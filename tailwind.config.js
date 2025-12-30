@@ -4,13 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        unda: {
-          navy: "#1A2E35", // Trustworthy base
-          teal: "#2D707E", // Primary brand color
-          orange: "#FF7D45", // Vibrant CTA accent
-          yellow: "#FFC83D", // Energy/Thriving accent
-          bg: "#F9FAFB", // Neutral background
-        },
+        'unda-navy': '#1A2E35', // Trustworthy base
+        'unda-teal': '#2D707E', // Primary brand color
+        'unda-orange': '#FF7D45', // Vibrant CTA accent
+        'unda-yellow': '#FFC83D', // Energy/Thriving accent
+        'unda-bg': '#F9FAFB', // Neutral background
       },
     },
   },
