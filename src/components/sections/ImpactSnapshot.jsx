@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useMetrics } from '../../hooks/useMetrics';
 
 const ImpactSnapshot = () => {
 
@@ -21,31 +22,32 @@ const ImpactSnapshot = () => {
     return () => observer.disconnect();
   }, []);
   
+  const { activeChampions, referralConversionRate, trainingComplianceRate, loading } = useMetrics();
+
   const stats = [
-    { number: "50,000", label: "Young People Reached", color: "bg-unda-navy", color: "bg-unda-navy",glow: "shadow-unda-navy/20" },
-    { number: "5000", label: "Preventive Services", color: "bg-unda-orange", color: "bg-unda-orange",glow: "shadow-unda-orange/20" },
-    { number: "100+", label: "Multi-sector Partnerships", color: "bg-unda-teal",color: "bg-unda-teal" , glow: "shadow-unda-teal/20" }, 
+    { number: activeChampions, label: "Active Peer Champions", color: "bg-unda-navy", glow: "shadow-unda-navy/20" },
+    { number: `${referralConversionRate.toFixed(1)}%`, label: "Referral Conversion Rate", color: "bg-unda-orange", glow: "shadow-unda-orange/20" },
+    { number: `${trainingComplianceRate.toFixed(1)}%`, label: "Training Compliance Rate", color: "bg-unda-teal", glow: "shadow-unda-teal/20" },
   ];
 
   return(
-    <section className = "py-24 bg-white">
-      <div className = "container mx-auto px-6">
-        <div className = "flex flex-wrap justify-center gap-8">
-          {stats.map((stat, index) => (
-            <div key={index} 
-              className={`flex-1 min-w-[280px] max-w-[360px] p-12 ${stat.color} rounded-[2.5rem] text-center shadow-2xl ${stat.glow} transition-all duration-500 hover:-translate-y-3`}
+    <section className="py-24 bg-white">
+      <div className="container mx-auto px-6">
+        <div className="flex flex-wrap justify-center gap-8">
+          {loading ? (
+            <div className="text-center w-full py-12 text-unda-navy font-bold">Loading metrics...</div>
+          ) : (
+            stats.map((stat, index) => (
+              <div key={index}
+                className={`flex-1 min-w-[280px] max-w-[360px] p-12 ${stat.color} rounded-[2.5rem] text-center shadow-2xl ${stat.glow} transition-all duration-500 hover:-translate-y-3`}
               >
                 <h3 className="text-5xl font-black text-white mb-2 tracking-tighter">{stat.number}</h3>
                 <p className="text-white/70 font-bold uppercase text-[10px] tracking-widest">{stat.label}</p>
-
-            </div>
-
-          ))}
-
+              </div>
+            ))
+          )}
         </div>
-
       </div>
-
     </section>
   );
 };

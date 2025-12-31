@@ -1,0 +1,57 @@
+import React, { createContext, useContext, useState } from 'react';
+import { createReferral } from '../services/apiService';
+
+const ReferralContext = createContext();
+
+export function useReferral() {
+  return useContext(ReferralContext);
+}
+
+export function ReferralProvider({ children }) {
+  const [referralAlert, setReferralAlert] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Trigger referral logic (called when a red flag is detected)
+  const triggerReferral = async ({ championId, reason, supervisorNotes, destination, checkInData }) => {
+    setLoading(true);
+    setError(null);
+    try {
+      // Create referral entry in backend
+      await createReferral({
+        championId,
+        reason,
+        supervisorNotes,
+        destination,
+        checkInData,
+        triggeredAt: new Date().toISOString(),
+      });
+      setReferralAlert({ reason, supervisorNotes, destination });
+      // Optionally, call notification API or EmailJS here
+    } catch (err) {
+      setError('Failed to trigger referral.');
+    } finally {
+      setLoading(false);
+      setTimeout(() => setReferralAlert(null), 7000);
+    }
+  };
+
+  return (
+    <ReferralContext.Provider value={{ triggerReferral, referralAlert, loading, error }}>
+      {children}
+      {referralAlert && (
+        <div className="fixed top-8 right-8 z-50 bg-unda-orange text-white px-6 py-4 rounded-xl shadow-xl font-bold">
+          <div>Referral Triggered!</div>
+          <div>Reason: {referralAlert.reason}</div>
+          <div>Supervisor Notes: {referralAlert.supervisorNotes}</div>
+          <div>Destination: {referralAlert.destination}</div>
+        </div>
+      )}
+      {error && (
+        <div className="fixed top-20 right-8 z-50 bg-red-600 text-white px-6 py-3 rounded-xl shadow-xl font-bold">
+          {error}
+        </div>
+      )}
+    </ReferralContext.Provider>
+  );
+}
