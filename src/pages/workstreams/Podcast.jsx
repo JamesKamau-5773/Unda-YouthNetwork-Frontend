@@ -45,7 +45,7 @@ const Podcast = () => {
               <p className="text-slate-600 text-xl font-medium max-w-xl leading-relaxed">
                 Listen to "The UMV Podcast" where we bridge the gap between
                 clinical expertise and youth-led storytelling. Prevention starts
-                with a conversation [cite: 5-8].
+                with a conversation.
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">
@@ -88,7 +88,7 @@ const Podcast = () => {
               Recent Sessions
             </h2>
             <p className="text-slate-500 font-bold text-sm mt-2 uppercase tracking-widest">
-              Prevention Literacy Track [cite: 42]
+              Prevention Literacy Track
             </p>
           </div>
           <div className="flex gap-4">

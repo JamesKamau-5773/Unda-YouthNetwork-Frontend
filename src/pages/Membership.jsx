@@ -2,6 +2,7 @@
 import React from 'react';
 import { Check, ShieldCheck, ArrowRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
 
 const Membership = () => {
@@ -76,9 +77,13 @@ const Membership = () => {
 								</div>
 
 								{/* Action Button */}
-								<Button className="w-full h-16 rounded-2xl bg-unda-navy text-white hover:bg-unda-teal text-lg font-bold transition-all flex items-center justify-between px-8 shadow-xl shadow-unda-navy/10 group">
-									Start My Journey
-									<ArrowRight className="group-hover:translate-x-2 transition-transform" />
+								{/* Peer Champion Tier */}
+								<Button asChild className="w-full h-16 rounded-2xl bg-unda-navy text-white hover:bg-unda-teal text-lg font-bold transition-all flex items-center justify-between px-8 shadow-xl shadow-unda-navy/10 group">
+									<Link to="/join">Apply as Champion<ArrowRight className="group-hover:translate-x-2 transition-transform" /></Link>
+								</Button>
+								{/* General Member Tier */}
+								<Button asChild variant="secondary" className="w-full h-16 rounded-2xl mt-4 text-lg font-bold flex items-center justify-between px-8">
+									<Link to="/join">Register as Member<ArrowRight className="group-hover:translate-x-2 transition-transform" /></Link>
 								</Button>
 
 								<div className="mt-6 flex justify-center gap-4 opacity-30 grayscale pointer-events-none">

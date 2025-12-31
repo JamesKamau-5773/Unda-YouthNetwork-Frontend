@@ -1,4 +1,4 @@
-
+import MultiStepChampionForm from './pages/Portal/MultiStepChampionForm';
 import React from 'react';
 import { ReferralProvider } from './context/ReferralContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -7,8 +7,12 @@ import Footer from './components/shared/Footer';
 import Home from './pages/Home';
 import Membership from './pages/Membership';
 import BackgroundElements from './components/shared/BackgroundElements';
-import PortalLogin from './features/auth/PortalLogin';
+import PodcastPage from './pages/Podcast';
+import PortalLogin from './pages/Portal/Login';
 import WeeklyCheckInForm from './features/checkin/WeeklyCheckInForm';
+import CampusEdition from './pages/workstreams/CampusEdition'; // Import the new CampusEdition page
+import DebatersCircle from './pages/workstreams/DebatersCircle'; // Import DebatersCircle for routing
+import UMVMtaani from './pages/workstreams/UMVMtaani';
 
 function App() {
   return (
@@ -25,7 +29,14 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/membership" element={<Membership />} />
               <Route path="/portal" element={<PortalLogin />} />
+
+              {/* NEW: The Registration Funnel (Day 6) */}
+              <Route path="/join" element={<MultiStepChampionForm />} />
               <Route path="/checkin" element={<WeeklyCheckInForm />} />
+              <Route path="/podcast" element={<PodcastPage />} />
+              <Route path="/campus" element={<CampusEdition />} /> {/* New route for CampusEdition */}
+              <Route path="/debaters-circle" element={<DebatersCircle />} /> {/* Route for DebatersCircle */}
+              <Route path="/mtaani" element={<UMVMtaani />} />
               {/* Future Day 4 Workstream Routes will go here */}
             </Routes>
           </main>

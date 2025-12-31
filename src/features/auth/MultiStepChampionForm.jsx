@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { registerChampion } from '../../services/apiService';
+import { championService } from '../../services/apiService';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
   fullName: '',
@@ -27,9 +28,9 @@ const steps = [
 export default function MultiStepChampionForm() {
   const [form, setForm] = useState(initialState);
   const [step, setStep] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -40,15 +41,20 @@ export default function MultiStepChampionForm() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    setLoading(true);
+    setIsSubmitting(true);
     setError('');
     try {
-      await registerChampion(form);
-      setSuccess(true);
+      const response = await championService.register(form);
+      if (response && (response.status === 201 || response.status === 200)) {
+        alert('Registration Successful! Please log in.');
+        navigate('/portal');
+      } else {
+        setError('Registration failed. Please try again.');
+      }
     } catch (err) {
-      setError('Registration failed.');
+      setError('Registration failed. Please try again.');
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -96,11 +102,12 @@ export default function MultiStepChampionForm() {
         {step < steps.length - 1 ? (
           <button type="button" onClick={nextStep} className="btn bg-unda-teal text-white">Next</button>
         ) : (
-          <button type="submit" className="btn bg-unda-teal text-white" disabled={loading}>Submit</button>
+          <button type="submit" className="btn bg-unda-teal text-white" disabled={isSubmitting}>
+            {isSubmitting ? 'Registering...' : 'Complete Registration'}
+          </button>
         )}
       </div>
       {error && <p className="text-red-500 mt-4">{error}</p>}
-      {success && <p className="text-green-500 mt-4">Registration successful!</p>}
     </form>
   );
 }

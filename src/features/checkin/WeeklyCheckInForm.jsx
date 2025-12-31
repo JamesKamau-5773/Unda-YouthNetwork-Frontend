@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { logCheckIn } from '../../services/apiService';
 import { useReferral } from '../../context/ReferralContext';
 
 const initialState = {
@@ -33,25 +32,19 @@ export default function WeeklyCheckInForm() {
     e.preventDefault();
     setLoading(true);
     setError('');
-    try {
-      await logCheckIn(form);
-      // Red flag detection logic
-      const isRedFlag = RED_FLAGS.includes(form.reason) || form.phq2Score >= 3 || form.gad2Score >= 3;
-      if (isRedFlag) {
-        triggerReferral({
-          championId: form.championId,
-          reason: form.reason,
-          supervisorNotes: form.supervisorNotes,
-          destination: form.destination,
-          checkInData: form,
-        });
-      }
-      setSuccess(true);
-    } catch (err) {
-      setError('Check-in failed.');
-    } finally {
-      setLoading(false);
+    // Red flag detection logic
+    const isRedFlag = RED_FLAGS.includes(form.reason) || form.phq2Score >= 3 || form.gad2Score >= 3;
+    if (isRedFlag) {
+      triggerReferral({
+        championId: form.championId,
+        reason: form.reason,
+        supervisorNotes: form.supervisorNotes,
+        destination: form.destination,
+        checkInData: form,
+      });
     }
+    setSuccess(true);
+    setLoading(false);
   };
 
   return (

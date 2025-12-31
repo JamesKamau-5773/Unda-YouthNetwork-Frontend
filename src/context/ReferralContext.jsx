@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from 'react';
-import { createReferral } from '../services/apiService';
 
 const ReferralContext = createContext();
 
@@ -16,24 +15,10 @@ export function ReferralProvider({ children }) {
   const triggerReferral = async ({ championId, reason, supervisorNotes, destination, checkInData }) => {
     setLoading(true);
     setError(null);
-    try {
-      // Create referral entry in backend
-      await createReferral({
-        championId,
-        reason,
-        supervisorNotes,
-        destination,
-        checkInData,
-        triggeredAt: new Date().toISOString(),
-      });
-      setReferralAlert({ reason, supervisorNotes, destination });
-      // Optionally, call notification API or EmailJS here
-    } catch (err) {
-      setError('Failed to trigger referral.');
-    } finally {
-      setLoading(false);
-      setTimeout(() => setReferralAlert(null), 7000);
-    }
+    // No backend call, just show alert
+    setReferralAlert({ reason, supervisorNotes, destination });
+    setLoading(false);
+    setTimeout(() => setReferralAlert(null), 7000);
   };
 
   return (
