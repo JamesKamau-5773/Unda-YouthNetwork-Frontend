@@ -1,23 +1,40 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { memberService, championService } from '@/services/apiService'; 
-import { User, ShieldAlert, GraduationCap, Link2, ArrowRight, ArrowLeft, CheckCircle, Loader2 } from 'lucide-react';
+import { User, ShieldAlert, GraduationCap, Link2, ArrowRight, ArrowLeft, CheckCircle, Loader2, Eye, EyeOff } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import Layout from '../../components/shared/Layout';
 
 // InputField is outside the main component for performance
-const InputField = ({ label, type = "text", value, onChange, placeholder }) => (
-  <div className="space-y-2">
-    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">{label}</label>
-    <input 
-      type={type} 
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-unda-navy font-bold focus:outline-none focus:ring-2 focus:ring-unda-teal/20 focus:border-unda-teal transition-all placeholder:text-slate-300"
-    />
-  </div>
-);
+const InputField = ({ label, type = "text", value, onChange, placeholder }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const isPasswordField = type === 'password';
+  
+  return (
+    <div className="space-y-2">
+      <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">{label}</label>
+      <div className="relative">
+        <input 
+          type={isPasswordField && !showPassword ? 'password' : 'text'} 
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-unda-navy font-bold focus:outline-none focus:ring-2 focus:ring-unda-teal/20 focus:border-unda-teal transition-all placeholder:text-slate-300"
+        />
+        {isPasswordField && (
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-unda-teal transition-colors"
+            aria-label={showPassword ? 'Hide password' : 'Show password'}
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const MultiStepChampionForm = () => {
   const navigate = useNavigate();

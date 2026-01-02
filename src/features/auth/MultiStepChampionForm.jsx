@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { memberService } from '../../services/apiService';
 import { useNavigate } from 'react-router-dom';
+import { Eye, EyeOff } from 'lucide-react';
 
 const initialState = {
   // Account fields
@@ -26,6 +27,8 @@ export default function MultiStepChampionForm() {
   const [step, setStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = e => {
@@ -74,8 +77,18 @@ export default function MultiStepChampionForm() {
             <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Email Address" className="input" required />
             <input name="username" value={form.username} onChange={handleChange} placeholder="Username" className="input" required />
             <input name="phone" type="tel" value={form.phone} onChange={handleChange} placeholder="Phone Number (0712345678)" className="input" required />
-            <input name="password" type="password" value={form.password} onChange={handleChange} placeholder="Password (min 8 characters)" className="input" required />
-            <input name="confirmPassword" type="password" value={form.confirmPassword} onChange={handleChange} placeholder="Confirm Password" className="input" required />
+            <div className="relative">
+              <input name="password" type={showPassword ? 'text' : 'password'} value={form.password} onChange={handleChange} placeholder="Password (min 8 characters)" className="input pr-10" required />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-unda-teal">
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+            <div className="relative">
+              <input name="confirmPassword" type={showConfirmPassword ? 'text' : 'password'} value={form.confirmPassword} onChange={handleChange} placeholder="Confirm Password" className="input pr-10" required />
+              <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-unda-teal">
+                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
           </div>
         )}
         {step === 1 && (
