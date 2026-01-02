@@ -1,9 +1,34 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { memberService, championService } from '@/services/apiService'; 
-import { User, ShieldAlert, GraduationCap, Link2, ArrowRight, ArrowLeft, CheckCircle, Loader2, Eye, EyeOff } from 'lucide-react';
+import { User, ShieldAlert, GraduationCap, Link2, ArrowRight, ArrowLeft, CheckCircle, Loader2, Eye, EyeOff, XCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import Layout from '../../components/shared/Layout';
+
+// Password strength checker
+const checkPasswordStrength = (password) => {
+  const requirements = {
+    minLength: password.length >= 8,
+    hasUpperCase: /[A-Z]/.test(password),
+    hasLowerCase: /[a-z]/.test(password),
+    hasNumber: /[0-9]/.test(password),
+    hasSpecialChar: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password),
+  };
+
+  const metRequirements = Object.values(requirements).filter(Boolean).length;
+  let strength = 'Weak';
+  let strengthColor = 'bg-red-500';
+
+  if (metRequirements >= 4) {
+    strength = 'Strong';
+    strengthColor = 'bg-green-500';
+  } else if (metRequirements >= 3) {
+    strength = 'Medium';
+    strengthColor = 'bg-yellow-500';
+  }
+
+  return { requirements, strength, strengthColor, metRequirements };
+};
 
 // InputField is outside the main component for performance
 const InputField = ({ label, type = "text", value, onChange, placeholder }) => {
@@ -58,6 +83,15 @@ const MultiStepChampionForm = () => {
   const prevStep = () => setStep(prev => prev - 1);
 
   const handleSubmit = async () => {
+    // Validate password strength
+    const { requirements } = checkPasswordStrength(formData.password);
+    const allReqsMet = Object.values(requirements).every(Boolean);
+    
+    if (!allReqsMet) {
+      alert("Password must meet all requirements!");
+      return;
+    }
+    
     // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
@@ -100,9 +134,93 @@ const MultiStepChampionForm = () => {
               <InputField label="Email Address" type="email" placeholder="you@example.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
               <InputField label="Username" placeholder="Choose a username" value={formData.username} onChange={e => setFormData({...formData, username: e.target.value})} />
               <InputField label="Phone Number" type="tel" placeholder="0712345678" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
-              <InputField label="Password" type="password" placeholder="Min 8 characters" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} />
-              <InputField label="Confirm Password" type="password" placeholder="Re-enter password" value={formData.confirmPassword} onChange={e => setFormData({...formData, confirmPassword: e.target.value})} />
+            </div>
+            
+            {/* Password Fields with Strength Meter - Full Width */}
+            <div className="space-y-4 md:col-span-2">
+              <div className="space-y-3">
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Password</label>
+                <div className="relative">
+                  <input 
+                    type={formData.password ? 'text' : 'password'}
+                    value={formData.password}
+                    onChange={e => setFormData({...formData, password: e.target.value})}
+                    placeholder="Min 8 characters"
+                    className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-unda-navy font-bold focus:outline-none focus:ring-2 focus:ring-unda-teal/20 focus:border-unda-teal transition-all placeholder:text-slate-300 pr-10"
+                  />
+                  {formData.password && (
+                    <button
+                      type="button"
+                      onClick={() => setFormData({...formData, password: formData.password})}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-unda-teal transition-colors"
+                    >
+                      {formData.password.includes('*') ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  )}
+                </div>
+                
+                {/* Password Strength Meter */}
+                {formData.password && (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="flex-1 h-2 bg-slate-200 rounded-full overflow-hidden">
+                        <div 
+                          className={`h-full ${checkPasswordStrength(formData.password).strengthColor}`}
+                          style={{ width: `${(checkPasswordStrength(formData.password).metRequirements / 5) * 100}%` }}
+                        />
+                      </div>
+                      <span className="text-xs font-bold text-slate-600">{checkPasswordStrength(formData.password).strength}</span>
+                    </div>
+                    
+                    {/* Requirements Checklist */}
+                    <div className="space-y-2 p-3 bg-slate-50 rounded-lg">
+                      {[
+                        { key: 'minLength', label: 'At least 8 characters' },
+                        { key: 'hasUpperCase', label: 'One uppercase letter (A-Z)' },
+                        { key: 'hasLowerCase', label: 'One lowercase letter (a-z)' },
+                        { key: 'hasNumber', label: 'One number (0-9)' },
+                        { key: 'hasSpecialChar', label: 'One special character (!@#$%^&*)' },
+                      ].map(req => {
+                        const isMet = checkPasswordStrength(formData.password).requirements[req.key];
+                        return (
+                          <div key={req.key} className="flex items-center gap-2 text-sm">
+                            {isMet ? (
+                              <CheckCircle size={16} className="text-green-500 flex-shrink-0" />
+                            ) : (
+                              <XCircle size={16} className="text-red-500 flex-shrink-0" />
+                            )}
+                            <span className={isMet ? 'text-green-700 font-medium' : 'text-slate-600'}>{req.label}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
               
+              {/* Confirm Password Field */}
+              <div className="space-y-3">
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Confirm Password</label>
+                <div className="relative">
+                  <input 
+                    type="password"
+                    value={formData.confirmPassword}
+                    onChange={e => setFormData({...formData, confirmPassword: e.target.value})}
+                    placeholder="Re-enter password"
+                    className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-unda-navy font-bold focus:outline-none focus:ring-2 focus:ring-unda-teal/20 focus:border-unda-teal transition-all placeholder:text-slate-300"
+                  />
+                </div>
+                {formData.confirmPassword && formData.password !== formData.confirmPassword && (
+                  <p className="text-xs text-red-500">Passwords do not match</p>
+                )}
+                {formData.confirmPassword && formData.password === formData.confirmPassword && (
+                  <p className="text-xs text-green-500">Passwords match ✓</p>
+                )}
+              </div>
+            </div>
+            
+            {/* Gender and other fields */}
+            <div className="grid md:grid-cols-2 gap-5">
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Gender</label>
                 <select className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 font-bold text-unda-navy focus:border-unda-teal outline-none" onChange={e => setFormData({...formData, gender: e.target.value})} value={formData.gender}>
