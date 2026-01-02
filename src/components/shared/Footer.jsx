@@ -53,9 +53,9 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* 3. Pilot Hubs - Creative Vertical Cards */}
+          {/* 3. Hubs - Creative Vertical Cards */}
           <div className="lg:col-span-4">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-unda-navy mb-8">Active Pilot Hubs</h4>
+            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-unda-navy mb-8">Active Hubs</h4>
             <div className="space-y-4">
               <div className="group p-4 rounded-2xl bg-slate-50 border border-transparent hover:border-unda-teal/30 hover:bg-white transition-all duration-500">
                 <div className="flex items-center gap-3 mb-1">
@@ -70,7 +70,7 @@ const Footer = () => {
                   <MapPin size={14} className="text-unda-orange" />
                   <p className="text-sm font-black text-unda-navy uppercase tracking-tighter">The Coast Region</p>
                 </div>
-                <p className="text-[11px] text-slate-600 font-medium pl-6">Regional Outreach Pilot</p>
+                <p className="text-[11px] text-slate-600 font-medium pl-6">Regional Outreach</p>
               </div>
             </div>
           </div>
@@ -79,7 +79,7 @@ const Footer = () => {
         {/* 4. Bottom Bar: Trust Indicators */}
         <div className="pt-12 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">
-            © 2025 UNDA Youth Network
+            © 2025 UNDA Youth Network Global
           </p>
           <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-slate-50 border border-slate-100">
             <ShieldCheck size={14} className="text-unda-teal" />

@@ -1,28 +1,24 @@
 import React, { useState } from 'react';
-import { championService } from '../../services/apiService';
+import { memberService } from '../../services/apiService';
 import { useNavigate } from 'react-router-dom';
 
 const initialState = {
+  // Account fields
   fullName: '',
+  email: '',
+  username: '',
+  phone: '',
+  password: '',
+  confirmPassword: '',
+  // Optional fields
   dob: '',
-  age: '',
-  phone1: '',
-  phone2: '',
-  emergencyName: '',
-  emergencyRelationship: '',
-  emergencyPhone: '',
-  educationLevel: '',
-  institution: '',
-  yearOfStudy: '',
-  recruitmentSource: '',
-  // ...add all other required fields
+  gender: '',
+  county: '',
 };
 
 const steps = [
-  'Identity',
-  'Safety',
-  'Education',
-  'Enrollment',
+  'Account',
+  'Complete',
 ];
 
 export default function MultiStepChampionForm() {
@@ -41,18 +37,23 @@ export default function MultiStepChampionForm() {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    if (form.password !== form.confirmPassword) {
+      setError('Passwords do not match!');
+      return;
+    }
     setIsSubmitting(true);
     setError('');
     try {
-      const response = await championService.register(form);
+      const response = await memberService.register(form);
       if (response && (response.status === 201 || response.status === 200)) {
-        alert('Registration Successful! Please log in.');
+        alert('Registration Successful! Your account is pending admin approval.');
         navigate('/portal');
       } else {
         setError('Registration failed. Please try again.');
       }
     } catch (err) {
-      setError('Registration failed. Please try again.');
+      const errorMessage = err.response?.data?.error || 'Registration failed. Please try again.';
+      setError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -70,30 +71,24 @@ export default function MultiStepChampionForm() {
         {step === 0 && (
           <div className="space-y-4">
             <input name="fullName" value={form.fullName} onChange={handleChange} placeholder="Full Name" className="input" required />
-            <input name="dob" value={form.dob} onChange={handleChange} placeholder="Date of Birth" className="input" required />
-            <input name="age" value={form.age} onChange={handleChange} placeholder="Age" className="input" required />
-            <input name="phone1" value={form.phone1} onChange={handleChange} placeholder="Phone Number 1" className="input" required />
-            <input name="phone2" value={form.phone2} onChange={handleChange} placeholder="Phone Number 2" className="input" />
+            <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Email Address" className="input" required />
+            <input name="username" value={form.username} onChange={handleChange} placeholder="Username" className="input" required />
+            <input name="phone" type="tel" value={form.phone} onChange={handleChange} placeholder="Phone Number (0712345678)" className="input" required />
+            <input name="password" type="password" value={form.password} onChange={handleChange} placeholder="Password (min 8 characters)" className="input" required />
+            <input name="confirmPassword" type="password" value={form.confirmPassword} onChange={handleChange} placeholder="Confirm Password" className="input" required />
           </div>
         )}
         {step === 1 && (
           <div className="space-y-4">
-            <input name="emergencyName" value={form.emergencyName} onChange={handleChange} placeholder="Emergency Contact Name" className="input" required />
-            <input name="emergencyRelationship" value={form.emergencyRelationship} onChange={handleChange} placeholder="Relationship" className="input" required />
-            <input name="emergencyPhone" value={form.emergencyPhone} onChange={handleChange} placeholder="Emergency Phone" className="input" required />
-          </div>
-        )}
-        {step === 2 && (
-          <div className="space-y-4">
-            <input name="educationLevel" value={form.educationLevel} onChange={handleChange} placeholder="Education Level" className="input" required />
-            <input name="institution" value={form.institution} onChange={handleChange} placeholder="Institution Name" className="input" required />
-            <input name="yearOfStudy" value={form.yearOfStudy} onChange={handleChange} placeholder="Year of Study" className="input" required />
-          </div>
-        )}
-        {step === 3 && (
-          <div className="space-y-4">
-            <input name="recruitmentSource" value={form.recruitmentSource} onChange={handleChange} placeholder="Recruitment Source" className="input" required />
-            {/* Add more fields as needed */}
+            <p className="text-sm text-slate-600 mb-4">Optional: Add more details to your profile</p>
+            <input name="dob" type="date" value={form.dob} onChange={handleChange} placeholder="Date of Birth" className="input" />
+            <select name="gender" value={form.gender} onChange={handleChange} className="input">
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <input name="county" value={form.county} onChange={handleChange} placeholder="County / Location" className="input" />
           </div>
         )}
       </div>

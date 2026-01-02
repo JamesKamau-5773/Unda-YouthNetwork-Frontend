@@ -41,7 +41,7 @@ const Navbar = () => {
             <div className="h-10 w-10 bg-unda-navy rounded-xl flex items-center justify-center text-white font-black text-lg shadow-lg shadow-unda-navy/20 group-hover:bg-unda-teal transition-all">U</div>
             <div className="flex flex-col">
               <span className="font-black text-unda-navy text-xl tracking-tighter leading-none">UNDA</span>
-              <span className="text-[7px] font-bold text-unda-teal uppercase tracking-[0.3em] mt-1">Youth Network </span>
+              <span className="text-[7px] font-bold text-unda-teal uppercase tracking-[0.3em] mt-1">Youth Network Global</span>
             </div>
           </Link>
 
@@ -80,7 +80,6 @@ const Navbar = () => {
             </div>
 
             <Link to="/membership" className={`text-[10px] font-black uppercase tracking-widest transition-all ${location.pathname === '/membership' ? 'text-unda-teal' : 'text-unda-navy/60 hover:text-unda-navy'}`}>Membership</Link>
-              <Link to="/membership" className={`text-[10px] font-black uppercase tracking-widest transition-all ${location.pathname === '/membership' ? 'text-unda-teal' : 'text-unda-navy/60 hover:text-unda-navy'}`}>Membership</Link>
           </div>
 
           {/* Action Button: Membership Bridge */}

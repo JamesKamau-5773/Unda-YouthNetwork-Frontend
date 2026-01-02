@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { championService } from '@/services/apiService'; 
+import { memberService, championService } from '@/services/apiService'; 
 import { User, ShieldAlert, GraduationCap, Link2, ArrowRight, ArrowLeft, CheckCircle, Loader2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import Layout from '../../components/shared/Layout';
@@ -25,9 +25,15 @@ const MultiStepChampionForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
+    // Account fields (required for registration)
+    email: '', username: '', password: '', confirmPassword: '',
+    // Personal info
     fullName: '', gender: '', dob: '', phone: '', altPhone: '', county: '',
+    // Emergency contact
     emergencyName: '', emergencyRelation: '', emergencyPhone: '',
+    // Education
     eduLevel: '', institution: '', fieldOfStudy: '', yearOfStudy: '',
+    // Other
     recruitmentSource: '', dateOfApplication: new Date().toISOString().split('T')[0]
   });
 
@@ -35,16 +41,23 @@ const MultiStepChampionForm = () => {
   const prevStep = () => setStep(prev => prev - 1);
 
   const handleSubmit = async () => {
+    // Validate passwords match
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    
     setIsSubmitting(true);
     try {
-      const response = await championService.register(formData);
+      const response = await memberService.register(formData);
       if (response.status === 201 || response.status === 200) {
-        alert("Registration Successful! Please log in.");
+        alert("Registration Successful! Your account is pending admin approval. You will be notified once approved.");
         navigate('/portal'); 
       }
     } catch (error) {
       console.error("Registration Error:", error);
-      alert("Registration failed. Please check your connection.");
+      const errorMessage = error.response?.data?.error || "Registration failed. Please check your details and try again.";
+      alert(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -60,13 +73,18 @@ const MultiStepChampionForm = () => {
                 <User size={24} />
               </div>
               <div>
-                <h3 className="text-2xl font-black text-unda-navy">Who are you?</h3>
-                <p className="text-slate-500 font-medium text-sm">Basic identity details for your profile.</p>
+                <h3 className="text-2xl font-black text-unda-navy">Create Your Account</h3>
+                <p className="text-slate-500 font-medium text-sm">Set up your login credentials and basic info.</p>
               </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-5">
               <InputField label="Full Name" placeholder="e.g. Juma Ochieng" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
+              <InputField label="Email Address" type="email" placeholder="you@example.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+              <InputField label="Username" placeholder="Choose a username" value={formData.username} onChange={e => setFormData({...formData, username: e.target.value})} />
+              <InputField label="Phone Number" type="tel" placeholder="0712345678" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
+              <InputField label="Password" type="password" placeholder="Min 8 characters" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} />
+              <InputField label="Confirm Password" type="password" placeholder="Re-enter password" value={formData.confirmPassword} onChange={e => setFormData({...formData, confirmPassword: e.target.value})} />
               
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Gender</label>
@@ -77,8 +95,6 @@ const MultiStepChampionForm = () => {
               </div>
 
               <InputField label="Date of Birth" type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} />
-              <InputField label="Phone Number" type="tel" placeholder="07..." value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
-              <InputField label="Alt Phone" type="tel" placeholder="07..." value={formData.altPhone} onChange={e => setFormData({...formData, altPhone: e.target.value})} />
               <InputField label="County / Location" placeholder="e.g. Nairobi, Kibera" value={formData.county} onChange={e => setFormData({...formData, county: e.target.value})} />
             </div>
           </div>

@@ -3,7 +3,7 @@ import axios from 'axios';
 // 1. Initialize Axios with your LIVE Backend URL
 const api = axios.create({
   // Points to your live Render backend
-  baseURL: 'https://unda-youth-network-backend.onrender.com/api', 
+  baseURL: 'https://unda-youth-network-backend.onrender.com', 
   headers: {
     'Content-Type': 'application/json',
   },
@@ -35,36 +35,46 @@ api.interceptors.response.use(
   }
 );
 
-// 4. Define the Champion Service (Pure Data Logic)
-export const championService = {
+// 4. Define the Member Registration Service (Public API)
+export const memberService = {
+  // Register a new member (public endpoint - no auth required)
   register: async (data) => {
-    // Map Frontend (camelCase) to Backend (snake_case)
-    // This matches your Phase 7 Database Schema exactly
     const payload = {
       full_name: data.fullName,
-      gender: data.gender,
-      date_of_birth: data.dob,
+      email: data.email,
       phone_number: data.phone,
-      alternative_phone_number: data.altPhone,
-      county: data.county,
-      
-      // Safety Fields
+      username: data.username,
+      password: data.password,
+      // Optional fields
+      date_of_birth: data.dob || null,
+      gender: data.gender || null,
+      county_sub_county: data.county || null
+    };
+
+    return await api.post('/api/auth/register', payload);
+  }
+};
+
+// 5. Define the Champion Application Service (requires login)
+export const championService = {
+  // Apply to become a champion (requires authentication)
+  apply: async (data) => {
+    const payload = {
+      date_of_birth: data.dob,
+      gender: data.gender,
+      county_sub_county: data.county,
       emergency_contact_name: data.emergencyName,
       emergency_contact_relationship: data.emergencyRelation,
       emergency_contact_phone: data.emergencyPhone,
-      
-      // Education Fields
       current_education_level: data.eduLevel,
       education_institution_name: data.institution,
       course_field_of_study: data.fieldOfStudy,
       year_of_study: data.yearOfStudy,
-      
-      // Source
-      recruitment_source: data.recruitmentSource,
-      date_of_application: data.dateOfApplication
+      motivation: data.motivation || '',
+      recruitment_source: data.recruitmentSource
     };
 
-    return await api.post('/champions/register', payload);
+    return await api.post('/api/champion/apply', payload);
   }
 };
 

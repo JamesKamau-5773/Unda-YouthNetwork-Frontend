@@ -62,10 +62,10 @@ const Hero = () => {
             />
           </div>
 
-          {/* Refined Pilot Tag placement */}
+          {/* Refined Tag placement */}
           <div className="absolute -bottom-6 -left-6 z-20 bg-unda-navy text-white p-6 rounded-3xl shadow-2xl max-w-[180px] animate-bounce-slow">
             <p className="text-[10px] font-bold text-unda-yellow uppercase mb-1 tracking-widest text-center">
-              Live Pilot
+              Live
             </p>
             <p className="text-xl font-black italic text-center">
               Nairobi & Coast
