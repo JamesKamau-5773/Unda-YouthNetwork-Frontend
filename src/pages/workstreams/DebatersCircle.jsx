@@ -1,15 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   MessageSquare,
   BookOpen,
   GraduationCap,
   Download,
   CheckSquare,
+  X,
+  Loader2,
+  Calendar,
+  MapPin,
+  Users,
+  CheckCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import api from "@/services/apiService";
 
 const DebatersCircle = () => {
-  const motions = [
+  const [showLogModal, setShowLogModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [message, setMessage] = useState({ type: '', text: '' });
+  const [formData, setFormData] = useState({
+    event_id: '',
+    notes: '',
+  });
+
+  // Sample fallback motions when API not available
+  const sampleMotions = [
     {
       topic: "Digital Wellbeing vs. Traditional Socialization",
       status: "Active",
@@ -24,8 +42,192 @@ const DebatersCircle = () => {
     },
   ];
 
+  const [motions, setMotions] = useState(sampleMotions);
+
+  // Fetch debate events when modal opens
+  useEffect(() => {
+    if (showLogModal) {
+      fetchDebateEvents();
+    }
+  }, [showLogModal]);
+
+  const fetchDebateEvents = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get('/api/events?category=debate');
+      if (response.data?.events?.length > 0) {
+        setEvents(response.data.events);
+      } else {
+        // Use sample events if none in database
+        setEvents([
+          { id: 1, title: "Digital Wellbeing Debate Session", event_date: "2026-01-15", location: "Virtual" },
+          { id: 2, title: "Academic Pressure Discussion", event_date: "2026-01-22", location: "Nairobi Hub" },
+        ]);
+      }
+    } catch (err) {
+      console.log('Events API not available, using sample data');
+      setEvents([
+        { id: 1, title: "Digital Wellbeing Debate Session", event_date: "2026-01-15", location: "Virtual" },
+        { id: 2, title: "Academic Pressure Discussion", event_date: "2026-01-22", location: "Nairobi Hub" },
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogParticipation = async (e) => {
+    e.preventDefault();
+    if (!formData.event_id) {
+      setMessage({ type: 'error', text: 'Please select an event' });
+      return;
+    }
+
+    setSubmitting(true);
+    setMessage({ type: '', text: '' });
+
+    try {
+      // Get champion_id from localStorage or current user context
+      const token = localStorage.getItem('unda_token');
+      
+      const response = await api.post('/api/event-participation/', {
+        event_id: parseInt(formData.event_id),
+        champion_id: 1, // This should come from the logged-in user's champion profile
+        registration_status: 'attended',
+      });
+
+      if (response.data?.success) {
+        setMessage({ type: 'success', text: 'Participation logged successfully! Your Documentation Quality Score has been updated.' });
+        setFormData({ event_id: '', notes: '' });
+        setTimeout(() => {
+          setShowLogModal(false);
+          setMessage({ type: '', text: '' });
+        }, 2000);
+      }
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || 'Failed to log participation. Please try again.';
+      setMessage({ type: 'error', text: errorMsg });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // Participation Modal Component
+  const ParticipationModal = () => (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+        {/* Modal Header */}
+        <div className="p-6 border-b border-slate-100 flex justify-between items-center">
+          <div>
+            <h2 className="text-xl font-black text-unda-navy">Log Debate Participation</h2>
+            <p className="text-sm text-slate-500 mt-1">Record your attendance for Documentation Quality Score</p>
+          </div>
+          <button 
+            onClick={() => setShowLogModal(false)}
+            className="p-2 hover:bg-slate-100 rounded-xl transition-colors"
+          >
+            <X size={20} className="text-slate-400" />
+          </button>
+        </div>
+
+        {/* Modal Body */}
+        <form onSubmit={handleLogParticipation} className="p-6 space-y-6">
+          {/* Message Display */}
+          {message.text && (
+            <div className={`p-4 rounded-xl flex items-center gap-3 ${
+              message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+            }`}>
+              {message.type === 'success' ? <CheckCircle size={20} /> : <X size={20} />}
+              <span className="text-sm font-medium">{message.text}</span>
+            </div>
+          )}
+
+          {/* Event Selection */}
+          <div className="space-y-3">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+              Select Debate Event
+            </label>
+            {loading ? (
+              <div className="flex items-center justify-center py-8">
+                <Loader2 className="animate-spin text-unda-teal" size={32} />
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {events.map((event) => (
+                  <label
+                    key={event.id}
+                    className={`block p-4 rounded-2xl border-2 cursor-pointer transition-all ${
+                      formData.event_id === String(event.id)
+                        ? 'border-unda-teal bg-unda-teal/5'
+                        : 'border-slate-100 hover:border-slate-200'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="event_id"
+                      value={event.id}
+                      checked={formData.event_id === String(event.id)}
+                      onChange={(e) => setFormData({ ...formData, event_id: e.target.value })}
+                      className="sr-only"
+                    />
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h4 className="font-bold text-unda-navy">{event.title}</h4>
+                        <div className="flex items-center gap-4 mt-2 text-xs text-slate-500">
+                          <span className="flex items-center gap-1">
+                            <Calendar size={12} /> {event.event_date}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <MapPin size={12} /> {event.location}
+                          </span>
+                        </div>
+                      </div>
+                      {formData.event_id === String(event.id) && (
+                        <CheckCircle className="text-unda-teal" size={20} />
+                      )}
+                    </div>
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Notes (Optional) */}
+          <div className="space-y-3">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+              Notes (Optional)
+            </label>
+            <textarea
+              value={formData.notes}
+              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+              placeholder="Any observations or key takeaways from the session..."
+              className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-unda-teal focus:outline-none transition-colors min-h-[100px] resize-none"
+            />
+          </div>
+
+          {/* Submit Button */}
+          <Button
+            type="submit"
+            disabled={submitting || !formData.event_id}
+            className="w-full h-14 rounded-2xl bg-unda-teal text-white hover:bg-unda-navy font-bold text-sm uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {submitting ? (
+              <span className="flex items-center gap-2">
+                <Loader2 className="animate-spin" size={18} /> Logging...
+              </span>
+            ) : (
+              'Log My Participation'
+            )}
+          </Button>
+        </form>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-white pb-32">
+      {/* Participation Modal */}
+      {showLogModal && <ParticipationModal />}
+
       {/* 1. HERO: Editorial Alignment */}
       <section className="pt-40 pb-20 bg-unda-navy relative overflow-hidden text-white">
         <div className="absolute bottom-0 right-0 w-1/3 h-full bg-unda-teal opacity-10 -skew-x-12 translate-x-1/2" />
@@ -138,7 +340,10 @@ const DebatersCircle = () => {
                 Champions must log debate participation to maintain high
                 Documentation Quality Scores.
               </p>
-              <Button className="w-full h-14 rounded-2xl bg-white text-unda-teal hover:bg-unda-navy hover:text-white font-black uppercase tracking-widest transition-all">
+              <Button 
+                onClick={() => setShowLogModal(true)}
+                className="w-full h-14 rounded-2xl bg-white text-unda-teal hover:bg-unda-navy hover:text-white font-black uppercase tracking-widest transition-all"
+              >
                 Open Operational Log
               </Button>
             </div>

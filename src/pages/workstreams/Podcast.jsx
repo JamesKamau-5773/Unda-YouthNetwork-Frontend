@@ -1,9 +1,19 @@
-import React from "react";
-import { Play, Mic2, Calendar, Share2, CheckCircle2 } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Play, Mic2, Calendar, Share2, CheckCircle2, Loader2, X, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import api from "@/services/apiService";
 
 const Podcast = () => {
-  const episodes = [
+  const [episodes, setEpisodes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showLogModal, setShowLogModal] = useState(false);
+  const [selectedEpisode, setSelectedEpisode] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState({ type: '', text: '' });
+
+  // Sample fallback data when API has no content yet
+  const sampleEpisodes = [
     {
       title: "Navigating Academic Pressure",
       guest: "Dr. Jane Kamau",
@@ -20,8 +30,91 @@ const Podcast = () => {
     },
   ];
 
+  useEffect(() => {
+    const fetchPodcasts = async () => {
+      try {
+        const response = await api.get('/api/podcasts');
+        if (response.data?.podcasts?.length > 0) {
+          setEpisodes(response.data.podcasts);
+        } else {
+          // Use sample data if no podcasts in database yet
+          setEpisodes(sampleEpisodes);
+        }
+      } catch (err) {
+        console.log('Podcasts API not available, using sample data');
+        // Fallback to sample data if API fails
+        setEpisodes(sampleEpisodes);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPodcasts();
+  }, []);
+
+  const handleLogAttendance = (episode) => {
+    setSelectedEpisode(episode);
+    setShowLogModal(true);
+    setMessage({ type: '', text: '' });
+  };
+
+  const submitAttendance = async () => {
+    setSubmitting(true);
+    try {
+      const response = await api.post('/api/event-participation/', {
+        event_id: selectedEpisode?.id || 1,
+        champion_id: 1,
+        registration_status: 'attended',
+      });
+      if (response.data?.success) {
+        setMessage({ type: 'success', text: 'Podcast attendance logged! Your Documentation Quality Score has been updated.' });
+        setTimeout(() => { setShowLogModal(false); setMessage({ type: '', text: '' }); }, 2000);
+      }
+    } catch (err) {
+      setMessage({ type: 'error', text: err.response?.data?.message || 'Failed to log attendance.' });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const AttendanceModal = () => (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl">
+        <div className="p-6 border-b border-slate-100 flex justify-between items-center">
+          <div>
+            <h2 className="text-xl font-black text-unda-navy">Log Podcast Attendance</h2>
+            <p className="text-sm text-slate-500 mt-1">Record your listening session</p>
+          </div>
+          <button onClick={() => setShowLogModal(false)} className="p-2 hover:bg-slate-100 rounded-xl">
+            <X size={20} className="text-slate-400" />
+          </button>
+        </div>
+        <div className="p-6 space-y-6">
+          {message.text && (
+            <div className={`p-4 rounded-xl flex items-center gap-3 ${message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+              {message.type === 'success' ? <CheckCircle size={20} /> : <X size={20} />}
+              <span className="text-sm font-medium">{message.text}</span>
+            </div>
+          )}
+          {selectedEpisode && (
+            <div className="p-4 rounded-2xl bg-unda-teal/5 border border-unda-teal/20">
+              <h4 className="font-bold text-unda-navy">{selectedEpisode.title}</h4>
+              <p className="text-sm text-slate-500 mt-1">Guest: {selectedEpisode.guest}</p>
+              <p className="text-xs text-slate-400 mt-2">{selectedEpisode.module} • {selectedEpisode.duration}</p>
+            </div>
+          )}
+          <Button onClick={submitAttendance} disabled={submitting} className="w-full h-14 rounded-2xl bg-unda-teal text-white hover:bg-unda-navy font-bold uppercase tracking-widest disabled:opacity-50">
+            {submitting ? <span className="flex items-center gap-2"><Loader2 className="animate-spin" size={18} /> Logging...</span> : 'Confirm Attendance'}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-white pb-24">
+      {showLogModal && <AttendanceModal />}
+      
       {/* 1. HERO SECTION: Asymmetrical & Bold */}
       <section className="pt-40 pb-20 bg-slate-50 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-unda-teal/[0.03] -skew-x-12 translate-x-1/4" />
@@ -99,51 +192,65 @@ const Podcast = () => {
         </div>
 
         <div className="grid gap-6">
-          {episodes.map((ep, idx) => (
-            <div
-              key={idx}
-              className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 hover:border-unda-teal/30 hover:shadow-2xl transition-all duration-500 flex flex-col md:flex-row md:items-center justify-between gap-8"
-            >
-              <div className="flex items-center gap-8">
-                <div className="h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center text-unda-teal group-hover:bg-unda-teal group-hover:text-white transition-all">
-                  <Play size={24} />
-                </div>
-                <div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <span className="px-3 py-1 rounded-full bg-unda-teal/5 text-unda-teal text-[9px] font-bold uppercase tracking-widest">
-                      {ep.module}
-                    </span>
-                    <span className="text-[10px] text-slate-400 font-bold flex items-center gap-1">
-                      <Calendar size={12} /> {ep.date}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-black text-unda-navy group-hover:text-unda-teal transition-colors">
-                    {ep.title}
-                  </h3>
-                  <p className="text-slate-600 font-semibold text-sm">
-                    Guest: {ep.guest}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <span className="text-slate-400 text-xs font-bold uppercase tracking-widest mr-4">
-                  {ep.duration}
-                </span>
-                <Button
-                  variant="ghost"
-                  className="rounded-xl hover:bg-slate-50"
-                >
-                  <Share2 size={18} className="text-slate-400" />
-                </Button>
-                {/* BACKEND INTEGRATION: Logs participation for Champion metrics  */}
-                <Button className="rounded-xl bg-slate-50 hover:bg-unda-teal hover:text-white text-slate-500 font-bold text-xs px-6 py-2 transition-all flex items-center gap-2">
-                  <CheckCircle2 size={16} />
-                  Log Attendance
-                </Button>
-              </div>
+          {loading ? (
+            <div className="flex items-center justify-center py-16">
+              <Loader2 className="animate-spin text-unda-teal" size={48} />
             </div>
-          ))}
+          ) : episodes.length === 0 ? (
+            <div className="text-center py-16 text-slate-500">
+              <p className="text-lg font-medium">No episodes available yet.</p>
+              <p className="text-sm">Check back soon for new content!</p>
+            </div>
+          ) : (
+            episodes.map((ep, idx) => (
+              <div
+                key={ep.id || idx}
+                className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 hover:border-unda-teal/30 hover:shadow-2xl transition-all duration-500 flex flex-col md:flex-row md:items-center justify-between gap-8"
+              >
+                <div className="flex items-center gap-8">
+                  <div className="h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center text-unda-teal group-hover:bg-unda-teal group-hover:text-white transition-all">
+                    <Play size={24} />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-1">
+                      <span className="px-3 py-1 rounded-full bg-unda-teal/5 text-unda-teal text-[9px] font-bold uppercase tracking-widest">
+                        {ep.module}
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-bold flex items-center gap-1">
+                        <Calendar size={12} /> {ep.date}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-black text-unda-navy group-hover:text-unda-teal transition-colors">
+                      {ep.title}
+                    </h3>
+                    <p className="text-slate-600 font-semibold text-sm">
+                      Guest: {ep.guest}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <span className="text-slate-400 text-xs font-bold uppercase tracking-widest mr-4">
+                    {ep.duration}
+                  </span>
+                  <Button
+                    variant="ghost"
+                    className="rounded-xl hover:bg-slate-50"
+                  >
+                    <Share2 size={18} className="text-slate-400" />
+                  </Button>
+                  {/* BACKEND INTEGRATION: Logs participation for Champion metrics  */}
+                  <Button 
+                    onClick={() => handleLogAttendance(ep)}
+                    className="rounded-xl bg-slate-50 hover:bg-unda-teal hover:text-white text-slate-500 font-bold text-xs px-6 py-2 transition-all flex items-center gap-2"
+                  >
+                    <CheckCircle2 size={16} />
+                    Log Attendance
+                  </Button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </section>
     </div>
