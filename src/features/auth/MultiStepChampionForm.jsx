@@ -85,6 +85,8 @@ export default function MultiStepChampionForm() {
       const response = await memberService.register(form);
       if (response && (response.status === 201 || response.status === 200)) {
         alert('Registration Successful! Your account is pending admin approval.');
+        setForm(initialState);
+        setStep(0);
         navigate('/portal');
       } else {
         setError('Registration failed. Please try again.');

@@ -65,6 +65,8 @@ const MultiStepChampionForm = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     // Account fields (required for registration)
@@ -103,6 +105,14 @@ const MultiStepChampionForm = () => {
       const response = await memberService.register(formData);
       if (response.status === 201 || response.status === 200) {
         alert("Registration Successful! Your account is pending admin approval. You will be notified once approved.");
+        setFormData({
+          email: '', username: '', password: '', confirmPassword: '',
+          fullName: '', gender: '', dob: '', phone: '', altPhone: '', county: '',
+          emergencyName: '', emergencyRelation: '', emergencyPhone: '',
+          eduLevel: '', institution: '', fieldOfStudy: '', yearOfStudy: '',
+          recruitmentSource: '', dateOfApplication: new Date().toISOString().split('T')[0]
+        });
+        setStep(1);
         navigate('/portal'); 
       }
     } catch (error) {
@@ -142,7 +152,7 @@ const MultiStepChampionForm = () => {
                 <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Password</label>
                 <div className="relative">
                   <input 
-                    type={formData.password ? 'text' : 'password'}
+                      type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={e => setFormData({...formData, password: e.target.value})}
                     placeholder="Min 8 characters"
@@ -151,10 +161,11 @@ const MultiStepChampionForm = () => {
                   {formData.password && (
                     <button
                       type="button"
-                      onClick={() => setFormData({...formData, password: formData.password})}
+                        onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-unda-teal transition-colors"
+                        aria-label={showPassword ? 'Hide password' : 'Show password'}
                     >
-                      {formData.password.includes('*') ? <EyeOff size={18} /> : <Eye size={18} />}
+                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   )}
                 </div>
@@ -203,12 +214,22 @@ const MultiStepChampionForm = () => {
                 <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Confirm Password</label>
                 <div className="relative">
                   <input 
-                    type="password"
+                      type={showConfirmPassword ? 'text' : 'password'}
                     value={formData.confirmPassword}
                     onChange={e => setFormData({...formData, confirmPassword: e.target.value})}
                     placeholder="Re-enter password"
-                    className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-unda-navy font-bold focus:outline-none focus:ring-2 focus:ring-unda-teal/20 focus:border-unda-teal transition-all placeholder:text-slate-300"
+                      className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-unda-navy font-bold focus:outline-none focus:ring-2 focus:ring-unda-teal/20 focus:border-unda-teal transition-all placeholder:text-slate-300 pr-10"
                   />
+                    {formData.confirmPassword && (
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-unda-teal transition-colors"
+                        aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                      >
+                        {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
+                    )}
                 </div>
                 {formData.confirmPassword && formData.password !== formData.confirmPassword && (
                   <p className="text-xs text-red-500">Passwords do not match</p>
