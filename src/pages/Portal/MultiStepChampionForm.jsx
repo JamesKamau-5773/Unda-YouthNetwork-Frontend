@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { memberService, championService } from '@/services/apiService'; 
-import { User, ShieldAlert, GraduationCap, Link2, ArrowRight, ArrowLeft, CheckCircle, Loader2, Eye, EyeOff, XCircle } from 'lucide-react';
+import { User, ShieldAlert, GraduationCap, Link2, ArrowRight, ArrowLeft, CheckCircle, Loader2, Eye, EyeOff, XCircle, Calendar } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import Layout from '../../components/shared/Layout';
 
@@ -31,19 +31,31 @@ const checkPasswordStrength = (password) => {
 };
 
 // InputField is outside the main component for performance
-const InputField = ({ label, type = "text", value, onChange, placeholder }) => {
+const InputField = ({ label, type = "text", value, onChange, placeholder, min, max }) => {
   const [showPassword, setShowPassword] = useState(false);
   const isPasswordField = type === 'password';
+  const isDateField = type === 'date';
+  const inputRef = useRef(null);
+
+  const openDatePicker = () => {
+    if (inputRef.current?.showPicker) inputRef.current.showPicker();
+    else inputRef.current?.focus();
+  };
   
   return (
     <div className="space-y-2">
       <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">{label}</label>
       <div className="relative">
         <input 
-          type={isPasswordField && !showPassword ? 'password' : 'text'} 
+          ref={inputRef}
+          type={isPasswordField && !showPassword ? 'password' : type} 
           value={value}
           onChange={onChange}
+          onFocus={isDateField ? openDatePicker : undefined}
+          onClick={isDateField ? openDatePicker : undefined}
           placeholder={placeholder}
+          min={min}
+          max={max}
           className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-unda-navy font-bold focus:outline-none focus:ring-2 focus:ring-unda-teal/20 focus:border-unda-teal transition-all placeholder:text-slate-300"
         />
         {isPasswordField && (
@@ -54,6 +66,16 @@ const InputField = ({ label, type = "text", value, onChange, placeholder }) => {
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        )}
+        {isDateField && (
+          <button
+            type="button"
+            onClick={openDatePicker}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-unda-teal transition-colors"
+            aria-label="Open date picker"
+          >
+            <Calendar size={18} />
           </button>
         )}
       </div>
@@ -67,6 +89,7 @@ const MultiStepChampionForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const today = new Date().toISOString().split('T')[0];
 
   const [formData, setFormData] = useState({
     // Account fields (required for registration)
@@ -250,7 +273,14 @@ const MultiStepChampionForm = () => {
                 </select>
               </div>
 
-              <InputField label="Date of Birth" type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} />
+              <InputField
+                label="Date of Birth"
+                type="date"
+                value={formData.dob}
+                onChange={e => setFormData({...formData, dob: e.target.value})}
+                min="1900-01-01"
+                max={today}
+              />
               <InputField label="County / Location" placeholder="e.g. Nairobi, Kibera" value={formData.county} onChange={e => setFormData({...formData, county: e.target.value})} />
             </div>
           </div>

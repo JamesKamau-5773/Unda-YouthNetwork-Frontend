@@ -54,6 +54,7 @@ export default function MultiStepChampionForm() {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const today = new Date().toISOString().split('T')[0];
   const navigate = useNavigate();
 
   const handleChange = e => {
@@ -198,7 +199,18 @@ export default function MultiStepChampionForm() {
         {step === 1 && (
           <div className="space-y-4">
             <p className="text-sm text-slate-600 mb-4">Optional: Add more details to your profile</p>
-            <input name="dob" type="date" value={form.dob} onChange={handleChange} placeholder="Date of Birth" className="input" />
+            <input
+              name="dob"
+              type="date"
+              value={form.dob}
+              onChange={handleChange}
+              onFocus={(e) => e.target.showPicker && e.target.showPicker()}
+              onClick={(e) => e.target.showPicker && e.target.showPicker()}
+              placeholder="Date of Birth"
+              min="1900-01-01"
+              max={today}
+              className="input"
+            />
             <select name="gender" value={form.gender} onChange={handleChange} className="input">
               <option value="">Select Gender</option>
               <option value="Male">Male</option>
