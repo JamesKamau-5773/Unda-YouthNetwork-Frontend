@@ -39,20 +39,21 @@ const Hero = () => {
           </p>
 
           <div className="mt-12 flex flex-wrap gap-6">
-            <Link to="/membership">
-              <Button className="h-16 px-10 rounded-2xl bg-unda-navy text-white hover:bg-unda-teal transition-all shadow-xl shadow-unda-navy/10">
+            <Button asChild className="h-16 px-10 rounded-2xl bg-unda-navy text-white hover:bg-unda-teal transition-all shadow-xl shadow-unda-navy/10">
+              <Link to="/membership">
                 Join the Network
-              </Button>
-            </Link>
-            <Link to="/about">
-              <Button
-                variant="ghost"
-                className="h-16 px-6 text-unda-navy font-bold group"
-              >
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="ghost"
+              className="h-16 px-6 text-unda-navy font-bold group"
+            >
+              <Link to={{ pathname: '/', hash: '#community-story' }}>
                 Our Story{" "}
                 <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </div>
 

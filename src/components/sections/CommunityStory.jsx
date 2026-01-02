@@ -2,7 +2,10 @@ import React from 'react';
 
 const CommunityStory = () => {
   return (
-    <section className="py-32 bg-white relative overflow-hidden">
+    <section
+      id="community-story"
+      className="py-32 bg-white relative overflow-hidden scroll-mt-32"
+    >
       {/* Ambient background element to anchor the center */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-unda-teal/[0.02] blur-[120px] pointer-events-none" />
 

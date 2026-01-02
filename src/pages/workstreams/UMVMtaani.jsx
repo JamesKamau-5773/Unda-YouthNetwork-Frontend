@@ -57,6 +57,7 @@ const UMVMtaani = () => {
         event_id: parseInt(formData.event_id),
         champion_id: 1,
         registration_status: 'attended',
+        notes: formData.notes,
       });
 
       if (response.data?.success) {

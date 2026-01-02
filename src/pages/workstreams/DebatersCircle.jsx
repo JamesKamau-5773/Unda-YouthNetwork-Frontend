@@ -93,6 +93,7 @@ const DebatersCircle = () => {
         event_id: parseInt(formData.event_id),
         champion_id: 1, // This should come from the logged-in user's champion profile
         registration_status: 'attended',
+        notes: formData.notes,
       });
 
       if (response.data?.success) {
