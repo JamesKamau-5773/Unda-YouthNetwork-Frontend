@@ -97,6 +97,17 @@ const CampusEdition = () => {
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-12">
                     <Rocket size={64} className="text-unda-yellow mb-6" />
                     <p className="text-white text-2xl font-black tracking-tight mb-2">
+                      Drive Innovation
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* OPPORTUNITIES GRID */}
+        <section className="py-24 container mx-auto px-6">
           {loading ? (
             <div className="flex items-center justify-center py-16">
               <Loader2 className="animate-spin text-unda-yellow" size={48} />
@@ -108,51 +119,40 @@ const CampusEdition = () => {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 gap-8">
-                      </p>
+              {initiatives.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="p-10 rounded-[3rem] border border-slate-100 bg-white hover:shadow-2xl transition-all duration-500 group"
+                >
+                  <div className="flex justify-between items-start mb-8">
+                    <div className="p-4 rounded-2xl bg-slate-50 text-unda-navy group-hover:bg-unda-yellow transition-colors">
+                      <Award size={24} />
+                    </div>
+                    <span className="px-4 py-1.5 rounded-full bg-unda-teal/5 text-unda-teal text-[9px] font-black uppercase tracking-widest">
+                      {item.tag}
+                    </span>
+                  </div>
+                  <h3 className="text-2xl font-black text-unda-navy mb-4">
+                    {item.title}
+                  </h3>
+                  <p className="text-slate-600 font-medium mb-8 leading-relaxed">
+                    {item.desc}
+                  </p>
+                  <div className="flex items-center justify-between pt-6 border-t border-slate-50">
+                    <span className="text-[10px] font-bold text-unda-navy uppercase tracking-widest">
+                      {item.status}
+                    </span>
+                    <Button
+                      variant="ghost"
+                      className="text-unda-teal font-black text-xs p-0 h-auto hover:bg-transparent"
+                    >
+                      Get Involved <ArrowRight size={14} className="ml-2" />
+                    </Button>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-            {/* OPPORTUNITIES GRID */}
-        <section className="py-24 container mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-8">
-            {initiatives.map((item, idx) => (
-              <div
-                key={idx}
-                className="p-10 rounded-[3rem] border border-slate-100 bg-white hover:shadow-2xl transition-all duration-500 group"
-              >
-                <div className="flex justify-between items-start mb-8">
-                  <div className="p-4 rounded-2xl bg-slate-50 text-unda-navy group-hover:bg-unda-yellow transition-colors">
-                    <Award size={24} />
-                  </div>
-                  <span className="px-4 py-1.5 rounded-full bg-unda-teal/5 text-unda-teal text-[9px] font-black uppercase tracking-widest">
-                    {item.tag}
-                  </span>
-                </div>
-                <h3 className="text-2xl font-black text-unda-navy mb-4">
-                  {item.title}
-                </h3>
-                <p className="text-slate-600 font-medium mb-8 leading-relaxed">
-                  {item.desc}
-                </p>
-                <div className="flex items-center justify-between pt-6 border-t border-slate-50">
-                  <span className="text-[10px] font-bold text-unda-navy uppercase tracking-widest">
               ))}
             </div>
-          )}  </span>
-                  <Button
-                    variant="ghost"
-                    className="text-unda-teal font-black text-xs p-0 h-auto hover:bg-transparent"
-                  >
-                    Get Involved <ArrowRight size={14} className="ml-2" />
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
+          )}
         </section>
       </div>
     </Layout>
