@@ -7,18 +7,49 @@ import api from '@/services/apiService';
 
 const UMVMtaani = () => {
   const [showLogModal, setShowLogModal] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [events, setEvents] = useState([]);
   const [message, setMessage] = useState({ type: '', text: '' });
   const [formData, setFormData] = useState({ event_id: '', notes: '' });
   const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [selectedRegion, setSelectedRegion] = useState('all');
+  const [regions, setRegions] = useState(['All', 'Nairobi', 'Coast']);
+
+  useEffect(() => {
+    fetchUpcomingBarazas();
+  }, []);
 
   useEffect(() => {
     if (showLogModal) {
       fetchMtaaniEvents();
     }
   }, [showLogModal]);
+
+  const fetchUpcomingBarazas = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get('/api/events?category=mtaani');
+      if (response.data?.events?.length > 0) {
+        setUpcomingEvents(response.data.events);
+        
+        // Extract unique regions from events
+        const uniqueRegions = ['All', ...new Set(
+          response.data.events
+            .map(event => event.region || event.location?.split(',')[0]?.trim())
+            .filter(Boolean)
+        )];
+        setRegions(uniqueRegions);
+      } else {
+        setUpcomingEvents([]);
+      }
+    } catch (err) {
+      console.error('Failed to fetch barazas:', err.message);
+      setUpcomingEvents([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchMtaaniEvents = async () => {
     setLoading(true);
@@ -181,33 +212,102 @@ const UMVMtaani = () => {
             </div>
 
             <div className="lg:col-span-7">
-              <div className="flex items-end justify-between mb-10">
-                <h2 className="text-3xl font-black text-unda-navy tracking-tight">Upcoming Barazas</h2>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Nairobi Region</span>
+              <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+                <div>
+                  <h2 className="text-3xl font-black text-unda-navy tracking-tight">Upcoming Barazas</h2>
+                  <p className="text-sm text-slate-500 mt-2">Community prevention events across Kenya</p>
+                </div>
+                
+                {/* Region Filter Tabs */}
+                <div className="flex gap-2 flex-wrap">
+                  {regions.map((region) => (
+                    <button
+                      key={region}
+                      onClick={() => setSelectedRegion(region.toLowerCase())}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${
+                        selectedRegion === region.toLowerCase()
+                          ? 'bg-unda-orange text-white shadow-lg'
+                          : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                      }`}
+                    >
+                      {region}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <div className="space-y-4">
-                {upcomingEvents.map((event, idx) => (
-                  <div key={idx} className="group p-8 rounded-[2rem] border border-slate-100 bg-white hover:border-unda-orange/30 hover:shadow-xl transition-all flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div className="flex items-center gap-6">
-                      <div className="h-16 w-16 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-unda-navy font-bold border border-slate-100">
-                        <span className="text-xs uppercase">{event.date.split(' ')[0]}</span>
-                        <span className="text-xl">{event.date.split(' ')[1].replace(',', '')}</span>
-                      </div>
-                      <div>
-                        <h4 className="text-xl font-black text-unda-navy group-hover:text-unda-orange transition-colors">{event.title}</h4>
-                        <div className="flex items-center gap-4 mt-1">
-                          <span className="text-xs font-bold text-slate-500 flex items-center gap-1"><MapPin size={12} /> {event.location}</span>
-                          <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-[9px] font-black uppercase tracking-widest">{event.type}</span>
+              {loading ? (
+                <div className="flex items-center justify-center py-16">
+                  <Loader2 className="animate-spin text-unda-orange" size={48} />
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {upcomingEvents
+                    .filter(event => {
+                      if (selectedRegion === 'all') return true;
+                      const eventRegion = (event.region || event.location?.split(',')[0]?.trim() || '').toLowerCase();
+                      return eventRegion === selectedRegion;
+                    })
+                    .map((event, idx) => {
+                      const eventRegion = event.region || event.location?.split(',')[0]?.trim() || 'Unknown';
+                      
+                      return (
+                        <div key={event.id || idx} className="group p-8 rounded-[2rem] border border-slate-100 bg-white hover:border-unda-orange/30 hover:shadow-xl transition-all">
+                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                            <div className="flex items-center gap-6 flex-1">
+                              <div className="h-16 w-16 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-unda-navy font-bold border border-slate-100 shrink-0">
+                                {event.event_date ? (
+                                  <>
+                                    <span className="text-xs uppercase">{new Date(event.event_date).toLocaleDateString('en-US', { month: 'short' })}</span>
+                                    <span className="text-xl">{new Date(event.event_date).getDate()}</span>
+                                  </>
+                                ) : (
+                                  <Calendar size={24} />
+                                )}
+                              </div>
+                              <div>
+                                <h4 className="text-xl font-black text-unda-navy group-hover:text-unda-orange transition-colors">{event.title}</h4>
+                                <div className="flex items-center gap-4 mt-2 flex-wrap">
+                                  <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
+                                    <MapPin size={12} /> {event.location}
+                                  </span>
+                                  <span className="px-3 py-1 rounded-full bg-unda-orange/10 text-unda-orange text-[9px] font-black uppercase tracking-widest">
+                                    {eventRegion}
+                                  </span>
+                                  {event.type && (
+                                    <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-[9px] font-black uppercase tracking-widest">
+                                      {event.type}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                            <Button 
+                              onClick={() => setShowLogModal(true)} 
+                              className="rounded-xl bg-unda-orange/10 hover:bg-unda-orange text-unda-orange hover:text-white font-bold whitespace-nowrap"
+                            >
+                              Log Attendance <CheckCircle size={16} className="ml-2" />
+                            </Button>
+                          </div>
                         </div>
-                      </div>
+                      );
+                    })}
+                  
+                  {upcomingEvents.filter(event => {
+                    if (selectedRegion === 'all') return true;
+                    const eventRegion = (event.region || event.location?.split(',')[0]?.trim() || '').toLowerCase();
+                    return eventRegion === selectedRegion;
+                  }).length === 0 && (
+                    <div className="text-center py-16 px-6">
+                      <MapPin size={48} className="mx-auto text-slate-300 mb-4" />
+                      <p className="text-lg font-medium text-slate-500">
+                        No barazas scheduled for {selectedRegion === 'all' ? 'any region' : selectedRegion.charAt(0).toUpperCase() + selectedRegion.slice(1)} yet.
+                      </p>
+                      <p className="text-sm text-slate-400 mt-2">Check back soon or select a different region!</p>
                     </div>
-                    <Button onClick={() => setShowLogModal(true)} className="rounded-xl bg-unda-orange/10 hover:bg-unda-orange text-unda-orange hover:text-white font-bold">
-                      Log Attendance <CheckCircle size={16} className="ml-2" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </section>

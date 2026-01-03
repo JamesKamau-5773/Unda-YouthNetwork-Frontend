@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/shared/Layout"; // Import the Layout wrapper
 import {
@@ -7,11 +7,39 @@ import {
   GraduationCap,
   ArrowRight,
   Award,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import api from "@/services/apiService";
 
 const CampusEdition = () => {
-  const initiatives = [];
+  const [initiatives, setInitiatives] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [hasFunding, setHasFunding] = useState(false);
+
+  useEffect(() => {
+    const fetchInitiatives = async () => {
+      try {
+        const response = await api.get('/api/campus-initiatives');
+        if (response.data?.initiatives?.length > 0) {
+          setInitiatives(response.data.initiatives);
+          // Check if any initiative has funding available
+          const fundingAvailable = response.data.initiatives.some(
+            init => init.status?.toLowerCase().includes('open') || init.funding_available
+          );
+          setHasFunding(fundingAvailable);
+        }
+      } catch (err) {
+        console.error('Failed to fetch campus initiatives:', err.message);
+        setInitiatives([]);
+        setHasFunding(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInitiatives();
+  }, []);
 
   return (
     <Layout>
@@ -42,9 +70,20 @@ const CampusEdition = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-4 pt-4">
-                  <Button asChild className="h-16 px-8 rounded-2xl bg-unda-navy text-white hover:bg-unda-yellow hover:text-unda-navy text-lg font-bold shadow-xl shadow-unda-navy/10 transition-all">
-                    <Link to="/join">Apply for Seed Funding</Link>
-                  </Button>
+                  {loading ? (
+                    <Button disabled className="h-16 px-8 rounded-2xl bg-slate-200 text-slate-400 text-lg font-bold">
+                      <Loader2 className="animate-spin mr-2" size={20} />
+                      Checking Availability...
+                    </Button>
+                  ) : hasFunding ? (
+                    <Button asChild className="h-16 px-8 rounded-2xl bg-unda-navy text-white hover:bg-unda-yellow hover:text-unda-navy text-lg font-bold shadow-xl shadow-unda-navy/10 transition-all">
+                      <Link to="/seed-funding-apply">Apply for Seed Funding</Link>
+                    </Button>
+                  ) : (
+                    <Button disabled className="h-16 px-8 rounded-2xl bg-slate-200 text-slate-500 text-lg font-bold cursor-not-allowed">
+                      No Funding Available Currently
+                    </Button>
+                  )}
                 </div>
               </div>
 
@@ -58,8 +97,18 @@ const CampusEdition = () => {
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-12">
                     <Rocket size={64} className="text-unda-yellow mb-6" />
                     <p className="text-white text-2xl font-black tracking-tight mb-2">
-                      Drive Innovation
-                    </p>
+          {loading ? (
+            <div className="flex items-center justify-center py-16">
+              <Loader2 className="animate-spin text-unda-yellow" size={48} />
+            </div>
+          ) : initiatives.length === 0 ? (
+            <div className="text-center py-16">
+              <p className="text-slate-500 text-lg font-medium">No initiatives available at the moment.</p>
+              <p className="text-slate-400 text-sm mt-2">Check back soon for new opportunities!</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-8">
+                      </p>
                   </div>
                 </div>
               </div>
@@ -91,8 +140,9 @@ const CampusEdition = () => {
                 </p>
                 <div className="flex items-center justify-between pt-6 border-t border-slate-50">
                   <span className="text-[10px] font-bold text-unda-navy uppercase tracking-widest">
-                    {item.status}
-                  </span>
+              ))}
+            </div>
+          )}  </span>
                   <Button
                     variant="ghost"
                     className="text-unda-teal font-black text-xs p-0 h-auto hover:bg-transparent"

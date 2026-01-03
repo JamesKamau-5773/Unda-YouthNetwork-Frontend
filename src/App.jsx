@@ -13,6 +13,7 @@ import WeeklyCheckInForm from './features/checkin/WeeklyCheckInForm';
 import CampusEdition from './pages/workstreams/CampusEdition'; // Import the new CampusEdition page
 import DebatersCircle from './pages/workstreams/DebatersCircle'; // Import DebatersCircle for routing
 import UMVMtaani from './pages/workstreams/UMVMtaani';
+import SeedFundingApplication from './pages/Programs/SeedFundingApplication';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
               <Route path="/campus" element={<CampusEdition />} /> {/* New route for CampusEdition */}
               <Route path="/debaters-circle" element={<DebatersCircle />} /> {/* Route for DebatersCircle */}
               <Route path="/mtaani" element={<UMVMtaani />} />
+              <Route path="/seed-funding-apply" element={<SeedFundingApplication />} /> {/* Seed Funding Application */}
               {/* Future Day 4 Workstream Routes will go here */}
             </Routes>
           </main>
