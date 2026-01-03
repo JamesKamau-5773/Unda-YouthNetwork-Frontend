@@ -26,23 +26,7 @@ const DebatersCircle = () => {
     notes: '',
   });
 
-  // Sample fallback motions when API not available
-  const sampleMotions = [
-    {
-      topic: "Digital Wellbeing vs. Traditional Socialization",
-      status: "Active",
-      level: "University / College",
-      participants: "450+ Youth Reached",
-    },
-    {
-      topic: "The Role of Peer Support in Academic Pressure",
-      status: "Archived",
-      level: "High School",
-      participants: "1,200+ Youth Reached",
-    },
-  ];
-
-  const [motions, setMotions] = useState(sampleMotions);
+  const [motions, setMotions] = useState([]);
 
   // Fetch debate events when modal opens
   useEffect(() => {
@@ -58,18 +42,11 @@ const DebatersCircle = () => {
       if (response.data?.events?.length > 0) {
         setEvents(response.data.events);
       } else {
-        // Use sample events if none in database
-        setEvents([
-          { id: 1, title: "Digital Wellbeing Debate Session", event_date: "2026-01-15", location: "Virtual" },
-          { id: 2, title: "Academic Pressure Discussion", event_date: "2026-01-22", location: "Nairobi Hub" },
-        ]);
+        setEvents([]);
       }
     } catch (err) {
-      console.log('Events API not available, using sample data');
-      setEvents([
-        { id: 1, title: "Digital Wellbeing Debate Session", event_date: "2026-01-15", location: "Virtual" },
-        { id: 2, title: "Academic Pressure Discussion", event_date: "2026-01-22", location: "Nairobi Hub" },
-      ]);
+      console.error('Events API error:', err.message);
+      setEvents([]);
     } finally {
       setLoading(false);
     }

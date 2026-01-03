@@ -11,20 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 const CampusEdition = () => {
-  const initiatives = [
-    {
-      title: "Mental Health Innovation Grant",
-      tag: "Seed Funding",
-      desc: "Apply for KES 50,000 to launch a peer-support circle on your campus.",
-      status: "Applications Open",
-    },
-    {
-      title: "Prevention Literacy Research",
-      tag: "Data Mapping",
-      desc: "Participate in national mapping of adolescent mental health stressors.",
-      status: "In Progress",
-    },
-  ];
+  const initiatives = [];
 
   return (
     <Layout>

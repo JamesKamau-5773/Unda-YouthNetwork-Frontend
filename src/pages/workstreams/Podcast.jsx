@@ -12,38 +12,44 @@ const Podcast = () => {
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
-  // Sample fallback data when API has no content yet
-  const sampleEpisodes = [
-    {
-      title: "Navigating Academic Pressure",
-      guest: "Dr. Jane Kamau",
-      duration: "45 mins",
-      module: "Basic Psychosocial Skills",
-      date: "Dec 28, 2025",
-    },
-    {
-      title: "Digital Resilience in a Social World",
-      guest: "Peer Lead: Omari T.",
-      duration: "32 mins",
-      module: "Prevention Literacy",
-      date: "Dec 20, 2025",
-    },
-  ];
-
   useEffect(() => {
     const fetchPodcasts = async () => {
       try {
         const response = await api.get('/api/podcasts');
-        if (response.data?.podcasts?.length > 0) {
-          setEpisodes(response.data.podcasts);
+        console.log('📡 Podcasts API Response:', response.data);
+        console.log('📊 Total podcasts from backend:', response.data?.total || 0);
+        
+        if (response.data?.podcasts && Array.isArray(response.data.podcasts)) {
+          if (response.data.podcasts.length > 0) {
+            console.log('✅ Using real podcasts from backend:', response.data.podcasts);
+            console.log('🔍 First podcast structure:', response.data.podcasts[0]);
+            
+            // Map backend fields to frontend expected fields
+            const mappedEpisodes = response.data.podcasts.map(podcast => ({
+              id: podcast.id,
+              title: podcast.title || podcast.name || 'Untitled Episode',
+              guest: podcast.guest || podcast.host || 'TBA',
+              duration: podcast.duration || podcast.length || 'N/A',
+              module: podcast.module || podcast.category || podcast.episode || 'General',
+              date: podcast.date || podcast.published_date || podcast.created_at || 'Recent',
+              // Keep original data for debugging
+              ...podcast
+            }));
+            
+            console.log('🗺️ Mapped episodes:', mappedEpisodes);
+            setEpisodes(mappedEpisodes);
+          } else {
+            console.warn('⚠️ Backend returned empty podcasts array');
+            setEpisodes([]);
+          }
         } else {
-          // Use sample data if no podcasts in database yet
-          setEpisodes(sampleEpisodes);
+          console.error('❌ Unexpected API response structure:', response.data);
+          setEpisodes([]);
         }
       } catch (err) {
-        console.log('Podcasts API not available, using sample data');
-        // Fallback to sample data if API fails
-        setEpisodes(sampleEpisodes);
+        console.error('❌ Podcasts API error:', err.message);
+        setEpisodes([]);
+        setError('Failed to load podcasts from backend.');
       } finally {
         setLoading(false);
       }

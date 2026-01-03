@@ -12,14 +12,7 @@ const UMVMtaani = () => {
   const [events, setEvents] = useState([]);
   const [message, setMessage] = useState({ type: '', text: '' });
   const [formData, setFormData] = useState({ event_id: '', notes: '' });
-
-  // Sample events for display
-  const sampleEvents = [
-    { id: 1, title: 'Mental Health Baraza', location: 'Kibera Community Hall', date: 'Jan 12, 2025', type: 'Open Forum' },
-    { id: 2, title: 'Art & Resilience Workshop', location: 'Mathare Social Hall', date: 'Jan 18, 2025', type: 'Creative Therapy' },
-  ];
-
-  const [upcomingEvents, setUpcomingEvents] = useState(sampleEvents);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
 
   useEffect(() => {
     if (showLogModal) {
@@ -34,10 +27,10 @@ const UMVMtaani = () => {
       if (response.data?.events?.length > 0) {
         setEvents(response.data.events);
       } else {
-        setEvents(sampleEvents.map(e => ({ ...e, event_date: e.date })));
+        setEvents([]);
       }
     } catch (err) {
-      setEvents(sampleEvents.map(e => ({ ...e, event_date: e.date })));
+      setEvents([]);
     } finally {
       setLoading(false);
     }

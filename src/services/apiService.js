@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// 1. Initialize Axios with your LIVE Backend URL
+// 1. Initialize Axios with Backend URL (auto-detects local vs production)
 const api = axios.create({
-  // Points to your live Render backend
-  baseURL: 'https://unda-youth-network-backend.onrender.com', 
+  // Use local backend in development, production backend in production
+  baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000',
   headers: {
     'Content-Type': 'application/json',
   },
