@@ -40,7 +40,8 @@ const DebatersCircle = () => {
           // Map backend fields to frontend expected fields
           const mappedDebates = response.data.events.map(debate => ({
             id: debate.id || debate.event_id,
-            title: debate.title,
+            title: debate.motion || debate.topic || debate.title, // Use motion/topic if available, fallback to title
+            motion: debate.motion || debate.topic, // Store the specific motion/topic field
             description: debate.description,
             date: new Date(debate.event_date).toLocaleDateString('en-US', { 
               year: 'numeric', 
@@ -52,7 +53,7 @@ const DebatersCircle = () => {
             imageUrl: debate.image_url || debate.imageUrl,
           }));
           
-          console.log('✅ Loaded debates:', mappedDebates);
+          console.log('✅ Loaded debates with motions:', mappedDebates);
           setMotions(mappedDebates);
         }
       } catch (err) {
@@ -186,7 +187,13 @@ const DebatersCircle = () => {
                       className="sr-only"
                     />
                     <div className="flex items-start justify-between">
-                      <div>
+                      <div className="flex-1">
+                        {event.motion && (
+                          <div className="mb-2">
+                            <span className="text-[9px] font-black text-unda-teal uppercase tracking-widest">Motion</span>
+                            <p className="font-black text-unda-navy text-sm mt-0.5">{event.motion}</p>
+                          </div>
+                        )}
                         <h4 className="font-bold text-unda-navy">{event.title}</h4>
                         <div className="flex items-center gap-4 mt-2 text-xs text-slate-500">
                           <span className="flex items-center gap-1">
@@ -308,9 +315,24 @@ const DebatersCircle = () => {
                         <Calendar size={12} /> {motion.date}
                       </span>
                     </div>
-                    <h3 className="text-2xl font-black text-unda-navy mb-4 group-hover:text-unda-teal transition-colors">
-                      {motion.title}
-                    </h3>
+                    
+                    {/* Display Motion/Topic prominently if it exists */}
+                    {motion.motion && (
+                      <div className="mb-3 pb-3 border-b border-slate-100">
+                        <span className="text-[10px] font-black text-unda-teal uppercase tracking-widest">Motion</span>
+                        <h3 className="text-2xl font-black text-unda-navy mt-1 group-hover:text-unda-teal transition-colors leading-tight">
+                          {motion.motion}
+                        </h3>
+                      </div>
+                    )}
+                    
+                    {/* Title - only show if different from motion */}
+                    {(!motion.motion || motion.title !== motion.motion) && (
+                      <h4 className="text-lg font-bold text-unda-navy mb-3">
+                        {motion.title}
+                      </h4>
+                    )}
+                    
                     <p className="text-slate-600 text-sm mb-4">{motion.description}</p>
                     <div className="flex items-center gap-6 text-slate-600 font-semibold text-xs">
                       <span className="flex items-center gap-2">
