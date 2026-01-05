@@ -28,6 +28,44 @@ const DebatersCircle = () => {
 
   const [motions, setMotions] = useState([]);
 
+  // Fetch debates on component mount
+  useEffect(() => {
+    const fetchDebates = async () => {
+      setLoading(true);
+      try {
+        const response = await api.get('/api/events/?category=debate');
+        console.log('📡 Debates API Response:', response.data);
+        
+        if (response.data?.events && Array.isArray(response.data.events)) {
+          // Map backend fields to frontend expected fields
+          const mappedDebates = response.data.events.map(debate => ({
+            id: debate.id || debate.event_id,
+            title: debate.title,
+            description: debate.description,
+            date: new Date(debate.event_date).toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'short', 
+              day: 'numeric' 
+            }),
+            location: debate.location,
+            status: debate.status,
+            imageUrl: debate.image_url || debate.imageUrl,
+          }));
+          
+          console.log('✅ Loaded debates:', mappedDebates);
+          setMotions(mappedDebates);
+        }
+      } catch (err) {
+        console.error('Failed to fetch debates:', err);
+        setMotions([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDebates();
+  }, []);
+
   // Fetch debate events when modal opens
   useEffect(() => {
     if (showLogModal) {
@@ -241,35 +279,47 @@ const DebatersCircle = () => {
               Current Motions
             </h2>
             <div className="space-y-6">
-              {motions.map((motion, idx) => (
-                <div
-                  key={idx}
-                  className="p-8 rounded-[2.5rem] border border-slate-100 bg-white hover:shadow-2xl transition-all group"
-                >
-                  <div className="flex justify-between items-start mb-4">
-                    <span
-                      className={`px-4 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
-                        motion.status === "Active"
-                          ? "bg-unda-teal/10 text-unda-teal"
-                          : "bg-slate-100 text-slate-400"
-                      }`}
-                    >
-                      {motion.status}
-                    </span>
-                    <span className="text-[10px] text-slate-500 font-bold uppercase">
-                      {motion.level}
-                    </span>
-                  </div>
-                  <h3 className="text-2xl font-black text-unda-navy mb-4 group-hover:text-unda-teal transition-colors">
-                    {motion.topic}
-                  </h3>
-                  <div className="flex items-center gap-6 text-slate-600 font-semibold text-xs">
-                    <span className="flex items-center gap-2">
-                      <CheckSquare size={14} /> {motion.participants}
-                    </span>
-                  </div>
+              {loading ? (
+                <div className="flex items-center justify-center py-16">
+                  <Loader2 className="animate-spin text-unda-teal" size={48} />
                 </div>
-              ))}
+              ) : motions.length === 0 ? (
+                <div className="text-center py-16 text-slate-500">
+                  <p className="text-lg font-medium">No debate motions available yet.</p>
+                  <p className="text-sm">Check back soon for upcoming debates!</p>
+                </div>
+              ) : (
+                motions.map((motion, idx) => (
+                  <div
+                    key={motion.id || idx}
+                    className="p-8 rounded-[2.5rem] border border-slate-100 bg-white hover:shadow-2xl transition-all group"
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <span
+                        className={`px-4 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
+                          motion.status === "Upcoming" || motion.status === "Active"
+                            ? "bg-unda-teal/10 text-unda-teal"
+                            : "bg-slate-100 text-slate-400"
+                        }`}
+                      >
+                        {motion.status}
+                      </span>
+                      <span className="text-[10px] text-slate-500 font-bold uppercase flex items-center gap-2">
+                        <Calendar size={12} /> {motion.date}
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-black text-unda-navy mb-4 group-hover:text-unda-teal transition-colors">
+                      {motion.title}
+                    </h3>
+                    <p className="text-slate-600 text-sm mb-4">{motion.description}</p>
+                    <div className="flex items-center gap-6 text-slate-600 font-semibold text-xs">
+                      <span className="flex items-center gap-2">
+                        <MapPin size={14} /> {motion.location}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
