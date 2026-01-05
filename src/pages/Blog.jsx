@@ -51,19 +51,19 @@ const Blog = () => {
         </section>
 
         {/* Articles */}
-        <section className="py-24 bg-white/50">
+        <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
               <div className="flex items-center gap-3 mb-12">
                 <div className="h-12 w-12 rounded-2xl bg-unda-teal/10 flex items-center justify-center">
                   <Newspaper size={24} className="text-unda-teal" />
                 </div>
-                <h2 className="text-4xl font-black text-unda-navy">Latest Articles</h2>
+                <h2 className="text-4xl font-black text-unda-navy font-unda">Latest Articles</h2>
               </div>
               
               <div className="space-y-6">
                 {articles.map((article, idx) => (
-                  <div key={idx} className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-lg transition-shadow group">
+                  <div key={idx} className="bg-unda-bg/30 rounded-2xl p-8 border-t-4 border-unda-teal hover:bg-white hover:shadow-xl transition-all duration-300 group">
                     <div className="flex items-center gap-3 mb-4">
                       <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-unda-teal/10 text-unda-teal">
                         {article.category}

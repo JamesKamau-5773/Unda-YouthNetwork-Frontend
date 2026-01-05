@@ -35,11 +35,11 @@ const Donate = () => {
         </section>
 
         {/* Donation Form */}
-        <section className="py-24 bg-white/50">
+        <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="max-w-2xl mx-auto">
-              <div className="bg-white rounded-3xl p-8 lg:p-12 border border-slate-100 shadow-xl">
-                <h2 className="text-4xl font-black text-unda-navy mb-8">Make a Difference</h2>
+              <div className="bg-unda-bg/30 rounded-2xl p-8 lg:p-12 border-t-4 border-unda-teal shadow-xl">
+                <h2 className="text-4xl font-black text-unda-navy mb-8 font-unda">Make a Difference</h2>
                 
                 {/* Donation Type */}
                 <div className="mb-8">

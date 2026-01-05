@@ -52,6 +52,8 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-8">
             <Link to="/" className={`text-[10px] font-black uppercase tracking-widest transition-all ${location.pathname === '/' ? 'text-unda-teal' : 'text-unda-navy/60 hover:text-unda-navy'}`}>Home</Link>
             
+            <Link to="/about" className={`text-[10px] font-black uppercase tracking-widest transition-all ${location.pathname === '/about' ? 'text-unda-teal' : 'text-unda-navy/60 hover:text-unda-navy'}`}>About</Link>
+
             {/* WORKSTREAMS DROPDOWN  [cite: 31-32, 172-180] */}
             <div className="relative group" onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
               <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-unda-navy/60 hover:text-unda-navy transition-all h-10">
@@ -81,6 +83,41 @@ const Navbar = () => {
                 </div>
               )}
             </div>
+
+            {/* MEDIA & GALLERY DROPDOWN */}
+            <div className="relative group">
+              <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-unda-navy/60 hover:text-unda-navy transition-all h-10">
+                Media & Gallery <ChevronDown size={12} className="transition-transform duration-300 group-hover:rotate-180 group-hover:text-unda-teal" />
+              </button>
+
+              <div className="absolute top-full -left-10 pt-6 w-[300px] opacity-0 invisible group-hover:opacity-100 group-hover:visible animate-in fade-in slide-in-from-top-4 duration-300 transition-all">
+                <div className="bg-white border border-slate-100 rounded-[2.5rem] shadow-2xl p-6 flex flex-col gap-3 relative overflow-hidden">
+                   <div className="absolute top-0 right-0 w-20 h-20 bg-unda-orange/5 blur-xl pointer-events-none"/>
+                   
+                   <Link to="/blog" className="flex items-center gap-3 p-4 rounded-2xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100 group/item">
+                      <div className="p-2 bg-unda-orange/5 text-unda-orange rounded-lg group-hover/item:bg-unda-orange group-hover/item:text-white transition-all">
+                        <Mic size={16} />
+                      </div>
+                      <div>
+                        <span className="block text-[10px] font-black text-unda-navy uppercase tracking-tight">Blog & Media</span>
+                        <span className="text-[9px] font-medium text-slate-500">Latest updates & stories</span>
+                      </div>
+                   </Link>
+
+                   <Link to="/gallery" className="flex items-center gap-3 p-4 rounded-2xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100 group/item">
+                      <div className="p-2 bg-unda-yellow/5 text-unda-yellow rounded-lg group-hover/item:bg-unda-yellow group-hover/item:text-white transition-all">
+                        <Users size={16} />
+                      </div>
+                      <div>
+                        <span className="block text-[10px] font-black text-unda-navy uppercase tracking-tight">Gallery & Moments</span>
+                        <span className="text-[9px] font-medium text-slate-500">Photos & videos</span>
+                      </div>
+                   </Link>
+                </div>
+              </div>
+            </div>
+
+            <Link to="/resources" className={`text-[10px] font-black uppercase tracking-widest transition-all ${location.pathname === '/resources' ? 'text-unda-teal' : 'text-unda-navy/60 hover:text-unda-navy'}`}>Resources</Link>
 
             <Link to="/membership" className={`text-[10px] font-black uppercase tracking-widest transition-all ${location.pathname === '/membership' ? 'text-unda-teal' : 'text-unda-navy/60 hover:text-unda-navy'}`}>Membership</Link>
           </div>

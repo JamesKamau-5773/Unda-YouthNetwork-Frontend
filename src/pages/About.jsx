@@ -74,7 +74,7 @@ const About = () => {
                   <Target size={18} className="text-unda-teal" />
                   <span className="text-xs font-black uppercase tracking-widest text-unda-navy">Our Mission</span>
                 </div>
-                <h2 className="text-4xl font-black text-unda-navy leading-tight">
+                <h2 className="text-4xl font-black text-unda-navy leading-tight font-unda">
                   Promoting Prevention, Increasing Access, Advocating Change
                 </h2>
                 <p className="text-lg text-slate-600 leading-relaxed">
@@ -87,7 +87,7 @@ const About = () => {
                   <Eye size={18} className="text-unda-yellow" />
                   <span className="text-xs font-black uppercase tracking-widest text-unda-navy">Our Vision</span>
                 </div>
-                <h2 className="text-4xl font-black text-unda-navy leading-tight">
+                <h2 className="text-4xl font-black text-unda-navy leading-tight font-unda">
                   Making Prevention a Global Priority
                 </h2>
                 <p className="text-lg text-slate-600 leading-relaxed">

@@ -29,19 +29,19 @@ const Gallery = () => {
         </section>
 
         {/* Photos Section */}
-        <section className="py-24 bg-white/50">
+        <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="max-w-6xl mx-auto">
               <div className="flex items-center gap-3 mb-12">
                 <div className="h-12 w-12 rounded-2xl bg-unda-teal/10 flex items-center justify-center">
                   <Camera size={24} className="text-unda-teal" />
                 </div>
-                <h2 className="text-4xl font-black text-unda-navy">Photos</h2>
+                <h2 className="text-4xl font-black text-unda-navy font-unda">Photos</h2>
               </div>
               
               <div className="grid md:grid-cols-3 gap-6">
                 {[1, 2, 3, 4, 5, 6].map((item) => (
-                  <div key={item} className="aspect-square rounded-2xl bg-gradient-to-br from-unda-teal/20 to-unda-navy/20 border border-slate-100 shadow-sm hover:shadow-lg transition-shadow overflow-hidden group">
+                  <div key={item} className="aspect-square rounded-2xl bg-unda-bg/30 border-t-4 border-unda-teal hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group">
                     <div className="w-full h-full flex items-center justify-center">
                       <div className="text-center">
                         <Image size={48} className="text-slate-300 mx-auto mb-3" />
@@ -62,19 +62,19 @@ const Gallery = () => {
         </section>
 
         {/* Videos Section */}
-        <section className="py-24 bg-slate-50">
+        <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="max-w-6xl mx-auto">
               <div className="flex items-center gap-3 mb-12">
                 <div className="h-12 w-12 rounded-2xl bg-unda-orange/10 flex items-center justify-center">
                   <Video size={24} className="text-unda-orange" />
                 </div>
-                <h2 className="text-4xl font-black text-unda-navy">Videos</h2>
+                <h2 className="text-4xl font-black text-unda-navy font-unda">Videos</h2>
               </div>
               
               <div className="grid md:grid-cols-2 gap-6">
                 {[1, 2, 3, 4].map((item) => (
-                  <div key={item} className="aspect-video rounded-2xl bg-gradient-to-br from-unda-orange/20 to-unda-yellow/20 border border-slate-100 shadow-sm hover:shadow-lg transition-shadow overflow-hidden group cursor-pointer">
+                  <div key={item} className="aspect-video rounded-2xl bg-unda-bg/30 border-t-4 border-unda-orange hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer">
                     <div className="w-full h-full flex items-center justify-center">
                       <div className="text-center">
                         <div className="h-16 w-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">

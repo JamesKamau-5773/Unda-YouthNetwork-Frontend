@@ -30,18 +30,18 @@ const Resources = () => {
         </section>
 
         {/* Publications */}
-        <section className="py-24 bg-white/50">
+        <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
               <div className="flex items-center gap-3 mb-8">
                 <div className="h-12 w-12 rounded-2xl bg-unda-teal/10 flex items-center justify-center">
                   <FileText size={24} className="text-unda-teal" />
                 </div>
-                <h2 className="text-4xl font-black text-unda-navy">Publications</h2>
+                <h2 className="text-4xl font-black text-unda-navy font-unda">Publications</h2>
               </div>
               
               <div className="space-y-6">
-                <div className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-lg transition-shadow">
+                <div className="bg-unda-bg/30 rounded-2xl p-8 border-t-4 border-unda-teal hover:bg-white hover:shadow-xl transition-all duration-300">
                   <h3 className="text-2xl font-black text-unda-navy mb-3">Research Summaries</h3>
                   <p className="text-slate-600 leading-relaxed mb-4">
                     Brief insights from UMV and partner research on youth mental health, preventive interventions, and evidence-based practices.
@@ -51,7 +51,7 @@ const Resources = () => {
                   </Button>
                 </div>
 
-                <div className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-lg transition-shadow">
+                <div className="bg-unda-bg/30 rounded-2xl p-8 border-t-4 border-unda-teal hover:bg-white hover:shadow-xl transition-all duration-300">
                   <h3 className="text-2xl font-black text-unda-navy mb-3">UMV Reports</h3>
                   <p className="text-slate-600 leading-relaxed mb-4">
                     Annual and quarterly program reports highlighting achievements, learnings, and program impact across schools, campuses, and communities.
@@ -66,17 +66,17 @@ const Resources = () => {
         </section>
 
         {/* Toolkits */}
-        <section className="py-24 bg-slate-50">
+        <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
               <div className="flex items-center gap-3 mb-8">
                 <div className="h-12 w-12 rounded-2xl bg-unda-yellow/10 flex items-center justify-center">
                   <BookOpen size={24} className="text-unda-yellow" />
                 </div>
-                <h2 className="text-4xl font-black text-unda-navy">Toolkits</h2>
+                <h2 className="text-4xl font-black text-unda-navy font-unda">Toolkits</h2>
               </div>
               
-              <div className="bg-white rounded-2xl p-8 border border-slate-100 shadow-lg">
+              <div className="bg-unda-bg/30 rounded-2xl p-8 border-t-4 border-unda-yellow hover:bg-white hover:shadow-xl transition-all duration-300">
                 <h3 className="text-2xl font-black text-unda-navy mb-3">Preventive Mental-Health Guides</h3>
                 <p className="text-slate-600 leading-relaxed mb-6">
                   Practical, user-friendly resources for young people, schools, and communities on resilience, stress management, peer support, and digital wellbeing.
@@ -88,7 +88,7 @@ const Resources = () => {
                     "Peer Support Guidelines",
                     "Digital Wellbeing Resources"
                   ].map((toolkit, idx) => (
-                    <div key={idx} className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                    <div key={idx} className="p-4 bg-white rounded-xl border border-slate-100">
                       <p className="font-bold text-unda-navy">{toolkit}</p>
                       <p className="text-xs text-slate-500 mt-1">Coming Soon</p>
                     </div>

@@ -148,10 +148,10 @@ const Programs = () => {
         </section>
 
         {/* Three Pillars */}
-        <section className="py-24 bg-white/50">
+        <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-5xl font-black text-unda-navy mb-6">
+              <h2 className="text-4xl font-black text-unda-navy mb-6 font-unda">
                 UMV is Built on <span className="text-unda-teal">Three Pillars</span>
               </h2>
               <p className="text-lg text-slate-600 max-w-3xl mx-auto">
@@ -163,13 +163,18 @@ const Programs = () => {
               {pillars.map((pillar, idx) => {
                 const Icon = pillar.icon;
                 const colorMap = {
-                  teal: 'bg-unda-teal/10 text-unda-teal border-unda-teal/20',
-                  orange: 'bg-unda-orange/10 text-unda-orange border-unda-orange/20',
-                  yellow: 'bg-unda-yellow/10 text-unda-yellow border-unda-yellow/20'
+                  teal: 'border-unda-teal',
+                  orange: 'border-unda-orange',
+                  yellow: 'border-unda-yellow'
+                };
+                const iconBgMap = {
+                  teal: 'bg-unda-teal/10 text-unda-teal',
+                  orange: 'bg-unda-orange/10 text-unda-orange',
+                  yellow: 'bg-unda-yellow/10 text-unda-yellow'
                 };
                 return (
-                  <div key={idx} className="bg-white rounded-3xl p-8 border border-slate-100 shadow-lg hover:shadow-xl transition-shadow">
-                    <div className={`h-16 w-16 rounded-2xl ${colorMap[pillar.color]} border flex items-center justify-center mb-6`}>
+                  <div key={idx} className={`bg-unda-bg/30 rounded-2xl p-8 border-t-4 ${colorMap[pillar.color]} hover:bg-white hover:shadow-xl transition-all duration-300 group`}>
+                    <div className={`h-16 w-16 rounded-2xl ${iconBgMap[pillar.color]} flex items-center justify-center mb-6`}>
                       <Icon size={32} />
                     </div>
                     <h3 className="text-2xl font-black text-unda-navy mb-4">{pillar.title}</h3>
@@ -182,10 +187,10 @@ const Programs = () => {
         </section>
 
         {/* Program Streams */}
-        <section className="py-24 bg-slate-50">
+        <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-5xl font-black text-unda-navy mb-6">
+              <h2 className="text-4xl font-black text-unda-navy mb-6 font-unda">
                 Our Program <span className="text-unda-teal">Streams</span>
               </h2>
               <p className="text-lg text-slate-600 max-w-3xl mx-auto">
@@ -197,34 +202,57 @@ const Programs = () => {
               {programs.map((program, idx) => {
                 const Icon = program.icon;
                 const colorMap = {
-                  teal: 'bg-unda-teal text-white',
-                  orange: 'bg-unda-orange text-white',
-                  yellow: 'bg-unda-yellow text-unda-navy',
-                  navy: 'bg-unda-navy text-white'
+                  teal: 'border-unda-teal',
+                  orange: 'border-unda-orange',
+                  yellow: 'border-unda-yellow',
+                  navy: 'border-unda-navy'
                 };
-                return (
-                  <div key={idx} className="bg-white rounded-3xl p-8 border border-slate-100 shadow-lg hover:shadow-2xl transition-all group">
-                    <div className={`h-16 w-16 rounded-2xl ${colorMap[program.color]} flex items-center justify-center mb-6`}>
-                      <Icon size={32} />
-                    </div>
-                    <h3 className="text-3xl font-black text-unda-navy mb-2">{program.title}</h3>
-                    <p className="text-sm font-bold text-unda-teal uppercase tracking-wider mb-4">{program.tagline}</p>
-                    <p className="text-slate-600 leading-relaxed mb-6">{program.description}</p>
-                    
-                    <ul className="space-y-2 mb-6">
-                      {program.highlights.map((highlight, hIdx) => (
-                        <li key={hIdx} className="flex items-start gap-2 text-sm text-slate-600">
-                          <div className="h-1.5 w-1.5 rounded-full bg-unda-teal mt-2 flex-shrink-0" />
-                          <span>{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
+                const iconBgMap = {
+                  teal: 'bg-unda-teal/10 text-unda-teal',
+                  orange: 'bg-unda-orange/10 text-unda-orange',
+                  yellow: 'bg-unda-yellow/10 text-unda-yellow',
+                  navy: 'bg-unda-navy/10 text-unda-navy'
+                };
+                const buttonMap = {
+                  teal: 'bg-unda-teal text-white hover:bg-unda-navy',
+                  orange: 'bg-unda-orange text-white hover:bg-unda-navy',
+                  yellow: 'bg-unda-yellow text-unda-navy hover:bg-unda-orange hover:text-white',
+                  navy: 'bg-unda-navy text-white hover:bg-unda-teal'
+                };
 
-                    <Button asChild className={`w-full ${colorMap[program.color]} hover:opacity-90 font-bold group-hover:translate-x-1 transition-transform`}>
-                      <Link to={program.link}>
-                        {program.cta} <ArrowRight size={16} className="ml-2" />
-                      </Link>
-                    </Button>
+                return (
+                  <div key={idx} className={`bg-unda-bg/30 rounded-2xl p-8 lg:p-12 border-l-4 ${colorMap[program.color]} hover:bg-white hover:shadow-xl transition-all duration-300 group`}>
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                      <div>
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl ${iconBgMap[program.color]} mb-6`}>
+                          <Icon size={20} />
+                          <span className="text-xs font-black uppercase tracking-widest">{program.title}</span>
+                        </div>
+                        <h3 className="text-3xl font-black text-unda-navy mb-2">{program.tagline}</h3>
+                        <p className="text-sm font-bold text-unda-teal uppercase tracking-wider mb-4">{program.tagline}</p>
+                        <p className="text-slate-600 leading-relaxed mb-6">{program.description}</p>
+                        
+                        <ul className="space-y-2 mb-6">
+                          {program.highlights.map((highlight, hIdx) => (
+                            <li key={hIdx} className="flex items-start gap-2 text-sm text-slate-600">
+                              <div className="h-1.5 w-1.5 rounded-full bg-unda-teal mt-2 flex-shrink-0" />
+                              <span>{highlight}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <Button asChild className={`w-full ${buttonMap[program.color]} font-bold group-hover:translate-x-1 transition-transform`}>
+                          <Link to={program.link}>
+                            {program.cta} <ArrowRight size={16} className="ml-2" />
+                          </Link>
+                        </Button>
+                      </div>
+                      
+                      {/* Placeholder for Program Image/Graphic */}
+                      <div className={`aspect-video rounded-2xl ${iconBgMap[program.color]} flex items-center justify-center opacity-50`}>
+                        <Icon size={64} className="opacity-20" />
+                      </div>
+                    </div>
                   </div>
                 );
               })}
