@@ -283,7 +283,6 @@ const Podcast = () => {
   };
 
   const AttendanceModal = () => (
-      {showPlayerModal && <PlayerModal />}
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl">
         <div className="p-6 border-b border-slate-100 flex justify-between items-center">
@@ -413,13 +412,13 @@ const Podcast = () => {
                 key={ep.id || idx}
                 className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 hover:border-unda-teal/30 hover:shadow-2xl transition-all duration-500 flex flex-col md:flex-row md:items-center justify-between gap-8"
               >
-                <dibutton 
+                <div className="flex items-center gap-8">
+                  <button 
                     onClick={() => handlePlayEpisode(ep)}
                     className="h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center text-unda-teal group-hover:bg-unda-teal group-hover:text-white transition-all cursor-pointer hover:scale-110"
                   >
                     <Play size={24} />
-                  </buttonay size={24} />
-                  </div>
+                  </button>
                   <div>
                     <div className="flex items-center gap-3 mb-1">
                       <span className="px-3 py-1 rounded-full bg-unda-teal/5 text-unda-teal text-[9px] font-bold uppercase tracking-widest">
