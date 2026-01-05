@@ -1,72 +1,54 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Heart, Lightbulb, Calendar } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowRight, Calendar } from 'lucide-react';
 
 const UpcomingEvents = () => {
   const events = [
     {
       title: "UMV Debaters Circle",
-      date: "March 12, 2026",
-      cta: "Register teams",
+      description: "March 12, 2026 — Register teams",
       link: "/debaters-circle",
-      color: "teal"
+      color: "border-unda-teal"
     },
     {
       title: "UMV Campus Showcase — Nairobi",
-      date: "April 4–5, 2026",
-      cta: "Call for proposals open",
+      description: "April 4–5, 2026 — Call for proposals open",
       link: "/campus",
-      color: "yellow"
+      color: "border-unda-yellow"
     },
     {
       title: "UMV Mtaani Community Gala — Nairobi",
-      date: "May 21, 2026",
-      cta: "Free entry, mental-health booths and performances",
+      description: "May 21, 2026 — Free entry, mental-health booths and performances",
       link: "/mtaani",
-      color: "orange"
+      color: "border-unda-orange"
     }
   ];
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-unda-yellow/[0.03] blur-[100px] pointer-events-none" />
-      
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-slate-200 mb-6">
-            <Calendar size={18} className="text-unda-teal" />
-            <span className="text-xs font-black uppercase tracking-widest text-unda-navy">Coming Up</span>
-          </div>
-          <h2 className="text-5xl lg:text-6xl font-black text-unda-navy mb-6 font-unda">
-            Upcoming <span className="text-unda-teal">Events</span>
-          </h2>
-        </div>
-
-        <div className="max-w-4xl space-y-6">
-          {events.map((event, idx) => {
-            const colorMap = {
-              teal: 'border-unda-teal bg-unda-bg/30 hover:bg-white',
-              yellow: 'border-unda-yellow bg-unda-bg/30 hover:bg-white',
-              orange: 'border-unda-orange bg-unda-bg/30 hover:bg-white'
-            };
-            return (
-              <div key={idx} className={`rounded-2xl p-8 border-l-4 ${colorMap[event.color]} transition-all hover:shadow-xl group`}>
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-black text-unda-navy mb-2">{event.title}</h3>
-                    <p className="text-slate-600 font-medium mb-2">Date: {event.date}</p>
-                    <p className="text-sm text-slate-500">{event.cta}</p>
-                  </div>
-                  <Button asChild className="bg-unda-navy text-white hover:bg-unda-teal group-hover:translate-x-1 transition-transform">
-                    <Link to={event.link}>
-                      Learn More <ArrowRight size={16} className="ml-2" />
-                    </Link>
-                  </Button>
-                </div>
+    <section className="py-24 bg-white">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl font-black text-unda-navy text-center mb-16 font-unda">
+          Upcoming Events
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {events.map((event, idx) => (
+            <Link
+              key={idx}
+              to={event.link}
+              className={`p-8 border-t-4 ${event.color} bg-unda-bg/30 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group cursor-pointer`}
+            >
+              <div className="text-unda-teal mb-4 group-hover:scale-110 transition-transform">
+                <Calendar size={32} />
               </div>
-            );
-          })}
+              <h4 className="font-bold text-unda-navy mb-2">{event.title}</h4>
+              <p className="text-xs text-slate-500 leading-relaxed mb-4">
+                {event.description}
+              </p>
+              <div className="flex items-center text-[10px] font-bold uppercase text-unda-teal opacity-0 group-hover:opacity-100 transition-opacity">
+                Learn More <ArrowRight size={12} className="ml-1" />
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>
