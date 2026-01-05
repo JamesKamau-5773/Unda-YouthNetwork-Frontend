@@ -75,7 +75,7 @@ const Donate = () => {
                           : 'border-slate-200 text-slate-600 hover:border-slate-300'
                       }`}
                     >
-                      <Building2 size={20} className=\"mx-auto mb-2\" />
+                      <Building2 size={20} className="mx-auto mb-2" />
                       Corporate
                     </button>
                   </div>
