@@ -5,7 +5,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/shared/Navbar';
 import Footer from './components/shared/Footer';
 import Home from './pages/Home';
+import About from './pages/About';
+import Programs from './pages/Programs';
 import Membership from './pages/Membership';
+import Resources from './pages/Resources';
+import Blog from './pages/Blog';
+import Gallery from './pages/Gallery';
+import Donate from './pages/Donate';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import BackgroundElements from './components/shared/BackgroundElements';
 import PodcastPage from './pages/Podcast';
 import PortalLogin from './pages/Portal/Login';
@@ -28,18 +35,22 @@ function App() {
           <main className="pt-20"> {/* pt-20 ensures content isn't hidden under the fixed Navbar */}
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/programs" element={<Programs />} />
               <Route path="/membership" element={<Membership />} />
+              <Route path="/resources" element={<Resources />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/donate" element={<Donate />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/portal" element={<PortalLogin />} />
-
-              {/* NEW: The Registration Funnel (Day 6) */}
               <Route path="/join" element={<MultiStepChampionForm />} />
               <Route path="/checkin" element={<WeeklyCheckInForm />} />
               <Route path="/podcast" element={<PodcastPage />} />
-              <Route path="/campus" element={<CampusEdition />} /> {/* New route for CampusEdition */}
-              <Route path="/debaters-circle" element={<DebatersCircle />} /> {/* Route for DebatersCircle */}
+              <Route path="/campus" element={<CampusEdition />} />
+              <Route path="/debaters-circle" element={<DebatersCircle />} />
               <Route path="/mtaani" element={<UMVMtaani />} />
-              <Route path="/seed-funding-apply" element={<SeedFundingApplication />} /> {/* Seed Funding Application */}
-              {/* Future Day 4 Workstream Routes will go here */}
+              <Route path="/seed-funding-apply" element={<SeedFundingApplication />} />
             </Routes>
           </main>
           {/* The Footer stays at the bottom of every page */}

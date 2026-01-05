@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, ShieldCheck, Globe } from 'lucide-react';
+import { Mail, MapPin, ShieldCheck, Globe, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 import undaLogo from '@/assets/logos/unda-logo-main.jpg';
 
 const Footer = () => {
@@ -22,12 +22,40 @@ const Footer = () => {
             <p className="text-slate-600 text-sm leading-relaxed max-w-xs font-medium">
               Kenya's national movement for Adolescent & Youth Mental Health Prevention through the UMV program.
             </p>
-            <div className="flex items-center gap-4 pt-2">
-              <div className="p-2 rounded-lg bg-slate-50 text-unda-teal hover:bg-unda-teal hover:text-white transition-colors cursor-pointer">
-                <Mail size={18} />
+            <div>
+              <p className="text-xs font-bold text-unda-navy mb-3">Contact Us</p>
+              <div className="space-y-2">
+                <a href="mailto:info@undayouth.org" className="flex items-center gap-2 text-sm text-slate-600 hover:text-unda-teal transition-colors">
+                  <Mail size={14} />
+                  <span className="font-medium">info@undayouth.org</span>
+                </a>
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <MapPin size={14} />
+                  <span className="font-medium">Nairobi, Kenya</span>
+                </div>
               </div>
-              <div className="p-2 rounded-lg bg-slate-50 text-unda-teal hover:bg-unda-teal hover:text-white transition-colors cursor-pointer">
-                <Globe size={18} />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-unda-navy mb-3">Follow Us</p>
+              <div className="flex items-center gap-3">
+                <a href="https://instagram.com/undayouthnetwork" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-slate-50 text-unda-teal hover:bg-unda-teal hover:text-white transition-colors">
+                  <Instagram size={18} />
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61583694005570" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-slate-50 text-unda-teal hover:bg-unda-teal hover:text-white transition-colors">
+                  <Facebook size={18} />
+                </a>
+                <a href="https://x.com/unda_youth_ke" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-slate-50 text-unda-teal hover:bg-unda-teal hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/unda-youth-network/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-slate-50 text-unda-teal hover:bg-unda-teal hover:text-white transition-colors">
+                  <Linkedin size={18} />
+                </a>
+                <a href="https://www.youtube.com/@UndaYouthNetwork" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-slate-50 text-unda-teal hover:bg-unda-teal hover:text-white transition-colors">
+                  <Youtube size={18} />
+                </a>
+                <a href="https://substack.com/@undayouthnetwork" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-slate-50 text-unda-teal hover:bg-unda-teal hover:text-white transition-colors">
+                  <Globe size={18} />
+                </a>
               </div>
             </div>
           </div>
@@ -35,23 +63,23 @@ const Footer = () => {
           {/* 2. Navigation & Resources */}
           <div className="lg:col-span-4 grid grid-cols-2 gap-8">
             <div>
-              <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-unda-navy mb-8">Workstreams</h4>
+              <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-unda-navy mb-8">Navigate</h4>
               <ul className="space-y-4">
-                {['UMV Podcast', 'Debaters Circle', 'Campus Edition'].map((item) => (
-                  <li key={item}>
-                    <Link to="#" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">
-                      {item}
-                    </Link>
-                  </li>
-                ))}
+                <li><Link to="/about" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">About</Link></li>
+                <li><Link to="/programs" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Programs</Link></li>
+                <li><Link to="/membership" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Membership</Link></li>
+                <li><Link to="/resources" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Resources</Link></li>
+                <li><Link to="/blog" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Blog</Link></li>
+                <li><Link to="/gallery" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Gallery</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-unda-navy mb-8">Governance</h4>
+              <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-unda-navy mb-8">Get Involved</h4>
               <ul className="space-y-4">
-                <li><Link to="#" className="text-slate-600 hover:text-unda-teal text-sm font-semibold">Safeguarding</Link></li>
-                <li><Link to="#" className="text-slate-600 hover:text-unda-teal text-sm font-semibold">Privacy Policy</Link></li>
-                <li><Link to="#" className="text-slate-600 hover:text-unda-teal text-sm font-semibold">Referrals</Link></li>
+                <li><Link to="/donate" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Donate</Link></li>
+                <li><Link to="/join" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Join</Link></li>
+                <li><Link to="/portal" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Portal</Link></li>
+                <li><Link to="/privacy-policy" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Privacy Policy</Link></li>
               </ul>
             </div>
           </div>
