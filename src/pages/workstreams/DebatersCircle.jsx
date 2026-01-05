@@ -323,45 +323,87 @@ const DebatersCircle = () => {
                 motions.map((motion, idx) => (
                   <div
                     key={motion.id || idx}
-                    className="p-8 rounded-[2.5rem] border border-slate-100 bg-white hover:shadow-2xl transition-all group"
+                    className="rounded-[2.5rem] border border-slate-100 bg-white hover:shadow-2xl transition-all group overflow-hidden"
                   >
-                    <div className="flex justify-between items-start mb-4">
-                      <span
-                        className={`px-4 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
-                          motion.status === "Upcoming" || motion.status === "Active"
-                            ? "bg-unda-teal/10 text-unda-teal"
-                            : "bg-slate-100 text-slate-400"
-                        }`}
-                      >
-                        {motion.status}
-                      </span>
-                      <span className="text-[10px] text-slate-500 font-bold uppercase flex items-center gap-2">
-                        <Calendar size={12} /> {motion.date}
-                      </span>
-                    </div>
-                    
-                    {/* Display Motion/Topic prominently if it exists */}
-                    {motion.motion && (
-                      <div className="mb-3 pb-3 border-b border-slate-100">
-                        <span className="text-[10px] font-black text-unda-teal uppercase tracking-widest">Motion</span>
-                        <h3 className="text-2xl font-black text-unda-navy mt-1 group-hover:text-unda-teal transition-colors leading-tight">
-                          {motion.motion}
-                        </h3>
+                    {/* Cover Image Section */}
+                    {motion.imageUrl ? (
+                      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-unda-teal/20 to-unda-navy/20">
+                        <img 
+                          src={motion.imageUrl} 
+                          alt={motion.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                        
+                        {/* Status Badge on Image */}
+                        <div className="absolute top-4 left-4">
+                          <span
+                            className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest backdrop-blur-md ${
+                              motion.status === "Upcoming" || motion.status === "Active"
+                                ? "bg-unda-teal/90 text-white"
+                                : "bg-white/90 text-slate-600"
+                            }`}
+                          >
+                            {motion.status}
+                          </span>
+                        </div>
+                        
+                        {/* Date Badge on Image */}
+                        <div className="absolute top-4 right-4">
+                          <span className="px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-[10px] text-unda-navy font-bold uppercase flex items-center gap-2">
+                            <Calendar size={12} /> {motion.date}
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      /* Fallback gradient when no image */
+                      <div className="relative h-32 bg-gradient-to-br from-unda-teal/10 via-unda-navy/5 to-slate-50 flex items-center justify-center">
+                        <MessageSquare size={48} className="text-unda-teal/20" />
+                        <div className="absolute top-4 left-4">
+                          <span
+                            className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest ${
+                              motion.status === "Upcoming" || motion.status === "Active"
+                                ? "bg-unda-teal/10 text-unda-teal"
+                                : "bg-slate-100 text-slate-400"
+                            }`}
+                          >
+                            {motion.status}
+                          </span>
+                        </div>
+                        <div className="absolute top-4 right-4">
+                          <span className="text-[10px] text-slate-500 font-bold uppercase flex items-center gap-2">
+                            <Calendar size={12} /> {motion.date}
+                          </span>
+                        </div>
                       </div>
                     )}
                     
-                    {/* Title - only show if different from motion */}
-                    {(!motion.motion || motion.title !== motion.motion) && (
-                      <h4 className="text-lg font-bold text-unda-navy mb-3">
-                        {motion.title}
-                      </h4>
-                    )}
-                    
-                    <p className="text-slate-600 text-sm mb-4">{motion.description}</p>
-                    <div className="flex items-center gap-6 text-slate-600 font-semibold text-xs">
-                      <span className="flex items-center gap-2">
-                        <MapPin size={14} /> {motion.location}
-                      </span>
+                    {/* Content Section */}
+                    <div className="p-8">
+                      {/* Display Motion/Topic prominently if it exists */}
+                      {motion.motion && (
+                        <div className="mb-3 pb-3 border-b border-slate-100">
+                          <span className="text-[10px] font-black text-unda-teal uppercase tracking-widest">Motion</span>
+                          <h3 className="text-2xl font-black text-unda-navy mt-1 group-hover:text-unda-teal transition-colors leading-tight">
+                            {motion.motion}
+                          </h3>
+                        </div>
+                      )}
+                      
+                      {/* Title - only show if different from motion */}
+                      {(!motion.motion || motion.title !== motion.motion) && (
+                        <h4 className="text-lg font-bold text-unda-navy mb-3">
+                          {motion.title}
+                        </h4>
+                      )}
+                      
+                      <p className="text-slate-600 text-sm mb-4 line-clamp-3">{motion.description}</p>
+                      <div className="flex items-center gap-6 text-slate-600 font-semibold text-xs">
+                        <span className="flex items-center gap-2">
+                          <MapPin size={14} /> {motion.location}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 ))
