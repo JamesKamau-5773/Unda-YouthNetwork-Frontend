@@ -5,6 +5,80 @@ import { MapPin, Users, Calendar, ArrowRight, HeartHandshake, X, Loader2, CheckC
 import { Button } from '@/components/ui/button';
 import api from '@/services/apiService';
 
+// Participation Modal Component - moved outside to prevent re-creation on each render
+const ParticipationModal = ({
+  showLogModal,
+  setShowLogModal,
+  message,
+  loading,
+  events,
+  formData,
+  setFormData,
+  handleLogParticipation,
+  submitting
+}) => {
+  if (!showLogModal) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div className="p-6 border-b border-slate-100 flex justify-between items-center">
+          <div>
+            <h2 className="text-xl font-black text-unda-navy">Log Community Outreach</h2>
+            <p className="text-sm text-slate-500 mt-1">Record your Mtaani Baraza attendance</p>
+          </div>
+          <button onClick={() => setShowLogModal(false)} className="p-2 hover:bg-slate-100 rounded-xl">
+            <X size={20} className="text-slate-400" />
+          </button>
+        </div>
+
+        <form onSubmit={handleLogParticipation} className="p-6 space-y-6">
+          {message.text && (
+            <div className={`p-4 rounded-xl flex items-center gap-3 ${message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+              {message.type === 'success' ? <CheckCircle size={20} /> : <X size={20} />}
+              <span className="text-sm font-medium">{message.text}</span>
+            </div>
+          )}
+
+          <div className="space-y-3">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Select Baraza Event</label>
+            {loading ? (
+              <div className="flex items-center justify-center py-8"><Loader2 className="animate-spin text-unda-orange" size={32} /></div>
+            ) : (
+              <div className="space-y-3">
+                {events.map((event) => (
+                  <label key={event.id} className={`block p-4 rounded-2xl border-2 cursor-pointer transition-all ${formData.event_id === String(event.id) ? 'border-unda-orange bg-unda-orange/5' : 'border-slate-100 hover:border-slate-200'}`}>
+                    <input type="radio" name="event_id" value={event.id} checked={formData.event_id === String(event.id)} onChange={(e) => setFormData({ ...formData, event_id: e.target.value })} className="sr-only" />
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h4 className="font-bold text-unda-navy">{event.title}</h4>
+                        <div className="flex items-center gap-4 mt-2 text-xs text-slate-500">
+                          <span className="flex items-center gap-1"><Calendar size={12} /> {event.event_date || event.date}</span>
+                          <span className="flex items-center gap-1"><MapPin size={12} /> {event.location}</span>
+                        </div>
+                      </div>
+                      {formData.event_id === String(event.id) && <CheckCircle className="text-unda-orange" size={20} />}
+                    </div>
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-3">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Notes (Optional)</label>
+            <textarea value={formData.notes} onChange={(e) => setFormData({ ...formData, notes: e.target.value })} placeholder="Community impact, youth reached, key discussions..." className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-unda-orange focus:outline-none min-h-[100px] resize-none" />
+          </div>
+
+          <Button type="submit" disabled={submitting || !formData.event_id} className="w-full h-14 rounded-2xl bg-unda-orange text-white hover:bg-unda-navy font-bold uppercase tracking-widest disabled:opacity-50">
+            {submitting ? <span className="flex items-center gap-2"><Loader2 className="animate-spin" size={18} /> Logging...</span> : 'Log My Participation'}
+          </Button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
 const UMVMtaani = () => {
   const [showLogModal, setShowLogModal] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -96,69 +170,20 @@ const UMVMtaani = () => {
     }
   };
 
-  const ParticipationModal = () => (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-        <div className="p-6 border-b border-slate-100 flex justify-between items-center">
-          <div>
-            <h2 className="text-xl font-black text-unda-navy">Log Community Outreach</h2>
-            <p className="text-sm text-slate-500 mt-1">Record your Mtaani Baraza attendance</p>
-          </div>
-          <button onClick={() => setShowLogModal(false)} className="p-2 hover:bg-slate-100 rounded-xl">
-            <X size={20} className="text-slate-400" />
-          </button>
-        </div>
-
-        <form onSubmit={handleLogParticipation} className="p-6 space-y-6">
-          {message.text && (
-            <div className={`p-4 rounded-xl flex items-center gap-3 ${message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
-              {message.type === 'success' ? <CheckCircle size={20} /> : <X size={20} />}
-              <span className="text-sm font-medium">{message.text}</span>
-            </div>
-          )}
-
-          <div className="space-y-3">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Select Baraza Event</label>
-            {loading ? (
-              <div className="flex items-center justify-center py-8"><Loader2 className="animate-spin text-unda-orange" size={32} /></div>
-            ) : (
-              <div className="space-y-3">
-                {events.map((event) => (
-                  <label key={event.id} className={`block p-4 rounded-2xl border-2 cursor-pointer transition-all ${formData.event_id === String(event.id) ? 'border-unda-orange bg-unda-orange/5' : 'border-slate-100 hover:border-slate-200'}`}>
-                    <input type="radio" name="event_id" value={event.id} checked={formData.event_id === String(event.id)} onChange={(e) => setFormData({ ...formData, event_id: e.target.value })} className="sr-only" />
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h4 className="font-bold text-unda-navy">{event.title}</h4>
-                        <div className="flex items-center gap-4 mt-2 text-xs text-slate-500">
-                          <span className="flex items-center gap-1"><Calendar size={12} /> {event.event_date || event.date}</span>
-                          <span className="flex items-center gap-1"><MapPin size={12} /> {event.location}</span>
-                        </div>
-                      </div>
-                      {formData.event_id === String(event.id) && <CheckCircle className="text-unda-orange" size={20} />}
-                    </div>
-                  </label>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className="space-y-3">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Notes (Optional)</label>
-            <textarea value={formData.notes} onChange={(e) => setFormData({ ...formData, notes: e.target.value })} placeholder="Community impact, youth reached, key discussions..." className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-unda-orange focus:outline-none min-h-[100px] resize-none" />
-          </div>
-
-          <Button type="submit" disabled={submitting || !formData.event_id} className="w-full h-14 rounded-2xl bg-unda-orange text-white hover:bg-unda-navy font-bold uppercase tracking-widest disabled:opacity-50">
-            {submitting ? <span className="flex items-center gap-2"><Loader2 className="animate-spin" size={18} /> Logging...</span> : 'Log My Participation'}
-          </Button>
-        </form>
-      </div>
-    </div>
-  );
-
   return (
     <Layout>
       <div className="min-h-screen bg-white pb-32">
-        {showLogModal && <ParticipationModal />}
+        <ParticipationModal
+          showLogModal={showLogModal}
+          setShowLogModal={setShowLogModal}
+          message={message}
+          loading={loading}
+          events={events}
+          formData={formData}
+          setFormData={setFormData}
+          handleLogParticipation={handleLogParticipation}
+          submitting={submitting}
+        />
 
         {/* 1. HERO: Urban & Grounded */}
         <section className="pt-40 pb-20 bg-unda-navy relative overflow-hidden">
