@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Play, Mic2, Calendar, Share2, CheckCircle2, Loader2, X, CheckCircle, ArrowRight } from "lucide-react";
+import { Play, Mic2, Calendar, Share2, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import api from "@/services/apiService";
 
@@ -7,10 +7,6 @@ const Podcast = () => {
   const [episodes, setEpisodes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showLogModal, setShowLogModal] = useState(false);
-  const [selectedEpisode, setSelectedEpisode] = useState(null);
-  const [submitting, setSubmitting] = useState(false);
-  const [message, setMessage] = useState({ type: '', text: '' });
   const [showPlayerModal, setShowPlayerModal] = useState(false);
   const [playingEpisode, setPlayingEpisode] = useState(null);
 
@@ -59,12 +55,6 @@ const Podcast = () => {
 
     fetchPodcasts();
   }, []);
-
-  const handleLogAttendance = (episode) => {
-    setSelectedEpisode(episode);
-    setShowLogModal(true);
-    setMessage({ type: '', text: '' });
-  };
 
   const handlePlayEpisode = (episode) => {
     setPlayingEpisode(episode);
@@ -117,25 +107,6 @@ const Podcast = () => {
       return `https://open.spotify.com/embed/${match[1]}/${match[2]}`;
     }
     return url;
-  };
-
-  const submitAttendance = async () => {
-    setSubmitting(true);
-    try {
-      const response = await api.post('/api/event-participation/', {
-        event_id: selectedEpisode?.id || 1,
-        champion_id: 1,
-        registration_status: 'attended',
-      });
-      if (response.data?.success) {
-        setMessage({ type: 'success', text: 'Podcast attendance logged! Your Documentation Quality Score has been updated.' });
-        setTimeout(() => { setShowLogModal(false); setMessage({ type: '', text: '' }); }, 2000);
-      }
-    } catch (err) {
-      setMessage({ type: 'error', text: err.response?.data?.message || 'Failed to log attendance.' });
-    } finally {
-      setSubmitting(false);
-    }
   };
 
   const PlayerModal = () => {
@@ -282,43 +253,8 @@ const Podcast = () => {
     );
   };
 
-  const AttendanceModal = () => (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl">
-        <div className="p-6 border-b border-slate-100 flex justify-between items-center">
-          <div>
-            <h2 className="text-xl font-black text-unda-navy">Log Podcast Attendance</h2>
-            <p className="text-sm text-slate-500 mt-1">Record your listening session</p>
-          </div>
-          <button onClick={() => setShowLogModal(false)} className="p-2 hover:bg-slate-100 rounded-xl">
-            <X size={20} className="text-slate-400" />
-          </button>
-        </div>
-        <div className="p-6 space-y-6">
-          {message.text && (
-            <div className={`p-4 rounded-xl flex items-center gap-3 ${message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
-              {message.type === 'success' ? <CheckCircle size={20} /> : <X size={20} />}
-              <span className="text-sm font-medium">{message.text}</span>
-            </div>
-          )}
-          {selectedEpisode && (
-            <div className="p-4 rounded-2xl bg-unda-teal/5 border border-unda-teal/20">
-              <h4 className="font-bold text-unda-navy">{selectedEpisode.title}</h4>
-              <p className="text-sm text-slate-500 mt-1">Guest: {selectedEpisode.guest}</p>
-              <p className="text-xs text-slate-400 mt-2">{selectedEpisode.module} • {selectedEpisode.duration}</p>
-            </div>
-          )}
-          <Button onClick={submitAttendance} disabled={submitting} className="w-full h-14 rounded-2xl bg-unda-teal text-white hover:bg-unda-navy font-bold uppercase tracking-widest disabled:opacity-50">
-            {submitting ? <span className="flex items-center gap-2"><Loader2 className="animate-spin" size={18} /> Logging...</span> : 'Confirm Attendance'}
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <div className="min-h-screen bg-white pb-24">
-      {showLogModal && <AttendanceModal />}
       {showPlayerModal && <PlayerModal />}
       
       {/* 1. HERO SECTION: Asymmetrical & Bold */}
@@ -447,14 +383,6 @@ const Podcast = () => {
                     className="rounded-xl hover:bg-slate-50"
                   >
                     <Share2 size={18} className="text-slate-400" />
-                  </Button>
-                  {/* BACKEND INTEGRATION: Logs participation for Champion metrics  */}
-                  <Button 
-                    onClick={() => handleLogAttendance(ep)}
-                    className="rounded-xl bg-slate-50 hover:bg-unda-teal hover:text-white text-slate-500 font-bold text-xs px-6 py-2 transition-all flex items-center gap-2"
-                  >
-                    <CheckCircle2 size={16} />
-                    Log Attendance
                   </Button>
                 </div>
               </div>
