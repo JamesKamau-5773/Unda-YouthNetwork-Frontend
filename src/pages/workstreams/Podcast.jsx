@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Play, Mic2, Calendar, Share2, CheckCircle2, Loader2, X, CheckCircle } from "lucide-react";
+import { Play, Mic2, Calendar, Share2, CheckCircle2, Loader2, X, CheckCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import api from "@/services/apiService";
 
@@ -11,6 +11,8 @@ const Podcast = () => {
   const [selectedEpisode, setSelectedEpisode] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const [showPlayerModal, setShowPlayerModal] = useState(false);
+  const [playingEpisode, setPlayingEpisode] = useState(null);
 
   useEffect(() => {
     const fetchPodcasts = async () => {
@@ -64,6 +66,59 @@ const Podcast = () => {
     setMessage({ type: '', text: '' });
   };
 
+  const handlePlayEpisode = (episode) => {
+    setPlayingEpisode(episode);
+    setShowPlayerModal(true);
+  };
+
+  const getYouTubeEmbedUrl = (url) => {
+    if (!url) return '';
+    const videoId = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/)?.[1];
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+  };
+
+  const getMediaType = (url) => {
+    if (!url) return null;
+    
+    // Check for YouTube
+    if (url.includes('youtube.com') || url.includes('youtu.be')) {
+      return 'youtube';
+    }
+    
+    // Check for Spotify
+    if (url.includes('spotify.com')) {
+      return 'spotify';
+    }
+    
+    // Check for SoundCloud
+    if (url.includes('soundcloud.com')) {
+      return 'soundcloud';
+    }
+    
+    // Check file extension for direct media files
+    const extension = url.split('.').pop().toLowerCase().split('?')[0];
+    
+    // Audio formats
+    if (['mp3', 'wav', 'ogg', 'm4a', 'aac', 'flac'].includes(extension)) {
+      return 'audio';
+    }
+    
+    // Video formats
+    if (['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv'].includes(extension)) {
+      return 'video';
+    }
+    
+    return 'unknown';
+  };
+
+  const getSpotifyEmbedUrl = (url) => {
+    const match = url.match(/spotify\.com\/(episode|show|playlist)\/([^?]+)/);
+    if (match) {
+      return `https://open.spotify.com/embed/${match[1]}/${match[2]}`;
+    }
+    return url;
+  };
+
   const submitAttendance = async () => {
     setSubmitting(true);
     try {
@@ -83,7 +138,152 @@ const Podcast = () => {
     }
   };
 
+  const PlayerModal = () => {
+    const mediaUrl = playingEpisode?.audioUrl || playingEpisode?.audio_url;
+    const mediaType = getMediaType(mediaUrl);
+
+    return (
+      <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-3xl max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10 rounded-t-3xl">
+            <div>
+              <h2 className="text-xl font-black text-unda-navy">{playingEpisode?.title}</h2>
+              <p className="text-sm text-slate-500 mt-1">Guest: {playingEpisode?.guest || 'N/A'}</p>
+            </div>
+            <button onClick={() => setShowPlayerModal(false)} className="p-2 hover:bg-slate-100 rounded-xl">
+              <X size={20} className="text-slate-400" />
+            </button>
+          </div>
+          <div className="p-6">
+            {!mediaUrl ? (
+              <div className="aspect-video w-full bg-slate-100 rounded-2xl flex items-center justify-center">
+                <div className="text-center">
+                  <Play size={48} className="mx-auto text-slate-300 mb-4" />
+                  <p className="text-slate-500 font-medium">No media available for this episode</p>
+                </div>
+              </div>
+            ) : mediaType === 'youtube' ? (
+              <div className="aspect-video w-full">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={getYouTubeEmbedUrl(mediaUrl)}
+                  title={playingEpisode?.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="rounded-2xl"
+                ></iframe>
+              </div>
+            ) : mediaType === 'spotify' ? (
+              <div className="w-full" style={{ height: '380px' }}>
+                <iframe
+                  src={getSpotifyEmbedUrl(mediaUrl)}
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                  className="rounded-2xl"
+                ></iframe>
+              </div>
+            ) : mediaType === 'soundcloud' ? (
+              <div className="w-full">
+                <iframe
+                  width="100%"
+                  height="300"
+                  scrolling="no"
+                  frameBorder="no"
+                  allow="autoplay"
+                  src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(mediaUrl)}&color=%2323b5a8&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true`}
+                  className="rounded-2xl"
+                ></iframe>
+              </div>
+            ) : mediaType === 'audio' ? (
+              <div className="w-full p-8 bg-gradient-to-br from-unda-teal/10 to-unda-navy/10 rounded-2xl">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="h-20 w-20 rounded-2xl bg-unda-teal flex items-center justify-center">
+                    <Mic2 size={40} className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-black text-unda-navy">{playingEpisode?.title}</h3>
+                    <p className="text-sm text-slate-500">{playingEpisode?.duration || 'Audio Podcast'}</p>
+                  </div>
+                </div>
+                <audio
+                  controls
+                  className="w-full"
+                  style={{ height: '54px' }}
+                  src={mediaUrl}
+                  preload="metadata"
+                >
+                  Your browser does not support the audio element.
+                </audio>
+              </div>
+            ) : mediaType === 'video' ? (
+              <div className="aspect-video w-full">
+                <video
+                  controls
+                  className="w-full h-full rounded-2xl bg-black"
+                  src={mediaUrl}
+                  preload="metadata"
+                >
+                  Your browser does not support the video element.
+                </video>
+              </div>
+            ) : (
+              <div className="p-8 bg-slate-50 rounded-2xl text-center">
+                <p className="text-slate-600 font-medium mb-4">Unsupported media format</p>
+                <a
+                  href={mediaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-unda-teal text-white rounded-xl font-bold hover:bg-unda-navy transition-all"
+                >
+                  Open in New Tab <ArrowRight size={16} />
+                </a>
+              </div>
+            )}
+            
+            {/* Episode Details */}
+            {playingEpisode && (
+              <div className="mt-6 p-6 bg-slate-50 rounded-2xl">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                  {playingEpisode.module && (
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Module</p>
+                      <p className="text-sm font-bold text-unda-navy">{playingEpisode.module}</p>
+                    </div>
+                  )}
+                  {playingEpisode.duration && (
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Duration</p>
+                      <p className="text-sm font-bold text-unda-navy">{playingEpisode.duration}</p>
+                    </div>
+                  )}
+                  {playingEpisode.date && (
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Date</p>
+                      <p className="text-sm font-bold text-unda-navy">{playingEpisode.date}</p>
+                    </div>
+                  )}
+                  {playingEpisode.episode && (
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Episode</p>
+                      <p className="text-sm font-bold text-unda-navy">{playingEpisode.episode}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const AttendanceModal = () => (
+      {showPlayerModal && <PlayerModal />}
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl">
         <div className="p-6 border-b border-slate-100 flex justify-between items-center">
@@ -213,9 +413,12 @@ const Podcast = () => {
                 key={ep.id || idx}
                 className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 hover:border-unda-teal/30 hover:shadow-2xl transition-all duration-500 flex flex-col md:flex-row md:items-center justify-between gap-8"
               >
-                <div className="flex items-center gap-8">
-                  <div className="h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center text-unda-teal group-hover:bg-unda-teal group-hover:text-white transition-all">
+                <dibutton 
+                    onClick={() => handlePlayEpisode(ep)}
+                    className="h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center text-unda-teal group-hover:bg-unda-teal group-hover:text-white transition-all cursor-pointer hover:scale-110"
+                  >
                     <Play size={24} />
+                  </buttonay size={24} />
                   </div>
                   <div>
                     <div className="flex items-center gap-3 mb-1">
