@@ -1,4 +1,5 @@
 import React from 'react';
+import undaLogo from '@/assets/logos/unda-logo-main.jpg';
 
 const BackgroundElements = () => {
   return (
@@ -12,7 +13,16 @@ const BackgroundElements = () => {
       <div className="absolute bottom-[10%] right-[-5%] w-[40%] h-[40%] rounded-full bg-unda-orange/5 blur-[100px]" />
       <div className="absolute top-[40%] left-[30%] w-[30%] h-[30%] rounded-full bg-unda-yellow/5 blur-[120px]" />
 
-      {/* 3. Modern Geometric Accents (The Logo Shape) */}
+      {/* 3. Creative Logo Watermark */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-[0.02] mix-blend-multiply pointer-events-none">
+        <img 
+          src={undaLogo} 
+          alt="" 
+          className="w-full h-full object-contain animate-[spin_120s_linear_infinite]" 
+        />
+      </div>
+
+      {/* 4. Modern Geometric Accents (The Logo Shape) */}
       <div className="absolute top-20 right-[15%] w-64 h-64 border border-unda-navy/[0.03] rounded-full rotate-45" />
       <div className="absolute top-24 right-[16%] w-64 h-64 border border-unda-navy/[0.02] rounded-full" />
     </div>

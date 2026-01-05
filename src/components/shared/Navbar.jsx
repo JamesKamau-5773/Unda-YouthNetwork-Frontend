@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, Mic, Users, GraduationCap, MapPin, Shield, Activity, ExternalLink } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import undaLogo from '@/assets/logos/unda-logo-main.jpg';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +39,9 @@ const Navbar = () => {
           
           {/* Logo with Status Metadata [cite: 12-14, 21-25] */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="h-10 w-10 bg-unda-navy rounded-xl flex items-center justify-center text-white font-black text-lg shadow-lg shadow-unda-navy/20 group-hover:bg-unda-teal transition-all">U</div>
+            <div className="h-12 w-12 rounded-xl overflow-hidden flex items-center justify-center bg-white">
+              <img src={undaLogo} alt="Unda Logo" className="w-full h-full object-contain mix-blend-multiply" />
+            </div>
             <div className="flex flex-col">
               <span className="font-black text-unda-navy text-xl tracking-tighter leading-none">UNDA</span>
               <span className="text-[7px] font-bold text-unda-teal uppercase tracking-[0.3em] mt-1">Youth Network Global</span>

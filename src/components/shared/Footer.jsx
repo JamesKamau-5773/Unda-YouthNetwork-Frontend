@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, ShieldCheck, Globe } from 'lucide-react';
+import undaLogo from '@/assets/logos/unda-logo-main.jpg';
 
 const Footer = () => {
   return (
@@ -13,7 +14,9 @@ const Footer = () => {
           {/* 1. Brand & Mission Column */}
           <div className="lg:col-span-4 space-y-6">
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 bg-unda-navy rounded-xl flex items-center justify-center text-white font-black text-xs">U</div>
+              <div className="h-10 w-10 rounded-xl overflow-hidden flex items-center justify-center bg-white border border-slate-100">
+                <img src={undaLogo} alt="Unda Logo" className="w-full h-full object-contain mix-blend-multiply" />
+              </div>
               <span className="font-black text-unda-navy tracking-tighter text-xl">UNDA</span>
             </div>
             <p className="text-slate-600 text-sm leading-relaxed max-w-xs font-medium">
