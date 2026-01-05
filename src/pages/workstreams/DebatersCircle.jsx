@@ -15,121 +15,21 @@ import {
 import { Button } from "@/components/ui/button";
 import api from "@/services/apiService";
 
-const DebatersCircle = () => {
-  const [showLogModal, setShowLogModal] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [events, setEvents] = useState([]);
-  const [message, setMessage] = useState({ type: '', text: '' });
-  const [formData, setFormData] = useState({
-    event_id: '',
-    notes: '',
-  });
-
-  const [motions, setMotions] = useState([]);
-
-  // Fetch debates on component mount
-  useEffect(() => {
-    const fetchDebates = async () => {
-      setLoading(true);
-      try {
-        const response = await api.get('/api/events/?category=debate');
-        console.log('📡 Debates API Response:', response.data);
-        
-        if (response.data?.events && Array.isArray(response.data.events)) {
-          // Map backend fields to frontend expected fields
-          const mappedDebates = response.data.events.map(debate => ({
-            id: debate.id || debate.event_id,
-            title: debate.motion || debate.topic || debate.title, // Use motion/topic if available, fallback to title
-            motion: debate.motion || debate.topic, // Store the specific motion/topic field
-            description: debate.description,
-            date: new Date(debate.event_date).toLocaleDateString('en-US', { 
-              year: 'numeric', 
-              month: 'short', 
-              day: 'numeric' 
-            }),
-            location: debate.location,
-            status: debate.status,
-            imageUrl: debate.image_url || debate.imageUrl,
-          }));
-          
-          console.log('✅ Loaded debates with motions:', mappedDebates);
-          setMotions(mappedDebates);
-        }
-      } catch (err) {
-        console.error('Failed to fetch debates:', err);
-        setMotions([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDebates();
-  }, []);
-
-  // Fetch debate events when modal opens
-  useEffect(() => {
-    if (showLogModal) {
-      fetchDebateEvents();
-    }
-  }, [showLogModal]);
-
-  const fetchDebateEvents = async () => {
-    setLoading(true);
-    try {
-      const response = await api.get('/api/events?category=debate');
-      if (response.data?.events?.length > 0) {
-        setEvents(response.data.events);
-      } else {
-        setEvents([]);
-      }
-    } catch (err) {
-      console.error('Events API error:', err.message);
-      setEvents([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleLogParticipation = async (e) => {
-    e.preventDefault();
-    if (!formData.event_id) {
-      setMessage({ type: 'error', text: 'Please select an event' });
-      return;
-    }
-
-    setSubmitting(true);
-    setMessage({ type: '', text: '' });
-
-    try {
-      // Get champion_id from localStorage or current user context
-      const token = localStorage.getItem('unda_token');
-      
-      const response = await api.post('/api/event-participation/', {
-        event_id: parseInt(formData.event_id),
-        champion_id: 1, // This should come from the logged-in user's champion profile
-        registration_status: 'attended',
-        notes: formData.notes,
-      });
-
-      if (response.data?.success) {
-        setMessage({ type: 'success', text: 'Participation logged successfully! Your Documentation Quality Score has been updated.' });
-        setFormData({ event_id: '', notes: '' });
-        setTimeout(() => {
-          setShowLogModal(false);
-          setMessage({ type: '', text: '' });
-        }, 2000);
-      }
-    } catch (err) {
-      const errorMsg = err.response?.data?.message || 'Failed to log participation. Please try again.';
-      setMessage({ type: 'error', text: errorMsg });
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  // Participation Modal Component
-  const ParticipationModal = () => (
+// Participation Modal Component - moved outside to prevent re-creation on each render
+const ParticipationModal = ({ 
+  showLogModal, 
+  setShowLogModal, 
+  message, 
+  loading, 
+  events, 
+  formData, 
+  setFormData, 
+  handleLogParticipation, 
+  submitting 
+}) => {
+  if (!showLogModal) return null;
+  
+  return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl">
         {/* Modal Header */}
@@ -245,11 +145,135 @@ const DebatersCircle = () => {
       </div>
     </div>
   );
+};
+
+const DebatersCircle = () => {
+  const [showLogModal, setShowLogModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [message, setMessage] = useState({ type: '', text: '' });
+  const [formData, setFormData] = useState({
+    event_id: '',
+    notes: '',
+  });
+
+  const [motions, setMotions] = useState([]);
+
+  // Fetch debates on component mount
+  useEffect(() => {
+    const fetchDebates = async () => {
+      setLoading(true);
+      try {
+        const response = await api.get('/api/events/?category=debate');
+        console.log('📡 Debates API Response:', response.data);
+        
+        if (response.data?.events && Array.isArray(response.data.events)) {
+          // Map backend fields to frontend expected fields
+          const mappedDebates = response.data.events.map(debate => ({
+            id: debate.id || debate.event_id,
+            title: debate.motion || debate.topic || debate.title, // Use motion/topic if available, fallback to title
+            motion: debate.motion || debate.topic, // Store the specific motion/topic field
+            description: debate.description,
+            date: new Date(debate.event_date).toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'short', 
+              day: 'numeric' 
+            }),
+            location: debate.location,
+            status: debate.status,
+            imageUrl: debate.image_url || debate.imageUrl,
+          }));
+          
+          console.log('✅ Loaded debates with motions:', mappedDebates);
+          setMotions(mappedDebates);
+        }
+      } catch (err) {
+        console.error('Failed to fetch debates:', err);
+        setMotions([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDebates();
+  }, []);
+
+  // Fetch debate events when modal opens
+  useEffect(() => {
+    if (showLogModal) {
+      fetchDebateEvents();
+    }
+  }, [showLogModal]);
+
+  const fetchDebateEvents = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get('/api/events?category=debate');
+      if (response.data?.events?.length > 0) {
+        setEvents(response.data.events);
+      } else {
+        setEvents([]);
+      }
+    } catch (err) {
+      console.error('Events API error:', err.message);
+      setEvents([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogParticipation = async (e) => {
+    e.preventDefault();
+    if (!formData.event_id) {
+      setMessage({ type: 'error', text: 'Please select an event' });
+      return;
+    }
+
+    setSubmitting(true);
+    setMessage({ type: '', text: '' });
+
+    try {
+      // Get champion_id from localStorage or current user context
+      const token = localStorage.getItem('unda_token');
+      
+      const response = await api.post('/api/event-participation/', {
+        event_id: parseInt(formData.event_id),
+        champion_id: 1, // This should come from the logged-in user's champion profile
+        registration_status: 'attended',
+        notes: formData.notes,
+      });
+
+      if (response.data?.success) {
+        setMessage({ type: 'success', text: 'Participation logged successfully! Your Documentation Quality Score has been updated.' });
+        setFormData({ event_id: '', notes: '' });
+        setTimeout(() => {
+          setShowLogModal(false);
+          setMessage({ type: '', text: '' });
+        }, 2000);
+      }
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || 'Failed to log participation. Please try again.';
+      setMessage({ type: 'error', text: errorMsg });
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white pb-32">
       {/* Participation Modal */}
-      {showLogModal && <ParticipationModal />}
+      <ParticipationModal 
+        showLogModal={showLogModal}
+        setShowLogModal={setShowLogModal}
+        message={message}
+        loading={loading}
+        events={events}
+        formData={formData}
+        setFormData={setFormData}
+        handleLogParticipation={handleLogParticipation}
+        submitting={submitting}
+      />
 
       {/* 1. HERO: Editorial Alignment */}
       <section className="pt-40 pb-20 bg-unda-navy relative overflow-hidden text-white">
