@@ -17,7 +17,7 @@ const Footer = () => {
               <div className="h-10 w-10 rounded-xl overflow-hidden flex items-center justify-center bg-white border border-slate-100">
                 <img src={undaLogo} alt="Unda Logo" className="w-full h-full object-contain mix-blend-multiply" />
               </div>
-              <span className="font-black text-unda-navy tracking-tighter text-xl">UNDA</span>
+              <span className="font-black text-unda-navy tracking-tighter text-xl">UNDA YOUTH NETWORK GLOBAL</span>
             </div>
             <p className="text-slate-600 text-sm leading-relaxed max-w-xs font-medium">
               Kenya's national movement for Adolescent & Youth Mental Health Prevention through the UMV program.
