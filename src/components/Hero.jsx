@@ -49,7 +49,7 @@ const Hero = () => {
               variant="ghost"
               className="h-16 px-6 text-unda-navy font-bold group"
             >
-              <Link to={{ pathname: '/', hash: '#community-story' }}>
+              <Link to="/about">
                 Our Story{" "}
                 <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform" />
               </Link>
