@@ -20,8 +20,8 @@ const Home = () => {
         <ImpactSnapshot />
         <PreventionPackage />
         <Workstreams />
-        <UpcomingEvents />
         <GetInvolved />
+        <UpcomingEvents />
         <LatestBlog />
       </main>
     </Layout>
