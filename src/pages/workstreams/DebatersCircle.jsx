@@ -261,7 +261,7 @@ const DebatersCircle = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-32">
+    <div className="min-h-screen bg-transparent pb-32">
       {/* Participation Modal */}
       <ParticipationModal 
         showLogModal={showLogModal}

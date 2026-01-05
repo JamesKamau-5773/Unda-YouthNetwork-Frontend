@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <Layout>
       <main className="relative bg-unda-bg/30">
-        <BackgroundElements />
+        {/* BackgroundElements is now global in App.jsx */}
         <Hero />
         <CommunityStory />
         <ImpactSnapshot />

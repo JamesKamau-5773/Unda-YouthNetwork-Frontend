@@ -43,7 +43,7 @@ const CampusEdition = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-white pb-32">
+      <div className="min-h-screen bg-transparent pb-32">
             {/* HERO: The Innovation Engine */}
         <section className="pt-40 pb-20 bg-slate-50 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-1/3 h-full bg-unda-yellow/[0.05] rounded-full blur-[120px] translate-x-1/2" />

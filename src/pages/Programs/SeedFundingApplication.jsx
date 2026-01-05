@@ -54,7 +54,7 @@ const SeedFundingApplication = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-slate-50 py-24">
+      <div className="min-h-screen bg-transparent py-24">
         <div className="container mx-auto px-6 max-w-4xl">
           {/* Header */}
           <div className="mb-12">

@@ -172,7 +172,7 @@ const UMVMtaani = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-white pb-32">
+      <div className="min-h-screen bg-transparent pb-32">
         <ParticipationModal
           showLogModal={showLogModal}
           setShowLogModal={setShowLogModal}

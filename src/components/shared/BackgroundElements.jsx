@@ -14,7 +14,7 @@ const BackgroundElements = () => {
       <div className="absolute top-[40%] left-[30%] w-[30%] h-[30%] rounded-full bg-unda-yellow/5 blur-[120px]" />
 
       {/* 3. Creative Logo Watermark */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-[0.02] mix-blend-multiply pointer-events-none">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-[0.08] mix-blend-multiply pointer-events-none">
         <img 
           src={undaLogo} 
           alt="" 

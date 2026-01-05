@@ -16,7 +16,7 @@ const Membership = () => {
 
 	return (
 		<Layout>
-			<section className="py-24 lg:py-40 bg-white relative overflow-hidden">
+			<section className="py-24 lg:py-40 bg-white/90 relative overflow-hidden">
 				{/* Background Decorative Element */}
 				<div className="absolute top-0 right-0 w-1/3 h-full bg-unda-teal/[0.02] -skew-x-12 translate-x-1/2" />
 

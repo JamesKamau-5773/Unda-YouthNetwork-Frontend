@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 const PortalLogin = () => {
   return (
     <Layout>
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center py-20 px-6">
+      <div className="min-h-screen bg-transparent flex flex-col items-center justify-center py-20 px-6">
         {/* The Gateway Card */}
         <div className="bg-white p-12 rounded-[2.5rem] shadow-2xl shadow-unda-navy/5 w-full max-w-md border border-white relative overflow-hidden">
           {/* Decorative Background Blur */}

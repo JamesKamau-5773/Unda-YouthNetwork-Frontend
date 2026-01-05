@@ -254,7 +254,7 @@ const Podcast = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-24">
+    <div className="min-h-screen bg-transparent pb-24">
       {showPlayerModal && <PlayerModal />}
       
       {/* 1. HERO SECTION: Asymmetrical & Bold */}
