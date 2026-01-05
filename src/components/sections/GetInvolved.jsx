@@ -44,16 +44,16 @@ const GetInvolved = () => {
       <div className="absolute top-0 left-0 w-96 h-96 bg-unda-teal/[0.03] blur-[100px] pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-left mb-16">
+        <div className="text-center mb-16">
           <h2 className="text-5xl lg:text-6xl font-black text-unda-navy mb-6 font-unda">
             How to Get <span className="text-unda-teal">Involved</span>
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl">
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Join the movement for adolescent and youth mental health prevention. There are many ways to support our mission.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl">
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {options.map((option, idx) => {
             const Icon = option.icon;
             const colorMap = {
