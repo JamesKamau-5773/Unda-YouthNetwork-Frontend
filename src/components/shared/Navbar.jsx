@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Mic, Users, GraduationCap, MapPin, Shield, Activity, ExternalLink } from 'lucide-react';
+import { ChevronDown, Mic, Users, GraduationCap, MapPin, Shield, Activity, ExternalLink, Menu, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import undaLogo from '@/assets/logos/unda-logo-main.jpg';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   const workstreams = [
@@ -122,8 +123,16 @@ const Navbar = () => {
             <Link to="/membership" className={`text-[10px] font-black uppercase tracking-widest transition-all ${location.pathname === '/membership' ? 'text-unda-teal' : 'text-unda-navy/60 hover:text-unda-navy'}`}>Membership</Link>
           </div>
 
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="md:hidden p-2 text-unda-navy"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+
           {/* Action Button: Membership Bridge */}
-          <Button asChild className="bg-unda-navy text-white text-[10px] font-black uppercase tracking-widest px-8 h-12 rounded-2xl hover:bg-unda-teal hover:scale-105 transition-all shadow-xl shadow-unda-navy/10">
+          <Button asChild className="hidden md:inline-flex bg-unda-navy text-white text-[10px] font-black uppercase tracking-widest px-8 h-12 rounded-2xl hover:bg-unda-teal hover:scale-105 transition-all shadow-xl shadow-unda-navy/10">
             <a 
               href="https://unda-youth-network-backend.onrender.com/auth/login" 
               className="flex items-center gap-2"
@@ -133,6 +142,37 @@ const Navbar = () => {
             </a>
           </Button>
         </div>
+
+        {/* Mobile Menu Drawer */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-t border-slate-100 shadow-xl p-6 flex flex-col gap-4 animate-in slide-in-from-top-5 z-50">
+            <Link to="/" className="text-sm font-bold text-unda-navy py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+            <Link to="/about" className="text-sm font-bold text-unda-navy py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
+            
+            <div className="py-2 border-b border-slate-50">
+              <span className="text-[10px] font-black uppercase text-unda-teal mb-3 block tracking-widest">Workstreams</span>
+              <div className="grid grid-cols-1 gap-3 pl-2">
+                {workstreams.map(ws => (
+                  <Link key={ws.path} to={ws.path} className="flex items-center gap-2 text-sm text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>
+                    <span className="text-unda-teal">{ws.icon}</span>
+                    {ws.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <Link to="/blog" className="text-sm font-bold text-unda-navy py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Blog & Media</Link>
+            <Link to="/gallery" className="text-sm font-bold text-unda-navy py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Gallery</Link>
+            <Link to="/resources" className="text-sm font-bold text-unda-navy py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Resources</Link>
+            <Link to="/membership" className="text-sm font-bold text-unda-navy py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Membership</Link>
+            
+            <Button asChild className="w-full bg-unda-navy text-white mt-4 h-12 rounded-xl">
+              <a href="https://unda-youth-network-backend.onrender.com/auth/login" target="_blank" rel="noopener noreferrer">
+                Portal Login <ExternalLink size={14} className="ml-2" />
+              </a>
+            </Button>
+          </div>
+        )}
       </div>
     </nav>
   );
