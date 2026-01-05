@@ -25,7 +25,7 @@ const LatestBlog = () => {
   ];
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-unda-bg/50">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-black text-unda-navy text-center mb-16 font-unda">
           Latest from the Blog
@@ -35,7 +35,7 @@ const LatestBlog = () => {
             <Link
               key={idx}
               to={article.link}
-              className={`p-8 border-t-4 ${article.color} bg-unda-bg/30 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group cursor-pointer`}
+              className={`p-8 border-t-4 ${article.color} bg-white rounded-2xl hover:shadow-xl transition-all duration-300 group cursor-pointer`}
             >
               <div className="text-unda-teal mb-4 group-hover:scale-110 transition-transform">
                 <Newspaper size={32} />
