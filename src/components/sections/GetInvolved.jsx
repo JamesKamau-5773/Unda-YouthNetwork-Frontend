@@ -40,12 +40,12 @@ const GetInvolved = () => {
   ];
 
   return (
-    <section className="py-24 bg-slate-50 relative overflow-hidden">
+    <section className="py-24 bg-white relative overflow-hidden">
       <div className="absolute top-0 left-0 w-96 h-96 bg-unda-teal/[0.03] blur-[100px] pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-5xl lg:text-6xl font-black text-unda-navy mb-6">
+          <h2 className="text-4xl font-black text-unda-navy mb-6 font-unda">
             How to Get <span className="text-unda-teal">Involved</span>
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
@@ -57,10 +57,16 @@ const GetInvolved = () => {
           {options.map((option, idx) => {
             const Icon = option.icon;
             const colorMap = {
-              teal: 'bg-unda-teal/10 text-unda-teal border-unda-teal/20',
-              orange: 'bg-unda-orange/10 text-unda-orange border-unda-orange/20',
-              yellow: 'bg-unda-yellow/10 text-unda-yellow border-unda-yellow/20',
-              navy: 'bg-unda-navy/10 text-unda-navy border-unda-navy/20'
+              teal: 'border-unda-teal',
+              orange: 'border-unda-orange',
+              yellow: 'border-unda-yellow',
+              navy: 'border-unda-navy'
+            };
+            const iconBgMap = {
+              teal: 'bg-unda-teal/10 text-unda-teal',
+              orange: 'bg-unda-orange/10 text-unda-orange',
+              yellow: 'bg-unda-yellow/10 text-unda-yellow',
+              navy: 'bg-unda-navy/10 text-unda-navy'
             };
             const buttonMap = {
               teal: 'bg-unda-teal text-white hover:bg-unda-navy',
@@ -69,8 +75,8 @@ const GetInvolved = () => {
               navy: 'bg-unda-navy text-white hover:bg-unda-teal'
             };
             return (
-              <div key={idx} className="bg-white rounded-3xl p-8 border border-slate-100 shadow-lg hover:shadow-2xl transition-all group">
-                <div className={`h-16 w-16 rounded-2xl ${colorMap[option.color]} border flex items-center justify-center mb-6`}>
+              <div key={idx} className={`bg-unda-bg/30 rounded-2xl p-8 border-t-4 ${colorMap[option.color]} hover:bg-white hover:shadow-xl transition-all duration-300 group`}>
+                <div className={`h-16 w-16 rounded-2xl ${iconBgMap[option.color]} flex items-center justify-center mb-6`}>
                   <Icon size={32} />
                 </div>
                 <h3 className="text-2xl font-black text-unda-navy mb-4">{option.title}</h3>

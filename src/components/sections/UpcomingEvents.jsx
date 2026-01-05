@@ -29,7 +29,7 @@ const UpcomingEvents = () => {
   ];
 
   return (
-    <section className="py-24 bg-white/50 relative overflow-hidden">
+    <section className="py-24 bg-white relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-unda-yellow/[0.03] blur-[100px] pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10">
@@ -38,7 +38,7 @@ const UpcomingEvents = () => {
             <Calendar size={18} className="text-unda-teal" />
             <span className="text-xs font-black uppercase tracking-widest text-unda-navy">Coming Up</span>
           </div>
-          <h2 className="text-5xl lg:text-6xl font-black text-unda-navy mb-6">
+          <h2 className="text-4xl font-black text-unda-navy mb-6 font-unda">
             Upcoming <span className="text-unda-teal">Events</span>
           </h2>
         </div>
@@ -46,12 +46,12 @@ const UpcomingEvents = () => {
         <div className="max-w-4xl mx-auto space-y-6">
           {events.map((event, idx) => {
             const colorMap = {
-              teal: 'border-unda-teal bg-unda-teal/5 text-unda-teal',
-              yellow: 'border-unda-yellow bg-unda-yellow/5 text-unda-yellow',
-              orange: 'border-unda-orange bg-unda-orange/5 text-unda-orange'
+              teal: 'border-unda-teal bg-unda-bg/30 hover:bg-white',
+              yellow: 'border-unda-yellow bg-unda-bg/30 hover:bg-white',
+              orange: 'border-unda-orange bg-unda-bg/30 hover:bg-white'
             };
             return (
-              <div key={idx} className={`rounded-3xl p-8 border-2 ${colorMap[event.color]} transition-all hover:shadow-xl group`}>
+              <div key={idx} className={`rounded-2xl p-8 border-l-4 ${colorMap[event.color]} transition-all hover:shadow-xl group`}>
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                   <div className="flex-1">
                     <h3 className="text-2xl font-black text-unda-navy mb-2">{event.title}</h3>
