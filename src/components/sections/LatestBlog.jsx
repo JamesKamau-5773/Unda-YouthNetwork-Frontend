@@ -37,7 +37,7 @@ const LatestBlog = () => {
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl">
           {articles.map((article, idx) => (
             <div key={idx} className="bg-unda-bg/30 rounded-2xl p-8 border-t-4 border-unda-orange hover:bg-white hover:shadow-xl transition-all duration-300 group cursor-pointer">
               <span className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-unda-orange/10 text-unda-orange mb-4">

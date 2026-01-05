@@ -43,7 +43,7 @@ const UpcomingEvents = () => {
           </h2>
         </div>
 
-        <div className="max-w-4xl space-y-6 mx-auto">
+        <div className="max-w-4xl space-y-6">
           {events.map((event, idx) => {
             const colorMap = {
               teal: 'border-unda-teal bg-unda-bg/30 hover:bg-white',
