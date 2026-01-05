@@ -319,6 +319,7 @@ const Podcast = () => {
   return (
     <div className="min-h-screen bg-white pb-24">
       {showLogModal && <AttendanceModal />}
+      {showPlayerModal && <PlayerModal />}
       
       {/* 1. HERO SECTION: Asymmetrical & Bold */}
       <section className="pt-40 pb-20 bg-slate-50 relative overflow-hidden">
