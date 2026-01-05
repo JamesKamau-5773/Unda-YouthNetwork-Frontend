@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
-import { MapPin, Users, Calendar, ArrowRight, HeartHandshake, X, Loader2, CheckCircle } from 'lucide-react';
+import { MapPin, Users, Calendar, ArrowRight, HeartHandshake, X, Loader2, CheckCircle, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import api from '@/services/apiService';
 
@@ -143,6 +143,14 @@ const UMVMtaani = () => {
 
   const handleLogParticipation = async (e) => {
     e.preventDefault();
+
+    // Check for authentication first
+    const token = localStorage.getItem('unda_token');
+    if (!token) {
+      setMessage({ type: 'error', text: 'You must be logged in to log participation. Please log in via the Portal.' });
+      return;
+    }
+
     if (!formData.event_id) {
       setMessage({ type: 'error', text: 'Please select an event' });
       return;
@@ -189,6 +197,13 @@ const UMVMtaani = () => {
         <section className="pt-40 pb-20 bg-unda-navy relative overflow-hidden">
           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
           <div className="container mx-auto px-6 relative z-10 text-center">
+            <div className="flex justify-center mb-8">
+              <Link to="/" className="inline-flex items-center text-slate-400 hover:text-white transition-colors">
+                <ArrowLeft size={20} className="mr-2" />
+                <span className="font-bold text-sm uppercase tracking-widest">Back to Home</span>
+              </Link>
+            </div>
+
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-unda-orange/10 border border-unda-orange/20 mb-8 mx-auto">
               <MapPin size={16} className="text-unda-orange" />
               <span className="text-[10px] font-black uppercase tracking-widest text-unda-orange">Neighborhood Prevention</span>

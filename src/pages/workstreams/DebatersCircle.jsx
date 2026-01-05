@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
+  ArrowLeft,
   MessageSquare,
   BookOpen,
   GraduationCap,
@@ -225,6 +227,14 @@ const DebatersCircle = () => {
 
   const handleLogParticipation = async (e) => {
     e.preventDefault();
+
+    // Check for authentication first
+    const token = localStorage.getItem('unda_token');
+    if (!token) {
+      setMessage({ type: 'error', text: 'You must be logged in to log participation. Please log in via the Portal.' });
+      return;
+    }
+
     if (!formData.event_id) {
       setMessage({ type: 'error', text: 'Please select an event' });
       return;
@@ -235,7 +245,7 @@ const DebatersCircle = () => {
 
     try {
       // Get champion_id from localStorage or current user context
-      const token = localStorage.getItem('unda_token');
+      // const token = localStorage.getItem('unda_token'); // Already checked above
       
       const response = await api.post('/api/event-participation/', {
         event_id: parseInt(formData.event_id),
@@ -281,6 +291,11 @@ const DebatersCircle = () => {
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-3xl space-y-8">
+            <Link to="/" className="inline-flex items-center text-slate-400 hover:text-white transition-colors">
+              <ArrowLeft size={20} className="mr-2" />
+              <span className="font-bold text-sm uppercase tracking-widest">Back to Home</span>
+            </Link>
+            
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 border border-white/20">
               <MessageSquare size={16} className="text-unda-teal" />
               <span className="text-[10px] font-bold uppercase tracking-widest">
