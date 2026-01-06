@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Mic, Users, GraduationCap, MapPin, Shield, Activity, ExternalLink, Menu, X } from 'lucide-react';
+import { ChevronDown, Mic, Users, GraduationCap, MapPin, Shield, Activity, ExternalLink, Menu, X, HeartHandshake, Layers, BookOpen, Lightbulb } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import undaLogo from '@/assets/logos/unda-logo-main.jpg';
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+
+  const handleMouseEnter = (name) => setActiveDropdown(name);
+  const handleMouseLeave = () => setActiveDropdown(null);
 
   const workstreams = [
     { name: 'UMV Podcast', path: '/podcast', icon: <Mic size={16} />, desc: 'Expert insights' },
@@ -20,7 +23,8 @@ const Navbar = () => {
     <nav className="fixed top-0 w-full z-[100] px-6 py-6 transition-all duration-300">
       <div className="max-w-7xl mx-auto">
         
-        {/* 1. TOP UTILITY BAR (Solves the 'Plain' look by adding technical density)  */}
+
+        {/* 1. TOP UTILITY BAR */}
         <div className="flex justify-between items-center px-8 mb-3 animate-in fade-in slide-in-from-top-2">
           <div className="flex gap-6 items-center">
             <span className="flex items-center gap-1.5 text-[8px] font-black uppercase tracking-[0.2em] text-unda-navy/40">
@@ -30,97 +34,176 @@ const Navbar = () => {
               <Activity size={10} className="text-unda-orange" /> Real-time Metrics
             </span>
           </div>
-          <Link to="/portal" className="text-[8px] font-black uppercase tracking-[0.2em] text-unda-navy/60 hover:text-unda-teal transition-colors">
-            Admins & Supervisors Only
-          </Link>
         </div>
 
-        {/* 2. MAIN NAV (Glassmorphism + Shadow) */}
-        <div className="bg-white/90 backdrop-blur-2xl border border-white/40 shadow-[0_20px_50px_rgba(0,0,0,0.05)] rounded-[2.5rem] px-10 py-4 flex items-center justify-between">
+        {/* 2. MAIN NAV */}
+        <div className="bg-white/90 backdrop-blur-2xl border border-white/40 shadow-[0_20px_50px_rgba(0,0,0,0.05)] rounded-[2.5rem] px-8 py-3 flex items-center justify-between">
           
-          {/* Logo with Status Metadata [cite: 12-14, 21-25] */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="h-12 w-12 rounded-xl overflow-hidden flex items-center justify-center bg-white">
+          {/* Logo Section */}
+          <Link to="/" className="flex items-center gap-3 group mr-8">
+            <div className="h-10 w-10 rounded-xl overflow-hidden flex items-center justify-center bg-white border border-slate-100">
               <img src={undaLogo} alt="Unda Logo" className="w-full h-full object-contain mix-blend-multiply" />
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-unda-navy text-xl tracking-tighter leading-none">UNDA</span>
-              <span className="text-[7px] font-bold text-unda-teal uppercase tracking-[0.3em] mt-1">Youth Network Global</span>
+              <span className="font-black text-unda-navy text-lg tracking-tighter leading-none">UNDA</span>
+              <span className="text-[6px] font-bold text-unda-teal uppercase tracking-[0.3em] mt-0.5">Youth Network</span>
             </div>
           </Link>
 
-          {/* Centered Navigation Links */}
-          <div className="hidden md:flex items-center gap-8">
-            <Link to="/" className={`text-[10px] font-black uppercase tracking-widest transition-all ${location.pathname === '/' ? 'text-unda-teal' : 'text-unda-navy/60 hover:text-unda-navy'}`}>Home</Link>
-            
-            <Link to="/about" className={`text-[10px] font-black uppercase tracking-widest transition-all ${location.pathname === '/about' ? 'text-unda-teal' : 'text-unda-navy/60 hover:text-unda-navy'}`}>About</Link>
+          {/* Center Navigation Links - Expanded */}
+          <div className="hidden md:flex items-center gap-1">
 
-            {/* WORKSTREAMS DROPDOWN  [cite: 31-32, 172-180] */}
-            <div className="relative group" onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
-              <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-unda-navy/60 hover:text-unda-navy transition-all h-10">
-                Workstreams <ChevronDown size={12} className={`transition-transform duration-300 ${isOpen ? 'rotate-180 text-unda-teal' : ''}`} />
+            {/* Home Link */}
+            <Link 
+              to="/" 
+              className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                location.pathname === '/' ? 'text-unda-navy bg-slate-100' : 'text-unda-navy/60 hover:text-unda-navy hover:bg-slate-50'
+              }`}
+            >
+              Home
+            </Link>
+            
+            {/* About Link */}
+            <Link 
+              to="/about" 
+              className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                location.pathname === '/about' ? 'text-unda-teal bg-unda-teal/5' : 'text-unda-navy/60 hover:text-unda-navy hover:bg-slate-50'
+              }`}
+            >
+              About Us
+            </Link>
+
+            {/* Programs Dropdown */}
+            <div className="relative" onMouseEnter={() => handleMouseEnter('programs')} onMouseLeave={handleMouseLeave}>
+              <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                activeDropdown === 'programs' ? 'text-unda-teal bg-unda-teal/5' : 'text-unda-navy/60 hover:text-unda-navy hover:bg-slate-50'
+              }`}>
+                Programs <ChevronDown size={10} className={`transition-transform duration-300 ${activeDropdown === 'programs' ? 'rotate-180' : ''}`} />
               </button>
 
-              {isOpen && (
-                <div className="absolute top-full -left-10 pt-6 w-[400px] animate-in fade-in slide-in-from-top-4 duration-300">
-                  <div className="bg-white border border-slate-100 rounded-[2.5rem] shadow-2xl p-6 grid grid-cols-2 gap-3 relative overflow-hidden">
-                     {/* Decorative blur in dropdown */}
-                     <div className="absolute top-0 right-0 w-20 h-20 bg-unda-teal/5 blur-xl pointer-events-none"/>
-                     
-                    {workstreams.map((stream) => (
-                      <Link 
-                        key={stream.path} 
-                        to={stream.path}
-                        className="flex flex-col gap-1 p-4 rounded-2xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100 group/item relative z-10"
-                      >
-                        <div className="flex items-center gap-2 mb-1">
-                          <div className="p-2 bg-unda-teal/5 text-unda-teal rounded-lg group-hover/item:bg-unda-teal group-hover/item:text-white transition-all">{stream.icon}</div>
-                          <span className="text-[10px] font-black text-unda-navy uppercase tracking-tight">{stream.name}</span>
-                        </div>
-                        <span className="text-[9px] font-medium text-slate-500 pl-1">{stream.desc}</span>
-                      </Link>
-                    ))}
+              {activeDropdown === 'programs' && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 w-[480px] animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="bg-white border border-slate-100 rounded-[2rem] shadow-xl p-5 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-unda-teal/5 blur-2xl pointer-events-none"/>
+                    
+                    <div className="flex gap-4 mb-4 pb-4 border-b border-slate-50">
+                       <Link to="/programs" className="flex-1 bg-unda-teal/5 hover:bg-unda-teal/10 p-4 rounded-xl transition-colors group/main">
+                          <div className="flex items-center gap-2 mb-1 text-unda-teal">
+                             <Layers size={16} />
+                             <span className="font-black uppercase text-xs tracking-wider">All Programs</span>
+                          </div>
+                          <p className="text-[10px] text-slate-500 group-hover/main:text-slate-600">Overview of our impact pillars</p>
+                       </Link>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2">
+                       {workstreams.map((stream) => (
+                         <Link 
+                           key={stream.path} 
+                           to={stream.path}
+                           className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-all group/item"
+                         >
+                           <div className="p-2 bg-slate-100 text-slate-400 rounded-lg group-hover/item:bg-unda-teal group-hover/item:text-white transition-all">
+                             {stream.icon}
+                           </div>
+                           <div>
+                             <span className="block text-[10px] font-bold text-unda-navy uppercase tracking-tight">{stream.name}</span>
+                             <span className="text-[9px] text-slate-400">{stream.desc}</span>
+                           </div>
+                         </Link>
+                       ))}
+                    </div>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* MEDIA & GALLERY DROPDOWN */}
-            <div className="relative group">
-              <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-unda-navy/60 hover:text-unda-navy transition-all h-10">
-                Media & Gallery <ChevronDown size={12} className="transition-transform duration-300 group-hover:rotate-180 group-hover:text-unda-teal" />
-              </button>
+            {/* Resources (Direct Link) */}
+            <Link 
+              to="/resources" 
+              className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                location.pathname === '/resources' ? 'text-unda-orange bg-unda-orange/5' : 'text-unda-navy/60 hover:text-unda-navy hover:bg-slate-50'
+              }`}
+            >
+              Resources
+            </Link>
 
-              <div className="absolute top-full -left-10 pt-6 w-[300px] opacity-0 invisible group-hover:opacity-100 group-hover:visible animate-in fade-in slide-in-from-top-4 duration-300 transition-all">
-                <div className="bg-white border border-slate-100 rounded-[2.5rem] shadow-2xl p-6 flex flex-col gap-3 relative overflow-hidden">
-                   <div className="absolute top-0 right-0 w-20 h-20 bg-unda-orange/5 blur-xl pointer-events-none"/>
-                   
-                   <Link to="/blog" className="flex items-center gap-3 p-4 rounded-2xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100 group/item">
-                      <div className="p-2 bg-unda-orange/5 text-unda-orange rounded-lg group-hover/item:bg-unda-orange group-hover/item:text-white transition-all">
-                        <Mic size={16} />
-                      </div>
-                      <div>
-                        <span className="block text-[10px] font-black text-unda-navy uppercase tracking-tight">Blog & Media</span>
-                        <span className="text-[9px] font-medium text-slate-500">Latest updates & stories</span>
-                      </div>
-                   </Link>
+            {/* Blog & Media (Direct Link) */}
+            <Link 
+               to="/blog" 
+               className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                 location.pathname === '/blog' ? 'text-unda-yellow bg-unda-yellow/5' : 'text-unda-navy/60 hover:text-unda-navy hover:bg-slate-50'
+               }`}
+             >
+               Stories
+             </Link>
 
-                   <Link to="/gallery" className="flex items-center gap-3 p-4 rounded-2xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100 group/item">
-                      <div className="p-2 bg-unda-yellow/5 text-unda-yellow rounded-lg group-hover/item:bg-unda-yellow group-hover/item:text-white transition-all">
-                        <Users size={16} />
-                      </div>
-                      <div>
-                        <span className="block text-[10px] font-black text-unda-navy uppercase tracking-tight">Gallery & Moments</span>
-                        <span className="text-[9px] font-medium text-slate-500">Photos & videos</span>
-                      </div>
-                   </Link>
-                </div>
-              </div>
+             {/* Gallery (Direct Link) */}
+             <Link 
+               to="/gallery" 
+               className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                 location.pathname === '/gallery' ? 'text-unda-teal bg-unda-teal/5' : 'text-unda-navy/60 hover:text-unda-navy hover:bg-slate-50'
+               }`}
+             >
+               Gallery
+             </Link>
+          </div>
+
+
+          {/* Right Action Cluster */}
+          <div className="hidden md:flex items-center gap-3">
+             {/* Get Involved Dropdown */}
+             <div className="relative" onMouseEnter={() => handleMouseEnter('join')} onMouseLeave={handleMouseLeave}>
+                <button className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
+                  activeDropdown === 'join' ? 'text-unda-teal' : 'text-unda-navy/60 hover:text-unda-navy'
+                }`}>
+                  Get Involved <ChevronDown size={10} />
+                </button>
+
+                {activeDropdown === 'join' && (
+                  <div className="absolute top-full right-0 pt-4 w-[280px] animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="bg-white border border-slate-100 rounded-[2rem] shadow-xl p-4 flex flex-col gap-2 relative overflow-hidden">
+                       <Link to="/partner" className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-all group/item">
+                          <div className="p-2 bg-slate-100 text-slate-400 rounded-lg group-hover/item:bg-unda-navy group-hover/item:text-white transition-all">
+                             <HeartHandshake size={16} />
+                          </div>
+                          <span className="text-[10px] font-black text-unda-navy uppercase">Partner With Us</span>
+                       </Link>
+                       <Link to="/membership" className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-all group/item">
+                          <div className="p-2 bg-slate-100 text-slate-400 rounded-lg group-hover/item:bg-unda-navy group-hover/item:text-white transition-all">
+                             <Users size={16} />
+                          </div>
+                          <span className="text-[10px] font-black text-unda-navy uppercase">Membership</span>
+                       </Link>
+                       <Link to="/volunteer" className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-all group/item">
+                          <div className="p-2 bg-slate-100 text-slate-400 rounded-lg group-hover/item:bg-unda-navy group-hover/item:text-white transition-all">
+                             <Lightbulb size={16} />
+                          </div>
+                          <span className="text-[10px] font-black text-unda-navy uppercase">Volunteer</span>
+                       </Link>
+                    </div>
+                  </div>
+                )}
+             </div>
+
+            {/* Creative Combined Portal Button */}
+            <div className="flex items-center bg-slate-100 p-1 rounded-2xl group border border-slate-200 hover:border-unda-teal/30 hover:shadow-lg hover:shadow-unda-teal/10 transition-all duration-300">
+                <Link 
+                  to="/member/dashboard" 
+                  className="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-unda-navy hover:text-white hover:bg-unda-navy transition-all duration-300 flex items-center gap-2"
+                >
+                  Member <div className="h-1.5 w-1.5 bg-green-500 rounded-full animate-pulse" />
+                </Link>
+                <div className="w-px h-4 bg-slate-300 mx-1 group-hover:opacity-50 transition-opacity" />
+                <a 
+                  href="https://unda-youth-network-backend.onrender.com/auth/login" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-unda-teal hover:bg-white transition-all duration-300"
+                >
+                  Staff
+                </a>
             </div>
-
-            <Link to="/resources" className={`text-[10px] font-black uppercase tracking-widest transition-all ${location.pathname === '/resources' ? 'text-unda-teal' : 'text-unda-navy/60 hover:text-unda-navy'}`}>Resources</Link>
-
-            <Link to="/membership" className={`text-[10px] font-black uppercase tracking-widest transition-all ${location.pathname === '/membership' ? 'text-unda-teal' : 'text-unda-navy/60 hover:text-unda-navy'}`}>Membership</Link>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -130,17 +213,6 @@ const Navbar = () => {
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-
-          {/* Action Button: Membership Bridge */}
-          <Button asChild className="hidden md:inline-flex bg-unda-navy text-white text-[10px] font-black uppercase tracking-widest px-8 h-12 rounded-2xl hover:bg-unda-teal hover:scale-105 transition-all shadow-xl shadow-unda-navy/10">
-            <a 
-              href="https://unda-youth-network-backend.onrender.com/auth/login" 
-              className="flex items-center gap-2"
-              target="_blank" rel="noopener noreferrer"
-            >
-              Portal Login <ExternalLink size={12} />
-            </a>
-          </Button>
         </div>
 
         {/* Mobile Menu Drawer */}
@@ -150,8 +222,11 @@ const Navbar = () => {
             <Link to="/about" className="text-sm font-bold text-unda-navy py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
             
             <div className="py-2 border-b border-slate-50">
-              <span className="text-[10px] font-black uppercase text-unda-teal mb-3 block tracking-widest">Workstreams</span>
+              <span className="text-[10px] font-black uppercase text-unda-teal mb-3 block tracking-widest">Programs</span>
               <div className="grid grid-cols-1 gap-3 pl-2">
+                 <Link to="/programs" className="flex items-center gap-2 text-sm text-slate-600 font-medium" onClick={() => setIsMobileMenuOpen(false)}>
+                    View All Programs
+                 </Link>
                 {workstreams.map(ws => (
                   <Link key={ws.path} to={ws.path} className="flex items-center gap-2 text-sm text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>
                     <span className="text-unda-teal">{ws.icon}</span>
@@ -161,10 +236,23 @@ const Navbar = () => {
               </div>
             </div>
 
-            <Link to="/blog" className="text-sm font-bold text-unda-navy py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Blog & Media</Link>
-            <Link to="/gallery" className="text-sm font-bold text-unda-navy py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Gallery</Link>
-            <Link to="/resources" className="text-sm font-bold text-unda-navy py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Resources</Link>
-            <Link to="/membership" className="text-sm font-bold text-unda-navy py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Membership</Link>
+            <div className="py-2 border-b border-slate-50">
+               <span className="text-[10px] font-black uppercase text-unda-orange mb-3 block tracking-widest">Hub</span>
+               <div className="grid grid-cols-1 gap-3 pl-2">
+                  <Link to="/resources" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Resources</Link>
+                  <Link to="/blog" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Blog & Media</Link>
+                  <Link to="/gallery" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Gallery</Link>
+               </div>
+            </div>
+
+            <div className="py-2 border-b border-slate-50">
+               <span className="text-[10px] font-black uppercase text-unda-navy mb-3 block tracking-widest">Get Involved</span>
+               <div className="grid grid-cols-1 gap-3 pl-2">
+                  <Link to="/partner" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Partner With Us</Link>
+                  <Link to="/membership" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Membership</Link>
+                  <Link to="/volunteer" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Volunteer</Link>
+               </div>
+            </div>
             
             <Button asChild className="w-full bg-unda-navy text-white mt-4 h-12 rounded-xl">
               <a href="https://unda-youth-network-backend.onrender.com/auth/login" target="_blank" rel="noopener noreferrer">

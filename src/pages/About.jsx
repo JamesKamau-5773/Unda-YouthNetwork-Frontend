@@ -179,7 +179,7 @@ const About = () => {
                   </div>
                   <div className="text-center p-6 bg-slate-50 rounded-2xl">
                     <p className="text-4xl font-black text-unda-navy mb-2">2</p>
-                    <p className="text-sm font-bold text-slate-600 uppercase tracking-wider">Pilot Regions</p>
+                    <p className="text-sm font-bold text-slate-600 uppercase tracking-wider"> Regions</p>
                   </div>
                   <div className="text-center p-6 bg-slate-50 rounded-2xl">
                     <p className="text-4xl font-black text-unda-yellow mb-2">50K+</p>
@@ -222,7 +222,7 @@ const About = () => {
 
               <div className="mt-12 text-center">
                 <Button asChild className="h-14 px-8 rounded-2xl bg-unda-navy text-white hover:bg-unda-teal text-lg font-bold shadow-xl">
-                  <Link to="/">Partner With Us</Link>
+                  <Link to="/partner">Partner With Us</Link>
                 </Button>
               </div>
             </div>

@@ -30,7 +30,7 @@ const Blog = () => {
     <Layout>
       <div className="min-h-screen bg-transparent">
         {/* Hero Section */}
-        <section className="pt-40 pb-20 bg-gradient-to-br from-unda-orange to-unda-yellow relative overflow-hidden">
+        <section className="pt-40 pb-20 bg-gradient-to-br from-unda-navy to-unda-teal relative overflow-hidden">
           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
           
           <div className="container mx-auto px-6 relative z-10">
@@ -41,9 +41,9 @@ const Blog = () => {
 
             <div className="max-w-4xl">
               <h1 className="text-6xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter mb-8">
-                Blog & <span className="text-unda-navy">Media.</span>
+                Blog & <span className="text-unda-yellow">Media.</span>
               </h1>
-              <p className="text-xl text-white/90 leading-relaxed max-w-3xl">
+              <p className="text-xl text-slate-200 leading-relaxed max-w-3xl">
                 The UNDA Youth Network Blog & Media Centre is your hub for news, stories, and insights on Adolescent & Youth Mental Health Prevention. We share content that informs, inspires, and engages youth, educators, partners, and the wider community.
               </p>
             </div>
@@ -63,12 +63,12 @@ const Blog = () => {
               
               <div className="space-y-6">
                 {articles.map((article, idx) => (
-                  <div key={idx} className="bg-unda-bg/30 rounded-2xl p-8 border-t-4 border-unda-teal hover:bg-white hover:shadow-xl transition-all duration-300 group">
+                  <div key={idx} className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:border-unda-teal/30 transition-all duration-300 group">
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-unda-teal/10 text-unda-teal">
+                      <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-unda-bg text-unda-navy">
                         {article.category}
                       </span>
-                      <span className="text-sm text-slate-500">{article.date}</span>
+                      <span className="text-sm text-slate-400 font-medium">{article.date}</span>
                     </div>
                     <h3 className="text-2xl font-black text-unda-navy mb-3 group-hover:text-unda-teal transition-colors">
                       {article.title}

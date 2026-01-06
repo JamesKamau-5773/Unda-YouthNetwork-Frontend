@@ -15,14 +15,14 @@ const GetInvolved = () => {
       icon: HeartHandshake,
       title: "Volunteer or Host an Event",
       description: "Support UMV channels including debates, podcasts, campus programs, Mtaani events, and forums.",
-      link: "/",
+      link: "/volunteer",
       color: "border-unda-orange"
     },
     {
       icon: Building2,
       title: "Partner With Us",
       description: "Organizations, schools, and funders can collaborate to support UMV programs and expand Adolescent & Youth Mental Health Prevention impact.",
-      link: "/about",
+      link: "/partner",
       color: "border-unda-yellow"
     },
     {

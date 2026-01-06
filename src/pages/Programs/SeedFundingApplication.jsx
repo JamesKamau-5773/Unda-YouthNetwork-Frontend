@@ -40,13 +40,30 @@ const SeedFundingApplication = () => {
           type: 'success', 
           text: 'Application submitted successfully! We will review and contact you within 5 business days.' 
         });
-        setTimeout(() => navigate('/campus'), 3000);
+        // Reset form on success
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          institution: '',
+          course: '',
+          yearOfStudy: '',
+          projectTitle: '',
+          projectDescription: '',
+          fundingAmount: '',
+          projectCategory: '',
+          teamSize: '',
+          expectedImpact: '',
+        });
+        // Scroll to top to show success message
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } catch (err) {
       setMessage({ 
         type: 'error', 
         text: err.response?.data?.message || 'Failed to submit application. Please try again.' 
       });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } finally {
       setSubmitting(false);
     }
@@ -82,11 +99,31 @@ const SeedFundingApplication = () => {
           {/* Form */}
           <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-8 lg:p-12 shadow-xl border border-slate-100">
             {message.text && (
-              <div className={`mb-8 p-4 rounded-2xl flex items-center gap-3 ${
-                message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+              <div className={`mb-8 p-5 rounded-2xl flex items-start gap-4 animate-in fade-in slide-in-from-top-3 ${
+                message.type === 'success' 
+                  ? 'bg-green-50 border-2 border-green-200 text-green-800' 
+                  : 'bg-red-50 border-2 border-red-200 text-red-800'
               }`}>
-                {message.type === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
-                <span className="text-sm font-medium">{message.text}</span>
+                {message.type === 'success' ? (
+                  <CheckCircle size={24} className="flex-shrink-0 mt-0.5" />
+                ) : (
+                  <AlertCircle size={24} className="flex-shrink-0 mt-0.5" />
+                )}
+                <div className="flex-1">
+                  <h4 className="font-bold mb-1">
+                    {message.type === 'success' ? 'Success!' : 'Error'}
+                  </h4>
+                  <p className="text-sm">{message.text}</p>
+                  {message.type === 'success' && (
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="mt-4 border-green-300 text-green-700 hover:bg-green-100"
+                    >
+                      <Link to="/campus">Back to Campus Edition</Link>
+                    </Button>
+                  )}
+                </div>
               </div>
             )}
 

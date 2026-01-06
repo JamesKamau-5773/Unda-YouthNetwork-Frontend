@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
 import { MapPin, Users, Calendar, ArrowRight, HeartHandshake, X, Loader2, CheckCircle, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -89,10 +89,26 @@ const UMVMtaani = () => {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState('all');
   const [regions, setRegions] = useState(['All', 'Nairobi', 'Coast']);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchUpcomingBarazas();
   }, []);
+
+  const handleStartHubClick = () => {
+    // Check if logged in (simple token check)
+    const token = localStorage.getItem('unda_token');
+    
+    if (token) {
+        // If logged in, go to join (or dashboard/create-hub if that existed)
+        // Currently /join is registration, but maybe we assume they want to "Register a new Hub"?
+        // Let's redirect to Member Dashboard for now as the 'Hub Manager'
+        navigate('/member/dashboard');
+    } else {
+        // Not logged in -> Gateway
+        navigate('/portal-gateway');
+    }
+  };
 
   useEffect(() => {
     if (showLogModal) {
@@ -227,8 +243,8 @@ const UMVMtaani = () => {
                 <p className="text-slate-600 font-medium leading-relaxed mb-8">
                   UMV Mtaani is designed for youth who are out of school or working in the informal sector. We meet you where you are.
                 </p>
-                <Button asChild className="w-full py-6 rounded-2xl bg-unda-navy text-white font-bold text-lg hover:bg-unda-orange transition-all">
-                  <Link to="/join">Start a Mtaani Hub <ArrowRight className="ml-2" /></Link>
+                <Button onClick={handleStartHubClick} className="w-full py-6 rounded-2xl bg-unda-navy text-white font-bold text-lg hover:bg-unda-orange transition-all cursor-pointer">
+                  Start a Mtaani Hub <ArrowRight className="ml-2" />
                 </Button>
               </div>
 

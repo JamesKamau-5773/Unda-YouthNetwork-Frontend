@@ -78,5 +78,32 @@ export const championService = {
   }
 };
 
+// 6. Check-In Service
+export const checkInService = {
+  submitCheckIn: async (data) => {
+    // Validate or transform data if needed
+    const payload = {
+      champion_id: data.championId,
+      phq2_score: parseInt(data.phq2Score),
+      gad2_score: parseInt(data.gad2Score),
+      reason: data.reason,
+      supervisor_notes: data.supervisorNotes,
+      referral_destination: data.destination,
+      red_flag_detected: data.isRedFlag || false
+    };
+    return await api.post('/api/checkin', payload);
+  }
+};
+
+// 7. Member Profile Service (Protected)
+export const profileService = {
+  getProfile: async () => {
+    return await api.get('/api/members/me');
+  },
+  updateProfile: async (data) => {
+    return await api.put('/api/members/me', data);
+  }
+};
+
 // 5. Single Default Export
 export default api;
