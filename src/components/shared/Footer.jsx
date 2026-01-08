@@ -76,7 +76,7 @@ const Footer = () => {
             <div>
               <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-unda-navy mb-8">Get Involved</h4>
               <ul className="space-y-4">
-                <li><Link to="/contribute" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Contribute</Link></li>
+                <li><Link to="/support" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Contribute</Link></li>
                 <li><Link to="/join" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Join</Link></li>
                 <li><Link to="/partner" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Partner</Link></li>
                 <li><Link to="/portal" className="text-slate-600 hover:text-unda-teal text-sm font-semibold transition-colors">Portal</Link></li>
