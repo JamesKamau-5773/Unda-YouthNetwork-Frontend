@@ -267,7 +267,7 @@ const Programs = () => {
               Ready to <span className="text-unda-yellow">Get Involved?</span>
             </h2>
             <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-12">
-              Join the movement for adolescent and youth mental health prevention. Become a member, volunteer, or partner with us today.
+              Join the movement for adolescent and youth mental health prevention. Become a member, support, or partner with us today.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button asChild className="h-14 px-8 rounded-2xl bg-unda-yellow text-unda-navy hover:bg-unda-orange hover:text-white text-lg font-bold">

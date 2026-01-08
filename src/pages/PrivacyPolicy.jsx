@@ -54,7 +54,7 @@ const PrivacyPolicy = () => {
                 <ul className="space-y-3">
                   <li className="flex items-start gap-3">
                     <div className="h-2 w-2 rounded-full bg-unda-teal mt-2 flex-shrink-0" />
-                    <p className="text-slate-600">Strict participant verification and background checks for all staff and volunteers</p>
+                    <p className="text-slate-600">Strict participant verification and background checks for all staff and supporters</p>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="h-2 w-2 rounded-full bg-unda-teal mt-2 flex-shrink-0" />

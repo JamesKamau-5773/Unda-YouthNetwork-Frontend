@@ -359,7 +359,7 @@ const MultiStepChampionForm = () => {
               <CheckCircle className="text-unda-teal mt-1 shrink-0" />
               <div>
                 <h4 className="font-bold text-unda-navy">Ready to Submit?</h4>
-                <p className="text-sm text-slate-600 mt-1">By clicking Complete, you agree to join the UNDA Youth Network as a volunteer Peer Champion.</p>
+                <p className="text-sm text-slate-600 mt-1">By clicking Complete, you agree to join the UNDA Youth Network as a support Peer Champion.</p>
               </div>
             </div>
           </div>

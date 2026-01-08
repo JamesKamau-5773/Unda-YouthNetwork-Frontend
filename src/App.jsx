@@ -28,7 +28,7 @@ import PodcastPage from './pages/Podcast';
 import PortalLogin from './pages/Portal/Login';
 import WeeklyCheckInForm from './features/checkin/WeeklyCheckInForm';
 import Partner from './pages/Partner';
-import Volunteer from './pages/Volunteer';
+import Support from './pages/Support';
 import CampusEdition from './pages/workstreams/CampusEdition';
 import DebatersCircle from './pages/workstreams/DebatersCircle'; 
 import UMVMtaani from './pages/workstreams/UMVMtaani';
@@ -70,7 +70,7 @@ function App() {
                     <Route path="/portal" element={<PortalLogin />} />
                     <Route path="/join" element={<MultiStepChampionForm />} />
                     <Route path="/partner" element={<Partner />} />
-                    <Route path="/volunteer" element={<Volunteer />} />
+                    <Route path="/support" element={<Support />} />
                     <Route path="/checkin" element={<WeeklyCheckInForm />} />
                     <Route path="/podcast" element={<PodcastPage />} />
                     <Route path="/campus" element={<CampusEdition />} />
