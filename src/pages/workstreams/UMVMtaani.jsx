@@ -88,7 +88,7 @@ const UMVMtaani = () => {
   const [formData, setFormData] = useState({ event_id: '', notes: '' });
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState('all');
-  const [regions, setRegions] = useState(['All', 'Nairobi', 'Coast']);
+  const [regions, setRegions] = useState(['All', 'Kenya', 'U.S.A']);
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -370,7 +370,7 @@ export default function MultiStepChampionForm() {
                         name="county"
                         value={form.county}
                         onChange={handleChange}
-                        placeholder="e.g. Nairobi"
+                        placeholder="e.g. Kenya"
                         className="bg-white border-slate-200 h-12 rounded-xl"
                       />
                     </div>

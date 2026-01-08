@@ -74,7 +74,7 @@ const Hero = () => {
               Live
             </p>
             <p className="text-xl font-black italic text-center">
-              Nairobi & Coast
+              Kenya & U.S.A
             </p>
           </div>
 

@@ -31,7 +31,7 @@ const Footer = () => {
                 </a>
                 <div className="flex items-center gap-2 text-sm text-slate-600">
                   <MapPin size={14} />
-                  <span className="font-medium">Nairobi, Kenya</span>
+                  <span className="font-medium">Kenya</span>
                 </div>
               </div>
             </div>
@@ -100,9 +100,9 @@ const Footer = () => {
               <div className="group p-4 rounded-2xl bg-slate-50 border border-transparent hover:border-unda-orange/30 hover:bg-white transition-all duration-500">
                 <div className="flex items-center gap-3 mb-1">
                   <MapPin size={14} className="text-unda-orange" />
-                  <p className="text-sm font-black text-unda-navy uppercase tracking-tighter">The Coast Region</p>
+                  <p className="text-sm font-black text-unda-navy uppercase tracking-tighter"></p>
                 </div>
-                <p className="text-[11px] text-slate-600 font-medium pl-6">Regional Outreach</p>
+                <p className="text-[11px] text-slate-600 font-medium pl-6"></p>
               </div>
             </div>
           </div>

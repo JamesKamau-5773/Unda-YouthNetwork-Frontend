@@ -10,7 +10,7 @@ const Profile = () => {
     fullName: 'James Mwangi',
     email: 'james.m@example.com',
     phone: '+254 712 345 678',
-    location: 'Nairobi, Westlands'
+    location: 'Kenya, Westlands'
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);

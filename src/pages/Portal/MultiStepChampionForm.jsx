@@ -281,7 +281,7 @@ const MultiStepChampionForm = () => {
                 min="1900-01-01"
                 max={today}
               />
-              <InputField label="County / Location" placeholder="e.g. Nairobi, Kibera" value={formData.county} onChange={e => setFormData({...formData, county: e.target.value})} />
+              <InputField label="County / Location" placeholder="e.g. Kenya, Kibera" value={formData.county} onChange={e => setFormData({...formData, county: e.target.value})} />
             </div>
           </div>
         );

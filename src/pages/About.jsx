@@ -170,7 +170,7 @@ const About = () => {
               <div className="bg-white rounded-3xl p-12 border border-slate-100 shadow-lg">
                 <h2 className="text-4xl font-black text-unda-navy mb-6">Target Regions & Population</h2>
                 <p className="text-lg text-slate-600 leading-relaxed mb-8">
-                  The UMV Prevention Program will pilot in <strong className="text-unda-navy">Nairobi and Coast regions</strong>, reaching young people aged 13–35 across urban, peri-urban, and rural contexts, including high schools, tertiary institutions, and community settings.
+                  The UMV Prevention Program will pilot in <strong className="text-unda-navy">Kenya and U.S.A regions</strong>, reaching young people aged 13–35 across urban, peri-urban, and rural contexts, including high schools, tertiary institutions, and community settings.
                 </p>
                 <div className="grid md:grid-cols-3 gap-6 mt-8">
                   <div className="text-center p-6 bg-slate-50 rounded-2xl">

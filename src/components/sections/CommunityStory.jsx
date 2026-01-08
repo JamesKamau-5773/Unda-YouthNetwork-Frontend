@@ -61,12 +61,12 @@ const CommunityStory = () => {
             {/* 4. THE REGIONS: Floating side-tags */}
             <div className="flex justify-center gap-16 pt-8">
               <div className="text-center">
-                <p className="text-xs font-black text-unda-teal uppercase tracking-widest mb-1">Nairobi</p>
+                <p className="text-xs font-black text-unda-teal uppercase tracking-widest mb-1">Kenya</p>
                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Hub</p>
               </div>
               <div className="w-px h-12 bg-slate-100" />
               <div className="text-center">
-                <p className="text-xs font-black text-unda-orange uppercase tracking-widest mb-1">The Coast</p>
+                <p className="text-xs font-black text-unda-orange uppercase tracking-widest mb-1">U.S.A</p>
                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Hub</p>
               </div>
             </div>

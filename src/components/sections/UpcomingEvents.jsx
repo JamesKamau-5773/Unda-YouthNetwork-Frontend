@@ -11,13 +11,13 @@ const UpcomingEvents = () => {
       color: "border-unda-teal"
     },
     {
-      title: "UMV Campus Showcase — Nairobi",
+      title: "UMV Campus Showcase — Kenya",
       description: "April 4–5, 2026 — Call for proposals open",
       link: "/campus",
       color: "border-unda-yellow"
     },
     {
-      title: "UMV Mtaani Community Gala — Nairobi",
+      title: "UMV Mtaani Community Gala — Kenya",
       description: "May 21, 2026 — Free entry, mental-health booths and performances",
       link: "/mtaani",
       color: "border-unda-orange"
