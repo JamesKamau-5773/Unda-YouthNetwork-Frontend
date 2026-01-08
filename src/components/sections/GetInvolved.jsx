@@ -13,9 +13,9 @@ const GetInvolved = () => {
     },
     {
       icon: HeartHandshake,
-      title: "Volunteer or Host an Event",
+      title: "Support or Host an Event",
       description: "Support UMV channels including debates, podcasts, campus programs, Mtaani events, and forums.",
-      link: "/volunteer",
+      link: "/support",
       color: "border-unda-orange"
     },
     {

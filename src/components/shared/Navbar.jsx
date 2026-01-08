@@ -175,11 +175,11 @@ const Navbar = () => {
                           </div>
                           <span className="text-[10px] font-black text-unda-navy uppercase">Membership</span>
                        </Link>
-                       <Link to="/volunteer" className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-all group/item">
+                       <Link to="/support" className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-all group/item">
                           <div className="p-2 bg-slate-100 text-slate-400 rounded-lg group-hover/item:bg-unda-navy group-hover/item:text-white transition-all">
                              <Lightbulb size={16} />
                           </div>
-                          <span className="text-[10px] font-black text-unda-navy uppercase">Volunteer</span>
+                          <span className="text-[10px] font-black text-unda-navy uppercase">Support</span>
                        </Link>
                     </div>
                   </div>
@@ -250,7 +250,7 @@ const Navbar = () => {
                <div className="grid grid-cols-1 gap-3 pl-2">
                   <Link to="/partner" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Partner With Us</Link>
                   <Link to="/membership" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Membership</Link>
-                  <Link to="/volunteer" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Volunteer</Link>
+                  <Link to="/support" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Support</Link>
                </div>
             </div>
             
