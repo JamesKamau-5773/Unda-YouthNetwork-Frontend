@@ -22,7 +22,7 @@ import Membership from './pages/Membership';
 import Resources from './pages/Resources';
 import Blog from './pages/Blog';
 import Gallery from './pages/Gallery';
-import Donate from './pages/Donate';
+import Contribute from './pages/Contribute';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import PodcastPage from './pages/Podcast';
 import PortalLogin from './pages/Portal/Login';
@@ -65,7 +65,7 @@ function App() {
                     <Route path="/resources" element={<Resources />} />
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/gallery" element={<Gallery />} />
-                    <Route path="/donate" element={<Donate />} />
+                    <Route path="/contribute" element={<Contribute />} />
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                     <Route path="/portal" element={<PortalLogin />} />
                     <Route path="/join" element={<MultiStepChampionForm />} />

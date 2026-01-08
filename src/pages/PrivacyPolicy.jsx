@@ -87,7 +87,7 @@ const PrivacyPolicy = () => {
               
               <div className="bg-white rounded-2xl p-8 border border-slate-100 shadow-lg space-y-6">
                 <p className="text-lg text-slate-700 leading-relaxed">
-                  We respect your privacy and handle all personal data securely. Information collected through membership, donations, or program participation is used solely to provide services, improve programs, and maintain communication.
+                  We respect your privacy and handle all personal data securely. Information collected through membership, contributions, or program participation is used solely to provide services, improve programs, and maintain communication.
                 </p>
 
                 <div className="grid md:grid-cols-2 gap-6">
@@ -97,7 +97,7 @@ const PrivacyPolicy = () => {
                       <li>• Name and contact information</li>
                       <li>• Age and demographic data</li>
                       <li>• Program participation records</li>
-                      <li>• Payment and donation information</li>
+                      <li>• Payment and contribution information</li>
                       <li>• Screening and assessment responses</li>
                     </ul>
                   </div>
@@ -108,7 +108,7 @@ const PrivacyPolicy = () => {
                       <li>• Deliver UMV program services</li>
                       <li>• Track progress and wellbeing</li>
                       <li>• Send updates and communications</li>
-                      <li>• Process donations and memberships</li>
+                      <li>• Process contributions and memberships</li>
                       <li>• Improve program effectiveness</li>
                     </ul>
                   </div>

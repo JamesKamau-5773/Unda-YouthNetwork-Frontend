@@ -27,9 +27,9 @@ const GetInvolved = () => {
     },
     {
       icon: Heart,
-      title: "Donate",
-      description: "One-time or recurring contributions fund UMV programs and help advance adolescents and youths mental health prevention across Kenya. Corporate donations start at KES 150,000 annually, supporting two youth cohorts of 25 participants each.",
-      link: "/donate",
+      title: "Contribute",
+      description: "One-time or recurring contributions fund UMV programs and help advance adolescents and youths mental health prevention across Kenya. Corporate contributions start at KES 150,000 annually, supporting two youth cohorts of 25 participants each.",
+      link: "/contribute",
       color: "border-unda-navy"
     }
   ];
