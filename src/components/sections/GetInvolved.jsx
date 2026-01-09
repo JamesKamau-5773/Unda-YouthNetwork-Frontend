@@ -14,7 +14,7 @@ const GetInvolved = () => {
     {
       icon: HeartHandshake,
       title: "Support or Host an Event",
-      description: "Support UMV channels including debates, podcasts, campus programs, Mtaani events, and forums.",
+      description: "Support UMV channels including UMV Debaters, UMV Podcast, UMV Campus, UMV Mtaani, and forums.",
       link: "/support",
       color: "border-[#00C2CB]"
     },

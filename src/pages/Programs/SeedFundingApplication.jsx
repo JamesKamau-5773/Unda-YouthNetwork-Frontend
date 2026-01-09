@@ -81,7 +81,7 @@ const SeedFundingApplication = () => {
               className="mb-6 text-unda-navy hover:text-unda-yellow"
             >
               <Link to="/campus">
-                <ArrowLeft size={16} className="mr-2" /> Back to Campus Edition
+                <ArrowLeft size={16} className="mr-2" /> Back to UMV Campus
               </Link>
             </Button>
             
@@ -120,7 +120,7 @@ const SeedFundingApplication = () => {
                       variant="outline"
                       className="mt-4 border-green-300 text-green-700 hover:bg-green-100"
                     >
-                      <Link to="/campus">Back to Campus Edition</Link>
+                      <Link to="/campus">Back to UMV Campus</Link>
                     </Button>
                   )}
                 </div>

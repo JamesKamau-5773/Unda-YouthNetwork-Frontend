@@ -56,7 +56,7 @@ const Membership = () => {
 								<div className="flex justify-between items-start mb-10">
 									<div>
 										<h3 className="text-2xl font-black text-unda-navy tracking-tight">Youth Membership</h3>
-										<p className="text-unda-orange font-bold text-xs uppercase tracking-widest mt-1">13–35 Years</p>
+										<p className="text-unda-teal font-bold text-xs uppercase tracking-widest mt-1">13–35 Years</p>
 									</div>
 									<div className="text-right">
 										<span className="block text-4xl font-black text-unda-navy tracking-tighter">KES 3,000</span>

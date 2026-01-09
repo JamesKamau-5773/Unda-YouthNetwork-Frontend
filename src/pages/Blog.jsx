@@ -20,7 +20,7 @@ const Blog = () => {
     },
     {
       title: "Youth Voices Setting the Pace for 2026",
-      excerpt: "Early stories from schools, campuses and communities preparing to participate in UMV Debates, Campus Edition and UMV Mtaani.",
+      excerpt: "Early stories from schools, campuses and communities preparing to participate in UMV Debaters, UMV Campus and UMV Mtaani.",
       category: "Success Story",
       date: "January 2026"
     }
@@ -84,7 +84,6 @@ const Blog = () => {
               </div>
 
               <div className="mt-12 text-center">
-                <p className="text-slate-500 text-lg mb-6">More stories coming soon...</p>
                 <Button className="bg-unda-teal text-white hover:bg-unda-navy">
                   Subscribe for Updates
                 </Button>

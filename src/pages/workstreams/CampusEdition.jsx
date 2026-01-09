@@ -113,7 +113,6 @@ const CampusEdition = () => {
           ) : initiatives.length === 0 ? (
             <div className="text-center py-16">
               <p className="text-slate-500 text-lg font-medium">No initiatives available at the moment.</p>
-              <p className="text-slate-400 text-sm mt-2">Check back soon for new opportunities!</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 gap-8">

@@ -182,7 +182,6 @@ export default function MultiStepChampionForm() {
                         value={form.fullName}
                         onChange={handleChange}
                         required
-                        placeholder="e.g. Jane Doe"
                         className="bg-white border-slate-200 h-12 rounded-xl"
                       />
                     </div>
@@ -196,7 +195,6 @@ export default function MultiStepChampionForm() {
                           value={form.email}
                           onChange={handleChange}
                           required
-                          placeholder="your@email.com"
                           className="bg-white border-slate-200 h-12 rounded-xl"
                         />
                       </div>
@@ -207,7 +205,6 @@ export default function MultiStepChampionForm() {
                           value={form.username}
                           onChange={handleChange}
                           required
-                          placeholder="username"
                           className="bg-white border-slate-200 h-12 rounded-xl"
                         />
                       </div>
@@ -221,7 +218,6 @@ export default function MultiStepChampionForm() {
                         value={form.phone}
                         onChange={handleChange}
                         required
-                        placeholder="0712345678"
                         className="bg-white border-slate-200 h-12 rounded-xl"
                       />
                     </div>
@@ -239,13 +235,12 @@ export default function MultiStepChampionForm() {
                         <div className="space-y-2">
                           <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Password *</label>
                           <div className="relative">
-                            <Input 
+                              <Input 
                               name="password"
                               type={showPassword ? 'text' : 'password'}
                               value={form.password}
                               onChange={handleChange}
                               required
-                              placeholder="Create a strong password"
                               className="bg-white border-slate-200 h-12 rounded-xl pr-10"
                             />
                             <button 
@@ -300,15 +295,14 @@ export default function MultiStepChampionForm() {
                         <div className="space-y-2">
                           <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Confirm Password *</label>
                           <div className="relative">
-                            <Input 
-                              name="confirmPassword"
-                              type={showConfirmPassword ? 'text' : 'password'}
-                              value={form.confirmPassword}
-                              onChange={handleChange}
-                              required
-                              placeholder="Re-enter your password"
-                              className="bg-white border-slate-200 h-12 rounded-xl pr-10"
-                            />
+                              <Input 
+                                name="confirmPassword"
+                                type={showConfirmPassword ? 'text' : 'password'}
+                                value={form.confirmPassword}
+                                onChange={handleChange}
+                                required
+                                className="bg-white border-slate-200 h-12 rounded-xl pr-10"
+                              />
                             <button 
                               type="button" 
                               onClick={() => setShowConfirmPassword(!showConfirmPassword)} 
@@ -370,7 +364,7 @@ export default function MultiStepChampionForm() {
                         name="county"
                         value={form.county}
                         onChange={handleChange}
-                        placeholder="e.g. Kenya"
+                        
                         className="bg-white border-slate-200 h-12 rounded-xl"
                       />
                     </div>
@@ -437,7 +431,7 @@ export default function MultiStepChampionForm() {
                   type={showPassword ? 'text' : 'password'} 
                   value={form.password} 
                   onChange={handleChange} 
-                  placeholder="Password (min 8 characters)" 
+                  
                   className="input pr-10" 
                   required 
                 />
@@ -492,7 +486,7 @@ export default function MultiStepChampionForm() {
                 type={showConfirmPassword ? 'text' : 'password'} 
                 value={form.confirmPassword} 
                 onChange={handleChange} 
-                placeholder="Confirm Password" 
+                
                 className="input pr-10" 
                 required 
               />
@@ -518,7 +512,7 @@ export default function MultiStepChampionForm() {
               onChange={handleChange}
               onFocus={(e) => e.target.showPicker && e.target.showPicker()}
               onClick={(e) => e.target.showPicker && e.target.showPicker()}
-              placeholder="Date of Birth"
+              
               min="1900-01-01"
               max={today}
               className="input"

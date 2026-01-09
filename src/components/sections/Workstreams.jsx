@@ -79,9 +79,7 @@ const Workstreams = () => {
                 <p className="text-xs text-slate-500 leading-relaxed mb-4">
                   {stream.desc}
                 </p>
-                <div className="flex items-center text-[10px] font-bold uppercase text-[#00C2CB] opacity-50">
-                  Coming Soon
-                </div>
+                <p className="text-xs text-slate-400 italic font-bold">Coming soon</p>
               </div>
             )
           ))}

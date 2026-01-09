@@ -42,12 +42,12 @@ const ParticipationModal = ({
 
           <div className="space-y-3">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Select Baraza Event</label>
-            {loading ? (
-              <div className="flex items-center justify-center py-8"><Loader2 className="animate-spin text-unda-orange" size={32} /></div>
+              {loading ? (
+              <div className="flex items-center justify-center py-8"><Loader2 className="animate-spin text-unda-teal" size={32} /></div>
             ) : (
               <div className="space-y-3">
                 {events.map((event) => (
-                  <label key={event.id} className={`block p-4 rounded-2xl border-2 cursor-pointer transition-all ${formData.event_id === String(event.id) ? 'border-unda-orange bg-unda-orange/5' : 'border-slate-100 hover:border-slate-200'}`}>
+                  <label key={event.id} className={`block p-4 rounded-2xl border-2 cursor-pointer transition-all ${formData.event_id === String(event.id) ? 'border-unda-teal bg-unda-teal/5' : 'border-slate-100 hover:border-slate-200'}`}>
                     <input type="radio" name="event_id" value={event.id} checked={formData.event_id === String(event.id)} onChange={(e) => setFormData({ ...formData, event_id: e.target.value })} className="sr-only" />
                     <div className="flex items-start justify-between">
                       <div>
@@ -57,7 +57,7 @@ const ParticipationModal = ({
                           <span className="flex items-center gap-1"><MapPin size={12} /> {event.location}</span>
                         </div>
                       </div>
-                      {formData.event_id === String(event.id) && <CheckCircle className="text-unda-orange" size={20} />}
+                      {formData.event_id === String(event.id) && <CheckCircle className="text-unda-teal" size={20} />}
                     </div>
                   </label>
                 ))}
@@ -67,10 +67,10 @@ const ParticipationModal = ({
 
           <div className="space-y-3">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Notes (Optional)</label>
-            <textarea value={formData.notes} onChange={(e) => setFormData({ ...formData, notes: e.target.value })} placeholder="Community impact, youth reached, key discussions..." className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-unda-orange focus:outline-none min-h-[100px] resize-none" />
+            <textarea value={formData.notes} onChange={(e) => setFormData({ ...formData, notes: e.target.value })} placeholder="Community impact, youth reached, key discussions..." className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-unda-teal focus:outline-none min-h-[100px] resize-none" />
           </div>
 
-          <Button type="submit" disabled={submitting || !formData.event_id} className="w-full h-14 rounded-2xl bg-unda-orange text-white hover:bg-unda-navy font-bold uppercase tracking-widest disabled:opacity-50">
+          <Button type="submit" disabled={submitting || !formData.event_id} className="w-full h-14 rounded-2xl bg-unda-teal text-white hover:bg-unda-navy font-bold uppercase tracking-widest disabled:opacity-50">
             {submitting ? <span className="flex items-center gap-2"><Loader2 className="animate-spin" size={18} /> Logging...</span> : 'Log My Participation'}
           </Button>
         </form>
@@ -360,7 +360,6 @@ const UMVMtaani = () => {
                       <p className="text-lg font-medium text-slate-500">
                         No barazas scheduled for {selectedRegion === 'all' ? 'any region' : selectedRegion.charAt(0).toUpperCase() + selectedRegion.slice(1)} yet.
                       </p>
-                      <p className="text-sm text-slate-400 mt-2">Check back soon or select a different region!</p>
                     </div>
                   )}
                 </div>

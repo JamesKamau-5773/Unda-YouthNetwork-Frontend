@@ -5,7 +5,7 @@ import { ArrowRight, Calendar } from 'lucide-react';
 const UpcomingEvents = () => {
   const events = [
     {
-      title: "UMV Debaters Circle",
+      title: "UMV Debaters",
       description: "March 12, 2026 — Register teams",
       link: "/debaters-circle",
       color: "border-[#00C2CB]"

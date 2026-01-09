@@ -340,7 +340,6 @@ const Podcast = () => {
           ) : episodes.length === 0 ? (
             <div className="text-center py-16 text-slate-500">
               <p className="text-lg font-medium">No episodes available yet.</p>
-              <p className="text-sm">Check back soon for new content!</p>
             </div>
           ) : (
             episodes.map((ep, idx) => (

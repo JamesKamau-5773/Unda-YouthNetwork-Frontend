@@ -29,7 +29,7 @@ const Programs = () => {
   const programs = [
     {
       icon: MessageSquare,
-      title: "UMV Debaters Circle",
+      title: "UMV Debaters",
       tagline: "Critical Thinking Through Structured Debates",
       description: "A dynamic platform where high school students explore mental-health prevention topics through structured debates.",
       highlights: [
@@ -44,7 +44,7 @@ const Programs = () => {
     },
     {
       icon: GraduationCap,
-      title: "UMV Campus Edition",
+      title: "UMV Campus",
       tagline: "Research-Driven Innovation for Tertiary Students",
       description: "A research-centered competition for university and college students passionate about preventive mental health.",
       highlights: [
@@ -113,7 +113,7 @@ const Programs = () => {
         "Building on the success of UMV in Kenya",
         "Creating global impact through local action"
       ],
-      cta: "Coming Soon",
+      cta: "",
       link: "/",
       color: "teal"
     }

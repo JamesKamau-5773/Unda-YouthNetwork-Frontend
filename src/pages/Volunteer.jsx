@@ -69,7 +69,7 @@ const Volunteer = () => {
                 Join the <span className="text-[#0090C0]">Movement.</span>
               </h1>
               <p className="text-xl text-slate-200 leading-relaxed max-w-3xl">
-                Be part of Kenya's youth-led mental health prevention revolution. Volunteer your skills or host an event in your community.
+                Be part of Kenya's youth-led mental health prevention revolution. Support our work with your skills or host an event in your community.
               </p>
             </div>
           </div>
@@ -85,7 +85,7 @@ const Volunteer = () => {
                 <div>
                   <h2 className="text-4xl font-black text-[#0B1E3B] mb-6">Why Get Involved?</h2>
                   <p className="text-lg text-slate-600 leading-relaxed">
-                    Whether you volunteer or host an event, you're contributing to scalable, peer-led mental health prevention that empowers young people across Kenya.
+                    Whether you support or host an event, you're contributing to scalable, peer-led mental health prevention that empowers young people across Kenya.
                   </p>
                 </div>
 
@@ -104,9 +104,9 @@ const Volunteer = () => {
                         <Users size={24} />
                       </div>
                       <div>
-                        <h4 className="font-bold text-[#0B1E3B] text-lg mb-2">I Want to Volunteer</h4>
+                        <h4 className="font-bold text-[#0B1E3B] text-lg mb-2">I Want to Support</h4>
                         <p className="text-sm text-slate-600">
-                          Support debates, podcasts, campus programs, Mtaani events, content creation, or peer support initiatives.
+                          Support UMV Debaters, UMV Podcast, UMV Campus, Mtaani events, content creation, or peer support initiatives.
                         </p>
                       </div>
                     </div>
@@ -176,7 +176,7 @@ const Volunteer = () => {
                   <form onSubmit={handleSubmit} className="relative z-10 space-y-6 animate-in slide-in-from-right-10 duration-500">
                     <div className="flex items-center justify-between mb-6">
                         <h3 className="text-2xl font-black text-[#0B1E3B]">
-                        {formType === 'volunteer' ? 'Volunteer Sign-Up' : 'Event Hosting Request'}
+                        {formType === 'volunteer' ? 'Support Sign-Up' : 'Event Hosting Request'}
                       </h3>
                       <button 
                         type="button" 
@@ -198,7 +198,6 @@ const Volunteer = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        placeholder="e.g. Jane Doe"
                         className="bg-white border-slate-200 h-12 rounded-xl"
                       />
                     </div>
@@ -212,7 +211,6 @@ const Volunteer = () => {
                           value={formData.email}
                           onChange={handleChange}
                           required
-                          placeholder="your@email.com"
                           className="bg-white border-slate-200 h-12 rounded-xl"
                         />
                       </div>
@@ -223,7 +221,6 @@ const Volunteer = () => {
                           type="tel"
                           value={formData.phone}
                           onChange={handleChange}
-                          placeholder="0712 345 678"
                           className="bg-white border-slate-200 h-12 rounded-xl"
                         />
                       </div>
@@ -249,7 +246,7 @@ const Volunteer = () => {
 
                     <div className="space-y-2">
                       <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">
-                        {formType === 'volunteer' ? 'Why do you want to volunteer?' : 'Tell us about your event idea'}
+                        {formType === 'volunteer' ? 'Why do you want to support?' : 'Tell us about your event idea'}
                       </label>
                       <textarea
                         name="message"
@@ -268,7 +265,7 @@ const Volunteer = () => {
                       type="submit" 
                       className={`w-full h-14 ${formType === 'volunteer' ? 'bg-[#00C2CB] hover:bg-[#00C2CB]/90' : 'bg-[#0090C0] hover:bg-[#0090C0]/90'} text-white font-bold text-lg rounded-xl shadow-lg transition-all`}
                     >
-                      {formType === 'volunteer' ? 'Submit Volunteer Application' : 'Submit Event Request'}
+                      {formType === 'volunteer' ? 'Submit Support Application' : 'Submit Event Request'}
                     </Button>
                   </form>
                 ) : (
@@ -278,7 +275,7 @@ const Volunteer = () => {
                     </div>
                     <h3 className="text-2xl font-black text-[#0B1E3B] mb-4">Thank You!</h3>
                     <p className="text-slate-600 mb-2">
-                      We've received your {formType === 'volunteer' ? 'volunteer application' : 'event hosting request'}.
+                      We've received your {formType === 'volunteer' ? 'support application' : 'event hosting request'}.
                     </p>
                     <p className="text-slate-600 mb-8">
                       Our team will review your details and contact you at <span className="font-bold">{formData.email}</span> within 48 hours.

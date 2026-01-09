@@ -53,7 +53,6 @@ const InputField = ({ label, type = "text", value, onChange, placeholder, min, m
           onChange={onChange}
           onFocus={isDateField ? openDatePicker : undefined}
           onClick={isDateField ? openDatePicker : undefined}
-          placeholder={placeholder}
           min={min}
           max={max}
           className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-[#0B1E3B] font-bold focus:outline-none focus:ring-2 focus:ring-[#00C2CB]/20 focus:border-[#00C2CB] transition-all placeholder:text-slate-300"
@@ -163,10 +162,10 @@ const MultiStepChampionForm = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-5">
-              <InputField label="Full Name" placeholder="e.g. Juma Ochieng" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
-              <InputField label="Email Address" type="email" placeholder="you@example.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
-              <InputField label="Username" placeholder="Choose a username" value={formData.username} onChange={e => setFormData({...formData, username: e.target.value})} />
-              <InputField label="Phone Number" type="tel" placeholder="0712345678" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
+              <InputField label="Full Name" value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} />
+              <InputField label="Email Address" type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+              <InputField label="Username" value={formData.username} onChange={e => setFormData({...formData, username: e.target.value})} />
+              <InputField label="Phone Number" type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
             </div>
             
             {/* Password Fields with Strength Meter - Full Width */}
@@ -178,7 +177,7 @@ const MultiStepChampionForm = () => {
                       type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={e => setFormData({...formData, password: e.target.value})}
-                    placeholder="Min 8 characters"
+                    
                     className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-[#0B1E3B] font-bold focus:outline-none focus:ring-2 focus:ring-[#00C2CB]/20 focus:border-[#00C2CB] transition-all placeholder:text-slate-300 pr-10"
                   />
                   {formData.password && (
@@ -240,7 +239,7 @@ const MultiStepChampionForm = () => {
                       type={showConfirmPassword ? 'text' : 'password'}
                     value={formData.confirmPassword}
                     onChange={e => setFormData({...formData, confirmPassword: e.target.value})}
-                    placeholder="Re-enter password"
+                    
                         className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 text-[#0B1E3B] font-bold focus:outline-none focus:ring-2 focus:ring-[#00C2CB]/20 focus:border-[#00C2CB] transition-all placeholder:text-slate-300 pr-10"
                   />
                     {formData.confirmPassword && (
@@ -281,7 +280,7 @@ const MultiStepChampionForm = () => {
                 min="1900-01-01"
                 max={today}
               />
-              <InputField label="County / Location" placeholder="e.g. Kenya, Kibera" value={formData.county} onChange={e => setFormData({...formData, county: e.target.value})} />
+              <InputField label="County / Location" value={formData.county} onChange={e => setFormData({...formData, county: e.target.value})} />
             </div>
           </div>
         );
@@ -299,10 +298,10 @@ const MultiStepChampionForm = () => {
             </div>
 
             <div className="space-y-5">
-              <InputField label="Contact Name" placeholder="Parent / Guardian Name" value={formData.emergencyName} onChange={e => setFormData({...formData, emergencyName: e.target.value})} />
+              <InputField label="Contact Name" value={formData.emergencyName} onChange={e => setFormData({...formData, emergencyName: e.target.value})} />
               <div className="grid md:grid-cols-2 gap-5">
-                <InputField label="Relationship" placeholder="e.g. Mother, Brother" value={formData.emergencyRelation} onChange={e => setFormData({...formData, emergencyRelation: e.target.value})} />
-                <InputField label="Contact Phone" type="tel" placeholder="07..." value={formData.emergencyPhone} onChange={e => setFormData({...formData, emergencyPhone: e.target.value})} />
+                <InputField label="Relationship" value={formData.emergencyRelation} onChange={e => setFormData({...formData, emergencyRelation: e.target.value})} />
+                <InputField label="Contact Phone" type="tel" value={formData.emergencyPhone} onChange={e => setFormData({...formData, emergencyPhone: e.target.value})} />
               </div>
             </div>
           </div>
@@ -328,9 +327,9 @@ const MultiStepChampionForm = () => {
                   <option value="High School">High School</option><option value="TVET">TVET</option><option value="University">University</option><option value="Graduate">Graduate</option>
                 </select>
               </div>
-              <InputField label="Institution" placeholder="School / University Name" value={formData.institution} onChange={e => setFormData({...formData, institution: e.target.value})} />
-              <InputField label="Field of Study" placeholder="Course Name" value={formData.fieldOfStudy} onChange={e => setFormData({...formData, fieldOfStudy: e.target.value})} />
-              <InputField label="Year of Study" placeholder="e.g. Year 2" value={formData.yearOfStudy} onChange={e => setFormData({...formData, yearOfStudy: e.target.value})} />
+              <InputField label="Institution" value={formData.institution} onChange={e => setFormData({...formData, institution: e.target.value})} />
+              <InputField label="Field of Study" value={formData.fieldOfStudy} onChange={e => setFormData({...formData, fieldOfStudy: e.target.value})} />
+              <InputField label="Year of Study" value={formData.yearOfStudy} onChange={e => setFormData({...formData, yearOfStudy: e.target.value})} />
             </div>
           </div>
         );
@@ -351,7 +350,7 @@ const MultiStepChampionForm = () => {
                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Recruitment Source</label>
                <select className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 font-bold text-[#0B1E3B] focus:border-[#00C2CB] outline-none" onChange={e => setFormData({...formData, recruitmentSource: e.target.value})} value={formData.recruitmentSource}>
                   <option value="">Select Source</option>
-                  <option value="Campus Edition">Campus Edition</option><option value="Mtaani">Mtaani</option><option value="Referral">Referral</option><option value="Social Media">Social Media</option>
+                  <option value="Campus Edition">UMV Campus</option><option value="Mtaani">Mtaani</option><option value="Referral">Referral</option><option value="Social Media">Social Media</option>
                 </select>
             </div>
 

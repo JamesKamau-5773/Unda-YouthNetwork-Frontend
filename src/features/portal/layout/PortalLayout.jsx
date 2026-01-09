@@ -53,7 +53,6 @@ const PortalLayout = ({ children, title, subtitle }) => {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#00C2CB] transition-colors" size={16} />
               <input 
                 type="text" 
-                placeholder="Search..." 
                 className="h-9 pl-9 pr-4 rounded-full bg-slate-100 border-transparent text-sm focus:bg-white focus:outline-none focus:border-[#00C2CB] focus:ring-2 focus:ring-[#00C2CB]/10 w-48 focus:w-64 transition-all duration-300"
               />
             </div>

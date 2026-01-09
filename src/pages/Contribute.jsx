@@ -18,7 +18,7 @@ const Contribute = () => {
         <form className="bg-white rounded-2xl p-8 border border-slate-100 shadow-xl">
           <div className="mb-6">
             <label className="block text-sm font-bold text-unda-navy mb-2">Amount (KES)</label>
-            <input type="number" className="w-full p-4 rounded-xl border border-slate-200 text-unda-navy font-medium focus:outline-none focus:ring-2 focus:ring-unda-teal/20 focus:border-unda-teal transition-all" placeholder="Enter amount" />
+            <input type="number" className="w-full p-4 rounded-xl border border-slate-200 text-unda-navy font-medium focus:outline-none focus:ring-2 focus:ring-unda-teal/20 focus:border-unda-teal transition-all" />
           </div>
           <button type="submit" className="w-full h-14 rounded-2xl bg-unda-teal text-white hover:bg-unda-navy text-lg font-bold shadow-xl">{type === "corporate" ? "Contact Us" : "Contribute Now"}</button>
         </form>

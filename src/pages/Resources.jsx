@@ -47,9 +47,8 @@ const Resources = () => {
                   <p className="text-slate-600 leading-relaxed mb-4">
                     Brief insights from UMV and partner research on youth mental health, preventive interventions, and evidence-based practices.
                   </p>
-                  <Button className="bg-[#00C2CB] text-white hover:bg-[#0B1E3B]">
-                    <Download size={16} className="mr-2" /> Coming Soon
-                  </Button>
+                  {/* resource download not yet available */}
+                  <p className="text-xs text-slate-400 italic font-bold">Coming soon</p>
                 </div>
 
                 <div className="bg-[#F9FAFB]/30 rounded-2xl p-8 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300">
@@ -57,9 +56,8 @@ const Resources = () => {
                   <p className="text-slate-600 leading-relaxed mb-4">
                     Annual and quarterly program reports highlighting achievements, learnings, and program impact across schools, campuses, and communities.
                   </p>
-                  <Button className="bg-[#00C2CB] text-white hover:bg-[#0B1E3B]">
-                    <Download size={16} className="mr-2" /> Coming Soon
-                  </Button>
+                  {/* resource download not yet available */}
+                  <p className="text-xs text-slate-400 italic font-bold">Coming soon</p>
                 </div>
               </div>
             </div>
@@ -91,7 +89,7 @@ const Resources = () => {
                   ].map((toolkit, idx) => (
                     <div key={idx} className="p-4 bg-white rounded-xl border border-slate-100">
                       <p className="font-bold text-[#0B1E3B]">{toolkit}</p>
-                      <p className="text-xs text-slate-500 mt-1">Coming Soon</p>
+                      <p className="text-xs text-slate-400 italic mt-2">Coming soon</p>
                     </div>
                   ))}
                 </div>
@@ -121,6 +119,34 @@ const Resources = () => {
                     Read Stories <ArrowRight size={16} className="ml-2" />
                   </Link>
                 </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Parents & Caregivers (NEW) */}
+        <section className="py-24 bg-white">
+          <div className="container mx-auto px-6">
+            <div className="max-w-4xl mx-auto">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="h-12 w-12 rounded-2xl bg-[#00C2CB]/10 flex items-center justify-center">
+                  <Heart size={24} className="text-[#00C2CB]" />
+                </div>
+                <h2 className="text-4xl font-black text-[#0B1E3B]">Parents &amp; Caregivers</h2>
+              </div>
+
+              <div className="bg-[#F9FAFB]/30 rounded-2xl p-8 hover:bg-white hover:shadow-xl transition-all duration-300 relative">
+                <div className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl" style={{ background: 'linear-gradient(90deg, #00C2CB 0%, #FFDFA8 50%, #FFC83D 100%)' }} />
+                <div className="pt-3">
+                <h3 className="text-2xl font-black text-[#0B1E3B] mb-3">MindRoots Parent Circle</h3>
+                <p className="text-slate-600 leading-relaxed mb-4">MindRoots Parent Circle offers prevention-first, culturally responsive support for immigrant parents navigating adolescence and young adulthood.</p>
+                <div className="flex items-center gap-4">
+                  <a href="/mindroots-parent-circle" className="text-unda-teal font-bold">Learn more</a>
+                  <Button asChild className="px-3 py-1.5 rounded-lg bg-white/40 backdrop-blur-sm border border-white/30 text-[#0B1E3B] hover:bg-[#00C2CB] hover:text-[#0B1E3B] hover:border-transparent text-sm font-semibold shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C2CB]/30">
+                    <a href="https://www.skool.com/mindroots-parent-circle-2411/about" target="_blank" rel="noopener noreferrer">Join the Parent Circle</a>
+                  </Button>
+                </div>
+                </div>
               </div>
             </div>
           </div>

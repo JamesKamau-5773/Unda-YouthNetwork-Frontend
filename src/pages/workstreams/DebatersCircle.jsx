@@ -331,7 +331,6 @@ const DebatersCircle = () => {
               ) : motions.length === 0 ? (
                 <div className="text-center py-16 text-slate-500">
                   <p className="text-lg font-medium">No debate motions available yet.</p>
-                  <p className="text-sm">Check back soon for upcoming debates!</p>
                 </div>
               ) : (
                 motions.map((motion, idx) => (

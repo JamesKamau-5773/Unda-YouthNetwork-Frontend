@@ -46,7 +46,6 @@ const Gallery = () => {
                     <div className="w-full h-full flex items-center justify-center">
                       <div className="text-center">
                         <Image size={48} className="text-slate-300 mx-auto mb-3" />
-                        <p className="text-sm font-bold text-slate-400">Coming Soon</p>
                       </div>
                     </div>
                   </div>
@@ -55,7 +54,7 @@ const Gallery = () => {
 
               <div className="mt-12 text-center">
                 <p className="text-slate-600 leading-relaxed">
-                  Snapshots from UMV Debaters Circle, UMV Campus Edition, UMV Mtaani, community outreach, and UMV Quarterly & Annual Forums, showcasing youth engagement, learning, and creativity.
+                  Snapshots from UMV Debaters, UMV Campus, UMV Mtaani, community outreach, and UMV Quarterly & Annual Forums, showcasing youth engagement, learning, and creativity.
                 </p>
               </div>
             </div>
@@ -81,7 +80,6 @@ const Gallery = () => {
                         <div className="h-16 w-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
                           <Play size={32} className="text-white ml-1" />
                         </div>
-                        <p className="text-sm font-bold text-slate-500">Video Coming Soon</p>
                       </div>
                     </div>
                   </div>

@@ -77,7 +77,7 @@ const Hero = () => {
           </div>
 
           {/* Decorative Teal circle behind the image */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[#00C2CB]/10 rounded-full -z-10 blur-3xl" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[#001F3F]/10 rounded-full -z-10 blur-3xl" />
         </div>
       </div>
     </section>

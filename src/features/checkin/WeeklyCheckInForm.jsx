@@ -117,7 +117,6 @@ export default function WeeklyCheckInForm() {
                       value={form.championId}
                       onChange={handleChange}
                       required
-                      placeholder="Enter Champion ID"
                       className="bg-white border-slate-200 h-12 rounded-xl"
                     />
                   </div>
@@ -137,7 +136,6 @@ export default function WeeklyCheckInForm() {
                         required
                         min="0"
                         max="6"
-                        placeholder="0"
                         className="bg-white border-slate-200 h-12 rounded-xl"
                       />
                       <p className="text-xs text-slate-500">Depression screening score</p>
@@ -155,7 +153,6 @@ export default function WeeklyCheckInForm() {
                         required
                         min="0"
                         max="6"
-                        placeholder="0"
                         className="bg-white border-slate-200 h-12 rounded-xl"
                       />
                       <p className="text-xs text-slate-500">Anxiety screening score</p>
@@ -191,7 +188,6 @@ export default function WeeklyCheckInForm() {
                       value={form.supervisorNotes}
                       onChange={handleChange}
                       rows={3}
-                      placeholder="Any observations or notes from the supervisor..."
                       className="w-full bg-white border border-slate-200 rounded-xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#00C2CB]"
                     />
                   </div>
@@ -203,7 +199,6 @@ export default function WeeklyCheckInForm() {
                       name="destination"
                       value={form.destination}
                       onChange={handleChange}
-                      placeholder="e.g. School Counselor, Mental Health Professional"
                       className="bg-white border-slate-200 h-12 rounded-xl"
                     />
                   </div>
