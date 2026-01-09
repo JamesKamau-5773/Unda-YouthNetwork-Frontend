@@ -41,12 +41,12 @@ const Navbar = () => {
           
           {/* Logo Section */}
           <Link to="/" className="flex items-center gap-3 group mr-8">
-            <div className="h-10 w-10 rounded-xl overflow-hidden flex items-center justify-center bg-white/10 border border-white/10">
-              <img src={undaLogo} alt="Unda Logo" className="w-full h-full object-contain mix-blend-multiply" />
+            <div className="h-10 w-10 rounded-xl overflow-hidden flex items-center justify-center bg-white/90 border border-white/50 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+              <img src={undaLogo} alt="Unda Logo" className="w-full h-full object-contain" />
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-white text-lg tracking-tighter leading-none">UNDA</span>
-              <span className="text-[6px] font-bold text-white/90 uppercase tracking-[0.3em] mt-0.5">Youth Network</span>
+              <span className="font-black text-[#0B1E3B] text-lg tracking-tighter leading-none">UNDA</span>
+              <span className="text-[6px] font-bold text-[#0B1E3B]/70 uppercase tracking-[0.3em] mt-0.5">Youth Network</span>
             </div>
           </Link>
 
