@@ -210,9 +210,10 @@ const UMVMtaani = () => {
         />
 
         {/* 1. HERO: Urban & Grounded */}
-        <section className="pt-40 pb-20 bg-unda-navy relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-          <div className="container mx-auto px-6 relative z-10 text-center">
+        <section className="pt-40 pb-20 bg-[#0B1E3B] relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10 z-0" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+          <div className="absolute inset-0 hero-overlay pointer-events-none z-10" />
+          <div className="container mx-auto px-6 relative z-20 text-center">
             <div className="flex justify-center mb-8">
               <Link to="/" className="inline-flex items-center text-slate-400 hover:text-white transition-colors">
                 <ArrowLeft size={20} className="mr-2" />
@@ -220,12 +221,12 @@ const UMVMtaani = () => {
               </Link>
             </div>
 
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-unda-orange/10 border border-unda-orange/20 mb-8 mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00C2CB]/10 border border-[#00C2CB]/20 mb-8 mx-auto">
               <MapPin size={16} className="text-unda-orange" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-unda-orange">Neighborhood Prevention</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-[#00C2CB]">Neighborhood Prevention</span>
             </div>
             <h1 className="text-6xl lg:text-9xl font-black text-white leading-[0.85] tracking-tighter mb-8">
-              UMV <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-unda-orange to-unda-yellow">Mtaani.</span>
+              UMV <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C2CB] to-[#0090C0]">Mtaani.</span>
             </h1>
             <p className="text-slate-300 text-xl font-medium max-w-2xl mx-auto leading-relaxed">
               Bringing mental health prevention to the doorstep. We turn community halls, playing fields, and social spaces into safe zones for resilience.
@@ -238,31 +239,31 @@ const UMVMtaani = () => {
           <div className="grid lg:grid-cols-12 gap-16">
             <div className="lg:col-span-5 space-y-12">
               <div className="p-10 rounded-[3rem] bg-slate-50 border border-slate-100">
-                <HeartHandshake size={48} className="text-unda-navy mb-6" />
-                <h3 className="text-3xl font-black text-unda-navy mb-4">Community First.</h3>
+                <HeartHandshake size={48} className="text-[#0B1E3B] mb-6" />
+                <h3 className="text-3xl font-black text-[#0B1E3B] mb-4">Community First.</h3>
                 <p className="text-slate-600 font-medium leading-relaxed mb-8">
                   UMV Mtaani is designed for youth who are out of school or working in the informal sector. We meet you where you are.
                 </p>
-                <Button onClick={handleStartHubClick} className="w-full py-6 rounded-2xl bg-unda-navy text-white font-bold text-lg hover:bg-unda-orange transition-all cursor-pointer">
+                <Button onClick={handleStartHubClick} className="w-full py-6 rounded-2xl bg-[#0B1E3B] text-white font-bold text-lg hover:bg-[#00C2CB] transition-all cursor-pointer">
                   Start a Mtaani Hub <ArrowRight className="ml-2" />
                 </Button>
               </div>
 
               {/* Log Participation Card */}
-              <div className="p-8 rounded-[2.5rem] bg-unda-orange text-white shadow-xl">
+              <div className="p-8 rounded-[2.5rem] bg-[#00C2CB] text-white shadow-xl">
                 <Users size={32} className="mb-4 opacity-50" />
                 <h4 className="font-black text-lg mb-2">Log Your Outreach</h4>
                 <p className="text-white/80 text-sm mb-6">Champions: Record your Baraza attendance for Documentation Quality Score.</p>
-                <Button onClick={() => setShowLogModal(true)} className="w-full h-12 rounded-xl bg-white text-unda-orange hover:bg-unda-navy hover:text-white font-bold uppercase text-xs">
+                <Button onClick={() => setShowLogModal(true)} className="w-full h-12 rounded-xl bg-white text-[#00C2CB] hover:bg-[#0B1E3B] hover:text-white font-bold uppercase text-xs">
                   Open Activity Log
                 </Button>
               </div>
 
-              <div className="flex items-center gap-6 p-8 rounded-[2.5rem] bg-unda-teal/10 border border-unda-teal/20">
-                <Users size={32} className="text-unda-teal" />
+              <div className="flex items-center gap-6 p-8 rounded-[2.5rem] bg-[#0090C0]/10 border border-[#0090C0]/20">
+                <Users size={32} className="text-[#0090C0]" />
                 <div>
-                  <p className="text-3xl font-black text-unda-navy">12</p>
-                  <p className="text-xs font-bold text-unda-teal uppercase tracking-widest">Active Locations</p>
+                  <p className="text-3xl font-black text-[#0B1E3B]">12</p>
+                  <p className="text-xs font-bold text-[#0090C0] uppercase tracking-widest">Active Locations</p>
                 </div>
               </div>
             </div>
@@ -270,19 +271,19 @@ const UMVMtaani = () => {
             <div className="lg:col-span-7">
               <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
                 <div>
-                  <h2 className="text-3xl font-black text-unda-navy tracking-tight">Upcoming Barazas</h2>
+                  <h2 className="text-3xl font-black text-[#0B1E3B] tracking-tight">Upcoming Barazas</h2>
                   <p className="text-sm text-slate-500 mt-2">Community prevention events across Kenya</p>
                 </div>
                 
                 {/* Region Filter Tabs */}
                 <div className="flex gap-2 flex-wrap">
                   {regions.map((region) => (
-                    <button
+                      <button
                       key={region}
                       onClick={() => setSelectedRegion(region.toLowerCase())}
                       className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${
                         selectedRegion === region.toLowerCase()
-                          ? 'bg-unda-orange text-white shadow-lg'
+                          ? 'bg-[#00C2CB] text-white shadow-lg'
                           : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                       }`}
                     >
@@ -294,7 +295,7 @@ const UMVMtaani = () => {
 
               {loading ? (
                 <div className="flex items-center justify-center py-16">
-                  <Loader2 className="animate-spin text-unda-orange" size={48} />
+                  <Loader2 className="animate-spin text-[#00C2CB]" size={48} />
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -307,8 +308,8 @@ const UMVMtaani = () => {
                     .map((event, idx) => {
                       const eventRegion = event.region || event.location?.split(',')[0]?.trim() || 'Unknown';
                       
-                      return (
-                        <div key={event.id || idx} className="group p-8 rounded-[2rem] border border-slate-100 bg-white hover:border-unda-orange/30 hover:shadow-xl transition-all">
+                        return (
+                        <div key={event.id || idx} className="group p-8 rounded-[2rem] border border-slate-100 bg-white hover:border-[#00C2CB]/30 hover:shadow-xl transition-all">
                           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                             <div className="flex items-center gap-6 flex-1">
                               <div className="h-16 w-16 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-unda-navy font-bold border border-slate-100 shrink-0">
@@ -322,12 +323,12 @@ const UMVMtaani = () => {
                                 )}
                               </div>
                               <div>
-                                <h4 className="text-xl font-black text-unda-navy group-hover:text-unda-orange transition-colors">{event.title}</h4>
+                                <h4 className="text-xl font-black text-[#0B1E3B] group-hover:text-[#00C2CB] transition-colors">{event.title}</h4>
                                 <div className="flex items-center gap-4 mt-2 flex-wrap">
                                   <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
                                     <MapPin size={12} /> {event.location}
                                   </span>
-                                  <span className="px-3 py-1 rounded-full bg-unda-orange/10 text-unda-orange text-[9px] font-black uppercase tracking-widest">
+                                  <span className="px-3 py-1 rounded-full bg-[#00C2CB]/10 text-[#00C2CB] text-[9px] font-black uppercase tracking-widest">
                                     {eventRegion}
                                   </span>
                                   {event.type && (
@@ -340,7 +341,7 @@ const UMVMtaani = () => {
                             </div>
                             <Button 
                               onClick={() => setShowLogModal(true)} 
-                              className="rounded-xl bg-unda-orange/10 hover:bg-unda-orange text-unda-orange hover:text-white font-bold whitespace-nowrap"
+                              className="rounded-xl bg-[#00C2CB]/10 hover:bg-[#00C2CB] text-[#00C2CB] hover:text-white font-bold whitespace-nowrap"
                             >
                               Log Attendance <CheckCircle size={16} className="ml-2" />
                             </Button>
