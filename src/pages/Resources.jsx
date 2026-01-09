@@ -10,9 +10,10 @@ const Resources = () => {
       <div className="min-h-screen bg-transparent">
         {/* Hero Section */}
         <section className="pt-40 pb-20 bg-gradient-to-br from-[#00C2CB] to-[#0B1E3B] relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+          <div className="absolute inset-0 opacity-10 z-0" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+          <div className="absolute inset-0 hero-overlay z-10 pointer-events-none" />
           
-          <div className="container mx-auto px-6 relative z-10">
+          <div className="container mx-auto px-6 relative z-20">
             <Link to="/" className="inline-flex items-center text-white/70 hover:text-white transition-colors mb-8">
               <ArrowLeft size={20} className="mr-2" />
               <span className="font-bold text-sm uppercase tracking-widest">Back to Home</span>

@@ -76,7 +76,7 @@ export default function WeeklyCheckInForm() {
     <Layout>
       <div className="min-h-screen bg-transparent">
         {/* Hero Section */}
-        <section className="pt-40 pb-20 bg-gradient-to-br from-[#00C2CB] to-[#0B1E3B] relative overflow-hidden">
+        <section className="pt-40 pb-20 bg-gradient-to-br from-[#00C2CB] to-[#0B1E3B] relative overflow-hidden hero-overlay">
           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
           
           <div className="container mx-auto px-6 relative z-10">
