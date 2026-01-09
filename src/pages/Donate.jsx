@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
 import { ArrowLeft, Heart, Calendar, Building2, CreditCard, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,12 @@ import { Button } from '@/components/ui/button';
 const Donate = () => {
   const [donationType, setDonationType] = useState('one-time');
   const [amount, setAmount] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const t = setTimeout(() => navigate('/partner', { replace: true }), 300);
+    return () => clearTimeout(t);
+  }, [navigate]);
 
   const quickAmounts = [1000, 2500, 5000, 10000];
 
