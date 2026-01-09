@@ -16,11 +16,11 @@ const Membership = () => {
 
 	return (
 		<Layout>
-			<section className="py-24 lg:py-40 bg-white/90 relative overflow-hidden">
+			<section className="py-24 lg:py-40 bg-white/90 relative overflow-hidden hero-overlay">
 				{/* Background Decorative Element */}
 				<div className="absolute top-0 right-0 w-1/3 h-full bg-unda-teal/[0.02] -skew-x-12 translate-x-1/2" />
 
-				<div className="container mx-auto px-6 relative z-10">
+				<div className="container mx-auto px-6 relative z-20">
 					<div className="grid lg:grid-cols-12 gap-16 items-center">
 						{/* LEFT: Information & Context (Left-Aligned) */}
 						<div className="lg:col-span-6 space-y-8">
@@ -49,9 +49,9 @@ const Membership = () => {
 						{/* RIGHT: The Conversion Card (Asymmetrical Placement) */}
 						<div className="lg:col-span-6 relative">
 							{/* Creative 'Shadow' element behind the card */}
-							<div className="absolute top-8 left-8 w-full h-full border-2 border-unda-navy/[0.05] rounded-[3rem] -z-10" />
+							<div className="absolute top-8 left-8 w-full h-full border-2 border-[#0B1E3B]/[0.05] rounded-[3rem] z-0" />
               
-							<div className="bg-white border border-slate-100 p-8 lg:p-12 rounded-[3rem] shadow-2xl relative overflow-hidden">
+							  <div className="bg-white border border-slate-100 p-8 lg:p-12 rounded-[3rem] shadow-2xl relative overflow-hidden z-30">
 								{/* Card Header */}
 								<div className="flex justify-between items-start mb-10">
 									<div>
