@@ -20,7 +20,7 @@ const Blog = () => {
     },
     {
       title: "Youth Voices Setting the Pace for 2026",
-      excerpt: "Early stories from schools, campuses and communities preparing to participate in UMV Debates, Campus Edition and UMV Mtaani.",
+      excerpt: "Early stories from schools, campuses and communities preparing to participate in UMV Debaters, UMV Campus and UMV Mtaani.",
       category: "Success Story",
       date: "January 2026"
     }
@@ -30,7 +30,7 @@ const Blog = () => {
     <Layout>
       <div className="min-h-screen bg-transparent">
         {/* Hero Section */}
-        <section className="pt-40 pb-20 bg-gradient-to-br from-unda-navy to-unda-teal relative overflow-hidden">
+        <section className="pt-40 pb-20 bg-gradient-to-br from-[#0B1E3B] to-[#00C2CB] relative overflow-hidden hero-overlay">
           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
           
           <div className="container mx-auto px-6 relative z-10">
@@ -84,7 +84,6 @@ const Blog = () => {
               </div>
 
               <div className="mt-12 text-center">
-                <p className="text-slate-500 text-lg mb-6">More stories coming soon...</p>
                 <Button className="bg-unda-teal text-white hover:bg-unda-navy">
                   Subscribe for Updates
                 </Button>

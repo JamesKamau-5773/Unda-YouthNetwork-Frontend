@@ -107,7 +107,7 @@ export default function MultiStepChampionForm() {
     <Layout>
       <div className="min-h-screen bg-transparent">
         {/* Hero Section */}
-        <section className="pt-40 pb-20 bg-gradient-to-br from-unda-navy to-unda-teal relative overflow-hidden">
+        <section className="pt-40 pb-20 bg-gradient-to-br from-[#0B1E3B] to-[#00C2CB] relative overflow-hidden hero-overlay">
           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
           
           <div className="container mx-auto px-6 relative z-10">
@@ -118,7 +118,7 @@ export default function MultiStepChampionForm() {
 
             <div className="max-w-4xl">
               <h1 className="text-6xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter mb-8">
-                Become a <span className="text-unda-yellow">Champion.</span>
+                Become a <span className="text-[#0090C0]">Champion.</span>
               </h1>
               <p className="text-xl text-slate-200 leading-relaxed max-w-3xl">
                 Join Kenya's youth-led mental health prevention movement as a Peer Champion. Your registration is pending admin approval.
@@ -137,7 +137,7 @@ export default function MultiStepChampionForm() {
                   <div key={label} className="flex items-center">
                     <div className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all ${
                       step === idx 
-                        ? 'bg-unda-teal text-white shadow-lg' 
+                        ? 'bg-[#00C2CB] text-white shadow-lg' 
                         : step > idx 
                         ? 'bg-green-100 text-green-700'
                         : 'bg-slate-100 text-slate-400'
@@ -159,99 +159,94 @@ export default function MultiStepChampionForm() {
               </div>
             </div>
 
-            <div className="bg-unda-bg/50 rounded-[2.5rem] p-8 lg:p-12 border border-slate-100 shadow-xl relative overflow-hidden">
+            <div className="bg-[#F9FAFB]/50 rounded-[2.5rem] p-8 lg:p-12 border border-slate-100 shadow-xl relative overflow-hidden">
               <form onSubmit={handleSubmit} className="relative z-10 space-y-6">
                 
                 {/* Step 0: Account Details */}
                 {step === 0 && (
                   <div className="space-y-6 animate-in fade-in slide-in-from-right-5 duration-300">
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="p-3 bg-unda-teal/10 rounded-xl text-unda-teal">
+                      <div className="p-3 bg-[#00C2CB]/10 rounded-xl text-[#00C2CB]">
                         <User size={24} />
                       </div>
                       <div>
-                        <h3 className="text-2xl font-black text-unda-navy">Account Information</h3>
+                        <h3 className="text-2xl font-black text-[#0B1E3B]">Account Information</h3>
                         <p className="text-sm text-slate-500">Create your peer champion account</p>
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-unda-navy uppercase tracking-wider">Full Name *</label>
+                      <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Full Name *</label>
                       <Input 
                         name="fullName"
                         value={form.fullName}
                         onChange={handleChange}
                         required
-                        placeholder="e.g. Jane Doe"
                         className="bg-white border-slate-200 h-12 rounded-xl"
                       />
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <label className="text-sm font-bold text-unda-navy uppercase tracking-wider">Email *</label>
+                        <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Email *</label>
                         <Input 
                           name="email"
                           type="email"
                           value={form.email}
                           onChange={handleChange}
                           required
-                          placeholder="your@email.com"
                           className="bg-white border-slate-200 h-12 rounded-xl"
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-sm font-bold text-unda-navy uppercase tracking-wider">Username *</label>
+                        <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Username *</label>
                         <Input 
                           name="username"
                           value={form.username}
                           onChange={handleChange}
                           required
-                          placeholder="username"
                           className="bg-white border-slate-200 h-12 rounded-xl"
                         />
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-unda-navy uppercase tracking-wider">Phone Number *</label>
+                      <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Phone Number *</label>
                       <Input 
                         name="phone"
                         type="tel"
                         value={form.phone}
                         onChange={handleChange}
                         required
-                        placeholder="0712345678"
                         className="bg-white border-slate-200 h-12 rounded-xl"
                       />
                     </div>
 
                     {/* Password Section */}
                     <div className="pt-4 border-t border-slate-100">
-                      <div className="flex items-center gap-3 mb-6">
-                        <div className="p-2 bg-unda-navy/10 rounded-lg text-unda-navy">
+                        <div className="flex items-center gap-3 mb-6">
+                        <div className="p-2 bg-[#0B1E3B]/10 rounded-lg text-[#0B1E3B]">
                           <Lock size={20} />
                         </div>
-                        <h4 className="text-lg font-bold text-unda-navy">Secure Password</h4>
+                        <h4 className="text-lg font-bold text-[#0B1E3B]">Secure Password</h4>
                       </div>
 
                       <div className="space-y-4">
                         <div className="space-y-2">
-                          <label className="text-sm font-bold text-unda-navy uppercase tracking-wider">Password *</label>
+                          <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Password *</label>
                           <div className="relative">
-                            <Input 
+                              <Input 
                               name="password"
                               type={showPassword ? 'text' : 'password'}
                               value={form.password}
                               onChange={handleChange}
                               required
-                              placeholder="Create a strong password"
                               className="bg-white border-slate-200 h-12 rounded-xl pr-10"
                             />
                             <button 
                               type="button" 
                               onClick={() => setShowPassword(!showPassword)} 
-                              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-unda-teal transition-colors"
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#00C2CB] transition-colors"
                             >
                               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                             </button>
@@ -298,21 +293,20 @@ export default function MultiStepChampionForm() {
                         )}
 
                         <div className="space-y-2">
-                          <label className="text-sm font-bold text-unda-navy uppercase tracking-wider">Confirm Password *</label>
+                          <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Confirm Password *</label>
                           <div className="relative">
-                            <Input 
-                              name="confirmPassword"
-                              type={showConfirmPassword ? 'text' : 'password'}
-                              value={form.confirmPassword}
-                              onChange={handleChange}
-                              required
-                              placeholder="Re-enter your password"
-                              className="bg-white border-slate-200 h-12 rounded-xl pr-10"
-                            />
+                              <Input 
+                                name="confirmPassword"
+                                type={showConfirmPassword ? 'text' : 'password'}
+                                value={form.confirmPassword}
+                                onChange={handleChange}
+                                required
+                                className="bg-white border-slate-200 h-12 rounded-xl pr-10"
+                              />
                             <button 
                               type="button" 
                               onClick={() => setShowConfirmPassword(!showConfirmPassword)} 
-                              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-unda-teal transition-colors"
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#00C2CB] transition-colors"
                             >
                               {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                             </button>
@@ -332,12 +326,12 @@ export default function MultiStepChampionForm() {
                 {step === 1 && (
                   <div className="space-y-6 animate-in fade-in slide-in-from-right-5 duration-300">
                     <div className="mb-6">
-                      <h3 className="text-2xl font-black text-unda-navy mb-2">Additional Information</h3>
+                      <h3 className="text-2xl font-black text-[#0B1E3B] mb-2">Additional Information</h3>
                       <p className="text-sm text-slate-500">Optional: Help us personalize your experience</p>
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-unda-navy uppercase tracking-wider">Date of Birth</label>
+                          <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Date of Birth</label>
                       <Input 
                         name="dob"
                         type="date"
@@ -349,12 +343,12 @@ export default function MultiStepChampionForm() {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-unda-navy uppercase tracking-wider">Gender</label>
+                      <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Gender</label>
                       <select 
                         name="gender"
                         value={form.gender}
                         onChange={handleChange}
-                        className="w-full bg-white border border-slate-200 h-12 rounded-xl px-3 text-sm focus:outline-none focus:ring-2 focus:ring-unda-teal"
+                        className="w-full bg-white border border-slate-200 h-12 rounded-xl px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#00C2CB]"
                       >
                         <option value="">Select Gender</option>
                         <option value="Male">Male</option>
@@ -365,12 +359,12 @@ export default function MultiStepChampionForm() {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-unda-navy uppercase tracking-wider">County / Location</label>
+                      <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">County / Location</label>
                       <Input 
                         name="county"
                         value={form.county}
                         onChange={handleChange}
-                        placeholder="e.g. Kenya"
+                        
                         className="bg-white border-slate-200 h-12 rounded-xl"
                       />
                     </div>
@@ -401,7 +395,7 @@ export default function MultiStepChampionForm() {
                     <Button 
                       type="button"
                       onClick={nextStep}
-                      className="flex-1 h-12 bg-unda-teal hover:bg-unda-navy text-white rounded-xl"
+                      className="flex-1 h-12 bg-[#00C2CB] hover:bg-[#0B1E3B] text-white rounded-xl"
                     >
                       Continue
                     </Button>
@@ -409,7 +403,7 @@ export default function MultiStepChampionForm() {
                     <Button 
                       type="submit"
                       disabled={isSubmitting}
-                      className="flex-1 h-12 bg-unda-navy hover:bg-unda-teal text-white rounded-xl disabled:opacity-50"
+                      className="flex-1 h-12 bg-[#0B1E3B] hover:bg-[#00C2CB] text-white rounded-xl disabled:opacity-50"
                     >
                       {isSubmitting ? 'Creating Account...' : 'Complete Registration'}
                     </Button>
@@ -437,11 +431,11 @@ export default function MultiStepChampionForm() {
                   type={showPassword ? 'text' : 'password'} 
                   value={form.password} 
                   onChange={handleChange} 
-                  placeholder="Password (min 8 characters)" 
+                  
                   className="input pr-10" 
                   required 
                 />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-unda-teal">
+                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#00C2CB]">
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
@@ -492,11 +486,11 @@ export default function MultiStepChampionForm() {
                 type={showConfirmPassword ? 'text' : 'password'} 
                 value={form.confirmPassword} 
                 onChange={handleChange} 
-                placeholder="Confirm Password" 
+                
                 className="input pr-10" 
                 required 
               />
-              <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-unda-teal">
+                <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#00C2CB]">
                 {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
               {form.confirmPassword && form.password !== form.confirmPassword && (
@@ -518,7 +512,7 @@ export default function MultiStepChampionForm() {
               onChange={handleChange}
               onFocus={(e) => e.target.showPicker && e.target.showPicker()}
               onClick={(e) => e.target.showPicker && e.target.showPicker()}
-              placeholder="Date of Birth"
+              
               min="1900-01-01"
               max={today}
               className="input"
@@ -536,9 +530,9 @@ export default function MultiStepChampionForm() {
       <div className="flex justify-between mt-4">
         <button type="button" onClick={prevStep} disabled={step === 0} className="btn">Back</button>
         {step < steps.length - 1 ? (
-          <button type="button" onClick={nextStep} className="btn bg-unda-teal text-white">Next</button>
+          <button type="button" onClick={nextStep} className="btn bg-[#00C2CB] text-white">Next</button>
         ) : (
-          <button type="submit" className="btn bg-unda-teal text-white" disabled={isSubmitting}>
+          <button type="submit" className="btn bg-[#00C2CB] text-white" disabled={isSubmitting}>
             {isSubmitting ? 'Registering...' : 'Complete Registration'}
           </button>
         )}

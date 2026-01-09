@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
 import { ArrowLeft, Heart, Calendar, Building2, CreditCard, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,12 @@ import { Button } from '@/components/ui/button';
 const Donate = () => {
   const [donationType, setDonationType] = useState('one-time');
   const [amount, setAmount] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const t = setTimeout(() => navigate('/partner', { replace: true }), 300);
+    return () => clearTimeout(t);
+  }, [navigate]);
 
   const quickAmounts = [1000, 2500, 5000, 10000];
 
@@ -14,7 +20,7 @@ const Donate = () => {
     <Layout>
       <div className="min-h-screen bg-transparent">
         {/* Hero Section */}
-        <section className="pt-40 pb-20 bg-gradient-to-br from-unda-teal to-unda-navy relative overflow-hidden">
+        <section className="pt-40 pb-20 bg-gradient-to-br from-[#00C2CB] to-[#0B1E3B] relative overflow-hidden hero-overlay">
           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
           
           <div className="container mx-auto px-6 relative z-10">

@@ -25,9 +25,9 @@ const ImpactSnapshot = () => {
   const { activeChampions, referralConversionRate, trainingComplianceRate, loading } = useMetrics();
 
   const stats = [
-    { number: activeChampions, label: "Active Peer Champions", color: "bg-unda-navy", glow: "shadow-unda-navy/20" },
-    { number: `${referralConversionRate.toFixed(1)}%`, label: "Referral Conversion Rate", color: "bg-unda-orange", glow: "shadow-unda-orange/20" },
-    { number: `${trainingComplianceRate.toFixed(1)}%`, label: "Training Compliance Rate", color: "bg-unda-teal", glow: "shadow-unda-teal/20" },
+    { number: activeChampions, label: "Active Peer Champions", color: "bg-[#0B1E3B]", glow: "shadow-[#0B1E3B]/20" },
+    { number: `${referralConversionRate.toFixed(1)}%`, label: "Referral Conversion Rate", color: "bg-[#00C2CB]", glow: "shadow-[#00C2CB]/20" },
+    { number: `${trainingComplianceRate.toFixed(1)}%`, label: "Training Compliance Rate", color: "bg-[#00C2CB]", glow: "shadow-[#00C2CB]/20" },
   ];
 
   return(
@@ -35,7 +35,7 @@ const ImpactSnapshot = () => {
       <div className="container mx-auto px-6">
         <div className="flex flex-wrap justify-center gap-8">
           {loading ? (
-            <div className="text-center w-full py-12 text-unda-navy font-bold">Loading metrics...</div>
+            <div className="text-center w-full py-12 text-[#0B1E3B] font-bold">Loading metrics...</div>
           ) : (
             stats.map((stat, index) => (
               <div key={index}

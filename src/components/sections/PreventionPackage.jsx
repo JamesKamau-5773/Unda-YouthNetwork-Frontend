@@ -12,10 +12,10 @@ const PreventionPackage = () => {
   ];
 
   return(
-    <section className = "py-32 bg-unda-bg/50">
+    <section className = "py-32 bg-[#F9FAFB]/50">
       <div className = "container mx-auto px-6">
         <div className = "max-w-3xl mx-auto text-center mb-20">
-          <h2 className = "text-4xl font-black text-unda-navy mb-4">The UMV Prevention Package</h2>
+          <h2 className = "text-4xl font-black text-[#0B1E3B] mb-4">The UMV Prevention Package</h2>
           <p className = "text-slate-500 leading-relaxed">A structured, youth-centered model to strengthen early prevention.</p>
         </div>
 
@@ -26,8 +26,8 @@ const PreventionPackage = () => {
               className = "bg-white/70 backdrop-blur-md border border-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl hover:bg-white transition-all duration-500 group"
             
             >
-              <span className = "text-4xl font-black text-slate-100 group-hover:text-unda-teal/20 transition-colors">{step.id}</span>
-              <h4 className = "text-xl font-bold text-unda-navy mt-4 mb-3">{step.title}</h4>
+              <span className = "text-4xl font-black text-slate-100 group-hover:text-[#00C2CB]/20 transition-colors">{step.id}</span>
+              <h4 className = "text-xl font-bold text-[#0B1E3B] mt-4 mb-3">{step.title}</h4>
               <p className = "text-slate-500 text-sm leading-relaxed">{step.desc}</p>
 
             </div>

@@ -19,11 +19,11 @@ const Sidebar = () => {
       {/* 1. Logo Area */}
       <div className="p-6 border-b border-slate-100">
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="h-10 w-10 rounded-lg bg-unda-navy flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105">
+          <div className="h-10 w-10 rounded-lg bg-[#0B1E3B] flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105">
             <img src={undaLogo} alt="Unda" className="w-full h-full object-contain mix-blend-mode-screen" />
           </div>
           <div className="flex flex-col">
-            <span className="font-black text-lg text-unda-navy leading-none tracking-tight">UNDA</span>
+            <span className="font-black text-lg text-[#0B1E3B] leading-none tracking-tight">UNDA</span>
             <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Member Portal</span>
           </div>
         </Link>
@@ -39,16 +39,16 @@ const Sidebar = () => {
             to={item.path}
             className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative ${
               isActive(item.path) 
-                ? 'text-unda-teal bg-unda-teal/5' 
-                : 'text-slate-500 hover:text-unda-navy hover:bg-slate-50'
+                ? 'text-[#00C2CB] bg-[#00C2CB]/5' 
+                : 'text-slate-500 hover:text-[#0B1E3B] hover:bg-slate-50'
             }`}
           >
             {isActive(item.path) && (
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-unda-teal rounded-r-full" />
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-[#00C2CB] rounded-r-full" />
             )}
             <item.icon 
               size={18} 
-              className={`transition-colors ${isActive(item.path) ? 'text-unda-teal' : 'text-slate-400 group-hover:text-unda-navy'}`} 
+              className={`transition-colors ${isActive(item.path) ? 'text-[#00C2CB]' : 'text-slate-400 group-hover:text-[#0B1E3B]'}`} 
             />
             {item.label}
           </Link>
@@ -60,16 +60,16 @@ const Sidebar = () => {
                 to="/member/profile"
                 className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative ${
                 isActive('/member/profile') 
-                    ? 'text-unda-teal bg-unda-teal/5' 
-                    : 'text-slate-500 hover:text-unda-navy hover:bg-slate-50'
+                    ? 'text-[#00C2CB] bg-[#00C2CB]/5' 
+                    : 'text-slate-500 hover:text-[#0B1E3B] hover:bg-slate-50'
                 }`}
             >
                 {isActive('/member/profile') && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-unda-teal rounded-r-full" />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-[#00C2CB] rounded-r-full" />
                 )}
                 <User 
                   size={18} 
-                  className={`transition-colors ${isActive('/member/profile') ? 'text-unda-teal' : 'text-slate-400 group-hover:text-unda-navy'}`} 
+                  className={`transition-colors ${isActive('/member/profile') ? 'text-[#00C2CB]' : 'text-slate-400 group-hover:text-[#0B1E3B]'}`} 
                 />
                 Profile & Settings
             </Link>

@@ -118,7 +118,7 @@ const Podcast = () => {
         <div className="bg-white rounded-3xl max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
           <div className="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10 rounded-t-3xl">
             <div>
-              <h2 className="text-xl font-black text-unda-navy">{playingEpisode?.title}</h2>
+              <h2 className="text-xl font-black text-[#0B1E3B]">{playingEpisode?.title}</h2>
               <p className="text-sm text-slate-500 mt-1">Guest: {playingEpisode?.guest || 'N/A'}</p>
             </div>
             <button onClick={() => setShowPlayerModal(false)} className="p-2 hover:bg-slate-100 rounded-xl">
@@ -171,13 +171,13 @@ const Podcast = () => {
                 ></iframe>
               </div>
             ) : mediaType === 'audio' ? (
-              <div className="w-full p-8 bg-gradient-to-br from-unda-teal/10 to-unda-navy/10 rounded-2xl">
+              <div className="w-full p-8 bg-gradient-to-br from-[#00C2CB]/10 to-[#0B1E3B]/10 rounded-2xl">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="h-20 w-20 rounded-2xl bg-unda-teal flex items-center justify-center">
+                  <div className="h-20 w-20 rounded-2xl bg-[#00C2CB] flex items-center justify-center">
                     <Mic2 size={40} className="text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-black text-unda-navy">{playingEpisode?.title}</h3>
+                    <h3 className="text-lg font-black text-[#0B1E3B]">{playingEpisode?.title}</h3>
                     <p className="text-sm text-slate-500">{playingEpisode?.duration || 'Audio Podcast'}</p>
                   </div>
                 </div>
@@ -209,7 +209,7 @@ const Podcast = () => {
                   href={mediaUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-unda-teal text-white rounded-xl font-bold hover:bg-unda-navy transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#00C2CB] text-white rounded-xl font-bold hover:bg-[#0B1E3B] transition-all"
                 >
                   Open in New Tab <ArrowRight size={16} />
                 </a>
@@ -223,25 +223,25 @@ const Podcast = () => {
                   {playingEpisode.module && (
                     <div>
                       <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Module</p>
-                      <p className="text-sm font-bold text-unda-navy">{playingEpisode.module}</p>
+                      <p className="text-sm font-bold text-[#0B1E3B]">{playingEpisode.module}</p>
                     </div>
                   )}
                   {playingEpisode.duration && (
                     <div>
                       <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Duration</p>
-                      <p className="text-sm font-bold text-unda-navy">{playingEpisode.duration}</p>
+                      <p className="text-sm font-bold text-[#0B1E3B]">{playingEpisode.duration}</p>
                     </div>
                   )}
                   {playingEpisode.date && (
                     <div>
                       <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Date</p>
-                      <p className="text-sm font-bold text-unda-navy">{playingEpisode.date}</p>
+                      <p className="text-sm font-bold text-[#0B1E3B]">{playingEpisode.date}</p>
                     </div>
                   )}
-                  {playingEpisode.episode && (
+                      {playingEpisode.episode && (
                     <div>
                       <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Episode</p>
-                      <p className="text-sm font-bold text-unda-navy">{playingEpisode.episode}</p>
+                      <p className="text-sm font-bold text-[#0B1E3B]">{playingEpisode.episode}</p>
                     </div>
                   )}
                 </div>
@@ -259,38 +259,37 @@ const Podcast = () => {
       
       {/* 1. HERO SECTION: Asymmetrical & Bold */}
       <section className="pt-40 pb-20 bg-slate-50 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-unda-teal/[0.03] -skew-x-12 translate-x-1/4" />
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-[#00C2CB]/[0.03] -skew-x-12 translate-x-1/4" />
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid lg:grid-cols-12 gap-16 items-center">
             <div className="lg:col-span-7 space-y-8">
               <div className="inline-flex items-center gap-3 px-4 py-2 rounded-2xl bg-white border border-slate-100 shadow-sm">
-                <Mic2 className="text-unda-teal" size={18} />
-                <span className="text-[10px] font-black uppercase tracking-widest text-unda-navy">
+                <Mic2 className="text-[#00C2CB]" size={18} />
+                <span className="text-[10px] font-black uppercase tracking-widest text-[#0B1E3B]">
                   Featured Conversation
                 </span>
               </div>
 
-              <h1 className="text-6xl lg:text-8xl font-black text-unda-navy leading-[0.9] tracking-tighter">
-                Candid <br />
-                <span className="text-unda-teal">Resilience</span> <br />
+              <h1 className="text-6xl lg:text-8xl font-black text-[#0B1E3B] leading-[0.9] tracking-tighter">
+                UMV <br />
+                <span className="text-[#00C2CB]">Podcast</span>
+                <br />
                 Stories.
               </h1>
 
               <p className="text-slate-600 text-xl font-medium max-w-xl leading-relaxed">
-                Listen to "The UMV Podcast" where we bridge the gap between
-                clinical expertise and youth-led storytelling. Prevention starts
-                with a conversation.
+                The UMV Podcast is our social driver—youth-led storytelling and expert conversations that translate prevention science into accessible narratives and community action.
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">
-                <Button className="h-16 px-8 rounded-2xl bg-unda-navy text-white hover:bg-unda-teal text-lg font-bold shadow-xl shadow-unda-navy/10 group">
+                <Button className="h-16 px-8 rounded-2xl bg-[#0B1E3B] text-white hover:bg-[#00C2CB] text-lg font-bold shadow-xl shadow-[#0B1E3B]/10 group">
                   <Play className="mr-3 fill-current" size={20} />
                   Listen Now
                 </Button>
                 <Button
                   variant="outline"
-                  className="h-16 px-8 rounded-2xl border-slate-200 text-unda-navy font-bold hover:bg-slate-50"
+                  className="h-16 px-8 rounded-2xl border-slate-200 text-[#0B1E3B] font-bold hover:bg-slate-50"
                 >
                   Browse Archive
                 </Button>
@@ -298,8 +297,8 @@ const Podcast = () => {
             </div>
 
             <div className="lg:col-span-5 relative">
-              <div className="aspect-square rounded-[4rem] bg-unda-navy flex items-center justify-center relative overflow-hidden shadow-2xl">
-                <div className="absolute inset-0 bg-gradient-to-tr from-unda-teal/40 to-transparent opacity-50" />
+              <div className="aspect-square rounded-[4rem] bg-[#0B1E3B] flex items-center justify-center relative overflow-hidden shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#00C2CB]/40 to-transparent opacity-50" />
                 <Mic2 size={120} className="text-white opacity-20" />
                 <div className="absolute bottom-10 left-10 right-10 p-6 bg-white/10 backdrop-blur-md rounded-3xl border border-white/10">
                   <p className="text-white text-xs font-black uppercase tracking-widest mb-2">
@@ -319,7 +318,7 @@ const Podcast = () => {
       <section className="py-24 container mx-auto px-6">
         <div className="flex justify-between items-end mb-16 border-b border-slate-100 pb-8">
           <div>
-            <h2 className="text-3xl font-black text-unda-navy tracking-tight">
+              <h2 className="text-3xl font-black text-[#0B1E3B] tracking-tight">
               Recent Sessions
             </h2>
             <p className="text-slate-500 font-bold text-sm mt-2 uppercase tracking-widest">
@@ -335,37 +334,36 @@ const Podcast = () => {
 
         <div className="grid gap-6">
           {loading ? (
-            <div className="flex items-center justify-center py-16">
-              <Loader2 className="animate-spin text-unda-teal" size={48} />
+              <div className="flex items-center justify-center py-16">
+              <Loader2 className="animate-spin text-[#00C2CB]" size={48} />
             </div>
           ) : episodes.length === 0 ? (
             <div className="text-center py-16 text-slate-500">
               <p className="text-lg font-medium">No episodes available yet.</p>
-              <p className="text-sm">Check back soon for new content!</p>
             </div>
           ) : (
             episodes.map((ep, idx) => (
               <div
                 key={ep.id || idx}
-                className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 hover:border-unda-teal/30 hover:shadow-2xl transition-all duration-500 flex flex-col md:flex-row md:items-center justify-between gap-8"
+                className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 hover:border-[#00C2CB]/30 hover:shadow-2xl transition-all duration-500 flex flex-col md:flex-row md:items-center justify-between gap-8"
               >
                 <div className="flex items-center gap-8">
                   <button 
                     onClick={() => handlePlayEpisode(ep)}
-                    className="h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center text-unda-teal group-hover:bg-unda-teal group-hover:text-white transition-all cursor-pointer hover:scale-110"
+                    className="h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center text-[#00C2CB] group-hover:bg-[#00C2CB] group-hover:text-white transition-all cursor-pointer hover:scale-110"
                   >
                     <Play size={24} />
                   </button>
                   <div>
                     <div className="flex items-center gap-3 mb-1">
-                      <span className="px-3 py-1 rounded-full bg-unda-teal/5 text-unda-teal text-[9px] font-bold uppercase tracking-widest">
+                      <span className="px-3 py-1 rounded-full bg-[#00C2CB]/5 text-[#00C2CB] text-[9px] font-bold uppercase tracking-widest">
                         {ep.module}
                       </span>
                       <span className="text-[10px] text-slate-400 font-bold flex items-center gap-1">
                         <Calendar size={12} /> {ep.date}
                       </span>
                     </div>
-                    <h3 className="text-xl font-black text-unda-navy group-hover:text-unda-teal transition-colors">
+                    <h3 className="text-xl font-black text-[#0B1E3B] group-hover:text-[#00C2CB] transition-colors">
                       {ep.title}
                     </h3>
                     <p className="text-slate-600 font-semibold text-sm">

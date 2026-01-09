@@ -25,7 +25,7 @@ export function ReferralProvider({ children }) {
     <ReferralContext.Provider value={{ triggerReferral, referralAlert, loading, error }}>
       {children}
       {referralAlert && (
-        <div className="fixed top-8 right-8 z-50 bg-unda-orange text-white px-6 py-4 rounded-xl shadow-xl font-bold">
+        <div className="fixed top-8 right-8 z-50 bg-[#00C2CB] text-white px-6 py-4 rounded-xl shadow-xl font-bold">
           <div>Referral Triggered!</div>
           <div>Reason: {referralAlert.reason}</div>
           <div>Supervisor Notes: {referralAlert.supervisorNotes}</div>

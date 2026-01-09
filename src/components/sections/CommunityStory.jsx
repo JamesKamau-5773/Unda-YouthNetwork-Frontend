@@ -7,7 +7,7 @@ const CommunityStory = () => {
       className="py-32 bg-white relative overflow-hidden scroll-mt-32"
     >
       {/* Ambient background element to anchor the center */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-unda-teal/[0.02] blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-[rgba(0,194,203,0.02)] blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
@@ -15,7 +15,7 @@ const CommunityStory = () => {
           {/* 1. THE IMAGE: Centered with a 'Floating' effect */}
           <div className="relative mb-20 w-full max-w-2xl group">
              {/* Decorative 'frame' for depth */}
-            <div className="absolute -inset-4 border border-unda-teal/10 rounded-[4rem] scale-105 group-hover:scale-100 transition-transform duration-700" />
+            <div className="absolute -inset-4 border border-[#00C2CB]/10 rounded-[4rem] scale-105 group-hover:scale-100 transition-transform duration-700" />
             
             <div className="relative rounded-[3.5rem] overflow-hidden shadow-2xl border-[12px] border-white rotate-1 group-hover:rotate-0 transition-transform duration-500">
               <img 
@@ -36,7 +36,7 @@ const CommunityStory = () => {
               ))}
             </div>
 
-            <h2 className="text-5xl lg:text-6xl font-black text-unda-navy leading-tight tracking-tight">
+            <h2 className="text-5xl lg:text-6xl font-black text-[#0B1E3B] leading-tight tracking-tight">
               Built by Youth, for Youth.
             </h2>
             
@@ -46,14 +46,14 @@ const CommunityStory = () => {
 
             {/* 3. THE ACTIVITIES: High-contrast text labels */}
             <div className="pt-8 flex flex-wrap justify-center gap-x-12 gap-y-6 border-t border-slate-100">
-              {[
-                { label: "Weekly Peer Check-Ins", color: "bg-unda-teal" },
-                { label: "Cultural Storytelling", color: "bg-unda-orange" },
-                { label: "Digital Resilience Tools", color: "bg-unda-yellow" }
+                {[
+                { label: "Weekly Peer Check-Ins", color: "bg-[#00C2CB]" },
+                { label: "Cultural Storytelling", color: "bg-[#00C2CB]" },
+                { label: "Digital Resilience Tools", color: "bg-[#0090C0]" }
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3">
                   <div className={`h-1.5 w-1.5 rounded-full ${item.color}`} />
-                  <span className="text-unda-navy font-bold text-sm tracking-tight">{item.label}</span>
+                  <span className="text-[#0B1E3B] font-bold text-sm tracking-tight">{item.label}</span>
                 </div>
               ))}
             </div>
@@ -61,12 +61,12 @@ const CommunityStory = () => {
             {/* 4. THE REGIONS: Floating side-tags */}
             <div className="flex justify-center gap-16 pt-8">
               <div className="text-center">
-                <p className="text-xs font-black text-unda-teal uppercase tracking-widest mb-1">Kenya</p>
+                <p className="text-xs font-black text-[#00C2CB] uppercase tracking-widest mb-1">Kenya</p>
                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Hub</p>
               </div>
               <div className="w-px h-12 bg-slate-100" />
               <div className="text-center">
-                <p className="text-xs font-black text-unda-orange uppercase tracking-widest mb-1">U.S.A</p>
+                <p className="text-xs font-black text-[#00C2CB] uppercase tracking-widest mb-1">U.S.A</p>
                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Hub</p>
               </div>
             </div>

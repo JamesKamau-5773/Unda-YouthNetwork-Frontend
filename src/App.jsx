@@ -22,7 +22,7 @@ import Membership from './pages/Membership';
 import Resources from './pages/Resources';
 import Blog from './pages/Blog';
 import Gallery from './pages/Gallery';
-import Volunteer from './pages/Volunteer';
+import MindRootsParentCircle from './pages/MindRootsParentCircle';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import PodcastPage from './pages/Podcast';
 import PortalLogin from './pages/Portal/Login';
@@ -65,8 +65,7 @@ function App() {
                     <Route path="/resources" element={<Resources />} />
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/gallery" element={<Gallery />} />
-                    <Route path="/contribute" element={<Volunteer />} />
-                    <Route path="/volunteer" element={<Volunteer />} />
+                    <Route path="/contribute" element={<Support />} />
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                     <Route path="/portal" element={<PortalLogin />} />
                     <Route path="/join" element={<MultiStepChampionForm />} />
@@ -74,6 +73,7 @@ function App() {
                     <Route path="/support" element={<Support />} />
                     <Route path="/checkin" element={<WeeklyCheckInForm />} />
                     <Route path="/podcast" element={<PodcastPage />} />
+                    <Route path="/mindroots-parent-circle" element={<MindRootsParentCircle />} />
                     <Route path="/campus" element={<CampusEdition />} />
                     <Route path="/debaters-circle" element={<DebatersCircle />} />
                     <Route path="/mtaani" element={<UMVMtaani />} />

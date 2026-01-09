@@ -14,45 +14,38 @@ const Workstreams = () => {
     {
       title: "UMV Podcast",
       icon: <Mic />,
-      desc: "Expert insights and youth stories on resilience.",
-      color: "border-unda-teal",
+      desc: "Our social driver — youth-led storytelling and expert conversations.",
+      color: "border-[#00C2CB]",
       link: "/podcast"
     },
     {
-      title: "Debaters Circle",
+      title: "UMV Debaters",
       icon: <Users />,
-      desc: "Empowering schools through mental health literacy.",
-      color: "border-unda-orange",
+      desc: "Prevention cohorts for 13–17yr olds in schools, churches and communities.",
+      color: "border-[#00C2CB]",
       link: "/debaters-circle"
     },
     {
-      title: "Campus Edition",
+      title: "UMV Campus",
       icon: <GraduationCap />,
-      desc: "Research-led innovation and seed funding.",
-      color: "border-unda-yellow",
+      desc: "Campus cohorts, events, and embedded research driving prevention innovation.",
+      color: "border-[#0090C0]",
       link: "/campus"
     },
     {
       title: "UMV Mtaani",
       icon: <MapPin />,
-      desc: "Community-driven prevention in your neighborhood.",
-      color: "border-unda-navy",
+      desc: "Community outreaches, local prevention cohorts, and pillar events.",
+      color: "border-[#0B1E3B]",
       link: "/mtaani"
     },
-    // High School workstream does not have a page yet
-    {
-      title: "High School",
-      icon: <BookOpen />,
-      desc: "Building wellness foundations for adolescents.",
-      color: "border-unda-teal",
-      link: null
-    },
+    // Keep placeholder removed — primary UMV products now displayed
   ];
 
   return (
     <section className="py-24 bg-white">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl font-black text-unda-navy text-center mb-16 font-unda">
+        <h2 className="text-4xl font-black text-[#0B1E3B] text-center mb-16">
           Our Workstreams
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
@@ -61,34 +54,32 @@ const Workstreams = () => {
               <Link
                 key={idx}
                 to={stream.link}
-                className={`p-8 border-t-4 ${stream.color} bg-unda-bg/30 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group cursor-pointer block`}
+                className={`p-8 border-t-4 ${stream.color} bg-[#F9FAFB]/30 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group cursor-pointer block`}
               >
-                <div className="text-unda-teal mb-4 group-hover:scale-110 transition-transform">
+                <div className="text-[#00C2CB] mb-4 group-hover:scale-110 transition-transform">
                   {React.cloneElement(stream.icon, { size: 32 })}
                 </div>
-                <h4 className="font-bold text-unda-navy mb-2">{stream.title}</h4>
+                <h4 className="font-bold text-[#0B1E3B] mb-2">{stream.title}</h4>
                 <p className="text-xs text-slate-500 leading-relaxed mb-4">
                   {stream.desc}
                 </p>
-                <div className="flex items-center text-[10px] font-bold uppercase text-unda-teal opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex items-center text-[10px] font-bold uppercase text-[#00C2CB] opacity-0 group-hover:opacity-100 transition-opacity">
                   Learn More <ArrowRight size={12} className="ml-1" />
                 </div>
               </Link>
             ) : (
               <div
                 key={idx}
-                className={`p-8 border-t-4 ${stream.color} bg-unda-bg/30 rounded-2xl opacity-60 cursor-not-allowed`}
+                className={`p-8 border-t-4 ${stream.color} bg-[#F9FAFB]/30 rounded-2xl opacity-60 cursor-not-allowed`}
               >
-                <div className="text-unda-teal mb-4">
+                <div className="text-[#00C2CB] mb-4">
                   {React.cloneElement(stream.icon, { size: 32 })}
                 </div>
-                <h4 className="font-bold text-unda-navy mb-2">{stream.title}</h4>
+                <h4 className="font-bold text-[#0B1E3B] mb-2">{stream.title}</h4>
                 <p className="text-xs text-slate-500 leading-relaxed mb-4">
                   {stream.desc}
                 </p>
-                <div className="flex items-center text-[10px] font-bold uppercase text-unda-teal opacity-50">
-                  Coming Soon
-                </div>
+                <p className="text-xs text-slate-400 italic font-bold">Coming soon</p>
               </div>
             )
           ))}

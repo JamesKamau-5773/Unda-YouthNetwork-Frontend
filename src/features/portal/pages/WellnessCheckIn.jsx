@@ -7,7 +7,7 @@ const WellnessCheckInPortal = () => {
     <PortalLayout title="Wellness Check-In" subtitle="Your weekly mental resilience tracker.">
        <div className="max-w-4xl mx-auto">
           
-          <div className="bg-gradient-to-br from-unda-teal to-[#155e75] rounded-3xl p-8 md:p-12 text-center text-white shadow-2xl shadow-teal-900/10 relative overflow-hidden">
+          <div className="bg-gradient-to-br from-[#00C2CB] to-[#155e75] rounded-3xl p-8 md:p-12 text-center text-white shadow-2xl shadow-teal-900/10 relative overflow-hidden">
              
              {/* Background Decoration */}
              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />

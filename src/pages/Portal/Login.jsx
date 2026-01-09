@@ -87,7 +87,7 @@ const PortalLogin = () => {
                 <Input 
                   type="email" 
                   name="email"
-                  placeholder="name@example.com" 
+                  
                   className="h-12 rounded-xl bg-slate-50 border-slate-200 focus:ring-unda-teal focus:border-unda-teal"
                   value={formData.email}
                   onChange={handleChange}
@@ -103,7 +103,7 @@ const PortalLogin = () => {
                 <Input 
                   type="password" 
                   name="password"
-                  placeholder="••••••••" 
+                  
                   className="h-12 rounded-xl bg-slate-50 border-slate-200 focus:ring-unda-teal focus:border-unda-teal"
                   value={formData.password}
                   onChange={handleChange}
