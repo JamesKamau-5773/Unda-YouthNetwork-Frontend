@@ -18,7 +18,7 @@ export function AlertProvider({ children }) {
     <AlertContext.Provider value={{ alert, triggerAlert }}>
       {children}
       {alert && (
-        <div className="fixed top-6 right-6 z-50 bg-unda-orange text-white px-6 py-3 rounded-xl shadow-xl font-bold">
+        <div className="fixed top-6 right-6 z-50 bg-[#00C2CB] text-white px-6 py-3 rounded-xl shadow-xl font-bold">
           {alert}
         </div>
       )}

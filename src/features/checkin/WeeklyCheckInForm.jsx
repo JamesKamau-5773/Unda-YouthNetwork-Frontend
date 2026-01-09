@@ -76,7 +76,7 @@ export default function WeeklyCheckInForm() {
     <Layout>
       <div className="min-h-screen bg-transparent">
         {/* Hero Section */}
-        <section className="pt-40 pb-20 bg-gradient-to-br from-unda-teal to-unda-navy relative overflow-hidden">
+        <section className="pt-40 pb-20 bg-gradient-to-br from-[#00C2CB] to-[#0B1E3B] relative overflow-hidden">
           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
           
           <div className="container mx-auto px-6 relative z-10">
@@ -87,7 +87,7 @@ export default function WeeklyCheckInForm() {
 
             <div className="max-w-4xl">
               <h1 className="text-6xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter mb-8">
-                Weekly <span className="text-unda-yellow">Check-In.</span>
+                Weekly <span className="text-[#0090C0]">Check-In.</span>
               </h1>
               <p className="text-xl text-slate-200 leading-relaxed max-w-3xl">
                 Monitor peer champion wellness and identify support needs through regular mental health assessments.
@@ -99,11 +99,11 @@ export default function WeeklyCheckInForm() {
         {/* Form Section */}
         <section className="py-24 bg-white relative">
           <div className="container mx-auto px-6 max-w-4xl">
-            <div className="bg-unda-bg/50 rounded-[2.5rem] p-8 lg:p-12 border border-slate-100 shadow-xl relative overflow-hidden">
+            <div className="bg-[#F9FAFB]/50 rounded-[2.5rem] p-8 lg:p-12 border border-slate-100 shadow-xl relative overflow-hidden">
               {!success ? (
                 <form onSubmit={handleSubmit} className="relative z-10 space-y-6">
                   <div className="mb-8">
-                    <h3 className="text-2xl font-black text-unda-navy mb-2">Champion Wellness Assessment</h3>
+                    <h3 className="text-2xl font-black text-[#0B1E3B] mb-2">Champion Wellness Assessment</h3>
                     <p className="text-sm text-slate-500">
                       Complete this weekly assessment to track wellness and identify any support needs.
                     </p>
@@ -111,7 +111,7 @@ export default function WeeklyCheckInForm() {
 
                   {/* Champion ID */}
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-unda-navy uppercase tracking-wider">Champion ID *</label>
+                    <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Champion ID *</label>
                     <Input 
                       name="championId"
                       value={form.championId}
@@ -125,8 +125,8 @@ export default function WeeklyCheckInForm() {
                   {/* Assessment Scores */}
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-unda-navy uppercase tracking-wider flex items-center gap-2">
-                        <Heart size={16} className="text-unda-teal" />
+                      <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider flex items-center gap-2">
+                        <Heart size={16} className="text-[#00C2CB]" />
                         PHQ-2 Score * <span className="text-xs text-slate-400 normal-case">(0-6)</span>
                       </label>
                       <Input 
@@ -143,8 +143,8 @@ export default function WeeklyCheckInForm() {
                       <p className="text-xs text-slate-500">Depression screening score</p>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-unda-navy uppercase tracking-wider flex items-center gap-2">
-                        <Activity size={16} className="text-unda-orange" />
+                      <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider flex items-center gap-2">
+                        <Activity size={16} className="text-[#00C2CB]" />
                         GAD-2 Score * <span className="text-xs text-slate-400 normal-case">(0-6)</span>
                       </label>
                       <Input 
@@ -164,12 +164,12 @@ export default function WeeklyCheckInForm() {
 
                   {/* Check-in Reason */}
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-unda-navy uppercase tracking-wider">Primary Reason for Check-In *</label>
+                    <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Primary Reason for Check-In *</label>
                     <select 
                       name="reason"
                       value={form.reason}
                       onChange={handleChange}
-                      className="w-full bg-white border border-slate-200 h-12 rounded-xl px-3 text-sm focus:outline-none focus:ring-2 focus:ring-unda-teal"
+                      className="w-full bg-white border border-slate-200 h-12 rounded-xl px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#00C2CB]"
                       required
                     >
                       <option value="">Select a reason...</option>
@@ -185,20 +185,20 @@ export default function WeeklyCheckInForm() {
 
                   {/* Supervisor Notes */}
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-unda-navy uppercase tracking-wider">Supervisor Notes</label>
-                    <textarea
+                    <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Supervisor Notes</label>
+                      <textarea
                       name="supervisorNotes"
                       value={form.supervisorNotes}
                       onChange={handleChange}
                       rows={3}
                       placeholder="Any observations or notes from the supervisor..."
-                      className="w-full bg-white border border-slate-200 rounded-xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-unda-teal"
+                      className="w-full bg-white border border-slate-200 rounded-xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#00C2CB]"
                     />
                   </div>
 
                   {/* Referral Destination */}
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-unda-navy uppercase tracking-wider">Referral Destination (if needed)</label>
+                    <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Referral Destination (if needed)</label>
                     <Input 
                       name="destination"
                       value={form.destination}
@@ -232,7 +232,7 @@ export default function WeeklyCheckInForm() {
                   <Button 
                     type="submit" 
                     disabled={loading}
-                    className="w-full h-14 bg-unda-teal hover:bg-unda-navy text-white font-bold text-lg rounded-xl shadow-lg transition-all disabled:opacity-50"
+                    className="w-full h-14 bg-[#00C2CB] hover:bg-[#0B1E3B] text-white font-bold text-lg rounded-xl shadow-lg transition-all disabled:opacity-50"
                   >
                     {loading ? 'Submitting Check-In...' : 'Submit Check-In'}
                   </Button>
@@ -242,7 +242,7 @@ export default function WeeklyCheckInForm() {
                   <div className="mx-auto w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
                     <CheckCircle size={40} />
                   </div>
-                  <h3 className="text-2xl font-black text-unda-navy mb-4">Check-In Submitted!</h3>
+                  <h3 className="text-2xl font-black text-[#0B1E3B] mb-4">Check-In Submitted!</h3>
                   <p className="text-slate-600 mb-2">
                     Weekly wellness assessment completed for Champion ID: <span className="font-bold">{form.championId}</span>
                   </p>
@@ -261,13 +261,13 @@ export default function WeeklyCheckInForm() {
                     <Button 
                       onClick={resetForm}
                       variant="outline" 
-                      className="border-unda-teal text-unda-teal hover:bg-unda-teal/5"
+                      className="border-[#00C2CB] text-[#00C2CB] hover:bg-[#00C2CB]/5"
                     >
                       New Check-In
                     </Button>
                     <Button 
                       asChild
-                      className="bg-unda-navy text-white hover:bg-unda-teal"
+                      className="bg-[#0B1E3B] text-white hover:bg-[#00C2CB]"
                     >
                       <Link to="/portal">Back to Portal</Link>
                     </Button>

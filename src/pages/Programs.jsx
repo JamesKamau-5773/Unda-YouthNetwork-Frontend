@@ -123,7 +123,7 @@ const Programs = () => {
     <Layout>
       <div className="min-h-screen bg-transparent">
         {/* Hero Section */}
-        <section className="pt-40 pb-20 bg-gradient-to-br from-unda-navy via-unda-teal to-unda-navy relative overflow-hidden">
+          <section className="pt-40 pb-20 bg-gradient-to-br from-[#0B1E3B] via-[#00C2CB] to-[#0B1E3B] relative overflow-hidden">
           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
           
           <div className="container mx-auto px-6 relative z-10">
@@ -134,13 +134,13 @@ const Programs = () => {
 
             <div className="max-w-4xl">
               <h1 className="text-6xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter mb-8">
-                UMV <span className="text-unda-yellow">Programs.</span>
+                UMV <span className="text-[#0090C0]">Programs.</span>
               </h1>
               <p className="text-xl text-slate-200 leading-relaxed max-w-3xl mb-8">
                 The Unda Mind Vibes (UMV) Prevention Program is delivered through a collective of youth-driven platforms under UNDA Youth Network, designed to build preventive mental-health literacy, promote youth-led engagement, and activate community participation.
               </p>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 border border-white/20">
-                <Target size={16} className="text-unda-yellow" />
+                <Target size={16} className="text-[#0090C0]" />
                 <span className="text-sm font-bold text-white">Converse. Prevent. Thrive Mentally.</span>
               </div>
             </div>
@@ -151,8 +151,8 @@ const Programs = () => {
         <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-black text-unda-navy mb-6 font-unda">
-                UMV is Built on <span className="text-unda-teal">Three Pillars</span>
+              <h2 className="text-4xl font-black text-[#0B1E3B] mb-6 font-unda">
+                UMV is Built on <span className="text-[#00C2CB]">Three Pillars</span>
               </h2>
               <p className="text-lg text-slate-600 max-w-3xl mx-auto">
                 All UMV activities reinforce the prevention agenda in schools, tertiary institutions and communities through storytelling, debates, research, creative expression and community events.
@@ -163,21 +163,21 @@ const Programs = () => {
               {pillars.map((pillar, idx) => {
                 const Icon = pillar.icon;
                 const colorMap = {
-                  teal: 'border-unda-teal',
-                  orange: 'border-unda-orange',
-                  yellow: 'border-unda-yellow'
+                  teal: 'border-[#00C2CB]',
+                  orange: 'border-[#00C2CB]',
+                  yellow: 'border-[#0090C0]'
                 };
                 const iconBgMap = {
-                  teal: 'bg-unda-teal/10 text-unda-teal',
-                  orange: 'bg-unda-orange/10 text-unda-orange',
-                  yellow: 'bg-unda-yellow/10 text-unda-yellow'
+                  teal: 'bg-[#00C2CB]/10 text-[#00C2CB]',
+                  orange: 'bg-[#00C2CB]/10 text-[#00C2CB]',
+                  yellow: 'bg-[#0090C0]/10 text-[#0090C0]'
                 };
                 return (
-                  <div key={idx} className={`bg-unda-bg/30 rounded-2xl p-8 border-t-4 ${colorMap[pillar.color]} hover:bg-white hover:shadow-xl transition-all duration-300 group`}>
+                  <div key={idx} className={`bg-[#F9FAFB]/30 rounded-2xl p-8 border-t-4 ${colorMap[pillar.color]} hover:bg-white hover:shadow-xl transition-all duration-300 group`}>
                     <div className={`h-16 w-16 rounded-2xl ${iconBgMap[pillar.color]} flex items-center justify-center mb-6`}>
                       <Icon size={32} />
                     </div>
-                    <h3 className="text-2xl font-black text-unda-navy mb-4">{pillar.title}</h3>
+                      <h3 className="text-2xl font-black text-[#0B1E3B] mb-4">{pillar.title}</h3>
                     <p className="text-slate-600 leading-relaxed">{pillar.description}</p>
                   </div>
                 );
@@ -190,8 +190,8 @@ const Programs = () => {
         <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-black text-unda-navy mb-6 font-unda">
-                Our Program <span className="text-unda-teal">Streams</span>
+              <h2 className="text-4xl font-black text-[#0B1E3B] mb-6 font-unda">
+                Our Program <span className="text-[#00C2CB]">Streams</span>
               </h2>
               <p className="text-lg text-slate-600 max-w-3xl mx-auto">
                 All UMV workstreams operate under Unda Mind Vibes (UMV), each designed to reach different segments of young people aged 13–35.
@@ -202,40 +202,40 @@ const Programs = () => {
               {programs.map((program, idx) => {
                 const Icon = program.icon;
                 const colorMap = {
-                  teal: 'border-unda-teal',
-                  orange: 'border-unda-orange',
-                  yellow: 'border-unda-yellow',
-                  navy: 'border-unda-navy'
+                  teal: 'border-[#00C2CB]',
+                  orange: 'border-[#00C2CB]',
+                  yellow: 'border-[#0090C0]',
+                  navy: 'border-[#0B1E3B]'
                 };
                 const iconBgMap = {
-                  teal: 'bg-unda-teal/10 text-unda-teal',
-                  orange: 'bg-unda-orange/10 text-unda-orange',
-                  yellow: 'bg-unda-yellow/10 text-unda-yellow',
-                  navy: 'bg-unda-navy/10 text-unda-navy'
+                  teal: 'bg-[#00C2CB]/10 text-[#00C2CB]',
+                  orange: 'bg-[#00C2CB]/10 text-[#00C2CB]',
+                  yellow: 'bg-[#0090C0]/10 text-[#0090C0]',
+                  navy: 'bg-[#0B1E3B]/10 text-[#0B1E3B]'
                 };
                 const buttonMap = {
-                  teal: 'bg-unda-teal text-white hover:bg-unda-navy',
-                  orange: 'bg-unda-orange text-white hover:bg-unda-navy',
-                  yellow: 'bg-unda-yellow text-unda-navy hover:bg-unda-orange hover:text-white',
-                  navy: 'bg-unda-navy text-white hover:bg-unda-teal'
+                  teal: 'bg-[#00C2CB] text-white hover:bg-[#0B1E3B]',
+                  orange: 'bg-[#00C2CB] text-white hover:bg-[#0B1E3B]',
+                  yellow: 'bg-[#0090C0] text-[#0B1E3B] hover:bg-[#00C2CB] hover:text-white',
+                  navy: 'bg-[#0B1E3B] text-white hover:bg-[#00C2CB]'
                 };
 
                 return (
-                  <div key={idx} className={`bg-unda-bg/30 rounded-2xl p-8 lg:p-12 border-l-4 ${colorMap[program.color]} hover:bg-white hover:shadow-xl transition-all duration-300 group`}>
+                  <div key={idx} className={`bg-[#F9FAFB]/30 rounded-2xl p-8 lg:p-12 border-l-4 ${colorMap[program.color]} hover:bg-white hover:shadow-xl transition-all duration-300 group`}>
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                       <div>
                         <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl ${iconBgMap[program.color]} mb-6`}>
                           <Icon size={20} />
                           <span className="text-xs font-black uppercase tracking-widest">{program.title}</span>
                         </div>
-                        <h3 className="text-3xl font-black text-unda-navy mb-2">{program.tagline}</h3>
-                        <p className="text-sm font-bold text-unda-teal uppercase tracking-wider mb-4">{program.tagline}</p>
+                        <h3 className="text-3xl font-black text-[#0B1E3B] mb-2">{program.tagline}</h3>
+                        <p className="text-sm font-bold text-[#00C2CB] uppercase tracking-wider mb-4">{program.tagline}</p>
                         <p className="text-slate-600 leading-relaxed mb-6">{program.description}</p>
                         
                         <ul className="space-y-2 mb-6">
                           {program.highlights.map((highlight, hIdx) => (
                             <li key={hIdx} className="flex items-start gap-2 text-sm text-slate-600">
-                              <div className="h-1.5 w-1.5 rounded-full bg-unda-teal mt-2 flex-shrink-0" />
+                                <div className="h-1.5 w-1.5 rounded-full bg-[#00C2CB] mt-2 flex-shrink-0" />
                               <span>{highlight}</span>
                             </li>
                           ))}
@@ -261,19 +261,19 @@ const Programs = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-24 bg-unda-navy text-white">
+        <section className="py-24 bg-[#0B1E3B] text-white">
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-5xl font-black mb-6">
-              Ready to <span className="text-unda-yellow">Get Involved?</span>
+              Ready to <span className="text-[#0090C0]">Get Involved?</span>
             </h2>
             <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-12">
               Join the movement for adolescent and youth mental health prevention. Become a member, support, or partner with us today.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild className="h-14 px-8 rounded-2xl bg-unda-yellow text-unda-navy hover:bg-unda-orange hover:text-white text-lg font-bold">
+                <Button asChild className="h-14 px-8 rounded-2xl bg-[#0090C0] text-[#0B1E3B] hover:bg-[#00C2CB] hover:text-white text-lg font-bold">
                 <Link to="/membership">Become a Member</Link>
               </Button>
-              <Button asChild variant="outline" className="h-14 px-8 rounded-2xl border-white text-white hover:bg-white hover:text-unda-navy text-lg font-bold">
+              <Button asChild variant="outline" className="h-14 px-8 rounded-2xl border-white text-white hover:bg-white hover:text-[#0B1E3B] text-lg font-bold">
                 <Link to="/">Partner With Us</Link>
               </Button>
             </div>

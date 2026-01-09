@@ -28,7 +28,7 @@ export default function PortalLogin() {
         <option value="admin">Admin/Supervisor</option>
       </select>
       {/* Add username/password fields here for real auth */}
-      <button type="submit" className="btn bg-unda-navy text-white w-full" disabled={loading}>
+      <button type="submit" className="btn bg-[#0B1E3B] text-white w-full" disabled={loading}>
         {loading ? 'Signing In...' : 'Sign In'}
       </button>
     </form>

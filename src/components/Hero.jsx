@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center bg-unda-bg/50 pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex items-center bg-[#F9FAFB]/50 pt-20 overflow-hidden">
       {/* Ambient orbs (Cyan top-right, Navy bottom-left) */}
       <div className="absolute -z-30 inset-0 pointer-events-none" style={{backgroundImage: 'radial-gradient(#0B1E3B 1px, transparent 1px)', backgroundSize: '40px 40px', opacity: 0.03}} />
       <div className="absolute -z-20 top-0 right-0 w-[700px] h-[700px] rounded-full bg-[#00C2CB]/10 blur-3xl pointer-events-none" />

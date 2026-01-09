@@ -37,7 +37,7 @@ const ParticipationModal = ({
         {/* Modal Header */}
         <div className="p-6 border-b border-slate-100 flex justify-between items-center">
           <div>
-            <h2 className="text-xl font-black text-unda-navy">Log Debate Participation</h2>
+            <h2 className="text-xl font-black text-[#0B1E3B]">Log Debate Participation</h2>
             <p className="text-sm text-slate-500 mt-1">Record your attendance for Documentation Quality Score</p>
           </div>
           <button 
@@ -66,8 +66,8 @@ const ParticipationModal = ({
               Select Debate Event
             </label>
             {loading ? (
-              <div className="flex items-center justify-center py-8">
-                <Loader2 className="animate-spin text-unda-teal" size={32} />
+                <div className="flex items-center justify-center py-8">
+                <Loader2 className="animate-spin text-[#00C2CB]" size={32} />
               </div>
             ) : (
               <div className="space-y-3">
@@ -76,7 +76,7 @@ const ParticipationModal = ({
                     key={event.id}
                     className={`block p-4 rounded-2xl border-2 cursor-pointer transition-all ${
                       formData.event_id === String(event.id)
-                        ? 'border-unda-teal bg-unda-teal/5'
+                        ? 'border-[#00C2CB] bg-[#00C2CB]/5'
                         : 'border-slate-100 hover:border-slate-200'
                     }`}
                   >
@@ -92,11 +92,11 @@ const ParticipationModal = ({
                       <div className="flex-1">
                         {event.motion && (
                           <div className="mb-2">
-                            <span className="text-[9px] font-black text-unda-teal uppercase tracking-widest">Motion</span>
-                            <p className="font-black text-unda-navy text-sm mt-0.5">{event.motion}</p>
+                            <span className="text-[9px] font-black text-[#00C2CB] uppercase tracking-widest">Motion</span>
+                            <p className="font-black text-[#0B1E3B] text-sm mt-0.5">{event.motion}</p>
                           </div>
                         )}
-                        <h4 className="font-bold text-unda-navy">{event.title}</h4>
+                        <h4 className="font-bold text-[#0B1E3B]">{event.title}</h4>
                         <div className="flex items-center gap-4 mt-2 text-xs text-slate-500">
                           <span className="flex items-center gap-1">
                             <Calendar size={12} /> {event.event_date}
@@ -107,7 +107,7 @@ const ParticipationModal = ({
                         </div>
                       </div>
                       {formData.event_id === String(event.id) && (
-                        <CheckCircle className="text-unda-teal" size={20} />
+                        <CheckCircle className="text-[#00C2CB]" size={20} />
                       )}
                     </div>
                   </label>
@@ -125,7 +125,7 @@ const ParticipationModal = ({
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               placeholder="Any observations or key takeaways from the session..."
-              className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-unda-teal focus:outline-none transition-colors min-h-[100px] resize-none"
+              className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#00C2CB] focus:outline-none transition-colors min-h-[100px] resize-none"
             />
           </div>
 
@@ -133,7 +133,7 @@ const ParticipationModal = ({
           <Button
             type="submit"
             disabled={submitting || !formData.event_id}
-            className="w-full h-14 rounded-2xl bg-unda-teal text-white hover:bg-unda-navy font-bold text-sm uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full h-14 rounded-2xl bg-[#00C2CB] text-white hover:bg-[#0B1E3B] font-bold text-sm uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? (
               <span className="flex items-center gap-2">
@@ -286,8 +286,8 @@ const DebatersCircle = () => {
       />
 
       {/* 1. HERO: Editorial Alignment */}
-      <section className="pt-40 pb-20 bg-unda-navy relative overflow-hidden text-white">
-        <div className="absolute bottom-0 right-0 w-1/3 h-full bg-unda-teal opacity-10 -skew-x-12 translate-x-1/2" />
+      <section className="pt-40 pb-20 bg-[#0B1E3B] relative overflow-hidden text-white">
+        <div className="absolute bottom-0 right-0 w-1/3 h-full bg-[#00C2CB] opacity-10 -skew-x-12 translate-x-1/2" />
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-3xl space-y-8">
@@ -296,16 +296,16 @@ const DebatersCircle = () => {
               <span className="font-bold text-sm uppercase tracking-widest">Back to Home</span>
             </Link>
             
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 border border-white/20">
-              <MessageSquare size={16} className="text-unda-teal" />
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 border border-white/20">
+              <MessageSquare size={16} className="text-[#00C2CB]" />
               <span className="text-[10px] font-bold uppercase tracking-widest">
                 Advocacy & Literacy
               </span>
             </div>
 
-            <h1 className="text-6xl lg:text-8xl font-black leading-[0.9] tracking-tighter">
+              <h1 className="text-6xl lg:text-8xl font-black leading-[0.9] tracking-tighter">
               Debaters <br />
-              <span className="text-unda-teal">Circle.</span>
+              <span className="text-[#00C2CB]">Circle.</span>
             </h1>
 
             <p className="text-slate-300 text-xl font-medium leading-relaxed max-w-xl">
@@ -321,13 +321,13 @@ const DebatersCircle = () => {
         <div className="grid lg:grid-cols-12 gap-20">
           {/* LEFT: Active Motions  */}
           <div className="lg:col-span-7">
-            <h2 className="text-2xl font-black text-unda-navy mb-10 tracking-tight uppercase tracking-[0.1em]">
+            <h2 className="text-2xl font-black text-[#0B1E3B] mb-10 tracking-tight uppercase tracking-[0.1em]">
               Current Motions
             </h2>
             <div className="space-y-6">
               {loading ? (
                 <div className="flex items-center justify-center py-16">
-                  <Loader2 className="animate-spin text-unda-teal" size={48} />
+                  <Loader2 className="animate-spin text-[#00C2CB]" size={48} />
                 </div>
               ) : motions.length === 0 ? (
                 <div className="text-center py-16 text-slate-500">
@@ -342,7 +342,7 @@ const DebatersCircle = () => {
                   >
                     {/* Cover Image Section */}
                     {motion.imageUrl ? (
-                      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-unda-teal/20 to-unda-navy/20">
+                      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[#00C2CB]/20 to-[#0B1E3B]/20">
                         <img 
                           src={motion.imageUrl} 
                           alt={motion.title}
@@ -356,7 +356,7 @@ const DebatersCircle = () => {
                           <span
                             className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest backdrop-blur-md ${
                               motion.status === "Upcoming" || motion.status === "Active"
-                                ? "bg-unda-teal/90 text-white"
+                                ? "bg-[#00C2CB]/90 text-white"
                                 : "bg-white/90 text-slate-600"
                             }`}
                           >
@@ -366,20 +366,20 @@ const DebatersCircle = () => {
                         
                         {/* Date Badge on Image */}
                         <div className="absolute top-4 right-4">
-                          <span className="px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-[10px] text-unda-navy font-bold uppercase flex items-center gap-2">
+                          <span className="px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-[10px] text-[#0B1E3B] font-bold uppercase flex items-center gap-2">
                             <Calendar size={12} /> {motion.date}
                           </span>
                         </div>
                       </div>
                     ) : (
                       /* Fallback gradient when no image */
-                      <div className="relative h-32 bg-gradient-to-br from-unda-teal/10 via-unda-navy/5 to-slate-50 flex items-center justify-center">
-                        <MessageSquare size={48} className="text-unda-teal/20" />
+                      <div className="relative h-32 bg-gradient-to-br from-[#00C2CB]/10 via-[#0B1E3B]/5 to-slate-50 flex items-center justify-center">
+                        <MessageSquare size={48} className="text-[#00C2CB]/20" />
                         <div className="absolute top-4 left-4">
                           <span
                             className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest ${
                               motion.status === "Upcoming" || motion.status === "Active"
-                                ? "bg-unda-teal/10 text-unda-teal"
+                                ? "bg-[#00C2CB]/10 text-[#00C2CB]"
                                 : "bg-slate-100 text-slate-400"
                             }`}
                           >
@@ -399,8 +399,8 @@ const DebatersCircle = () => {
                       {/* Display Motion/Topic prominently if it exists */}
                       {motion.motion && (
                         <div className="mb-3 pb-3 border-b border-slate-100">
-                          <span className="text-[10px] font-black text-unda-teal uppercase tracking-widest">Motion</span>
-                          <h3 className="text-2xl font-black text-unda-navy mt-1 group-hover:text-unda-teal transition-colors leading-tight">
+                          <span className="text-[10px] font-black text-[#00C2CB] uppercase tracking-widest">Motion</span>
+                          <h3 className="text-2xl font-black text-[#0B1E3B] mt-1 group-hover:text-[#00C2CB] transition-colors leading-tight">
                             {motion.motion}
                           </h3>
                         </div>
@@ -408,7 +408,7 @@ const DebatersCircle = () => {
                       
                       {/* Title - only show if different from motion */}
                       {(!motion.motion || motion.title !== motion.motion) && (
-                        <h4 className="text-lg font-bold text-unda-navy mb-3">
+                        <h4 className="text-lg font-bold text-[#0B1E3B] mb-3">
                           {motion.title}
                         </h4>
                       )}
@@ -429,7 +429,7 @@ const DebatersCircle = () => {
           {/* RIGHT: Compliance & Toolkits  */}
           <div className="lg:col-span-5 space-y-12">
             <div className="p-10 rounded-[3rem] bg-slate-50 border border-slate-100">
-              <h3 className="text-xl font-black text-unda-navy mb-6">
+              <h3 className="text-xl font-black text-[#0B1E3B] mb-6">
                 Institutional Toolkit
               </h3>
               <p className="text-slate-600 text-sm font-medium mb-8">
@@ -445,13 +445,13 @@ const DebatersCircle = () => {
                 ].map((doc, idx) => (
                   <button
                     key={idx}
-                    className="w-full flex items-center justify-between p-4 rounded-2xl bg-white border border-slate-200 hover:border-unda-teal transition-all group"
+                    className="w-full flex items-center justify-between p-4 rounded-2xl bg-white border border-slate-200 hover:border-[#00C2CB] transition-all group"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-xl bg-slate-50 text-slate-400 group-hover:text-unda-teal">
+                      <div className="p-2 rounded-xl bg-slate-50 text-slate-400 group-hover:text-[#00C2CB]">
                         <Download size={16} />
                       </div>
-                      <span className="text-sm font-bold text-unda-navy">
+                      <span className="text-sm font-bold text-[#0B1E3B]">
                         {doc.name}
                       </span>
                     </div>
@@ -464,7 +464,7 @@ const DebatersCircle = () => {
             </div>
 
             {/* QUICK LINK: Operational Data Log  */}
-            <div className="p-10 rounded-[3rem] bg-unda-teal text-white shadow-2xl shadow-unda-teal/20">
+            <div className="p-10 rounded-[3rem] bg-[#00C2CB] text-white shadow-2xl shadow-[#00C2CB]/20">
               <GraduationCap size={40} className="mb-6 opacity-30" />
               <h3 className="text-xl font-black mb-4">Log Circle Activity</h3>
               <p className="text-white/80 text-sm font-medium mb-8">
@@ -473,7 +473,7 @@ const DebatersCircle = () => {
               </p>
               <Button 
                 onClick={() => setShowLogModal(true)}
-                className="w-full h-14 rounded-2xl bg-white text-unda-teal hover:bg-unda-navy hover:text-white font-black uppercase tracking-widest transition-all"
+                className="w-full h-14 rounded-2xl bg-white text-[#00C2CB] hover:bg-[#0B1E3B] hover:text-white font-black uppercase tracking-widest transition-all"
               >
                 Open Operational Log
               </Button>

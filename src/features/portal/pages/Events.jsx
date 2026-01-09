@@ -42,7 +42,7 @@ const Events = () => {
                 <div key={idx} className="bg-white p-5 rounded-2xl border border-slate-100 flex flex-col md:flex-row items-center gap-6 shadow-sm hover:shadow-md hover:border-slate-200 transition-all group">
                     
                     {/* Date Block */}
-                    <div className="h-16 w-16 bg-slate-50 text-slate-600 rounded-xl flex flex-col items-center justify-center font-bold flex-shrink-0 group-hover:bg-unda-navy group-hover:text-white transition-colors">
+                            <div className="h-16 w-16 bg-slate-50 text-slate-600 rounded-xl flex flex-col items-center justify-center font-bold flex-shrink-0 group-hover:bg-[#0B1E3B] group-hover:text-white transition-colors">
                         <span className="text-xl leading-none">{evt.date.split(' ')[1].replace(',','')}</span>
                         <span className="text-[10px] uppercase tracking-wide">{evt.date.split(' ')[0]}</span>
                     </div>
@@ -61,7 +61,7 @@ const Events = () => {
                                 {evt.type}
                              </span>
                         </div>
-                        <h3 className="text-lg font-bold text-unda-navy truncate">{evt.title}</h3>
+                                <h3 className="text-lg font-bold text-[#0B1E3B] truncate">{evt.title}</h3>
                         <div className="flex items-center justify-center md:justify-start gap-4 mt-1 text-xs text-slate-500 font-medium">
                             <span className="flex items-center gap-1"><Users size={12}/> By {evt.host}</span>
                             <span className="flex items-center gap-1"><Clock size={12}/> {evt.time}</span>
@@ -73,7 +73,7 @@ const Events = () => {
                             className={`w-full md:w-auto rounded-xl font-bold text-xs h-10 px-6 ${
                                 evt.status === 'Waitlist' 
                                 ? 'bg-slate-100 text-slate-400 hover:bg-slate-200' 
-                                : 'bg-white border border-slate-200 text-unda-navy hover:bg-unda-navy hover:text-white'
+                                        : 'bg-white border border-slate-200 text-[#0B1E3B] hover:bg-[#0B1E3B] hover:text-white'
                             }`}
                             disabled={evt.status === 'Waitlist'}
                         >
