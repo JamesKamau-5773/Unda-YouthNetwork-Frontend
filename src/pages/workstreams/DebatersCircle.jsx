@@ -303,14 +303,13 @@ const DebatersCircle = () => {
               </span>
             </div>
 
-              <h1 className="text-6xl lg:text-8xl font-black leading-[0.9] tracking-tighter">
-              Debaters <br />
-              <span className="text-[#00C2CB]">Circle.</span>
+            <h1 className="text-6xl lg:text-8xl font-black leading-[0.9] tracking-tighter">
+              UMV <br />
+              <span className="text-[#00C2CB]">Debaters.</span>
             </h1>
 
             <p className="text-slate-300 text-xl font-medium leading-relaxed max-w-xl">
-              Equipping Peer Champions to lead mental health advocacy through
-              structured debate and critical thinking in Schools and Churches.
+              UMV Debaters runs prevention cohorts in high schools, churches, and community groups (ages 13–17), equipping peer champions with advocacy, debate, and critical thinking skills to lead prevention conversations.
             </p>
           </div>
         </div>
