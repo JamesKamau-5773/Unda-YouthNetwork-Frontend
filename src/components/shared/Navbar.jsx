@@ -37,16 +37,16 @@ const Navbar = () => {
         </div>
 
         {/* 2. MAIN NAV */}
-        <div className="bg-white/90 backdrop-blur-2xl border border-white/40 shadow-[0_20px_50px_rgba(0,0,0,0.05)] rounded-[2.5rem] px-8 py-3 flex items-center justify-between">
+        <div className="bg-gradient-corporate text-white shadow-[0_20px_50px_rgba(0,0,0,0.08)] rounded-[2.5rem] px-8 py-3 flex items-center justify-between">
           
           {/* Logo Section */}
           <Link to="/" className="flex items-center gap-3 group mr-8">
-            <div className="h-10 w-10 rounded-xl overflow-hidden flex items-center justify-center bg-white border border-slate-100">
+            <div className="h-10 w-10 rounded-xl overflow-hidden flex items-center justify-center bg-white/10 border border-white/10">
               <img src={undaLogo} alt="Unda Logo" className="w-full h-full object-contain mix-blend-multiply" />
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-unda-navy text-lg tracking-tighter leading-none">UNDA</span>
-              <span className="text-[6px] font-bold text-unda-teal uppercase tracking-[0.3em] mt-0.5">Youth Network</span>
+              <span className="font-black text-white text-lg tracking-tighter leading-none">UNDA</span>
+              <span className="text-[6px] font-bold text-white/90 uppercase tracking-[0.3em] mt-0.5">Youth Network</span>
             </div>
           </Link>
 
@@ -86,8 +86,8 @@ const Navbar = () => {
                   <div className="bg-white border border-slate-100 rounded-[2rem] shadow-xl p-5 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-unda-teal/5 blur-2xl pointer-events-none"/>
                     
-                    <div className="flex gap-4 mb-4 pb-4 border-b border-slate-50">
-                       <Link to="/programs" className="flex-1 bg-unda-teal/5 hover:bg-unda-teal/10 p-4 rounded-xl transition-colors group/main">
+                      <div className="flex gap-4 mb-4 pb-4 border-b border-white/10">
+                        <Link to="/programs" className="flex-1 bg-unda-teal/10 hover:bg-unda-teal/20 p-4 rounded-xl transition-colors group/main">
                           <div className="flex items-center gap-2 mb-1 text-unda-teal">
                              <Layers size={16} />
                              <span className="font-black uppercase text-xs tracking-wider">All Programs</span>
@@ -163,12 +163,12 @@ const Navbar = () => {
                 {activeDropdown === 'join' && (
                   <div className="absolute top-full right-0 pt-4 w-[280px] animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="bg-white border border-slate-100 rounded-[2rem] shadow-xl p-4 flex flex-col gap-2 relative overflow-hidden">
-                       <Link to="/partner" className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-all group/item">
-                          <div className="p-2 bg-slate-100 text-slate-400 rounded-lg group-hover/item:bg-unda-navy group-hover/item:text-white transition-all">
-                             <HeartHandshake size={16} />
+                        <Link to="/partner" className="flex items-center gap-3 px-4 py-2 rounded-full bg-gradient-energy text-white shadow-glow-energy transition-all group/item">
+                          <div className="p-2 bg-white/10 text-white rounded-full transition-all">
+                            <HeartHandshake size={16} />
                           </div>
-                          <span className="text-[10px] font-black text-unda-navy uppercase">Partner With Us</span>
-                       </Link>
+                          <span className="text-[10px] font-black uppercase">Partner With Us</span>
+                        </Link>
                        <Link to="/membership" className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-all group/item">
                           <div className="p-2 bg-slate-100 text-slate-400 rounded-lg group-hover/item:bg-unda-navy group-hover/item:text-white transition-all">
                              <Users size={16} />

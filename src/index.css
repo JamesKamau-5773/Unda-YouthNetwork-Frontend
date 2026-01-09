@@ -29,8 +29,8 @@
   /* UNDA brand hex codes */
   --unda-navy: #1A2E35;
   --unda-teal: #2D707E;
-  --unda-orange: #FF7D45;
-  --unda-yellow: #FFC83D;
+  --unda-orange: #00C2CB; /* Electric Cyan (was orange) */
+  --unda-yellow: #0090C0; /* Darker Cyan stop (was yellow) */
   --unda-bg: #F9FAFB;
 } /* Close :root properly here */
 
