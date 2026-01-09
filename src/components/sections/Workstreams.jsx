@@ -14,39 +14,32 @@ const Workstreams = () => {
     {
       title: "UMV Podcast",
       icon: <Mic />,
-      desc: "Expert insights and youth stories on resilience.",
+      desc: "Our social driver — youth-led storytelling and expert conversations.",
       color: "border-[#00C2CB]",
       link: "/podcast"
     },
     {
-      title: "Debaters Circle",
+      title: "UMV Debaters",
       icon: <Users />,
-      desc: "Empowering schools through mental health literacy.",
+      desc: "Prevention cohorts for 13–17yr olds in schools, churches and communities.",
       color: "border-[#00C2CB]",
       link: "/debaters-circle"
     },
     {
-      title: "Campus Edition",
+      title: "UMV Campus",
       icon: <GraduationCap />,
-      desc: "Research-led innovation and seed funding.",
+      desc: "Campus cohorts, events, and embedded research driving prevention innovation.",
       color: "border-[#0090C0]",
       link: "/campus"
     },
     {
       title: "UMV Mtaani",
       icon: <MapPin />,
-      desc: "Community-driven prevention in your neighborhood.",
+      desc: "Community outreaches, local prevention cohorts, and pillar events.",
       color: "border-[#0B1E3B]",
       link: "/mtaani"
     },
-    // High School workstream does not have a page yet
-    {
-      title: "High School",
-      icon: <BookOpen />,
-      desc: "Building wellness foundations for adolescents.",
-      color: "border-[#00C2CB]",
-      link: null
-    },
+    // Keep placeholder removed — primary UMV products now displayed
   ];
 
   return (
