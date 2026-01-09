@@ -13,10 +13,10 @@ const Navbar = () => {
   const handleMouseLeave = () => setActiveDropdown(null);
 
   const workstreams = [
-    { name: 'UMV Podcast', path: '/podcast', icon: <Mic size={16} />, desc: 'Expert insights' },
-    { name: 'Debaters Circle', path: '/debaters-circle', icon: <Users size={16} />, desc: 'Advocacy hub' },
-    { name: 'Campus Edition', path: '/campus', icon: <GraduationCap size={16} />, desc: 'Innovation grants' },
-    { name: 'UMV Mtaani', path: '/mtaani', icon: <MapPin size={16} />, desc: 'Local prevention' }
+    { name: 'UMV Podcast', path: '/podcast', icon: <Mic size={16} />, desc: 'Social driver & audio content' },
+    { name: 'UMV Debaters', path: '/debaters-circle', icon: <Users size={16} />, desc: 'Prevention cohorts (13–17) & advocacy' },
+    { name: 'UMV Campus', path: '/campus', icon: <GraduationCap size={16} />, desc: 'Campus cohorts, events & research' },
+    { name: 'UMV Mtaani', path: '/mtaani', icon: <MapPin size={16} />, desc: 'Community outreaches & pillar events' }
   ];
 
   return (
@@ -167,7 +167,7 @@ const Navbar = () => {
                           <div className="p-2 bg-white/10 text-white rounded-full transition-all">
                             <HeartHandshake size={16} />
                           </div>
-                          <span className="text-[10px] font-black uppercase">Partner With Us</span>
+                          <span className="text-[10px] font-black uppercase">Partner / Support</span>
                         </Link>
                        <Link to="/membership" className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition-all group/item">
                             <div className="p-2 bg-slate-100 text-slate-400 rounded-lg group-hover/item:bg-[#0B1E3B] group-hover/item:text-white transition-all">
@@ -248,7 +248,7 @@ const Navbar = () => {
             <div className="py-2 border-b border-slate-50">
               <span className="text-[10px] font-black uppercase text-[#0B1E3B] mb-3 block tracking-widest">Get Involved</span>
                <div className="grid grid-cols-1 gap-3 pl-2">
-                  <Link to="/partner" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Partner With Us</Link>
+                  <Link to="/partner" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Partner / Support</Link>
                   <Link to="/membership" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Membership</Link>
                   <Link to="/support" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Support</Link>
                </div>
