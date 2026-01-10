@@ -91,7 +91,7 @@ const About = () => {
                   Making Prevention a Global Priority
                 </h2>
                 <p className="text-lg text-slate-600 leading-relaxed">
-                  To make Adolescents and Youths Mental Health Prevention a visible global priority through digital innovation, storytelling, community activation, and strategic partnerships.
+                  To make Adolescents and Youth Mental Health Prevention a visible global priority through digital innovation, storytelling, community activation, and strategic partnerships.
                 </p>
               </div>
             </div>

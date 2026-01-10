@@ -28,7 +28,7 @@ const GetInvolved = () => {
     {
       icon: Heart,
       title: "Contribute",
-      description: "One-time or recurring contributions fund UMV programs and help advance adolescents and youths mental health prevention across Kenya. Corporate contributions start at KES 150,000 annually, supporting two youth cohorts of 25 participants each.",
+      description: "One-time or recurring contributions fund UMV programs and help advance adolescents and youth mental health prevention across Kenya. Corporate contributions start at KES 150,000 annually, supporting two youth cohorts of 25 participants each.",
       link: "/contribute",
       color: "border-[#0B1E3B]"
     }
