@@ -6,8 +6,8 @@ const GetInvolved = () => {
   const options = [
     {
       icon: Users,
-      title: "Become a Member",
-      description: "Pay KES 3,000 annually or $50 to join Unda Mind Vibes (UMV). Members gain access to UMV activities, trainings, and the member portal.",
+      title: "Become a prevention champion",
+      description: "Join as a prevention champion to gain access to UMV activities, trainings, and the member portal.",
       link: "/membership",
       color: "border-[#00C2CB]"
     },
@@ -21,7 +21,7 @@ const GetInvolved = () => {
     {
       icon: Building2,
       title: "Partner With Us",
-      description: "Organizations, schools, and funders can collaborate to support UMV programs and expand Adolescent & Youth Mental Health Prevention impact.",
+      description: "Organizations and schools can collaborate to support UMV programs and expand Adolescent & Youth Mental Health Prevention impact.",
       link: "/partner",
       color: "border-[#0090C0]"
     },
