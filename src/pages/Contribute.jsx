@@ -28,7 +28,7 @@ const Contribute = () => {
           <ul className="space-y-3">
             <li>KES 1,000: Provides screening tools and resources for 5 youth</li>
             <li>KES 5,000: Supports a peer champion's training</li>
-            <li>KES 10,000: Funds a full UMV event reaching 50+ youth</li>
+            <li>KES 10,000: Funds a full Unda Mind Vibes event reaching 50+ youth</li>
           </ul>
         </div>
       </div>

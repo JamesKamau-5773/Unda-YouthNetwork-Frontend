@@ -4,7 +4,7 @@ import {Button} from "@/components/ui/button";
 
 const Membership = () => {
   const benefits = [
-    "Official UNDA Membership Certificate",
+    "Official Unda Membership Certificate",
     "Weekly Peer Check-In access",
     "Semi-Annual Session with professionals",
     "Annual Resilience Training (MHR-T)",
@@ -35,7 +35,7 @@ const Membership = () => {
               <div className = "flex justify-between items-start mb-8">
                 <div>
                   <h3 className = "text-2xl font-black text-[#0B1E3B]">Youth Subscriber</h3>
-                  <p className = "text-[#00C2CB] font-bold text-sm uppercase tracking-widest">Ages 13–35</p>
+                  <p className = "text-[#00C2CB] font-bold text-sm uppercase tracking-widest">Adolescents and youth</p>
 
                 </div >
 

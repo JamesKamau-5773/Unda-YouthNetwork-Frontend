@@ -5,19 +5,19 @@ import { ArrowRight, Calendar } from 'lucide-react';
 const UpcomingEvents = () => {
   const events = [
     {
-      title: "UMV Debaters",
+      title: "Unda Mind Vibes Debaters",
       description: "March 12, 2026 — Register teams",
       link: "/debaters-circle",
       color: "border-[#00C2CB]"
     },
     {
-      title: "UMV Campus Showcase — Kenya",
+      title: "Unda Mind Vibes Campus Showcase — Kenya",
       description: "April 4–5, 2026 — Roll out Mental health forums",
       link: "/campus",
       color: "border-[#0090C0]"
     },
     {
-      title: "UMV Mtaani Community Gala — Kenya",
+      title: "Unda Mind Vibes Mtaani Community Gala — Kenya",
       description: "May 21, 2026 — Free entry, mental-health booths and performances",
       link: "/mtaani",
       color: "border-[#00C2CB]"

@@ -48,7 +48,7 @@ const Partner = () => {
                 Partner <span className="text-[#0090C0]">With Us.</span>
               </h1>
               <p className="text-xl text-slate-200 leading-relaxed max-w-3xl">
-                Collaborate with UNDA Youth Network to amplify impact. We invite organizations, funders, and academic institutions to join us in advancing Adolescent & Youth Mental Health Prevention.
+                Collaborate with Unda Youth Network to amplify impact. We invite organizations, funders, and academic institutions to join us in advancing Adolescent & Youth Mental Health Prevention.
               </p>
             </div>
           </div>
@@ -64,7 +64,7 @@ const Partner = () => {
                 <div>
                   <h2 className="text-4xl font-black text-[#0B1E3B] mb-6">Why Partner?</h2>
                   <p className="text-lg text-slate-600 leading-relaxed">
-                    By partnering with UMV, you contribute to a scalable, evidence-informed prevention model that prioritizes youth leadership and sustainable community impact.
+                    By partnering with Unda Mind Vibes, you contribute to a scalable, evidence-informed prevention model that prioritizes youth leadership and sustainable community impact.
                   </p>
                 </div>
 

@@ -6,29 +6,29 @@ const GetInvolved = () => {
   const options = [
     {
       icon: Users,
-      title: "Become a prevention champion",
-      description: "Join as a prevention champion to gain access to UMV activities, trainings, and the member portal.",
+      title: "Join Unda Youth Network",
+      description: "Join the Unda Youth Network to gain access to Unda Mind Vibes activities, trainings, and the member portal.",
       link: "/membership",
       color: "border-[#00C2CB]"
     },
     {
       icon: HeartHandshake,
       title: "Support or Host an Event",
-      description: "Support UMV channels including UMV Debaters, UMV Podcast, UMV Campus, UMV Mtaani, and forums.",
+      description: "Support Unda Mind Vibes channels including Unda Mind Vibes Debaters, Unda Mind Vibes Podcast, Unda Mind Vibes Campus, Unda Mind Vibes Mtaani, and forums.",
       link: "/support",
       color: "border-[#00C2CB]"
     },
     {
       icon: Building2,
       title: "Partner With Us",
-      description: "Organizations and schools can collaborate to support UMV programs and expand Adolescent & Youth Mental Health Prevention impact.",
+      description: "Organizations and schools can collaborate to support Unda Mind Vibes programs and expand Adolescent & Youth Mental Health Prevention impact.",
       link: "/partner",
       color: "border-[#0090C0]"
     },
     {
       icon: Heart,
       title: "Contribute",
-      description: "One-time or recurring contributions fund UMV programs and help advance adolescents and youth mental health prevention across Kenya. Corporate contributions start at KES 150,000 annually, supporting two youth cohorts of 25 participants each.",
+      description: "One-time or recurring contributions fund Unda Mind Vibes programs and help advance adolescents and youth mental health prevention across Kenya. Corporate contributions start at KES 150,000 annually, supporting two youth cohorts of 25 participants each.",
       link: "/contribute",
       color: "border-[#0B1E3B]"
     }

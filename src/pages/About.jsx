@@ -8,11 +8,11 @@ const About = () => {
   const alignmentPoints = [
     {
       title: "Awareness & Storytelling",
-      description: "UMV's campaigns and storytelling initiatives promote youth mental-health literacy, practical life skills, and risk-reduction strategies, directly supporting WHO's emphasis on psychosocial promotion and preventive interventions."
+      description: "Unda Mind Vibes' campaigns and storytelling initiatives promote youth mental-health literacy, practical life skills, and risk-reduction strategies, directly supporting WHO's emphasis on psychosocial promotion and preventive interventions."
     },
     {
       title: "Multi-Setting Engagement",
-      description: "By implementing programs across schools, campuses, and community spaces, UMV mirrors global guidance to integrate mental-health promotion into everyday, non-clinical environments."
+      description: "By implementing programs across schools, campuses, and community spaces, Unda Mind Vibes mirrors global guidance to integrate mental-health promotion into everyday, non-clinical environments."
     },
     {
       title: "Peer-Led Access & Support",
@@ -24,7 +24,7 @@ const About = () => {
     {
       icon: Users,
       title: "Awareness",
-      goal: "Reach 50,000 young people (13–35 years)",
+      goal: "Reach 50,000 adolescents and youth",
       description: "Targeted prevention campaigns, storytelling and knowledge-sharing by October 2026"
     },
     {
@@ -126,22 +126,22 @@ const About = () => {
 
               <div className="mt-12 p-8 bg-unda-navy/5 rounded-2xl border border-unda-navy/10">
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  <strong className="text-unda-navy">Global Youth Mental Health Priorities:</strong> UMV supports the recent WHO/UN joint call for sustained investment in child and youth mental health as a global policy priority. Our approach, combining youth participation, digital innovation, and whole-of-society collaboration, reflects global guidance for rights-based, community-led, cross-sectoral strategies.
+                  <strong className="text-unda-navy">Global Youth Mental Health Priorities:</strong> Unda Mind Vibes supports the recent WHO/UN joint call for sustained investment in child and youth mental health as a global policy priority. Our approach, combining youth participation, digital innovation, and whole-of-society collaboration, reflects global guidance for rights-based, community-led, cross-sectoral strategies.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* UMV Program Strategic Goals */}
+        {/* Unda Mind Vibes Program Strategic Goals */}
         <section className="py-24 bg-white/50">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
               <h2 className="text-5xl font-black text-unda-navy mb-6">
-                UMV Program <span className="text-unda-teal">Strategic Goals</span>
+                Unda Mind Vibes Program <span className="text-unda-teal">Strategic Goals</span>
               </h2>
               <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-                To strengthen adolescent and youth mental-health prevention through the UMV Prevention Program by advancing holistic wellbeing via collaborative, youth-centered, and evidence-informed interventions in Kenya, the United States, and beyond.
+                To strengthen adolescent and youth mental-health prevention through the Unda Mind Vibes Prevention Program by advancing holistic wellbeing via collaborative, youth-centered, and evidence-informed interventions in Kenya, the United States, and beyond.
               </p>
             </div>
 
@@ -170,11 +170,11 @@ const About = () => {
               <div className="bg-white rounded-3xl p-12 border border-slate-100 shadow-lg">
                 <h2 className="text-4xl font-black text-unda-navy mb-6">Target Regions & Population</h2>
                 <p className="text-lg text-slate-600 leading-relaxed mb-8">
-                  The UMV Prevention Program will pilot in <strong className="text-unda-navy">Kenya and U.S.A regions</strong>, reaching young people aged 13–35 across urban, peri-urban, and rural contexts, including high schools, tertiary institutions, and community settings.
+                  The Unda Mind Vibes Prevention Program will pilot in <strong className="text-unda-navy">Kenya and U.S.A regions</strong>, reaching adolescents and youth across urban, peri-urban, and rural contexts, including high schools, tertiary institutions, and community settings.
                 </p>
                 <div className="grid md:grid-cols-3 gap-6 mt-8">
                   <div className="text-center p-6 bg-slate-50 rounded-2xl">
-                    <p className="text-4xl font-black text-unda-teal mb-2">13-35</p>
+                    <p className="text-4xl font-black text-unda-teal mb-2">Adolescents and youth</p>
                     <p className="text-sm font-bold text-slate-600 uppercase tracking-wider">Age Range</p>
                   </div>
                   <div className="text-center p-6 bg-slate-50 rounded-2xl">
@@ -200,7 +200,7 @@ const About = () => {
                   Multi-Sectoral <span className="text-unda-teal">Collaboration</span>
                 </h2>
                 <p className="text-lg text-slate-600 leading-relaxed">
-                  UMV thrives on strong partnerships that strengthen impact, scale and sustainability. We collaborate with:
+                  Unda Mind Vibes thrives on strong partnerships that strengthen impact, scale and sustainability. We collaborate with:
                 </p>
               </div>
 

@@ -12,34 +12,34 @@ import {
 const Workstreams = () => {
   const streams = [
     {
-      title: "UMV Podcast",
+      title: "Unda Mind Vibes Podcast",
       icon: <Mic />,
       desc: "Our social driver — youth-led storytelling and expert conversations.",
       color: "border-[#00C2CB]",
       link: "/podcast"
     },
     {
-      title: "UMV Debaters",
+      title: "Unda Mind Vibes Debaters",
       icon: <Users />,
       desc: "Age-appropriate mental health debates and conversations for 13–17 in school and community settings.",
       color: "border-[#00C2CB]",
       link: "/debaters-circle"
     },
     {
-      title: "UMV Campus",
+      title: "Unda Mind Vibes Campus",
       icon: <GraduationCap />,
       desc: "Campus cohorts, events, and embedded research driving prevention innovation.",
       color: "border-[#0090C0]",
       link: "/campus"
     },
     {
-      title: "UMV Mtaani",
+      title: "Unda Mind Vibes Mtaani",
       icon: <MapPin />,
       desc: "Community outreaches, local prevention cohorts, and pillar events.",
       color: "border-[#0B1E3B]",
       link: "/mtaani"
     },
-    // Keep placeholder removed — primary UMV products now displayed
+    // Keep placeholder removed — primary Unda Mind Vibes products now displayed
   ];
 
   return (

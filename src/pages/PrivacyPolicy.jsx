@@ -21,8 +21,8 @@ const PrivacyPolicy = () => {
               <h1 className="text-6xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter mb-8">
                 Privacy & <span className="text-[#0090C0]">Policies.</span>
               </h1>
-              <p className="text-xl text-slate-200 leading-relaxed max-w-3xl">
-                UNDA Youth Network is committed to creating a safe, transparent, and secure environment for all users, members, and young people engaging with our UMV Prevention Program and broader Adolescent & Youth Mental Health Prevention initiatives.
+                <p className="text-xl text-slate-200 leading-relaxed max-w-3xl">
+                Unda Youth Network is committed to creating a safe, transparent, and secure environment for all users, members, and young people engaging with our Unda Mind Vibes Prevention Program and broader Adolescent & Youth Mental Health Prevention initiatives.
               </p>
             </div>
           </div>
@@ -105,7 +105,7 @@ const PrivacyPolicy = () => {
                   <div className="p-6 bg-slate-50 rounded-xl">
                     <h3 className="text-lg font-black text-[#0B1E3B] mb-3">How We Use It</h3>
                     <ul className="space-y-2 text-sm text-slate-600">
-                      <li>• Deliver UMV program services</li>
+                      <li>• Deliver Unda Mind Vibes program services</li>
                       <li>• Track progress and wellbeing</li>
                       <li>• Send updates and communications</li>
                       <li>• Process contributions and memberships</li>

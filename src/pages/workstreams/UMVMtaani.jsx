@@ -226,7 +226,7 @@ const UMVMtaani = () => {
               <span className="text-[10px] font-black uppercase tracking-widest text-[#00C2CB]">Neighborhood Prevention</span>
             </div>
             <h1 className="text-6xl lg:text-9xl font-black text-white leading-[0.85] tracking-tighter mb-8">
-              UMV <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C2CB] to-[#0090C0]">Mtaani.</span>
+              Unda Mind Vibes <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C2CB] to-[#0090C0]">Mtaani.</span>
             </h1>
             <p className="text-slate-300 text-xl font-medium max-w-2xl mx-auto leading-relaxed">
               Bringing mental health prevention to the doorstep. We turn community halls, playing fields, and social spaces into safe zones for resilience.
@@ -242,7 +242,7 @@ const UMVMtaani = () => {
                 <HeartHandshake size={48} className="text-[#0B1E3B] mb-6" />
                 <h3 className="text-3xl font-black text-[#0B1E3B] mb-4">Community First.</h3>
                 <p className="text-slate-600 font-medium leading-relaxed mb-8">
-                  UMV Mtaani is designed for youth who are out of school or working in the informal sector. We meet you where you are.
+                  Unda Mind Vibes Mtaani is designed for youth who are out of school or working in the informal sector. We meet you where you are.
                 </p>
                 <Button onClick={handleStartHubClick} className="w-full py-6 rounded-2xl bg-[#0B1E3B] text-white font-bold text-lg hover:bg-[#00C2CB] transition-all cursor-pointer">
                   Start a Mtaani Hub <ArrowRight className="ml-2" />

@@ -20,7 +20,7 @@ const CommunityStory = () => {
             <div className="relative rounded-[3.5rem] overflow-hidden shadow-2xl border-[12px] border-white rotate-1 group-hover:rotate-0 transition-transform duration-500">
               <img 
                 src="https://i.pinimg.com/736x/ac/34/0f/ac340f495ae1469a2dec12f6232045a3.jpg" 
-                alt="UNDA Youth Community" 
+                alt="Unda Youth Community" 
                 className="w-full h-auto" 
               />
             </div>
@@ -41,7 +41,7 @@ const CommunityStory = () => {
             </h2>
             
             <p className="text-slate-600 text-xl leading-relaxed font-light max-w-2xl mx-auto">
-              UNDA Youth Network leads the national movement for Adolescent & Youth Mental Health Prevention through our UMV program. Empowering those aged 13–35 to build resilience before a crisis.
+              Unda Youth Network leads the national movement for Adolescent & Youth Mental Health Prevention through our Unda Mind Vibes program. Empowering adolescents and youth to build resilience before a crisis.
             </p>
 
             {/* 3. THE ACTIVITIES: High-contrast text labels */}

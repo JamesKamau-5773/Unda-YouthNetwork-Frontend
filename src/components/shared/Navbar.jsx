@@ -13,10 +13,10 @@ const Navbar = () => {
   const handleMouseLeave = () => setActiveDropdown(null);
 
   const workstreams = [
-    { name: 'UMV Podcast', path: '/podcast', icon: <Mic size={16} />, desc: 'Social driver & audio content' },
-    { name: 'UMV Debaters', path: '/debaters-circle', icon: <Users size={16} />, desc: 'Age-appropriate mental health debates and conversations for 13–17 in school and community settings' },
-    { name: 'UMV Campus', path: '/campus', icon: <GraduationCap size={16} />, desc: 'Campus cohorts, events & research' },
-    { name: 'UMV Mtaani', path: '/mtaani', icon: <MapPin size={16} />, desc: 'Community outreaches & pillar events' }
+    { name: 'Unda Mind Vibes Podcast', path: '/podcast', icon: <Mic size={16} />, desc: 'Social driver & audio content' },
+    { name: 'Unda Mind Vibes Debaters', path: '/debaters-circle', icon: <Users size={16} />, desc: 'Age-appropriate mental health debates and conversations for 13–17 in school and community settings' },
+    { name: 'Unda Mind Vibes Campus', path: '/campus', icon: <GraduationCap size={16} />, desc: 'Campus cohorts, events & research' },
+    { name: 'Unda Mind Vibes Mtaani', path: '/mtaani', icon: <MapPin size={16} />, desc: 'Community outreaches & pillar events' }
   ];
 
   return (
@@ -45,7 +45,7 @@ const Navbar = () => {
               <img src={undaLogo} alt="Unda Logo" className="w-full h-full object-contain" />
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-[#0B1E3B] text-lg tracking-tighter leading-none">UNDA</span>
+              <span className="font-black text-[#0B1E3B] text-lg tracking-tighter leading-none">Unda</span>
               <span className="text-[6px] font-bold text-[#0B1E3B]/70 uppercase tracking-[0.3em] mt-0.5">Youth Network</span>
             </div>
           </Link>

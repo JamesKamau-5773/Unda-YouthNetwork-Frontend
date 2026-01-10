@@ -75,13 +75,13 @@ const SeedFundingApplication = () => {
         <div className="container mx-auto px-6 max-w-4xl">
           {/* Header */}
           <div className="mb-12">
-            <Button
+              <Button
               variant="ghost"
               asChild
               className="mb-6 text-unda-navy hover:text-unda-yellow"
             >
               <Link to="/campus">
-                <ArrowLeft size={16} className="mr-2" /> Back to UMV Campus
+                <ArrowLeft size={16} className="mr-2" /> Back to Unda Mind Vibes Campus
               </Link>
             </Button>
             
@@ -120,7 +120,7 @@ const SeedFundingApplication = () => {
                       variant="outline"
                       className="mt-4 border-green-300 text-green-700 hover:bg-green-100"
                     >
-                      <Link to="/campus">Back to UMV Campus</Link>
+                      <Link to="/campus">Back to Unda Mind Vibes Campus</Link>
                     </Button>
                   )}
                 </div>

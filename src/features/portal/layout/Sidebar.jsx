@@ -23,7 +23,7 @@ const Sidebar = () => {
             <img src={undaLogo} alt="Unda" className="w-full h-full object-contain mix-blend-mode-screen" />
           </div>
           <div className="flex flex-col">
-            <span className="font-black text-lg text-[#0B1E3B] leading-none tracking-tight">UNDA</span>
+            <span className="font-black text-lg text-[#0B1E3B] leading-none tracking-tight">Unda</span>
             <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Member Portal</span>
           </div>
         </Link>

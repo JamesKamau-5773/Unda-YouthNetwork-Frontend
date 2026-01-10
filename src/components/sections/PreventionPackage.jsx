@@ -15,7 +15,7 @@ const PreventionPackage = () => {
     <section className = "py-32 bg-[#F9FAFB]/50">
       <div className = "container mx-auto px-6">
         <div className = "max-w-3xl mx-auto text-center mb-20">
-          <h2 className = "text-4xl font-black text-[#0B1E3B] mb-4">The UMV Prevention Package</h2>
+          <h2 className = "text-4xl font-black text-[#0B1E3B] mb-4">The Unda Mind Vibes Prevention Package</h2>
           <p className = "text-slate-500 leading-relaxed">A structured, youth-centered model to strengthen early prevention.</p>
         </div>
 
