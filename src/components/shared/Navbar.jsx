@@ -14,7 +14,7 @@ const Navbar = () => {
 
   const workstreams = [
     { name: 'UMV Podcast', path: '/podcast', icon: <Mic size={16} />, desc: 'Social driver & audio content' },
-    { name: 'UMV Debaters', path: '/debaters-circle', icon: <Users size={16} />, desc: 'Prevention cohorts (13–17) & advocacy' },
+    { name: 'UMV Debaters', path: '/debaters-circle', icon: <Users size={16} />, desc: 'Age-appropriate mental health debates and conversations for 13–17 in school and community settings' },
     { name: 'UMV Campus', path: '/campus', icon: <GraduationCap size={16} />, desc: 'Campus cohorts, events & research' },
     { name: 'UMV Mtaani', path: '/mtaani', icon: <MapPin size={16} />, desc: 'Community outreaches & pillar events' }
   ];

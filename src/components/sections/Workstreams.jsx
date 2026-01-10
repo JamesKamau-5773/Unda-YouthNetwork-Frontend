@@ -21,7 +21,7 @@ const Workstreams = () => {
     {
       title: "UMV Debaters",
       icon: <Users />,
-      desc: "Prevention cohorts for 13–17yr olds in schools, churches and communities.",
+      desc: "Age-appropriate mental health debates and conversations for 13–17 in school and community settings.",
       color: "border-[#00C2CB]",
       link: "/debaters-circle"
     },

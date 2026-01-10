@@ -8,7 +8,7 @@ const PreventionPackage = () => {
     {id: "04", title: "Monthly Mini-Screening", desc: "Monthly screening with appropriate referrals and resources to support care pathways."},
     {id: "05", title: "Quarterly Mental Health Events", desc: "Youth-expert engagements on advocacy and leadership."},
     {id: "06", title: "Semi-Annual Therapy", desc: "Sessions with approved professionals for deeper support."},
-    {id: "07", title: "Annual MHR-Training", desc: "Certified resilience and stress management skills building."}
+    {id: "07", title: "Annual Mental Health Resilience skills training", desc: "Certified resilience and stress management skills building."}
   ];
 
   return(
