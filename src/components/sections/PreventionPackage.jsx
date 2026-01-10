@@ -3,19 +3,19 @@ import React from 'react';
 const PreventionPackage = () => {
   const steps = [
     {id: "01", title: "Initial Screening", desc: "PHQ-4, PHQ-9, and GAD-7 tools to identify baseline needs"},
-    {id: "02", title: "Daily Affirmations", desc: "Thematic digital messages for positive mental habits."},
-    {id: "03", title: "Weekly Peer Check-Ins", desc: "Safe spaces for group discussions and Psychological First Aid."},
-    {id: "04", title: "Monthly Mini-Screening", desc: "Brief check-ins to monitor wellbeing trends over time."},
-    {id: "05", title: "Quarterly Pillar Events", desc: "Youth-expert engagements on advocacy and leadership."},
+    {id: "02", title: "Daily Affirmations", desc: "Daily affirmations for positive mental habits and emotional regulation."},
+    {id: "03", title: "Weekly Peer Check-Ins", desc: "Weekly check-ins for social connectedness and Psychological First Aid; includes referrals to community resources."},
+    {id: "04", title: "Monthly Mini-Screening", desc: "Monthly screening with appropriate referrals and resources to support care pathways."},
+    {id: "05", title: "Quarterly Mental Health Events", desc: "Youth-expert engagements on advocacy and leadership."},
     {id: "06", title: "Semi-Annual Therapy", desc: "Sessions with approved professionals for deeper support."},
-    {id: "07", title: "Annual MHR-Training", desc: "Certified resilience and stress management skills building."}
+    {id: "07", title: "Annual Mental Health Resilience skills training", desc: "Certified resilience and stress management skills building."}
   ];
 
   return(
     <section className = "py-32 bg-[#F9FAFB]/50">
       <div className = "container mx-auto px-6">
         <div className = "max-w-3xl mx-auto text-center mb-20">
-          <h2 className = "text-4xl font-black text-[#0B1E3B] mb-4">The UMV Prevention Package</h2>
+          <h2 className = "text-4xl font-black text-[#0B1E3B] mb-4">The Unda Mind Vibes Prevention Package</h2>
           <p className = "text-slate-500 leading-relaxed">A structured, youth-centered model to strengthen early prevention.</p>
         </div>
 

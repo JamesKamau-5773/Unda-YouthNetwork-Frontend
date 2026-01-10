@@ -23,7 +23,7 @@ const Gallery = () => {
                 Gallery & <span className="text-[#0B1E3B]">Moments.</span>
               </h1>
               <p className="text-xl text-white/95 leading-relaxed max-w-3xl">
-                Our Gallery brings the UMV Prevention Program experience to life. Explore photos and videos capturing the energy, creativity, and impact of UNDA Youth Network programs.
+                Our Gallery brings the Unda Mind Vibes Prevention Program experience to life. Explore photos and videos capturing the energy, creativity, and impact of Unda Youth Network programs.
               </p>
             </div>
           </div>
@@ -54,7 +54,7 @@ const Gallery = () => {
 
               <div className="mt-12 text-center">
                 <p className="text-slate-600 leading-relaxed">
-                  Snapshots from UMV Debaters, UMV Campus, UMV Mtaani, community outreach, and UMV Quarterly & Annual Forums, showcasing youth engagement, learning, and creativity.
+                  Snapshots from Unda Mind Vibes Debaters, Unda Mind Vibes Campus, Unda Mind Vibes Mtaani, community outreach, and Unda Mind Vibes Quarterly & Annual Forums, showcasing youth engagement, learning, and creativity.
                 </p>
               </div>
             </div>
@@ -102,7 +102,7 @@ const Gallery = () => {
               Join the <span className="text-[#0090C0]">Movement</span>
             </h2>
             <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-12">
-              Be part of the moments we capture. Participate in UMV programs and help us create more impactful stories.
+              Be part of the moments we capture. Participate in Unda Mind Vibes programs and help us create more impactful stories.
             </p>
             <Link to="/membership" className="inline-flex items-center h-14 px-8 rounded-2xl bg-[#0090C0] text-[#0B1E3B] hover:bg-[#00C2CB] hover:text-white text-lg font-bold transition-colors">
               Get Involved

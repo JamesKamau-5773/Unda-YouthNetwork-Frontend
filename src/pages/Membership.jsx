@@ -37,7 +37,7 @@ const Membership = () => {
 
 							<p className="text-slate-500 text-xl leading-relaxed font-light max-w-lg">
 								Our annual subscription provides the framework for long-term mental strength. 
-								Built specifically for Kenya's 13–35 demographic.
+								Designed specifically for adolescents and youth in Kenya.
 							</p>
 
 							<div className="pt-8 flex items-center gap-6 text-unda-navy/40">
@@ -56,7 +56,7 @@ const Membership = () => {
 								<div className="flex justify-between items-start mb-10">
 									<div>
 										<h3 className="text-2xl font-black text-unda-navy tracking-tight">Youth Membership</h3>
-										<p className="text-unda-teal font-bold text-xs uppercase tracking-widest mt-1">13–35 Years</p>
+										<p className="text-unda-teal font-bold text-xs uppercase tracking-widest mt-1">Adolescents and youth</p>
 									</div>
 									<div className="text-right">
 										<span className="block text-4xl font-black text-unda-navy tracking-tighter">KES 3,000</span>

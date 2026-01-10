@@ -106,7 +106,7 @@ const Volunteer = () => {
                       <div>
                         <h4 className="font-bold text-[#0B1E3B] text-lg mb-2">I Want to Support</h4>
                         <p className="text-sm text-slate-600">
-                          Support UMV Debaters, UMV Podcast, UMV Campus, Mtaani events, content creation, or peer support initiatives.
+                          Support Unda Mind Vibes Debaters, Unda Mind Vibes Podcast, Unda Mind Vibes Campus, Mtaani events, content creation, or peer support initiatives.
                         </p>
                       </div>
                     </div>
@@ -127,7 +127,7 @@ const Volunteer = () => {
                       <div>
                         <h4 className="font-bold text-[#0B1E3B] text-lg mb-2">I Want to Host an Event</h4>
                         <p className="text-sm text-slate-600">
-                          Bring UMV to your school, campus, community, or organization for a mental health prevention event.
+                          Bring Unda Mind Vibes to your school, campus, community, or organization for a mental health prevention event.
                         </p>
                       </div>
                     </div>

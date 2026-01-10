@@ -24,7 +24,7 @@ const Resources = () => {
                 Resources & <span className="text-[#0090C0]">Tools.</span>
               </h1>
               <p className="text-xl text-slate-200 leading-relaxed max-w-3xl">
-                At UNDA Youth Network, we provide up-to-date materials to support youth, educators, and partners in mental-health prevention. Resources are regularly updated as the UMV Prevention Program grows.
+                At UNDA Youth Network, we provide up-to-date materials to support youth, educators, and partners in mental-health prevention. Resources are regularly updated as the Unda Mind Vibes Prevention Program grows.
               </p>
             </div>
           </div>
@@ -45,14 +45,14 @@ const Resources = () => {
                 <div className="bg-[#F9FAFB]/30 rounded-2xl p-8 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300">
                   <h3 className="text-2xl font-black text-[#0B1E3B] mb-3">Research Summaries</h3>
                   <p className="text-slate-600 leading-relaxed mb-4">
-                    Brief insights from UMV and partner research on youth mental health, preventive interventions, and evidence-based practices.
+                    Brief insights from Unda Mind Vibes and partner research on youth mental health, preventive interventions, and evidence-based practices.
                   </p>
                   {/* resource download not yet available */}
                   <p className="text-xs text-slate-400 italic font-bold">Coming soon</p>
                 </div>
 
                 <div className="bg-[#F9FAFB]/30 rounded-2xl p-8 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300">
-                  <h3 className="text-2xl font-black text-[#0B1E3B] mb-3">UMV Reports</h3>
+                  <h3 className="text-2xl font-black text-[#0B1E3B] mb-3">Unda Mind Vibes Reports</h3>
                   <p className="text-slate-600 leading-relaxed mb-4">
                     Annual and quarterly program reports highlighting achievements, learnings, and program impact across schools, campuses, and communities.
                   </p>

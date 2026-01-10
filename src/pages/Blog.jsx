@@ -7,22 +7,30 @@ import { Button } from '@/components/ui/button';
 const Blog = () => {
   const articles = [
     {
-      title: "UNDA Youth Network UMV Program Featured on EpicPulse Magazine",
+      title: "Unda Youth Network Unda Mind Vibes Program Featured on EpicPulse Magazine",
       excerpt: "A preview of how our prevention-first model is shaping conversations ahead of our official rollout in January.",
       category: "Media",
       date: "December 2025"
     },
     {
-      title: "What to Expect: Launching UMV in January 2026",
+      title: "What to Expect: Launching Unda Mind Vibes in January 2026",
       excerpt: "An inside look at our awareness, access and advocacy pillars and how young people will take the lead.",
       category: "Update",
       date: "January 2026"
     },
     {
       title: "Youth Voices Setting the Pace for 2026",
-      excerpt: "Early stories from schools, campuses and communities preparing to participate in UMV Debaters, UMV Campus and UMV Mtaani.",
+      excerpt: "Early stories from schools, campuses and communities preparing to participate in Debaters, Campus and Mtaani.",
       category: "Success Story",
       date: "January 2026"
+    }
+    ,
+    {
+      title: "MindRoots Parent Circle",
+      excerpt: "Prevention-first support for parents and caregivers — now part of our Resources and Blog.",
+      category: "Resource",
+      date: "January 2026",
+      link: "/mindroots-parent-circle"
     }
   ];
 

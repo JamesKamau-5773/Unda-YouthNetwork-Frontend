@@ -124,9 +124,9 @@ export default function WeeklyCheckInForm() {
                   {/* Assessment Scores */}
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider flex items-center gap-2">
+                        <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider flex items-center gap-2">
                         <Heart size={16} className="text-[#00C2CB]" />
-                        PHQ-2 Score * <span className="text-xs text-slate-400 normal-case">(0-6)</span>
+                        PHQ-2 Score * <span className="text-xs text-slate-400 uppercase">(0-6)</span>
                       </label>
                       <Input 
                         name="phq2Score"
@@ -143,7 +143,7 @@ export default function WeeklyCheckInForm() {
                     <div className="space-y-2">
                       <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider flex items-center gap-2">
                         <Activity size={16} className="text-[#00C2CB]" />
-                        GAD-2 Score * <span className="text-xs text-slate-400 normal-case">(0-6)</span>
+                        GAD-2 Score * <span className="text-xs text-slate-400 uppercase">(0-6)</span>
                       </label>
                       <Input 
                         name="gad2Score"

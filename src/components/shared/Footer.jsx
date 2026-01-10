@@ -13,14 +13,14 @@ const Footer = () => {
         <div className="grid lg:grid-cols-12 gap-16 mb-20">
           {/* 1. Brand & Mission Column */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
               <div className="h-10 w-10 rounded-xl overflow-hidden flex items-center justify-center bg-white border border-slate-100">
                 <img src={undaLogo} alt="Unda Logo" className="w-full h-full object-contain mix-blend-multiply" />
               </div>
-              <span className="font-black text-[#0B1E3B] tracking-tighter text-xl">UNDA YOUTH NETWORK GLOBAL</span>
+              <span className="font-black text-[#0B1E3B] tracking-tighter text-xl">Unda Youth Network Global</span>
             </div>
             <p className="text-slate-600 text-sm leading-relaxed max-w-xs font-medium">
-              Kenya's national movement for Adolescent & Youth Mental Health Prevention through the UMV program.
+              Kenya's national movement for Adolescent & Youth Mental Health Prevention through the Unda Mind Vibes program.
             </p>
             <div>
               <p className="text-xs font-bold text-[#0B1E3B] mb-3">Contact Us</p>
@@ -130,7 +130,7 @@ const Footer = () => {
         {/* 4. Bottom Bar: Trust Indicators */}
         <div className="pt-12 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">
-            © 2025 UNDA Youth Network Global
+            © 2025 Unda Youth Network Global
           </p>
           <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-slate-50 border border-slate-100">
             <ShieldCheck size={14} className="text-[#00C2CB]" />

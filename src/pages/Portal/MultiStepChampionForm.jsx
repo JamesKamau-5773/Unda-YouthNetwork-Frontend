@@ -350,7 +350,7 @@ const MultiStepChampionForm = () => {
                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Recruitment Source</label>
                <select className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 font-bold text-[#0B1E3B] focus:border-[#00C2CB] outline-none" onChange={e => setFormData({...formData, recruitmentSource: e.target.value})} value={formData.recruitmentSource}>
                   <option value="">Select Source</option>
-                  <option value="Campus Edition">UMV Campus</option><option value="Mtaani">Mtaani</option><option value="Referral">Referral</option><option value="Social Media">Social Media</option>
+                  <option value="Campus Edition">Unda Mind Vibes Campus</option><option value="Mtaani">Mtaani</option><option value="Referral">Referral</option><option value="Social Media">Social Media</option>
                 </select>
             </div>
 

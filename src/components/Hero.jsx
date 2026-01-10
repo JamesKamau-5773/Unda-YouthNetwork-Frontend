@@ -20,7 +20,7 @@ const Hero = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00C2CB] opacity-50"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00C2CB]"></span>
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-widest">
+            <span className="text-[10px] font-bold normal-case tracking-widest">
               Unda Mind Vibes Initiative
             </span>
           </div>
