@@ -12,7 +12,7 @@ const UpcomingEvents = () => {
     },
     {
       title: "UMV Campus Showcase — Kenya",
-      description: "April 4–5, 2026 — Call for proposals open",
+      description: "April 4–5, 2026 — Roll out Mental health forums",
       link: "/campus",
       color: "border-[#0090C0]"
     },

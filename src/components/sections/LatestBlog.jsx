@@ -22,6 +22,13 @@ const LatestBlog = () => {
       link: "/blog",
       color: "border-[#0090C0]"
     }
+    ,
+    {
+      title: "MindRoots Parent Circle",
+      excerpt: "Prevention-first support for parents and caregivers — now part of our Resources and Blog.",
+      link: "/mindroots-parent-circle",
+      color: "border-[#00C2CB]"
+    }
   ];
 
   return (
