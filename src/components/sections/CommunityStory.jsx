@@ -49,7 +49,8 @@ const CommunityStory = () => {
                 {[
                 { label: "Weekly Peer Check-Ins", color: "bg-[#00C2CB]" },
                 { label: "Cultural Storytelling", color: "bg-[#00C2CB]" },
-                { label: "Digital Resilience Tools", color: "bg-[#0090C0]" }
+                { label: "Mental Resilience tools", color: "bg-[#0090C0]" },
+                { label: "Referral Pathways", color: "bg-[#0090C0]" }
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3">
                   <div className={`h-1.5 w-1.5 rounded-full ${item.color}`} />
