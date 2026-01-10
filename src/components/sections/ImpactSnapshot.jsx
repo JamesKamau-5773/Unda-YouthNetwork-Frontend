@@ -24,8 +24,8 @@ const ImpactSnapshot = () => {
   
   const { activeChampions, referralConversionRate, trainingComplianceRate, loading } = useMetrics();
 
+  // Temporarily hide active champions until a later update
   const stats = [
-    { number: activeChampions, label: "Active Peer Champions", color: "bg-[#0B1E3B]", glow: "shadow-[#0B1E3B]/20" },
     { number: `${referralConversionRate.toFixed(1)}%`, label: "Referral Conversion Rate", color: "bg-[#00C2CB]", glow: "shadow-[#00C2CB]/20" },
     { number: `${trainingComplianceRate.toFixed(1)}%`, label: "Training Compliance Rate", color: "bg-[#00C2CB]", glow: "shadow-[#00C2CB]/20" },
   ];
