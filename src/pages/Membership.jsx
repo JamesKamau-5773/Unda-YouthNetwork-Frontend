@@ -36,8 +36,7 @@ const Membership = () => {
 							</h2>
 
 							<p className="text-slate-500 text-xl leading-relaxed font-light max-w-lg">
-								Our annual subscription provides the framework for long-term mental strength. 
-								Designed specifically for adolescents and youth in Kenya.
+								Our membership provides the framework for long-term mental strength. Membership is free and open to adolescents and youth in Kenya.
 							</p>
 
 							<div className="pt-8 flex items-center gap-6 text-unda-navy/40">
@@ -58,10 +57,7 @@ const Membership = () => {
 										<h3 className="text-2xl font-black text-unda-navy tracking-tight">Youth Membership</h3>
 										<p className="text-unda-teal font-bold text-xs uppercase tracking-widest mt-1">Adolescents and youth</p>
 									</div>
-									<div className="text-right">
-										<span className="block text-4xl font-black text-unda-navy tracking-tighter">KES 3,000</span>
-										<span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">per year</span>
-									</div>
+									<div className="text-right" />
 								</div>
 
 								{/* Benefits List */}
@@ -86,9 +82,8 @@ const Membership = () => {
 									<Link to="/join">Register as Member<ArrowRight className="group-hover:translate-x-2 transition-transform" /></Link>
 								</Button>
 
-								<div className="mt-6 flex justify-center gap-4 opacity-30 grayscale pointer-events-none">
-									{/* Visual representation of payment icons would go here */}
-									<p className="text-[9px] font-bold uppercase tracking-widest text-unda-navy">M-Pesa • Visa • Mastercard</p>
+								<div className="mt-6 flex justify-center gap-4">
+									<p className="text-[11px] text-slate-500 italic">Membership is free. No payment required.</p>
 								</div>
 							</div>
 						</div>
