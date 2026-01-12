@@ -46,10 +46,7 @@ const Membership = () => {
 
               </div>
 
-              <div className = "mb-8">
-                <span className = "text-5xl font-black text-[#0B1E3B] tracking-tighter">KES 3,000</span>
-                <span className = "text-slate-400 font-medium ml-2">annually</span>
-              </div>
+              
 
               <ul className = "space-y-4 mb-10">
                 {benefits.map((benefit, idx) => (
@@ -62,14 +59,9 @@ const Membership = () => {
               </ul>
 
               <Button className = "w-full h-16 rounded-2xl bg-[#0B1E3B] text-white hover:bg-[#00C2CB] text-lg font-bold transition-all shadow-xl shadow-[0_10px_30px_rgba(11,30,59,0.1)]">
-                Become a Member
+                Join the Network
 
               </Button>
-
-              <p className = "text-center text-[10px] text-slate-400 mt-6 uppercase font-bold tracking-widest">
-                  Secure Payment via M-PESA or Card
-
-              </p>
 
               </div>
 
