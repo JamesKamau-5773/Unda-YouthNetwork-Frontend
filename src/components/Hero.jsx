@@ -21,7 +21,7 @@ const Hero = () => {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00C2CB]"></span>
             </span>
             <span className="text-[10px] font-bold normal-case tracking-widest">
-              Unda Mind Vibes Initiative
+              Unda Mind Vibes  Initiative
             </span>
           </div>
 
@@ -32,7 +32,7 @@ const Hero = () => {
           </h1>
 
           <p className="mt-8 text-xl text-[#0B1E3B]/70 max-w-lg leading-relaxed font-light">
-            Equipping Kenya's youth with the tools to build resilience and
+            Equipping Adolescents and youth- with the tools to build resilience and
             mental strength long before a crisis begins.
           </p>
 

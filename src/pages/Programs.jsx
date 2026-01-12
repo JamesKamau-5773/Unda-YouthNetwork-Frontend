@@ -29,7 +29,7 @@ const Programs = () => {
   const programs = [
     {
       icon: MessageSquare,
-      title: "Unda Mind Vibes Debaters",
+      title: "UMV Debaters",
       tagline: "Critical Thinking Through Structured Debates",
       description: "A dynamic platform where high school students explore mental-health prevention topics through structured debates.",
       highlights: [
@@ -44,7 +44,7 @@ const Programs = () => {
     },
     {
       icon: GraduationCap,
-      title: "Unda Mind Vibes Campus",
+      title: "UMV Campus",
       tagline: "Research-Driven Innovation for Tertiary Students",
       description: "A research-centered competition for university and college students passionate about preventive mental health.",
       highlights: [
@@ -59,7 +59,7 @@ const Programs = () => {
     },
     {
       icon: MapPin,
-      title: "Unda Mind Vibes Mtaani",
+      title: "UMV Mtaani",
       tagline: "Community Engagement Beyond the Classroom",
       description: "A vibrant community engagement model reaching young people outside formal schooling.",
       highlights: [
@@ -74,7 +74,7 @@ const Programs = () => {
     },
     {
       icon: Mic2,
-      title: "Unda Mind Vibes Podcast",
+      title: "UMV Podcast",
       tagline: "Conversations That Prevent",
       description: "A bi-monthly podcast where young people, creatives and mental-health voices unpack real issues affecting daily life.",
       highlights: [
@@ -89,7 +89,7 @@ const Programs = () => {
     },
     {
       icon: Calendar,
-      title: "Unda Mind Vibes Annual Conference",
+      title: "UMV Annual Conference",
       tagline: "A Flagship Youth Mental Health Convening",
       description: "A flagship youth convening that brings together networks, schools, universities, researchers and community partners.",
       highlights: [
@@ -104,13 +104,13 @@ const Programs = () => {
     },
     {
       icon: Globe,
-      title: "Unda Mind Vibes Global",
+      title: "UMV Global",
       tagline: "Expanding Prevention to the United States",
-      description: "The international expansion of the Unda Mind Vibes Prevention Program, bringing our youth-centered mental-health initiatives to the United States.",
+      description: "The international expansion of the UMV Prevention Program, bringing our youth-centered mental-health initiatives to the United States.",
       highlights: [
         "Adapted programs for new cultural contexts",
         "Accessibility and relevance for adolescents and youth",
-        "Building on the success of Unda Mind Vibes in Kenya",
+                "Building on the success of UMV in Kenya",
         "Creating global impact through local action"
       ],
       cta: "",
@@ -137,7 +137,7 @@ const Programs = () => {
                 Unda Mind Vibes <span className="text-[#0090C0]">Programs.</span>
               </h1>
               <p className="text-xl text-slate-200 leading-relaxed max-w-3xl mb-8">
-                The Unda Mind Vibes Prevention Program is delivered through a collective of youth-driven platforms under UNDA Youth Network, designed to build preventive mental-health literacy, promote youth-led engagement, and activate community participation.
+                The Unda Mind Vibes (UMV) Prevention Program is delivered through a collective of youth-driven platforms under UNDA Youth Network, designed to build preventive mental-health literacy, promote youth-led engagement, and activate community participation.
               </p>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 border border-white/20">
                 <Target size={16} className="text-[#0090C0]" />
@@ -152,10 +152,10 @@ const Programs = () => {
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-black text-[#0B1E3B] mb-6 font-unda">
-                Unda Mind Vibes is Built on <span className="text-[#00C2CB]">Three Pillars</span>
+                UMV is Built on <span className="text-[#00C2CB]">Three Pillars</span>
               </h2>
               <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-                All Unda Mind Vibes activities reinforce the prevention agenda in schools, tertiary institutions and communities through storytelling, debates, research, creative expression and community events.
+                All UMV activities reinforce the prevention agenda in schools, tertiary institutions and communities through storytelling, debates, research, creative expression and community events.
               </p>
             </div>
 
@@ -194,7 +194,7 @@ const Programs = () => {
                 Our Program <span className="text-[#00C2CB]">Streams</span>
               </h2>
               <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-                All workstreams operate under Unda Mind Vibes, each designed to reach different segments of adolescents and youth.
+                All workstreams operate under UMV, each designed to reach different segments of adolescents and youth.
               </p>
             </div>
 

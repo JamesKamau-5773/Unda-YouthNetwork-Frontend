@@ -304,7 +304,7 @@ const DebatersCircle = () => {
             </div>
 
             <h1 className="text-6xl lg:text-8xl font-black leading-[0.9] tracking-tighter">
-              Unda Mind Vibes <br />
+              UMV <br />
               <span className="text-[#00C2CB]">Debaters.</span>
             </h1>
 

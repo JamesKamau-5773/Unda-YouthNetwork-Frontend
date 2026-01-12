@@ -5,27 +5,27 @@ import { Newspaper, ArrowRight } from 'lucide-react';
 const LatestBlog = () => {
   const articles = [
     {
-      title: "Unda Youth Network Unda Mind Vibes Program Featured on EpicPulse Magazine",
+      title: "Unda Youth Network Unda Mind Vibes (UMV) Program Featured on EpicPulse Magazine",
       excerpt: "A preview of how our prevention-first model is shaping conversations ahead of our official rollout in January.",
       link: "/blog",
       color: "border-[#00C2CB]"
     },
     {
-      title: "What to Expect: Launching Unda Mind Vibes in January 2026",
+      title: "What to Expect: Launching Unda Mind Vibes (UMV) in January 2026",
       excerpt: "An inside look at our awareness, access and advocacy pillars and how young people will take the lead.",
       link: "/blog",
       color: "border-[#00C2CB]"
     },
     {
       title: "Youth Voices Setting the Pace for 2026",
-      excerpt: "Early stories from schools, campuses and communities preparing to participate in Unda Mind Vibes Debaters, Unda Mind Vibes Campus and Unda Mind Vibes Mtaani.",
+      excerpt: "Early stories from schools, campuses and communities preparing to participate in Unda Mind Vibes (UMV) Debaters, Unda Mind Vibes (UMV) Campus and Unda Mind Vibes (UMV) Mtaani.",
       link: "/blog",
       color: "border-[#0090C0]"
     }
     ,
     {
       title: "MindRoots Parent Circle",
-      excerpt: "Prevention-first support for parents and caregivers — now part of our Resources and Blog.",
+      excerpt: "Prevention support and family psychoeducation to enhance parent-youth conversation and proactive action.",
       link: "/mindroots-parent-circle",
       color: "border-[#00C2CB]"
     }

@@ -41,7 +41,7 @@ const CommunityStory = () => {
             </h2>
             
             <p className="text-slate-600 text-xl leading-relaxed font-light max-w-2xl mx-auto">
-              Unda Youth Network leads the national movement for Adolescent & Youth Mental Health Prevention through our Unda Mind Vibes program. Empowering adolescents and youth to build resilience before a crisis.
+              Unda Youth Network leads the national movement for Adolescent & Youth Mental Health Prevention through our Unda Mind Vibes (UMV) program. Empowering adolescents and youth to build resilience before a crisis.
             </p>
 
             {/* 3. THE ACTIVITIES: High-contrast text labels */}

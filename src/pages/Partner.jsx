@@ -64,7 +64,7 @@ const Partner = () => {
                 <div>
                   <h2 className="text-4xl font-black text-[#0B1E3B] mb-6">Why Partner?</h2>
                   <p className="text-lg text-slate-600 leading-relaxed">
-                    By partnering with Unda Mind Vibes, you contribute to a scalable, evidence-informed prevention model that prioritizes youth leadership and sustainable community impact.
+                    By partnering with UMV, you contribute to a scalable, evidence-informed prevention model that prioritizes youth leadership and sustainable community impact.
                   </p>
                 </div>
 
