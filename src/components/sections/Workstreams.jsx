@@ -12,34 +12,34 @@ import {
 const Workstreams = () => {
   const streams = [
     {
-      title: "Unda Mind Vibes Podcast",
+      title: "UMV Podcast",
       icon: <Mic />,
       desc: "Our social driver — youth-led storytelling and expert conversations.",
       color: "border-[#00C2CB]",
       link: "/podcast"
     },
     {
-      title: "Unda Mind Vibes Debaters",
+      title: "UMV Debaters",
       icon: <Users />,
       desc: "Age-appropriate mental health debates and conversations for 13–17 in school and community settings.",
       color: "border-[#00C2CB]",
       link: "/debaters-circle"
     },
     {
-      title: "Unda Mind Vibes Campus",
+      title: "UMV Campus",
       icon: <GraduationCap />,
       desc: "Campus cohorts, events, and embedded research driving prevention innovation.",
       color: "border-[#0090C0]",
       link: "/campus"
     },
     {
-      title: "Unda Mind Vibes Mtaani",
+      title: "UMV Mtaani",
       icon: <MapPin />,
       desc: "Community outreaches, local prevention cohorts, and pillar events.",
       color: "border-[#0B1E3B]",
       link: "/mtaani"
     },
-    // Keep placeholder removed — primary Unda Mind Vibes products now displayed
+    // Keep placeholder removed — primary UMV products now displayed
   ];
 
   return (
@@ -48,21 +48,25 @@ const Workstreams = () => {
         <h2 className="text-4xl font-black text-[#0B1E3B] text-center mb-16">
           Our Workstreams
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {streams.map((stream, idx) => (
             stream.link ? (
               <Link
                 key={idx}
                 to={stream.link}
-                className={`p-8 border-t-4 ${stream.color} bg-[#F9FAFB]/30 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group cursor-pointer block`}
+                className={`p-8 border-t-4 ${stream.color} bg-[#F9FAFB]/30 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group cursor-pointer block flex flex-col h-full justify-between`}
               >
-                <div className="text-[#00C2CB] mb-4 group-hover:scale-110 transition-transform">
-                  {React.cloneElement(stream.icon, { size: 32 })}
+                <div className="mb-6 group-hover:scale-110 transition-transform">
+                  {React.cloneElement(stream.icon, { size: 36, className: "text-[#00C2CB]" })}
                 </div>
-                <h4 className="font-bold text-[#0B1E3B] mb-2">{stream.title}</h4>
-                <p className="text-xs text-slate-500 leading-relaxed mb-4">
-                  {stream.desc}
-                </p>
+
+                <div>
+                  <h4 className="font-bold text-[#0B1E3B] mb-2">{stream.title}</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed mb-4">
+                    {stream.desc}
+                  </p>
+                </div>
+
                 <div className="flex items-center text-[10px] font-bold uppercase text-[#00C2CB] opacity-0 group-hover:opacity-100 transition-opacity">
                   Learn More <ArrowRight size={12} className="ml-1" />
                 </div>
@@ -70,15 +74,19 @@ const Workstreams = () => {
             ) : (
               <div
                 key={idx}
-                className={`p-8 border-t-4 ${stream.color} bg-[#F9FAFB]/30 rounded-2xl opacity-60 cursor-not-allowed`}
+                className={`p-8 border-t-4 ${stream.color} bg-[#F9FAFB]/30 rounded-2xl opacity-60 cursor-not-allowed flex flex-col h-full justify-between`}
               >
-                <div className="text-[#00C2CB] mb-4">
-                  {React.cloneElement(stream.icon, { size: 32 })}
+                <div className="mb-6">
+                  {React.cloneElement(stream.icon, { size: 36, className: "text-[#00C2CB]" })}
                 </div>
-                <h4 className="font-bold text-[#0B1E3B] mb-2">{stream.title}</h4>
-                <p className="text-xs text-slate-500 leading-relaxed mb-4">
-                  {stream.desc}
-                </p>
+
+                <div>
+                  <h4 className="font-bold text-[#0B1E3B] mb-2">{stream.title}</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed mb-4">
+                    {stream.desc}
+                  </p>
+                </div>
+
                 <p className="text-xs text-slate-400 italic font-bold">Coming soon</p>
               </div>
             )

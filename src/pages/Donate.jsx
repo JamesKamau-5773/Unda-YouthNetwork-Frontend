@@ -34,7 +34,7 @@ const Donate = () => {
                 Support <span className="text-unda-yellow">Prevention.</span>
               </h1>
               <p className="text-xl text-slate-200 leading-relaxed max-w-3xl">
-                Support the Unda Youth Network and help young people across Kenya access Unda Mind Vibes Prevention Program activities and preventive mental-health services. Your contributions fund programs, events, peer-support initiatives, and community outreach that advance Adolescent & Youth Mental Health Prevention.
+                Support the Unda Youth Network and help young people across Kenya access UMV Prevention Program activities and preventive mental-health services. Your contributions fund programs, events, peer-support initiatives, and community outreach that advance Adolescent & Youth Mental Health Prevention.
               </p>
             </div>
           </div>
@@ -191,7 +191,7 @@ const Donate = () => {
                 </div>
                 <div className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm">
                   <p className="text-4xl font-black text-unda-navy mb-3">KES 10,000</p>
-                  <p className="text-slate-600">Funds a full Unda Mind Vibes event reaching 50+ youth</p>
+                  <p className="text-slate-600">Funds a full UMV event reaching 50+ youth</p>
                 </div>
               </div>
             </div>

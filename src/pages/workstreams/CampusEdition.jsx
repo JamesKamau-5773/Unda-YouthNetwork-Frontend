@@ -64,7 +64,7 @@ const CampusEdition = () => {
                 </h1>
 
                 <p className="text-slate-600 text-xl font-medium max-w-xl leading-relaxed">
-                  Unda Mind Vibes Campus combines prevention cohorts, events, and an embedded research component—empowering university and college students to lead prevention innovation, evaluation, and campus-wide programming.
+                  UMV Campus combines prevention cohorts, events, and an embedded research component—empowering university and college students to lead prevention innovation, evaluation, and campus-wide programming.
                 </p>
 
                 <div className="flex flex-wrap gap-4 pt-4">

@@ -7,21 +7,21 @@ const GetInvolved = () => {
     {
       icon: Users,
       title: "Join Unda Youth Network",
-      description: "Join the Unda Youth Network to gain access to Unda Mind Vibes activities, trainings, and the member portal.",
+      description: "Join the Unda Youth Network to gain access to Unda Mind Vibes (UMV) activities, trainings, and the member portal.",
       link: "/membership",
       color: "border-[#00C2CB]"
     },
     {
       icon: HeartHandshake,
       title: "Support or Host an Event",
-      description: "Support Unda Mind Vibes channels including Unda Mind Vibes Debaters, Unda Mind Vibes Podcast, Unda Mind Vibes Campus, Unda Mind Vibes Mtaani, and forums.",
+      description: "Support Unda Mind Vibes (UMV) channels including Unda Mind Vibes (UMV) Debaters, Unda Mind Vibes (UMV) Podcast, Unda Mind Vibes (UMV) Campus, Unda Mind Vibes (UMV) Mtaani, and forums.",
       link: "/support",
       color: "border-[#00C2CB]"
     },
     {
       icon: Building2,
       title: "Partner With Us",
-      description: "Organizations and schools can collaborate to support Unda Mind Vibes programs and expand Adolescent & Youth Mental Health Prevention impact.",
+      description: "Organizations and schools can collaborate to support Unda Mind Vibes (UMV) programs and expand Adolescent & Youth Mental Health Prevention impact.",
       link: "/partner",
       color: "border-[#0090C0]"
     },

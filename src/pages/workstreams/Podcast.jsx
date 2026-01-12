@@ -272,14 +272,14 @@ const Podcast = () => {
               </div>
 
               <h1 className="text-6xl lg:text-8xl font-black text-[#0B1E3B] leading-[0.9] tracking-tighter">
-                Unda Mind Vibes <br />
+                UMV <br />
                 <span className="text-[#00C2CB]">Podcast</span>
                 <br />
                 Stories.
               </h1>
 
               <p className="text-slate-600 text-xl font-medium max-w-xl leading-relaxed">
-                The Unda Mind Vibes Podcast is our social driver—youth-led storytelling and expert conversations that translate prevention science into accessible narratives and community action.
+                The UMV Podcast is our social driver—youth-led storytelling and expert conversations that translate prevention science into accessible narratives and community action.
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">

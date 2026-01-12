@@ -20,7 +20,7 @@ const Footer = () => {
               <span className="font-black text-[#0B1E3B] tracking-tighter text-xl">Unda Youth Network Global</span>
             </div>
             <p className="text-slate-600 text-sm leading-relaxed max-w-xs font-medium">
-              Kenya's national movement for Adolescent & Youth Mental Health Prevention through the Unda Mind Vibes program.
+              Kenya's national movement for Adolescent & Youth Mental Health Prevention through the UMV program.
             </p>
             <div>
               <p className="text-xs font-bold text-[#0B1E3B] mb-3">Contact Us</p>
