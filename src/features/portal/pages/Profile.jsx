@@ -6,12 +6,12 @@ import { Input } from '@/components/ui/input';
 import { profileService } from '../../../services/apiService';
 
 const Profile = () => {
-  const [formData, setFormData] = useState({
-    fullName: 'James Mwangi',
-    email: 'james.m@example.com',
-    phone: '+254 712 345 678',
-    location: 'Kenya, Westlands'
-  });
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        phone: '',
+        location: ''
+    });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -53,8 +53,7 @@ const Profile = () => {
                         </div>
                     </div>
                     
-                    <h2 className="text-lg font-bold text-[#0B1E3B]">{formData.fullName}</h2>
-                    <p className="text-xs text-slate-500 font-medium mb-4">Member ID: UNDA-8821</p>
+                    <h2 className="text-lg font-bold text-[#0B1E3B]">{formData.fullName || '—'}</h2>
                     
                     <div className="w-full pt-4 border-t border-slate-50">
                         <div className="flex items-center justify-between text-xs mb-2">

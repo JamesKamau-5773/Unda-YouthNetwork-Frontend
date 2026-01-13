@@ -209,161 +209,73 @@ const UMVMtaani = () => {
           submitting={submitting}
         />
 
-        {/* 1. HERO: Urban & Grounded */}
-        <section className="pt-40 pb-20 bg-[#0B1E3B] relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10 z-0" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-          <div className="absolute inset-0 hero-overlay pointer-events-none z-10" />
-          <div className="container mx-auto px-6 relative z-20 text-center">
-            <div className="flex justify-center mb-8">
+        <section className="pt-40 pb-20 bg-gradient-to-br from-[#0B1E3B] via-[#00C2CB] to-[#0B1E3B] relative overflow-hidden hero-overlay">
+          <div className="absolute inset-0 bg-black/30 pointer-events-none" />
+          <div className="container mx-auto px-6 relative z-20 text-left">
+            <div className="mb-6">
               <Link to="/" className="inline-flex items-center text-slate-400 hover:text-white transition-colors">
                 <ArrowLeft size={20} className="mr-2" />
                 <span className="font-bold text-sm uppercase tracking-widest">Back to Home</span>
               </Link>
             </div>
 
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00C2CB]/10 border border-[#00C2CB]/20 mb-8 mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00C2CB]/10 border border-[#00C2CB]/20 mb-6">
               <MapPin size={16} className="text-unda-orange" />
               <span className="text-[10px] font-black uppercase tracking-widest text-[#00C2CB]">Neighborhood Prevention</span>
             </div>
-            <h1 className="text-6xl lg:text-9xl font-black text-white leading-[0.85] tracking-tighter mb-8">
-              UMV <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C2CB] to-[#0090C0]">Mtaani.</span>
+
+            <h1 className="text-6xl lg:text-8xl font-black text-white leading-tight mb-4">
+              UMV <span className="text-white">Mtaani.</span>
             </h1>
-                <p className="text-slate-300 text-xl font-medium max-w-2xl mx-auto leading-relaxed">
+
+            <p className="text-slate-300 text-lg max-w-3xl">
               Bringing mental health prevention to the doorstep. We turn community halls, playing fields, and social spaces into safe zones for resilience.
             </p>
           </div>
         </section>
 
-        {/* 2. LOCAL ACTION GRID  */}
-        <section className="py-24 container mx-auto px-6">
-          <div className="grid lg:grid-cols-12 gap-16">
-            <div className="lg:col-span-5 space-y-12">
-              <div className="p-10 rounded-[3rem] bg-slate-50 border border-slate-100">
-                <HeartHandshake size={48} className="text-[#0B1E3B] mb-6" />
-                <h3 className="text-3xl font-black text-[#0B1E3B] mb-4">Community First.</h3>
-                <p className="text-slate-600 font-medium leading-relaxed mb-8">
-                  UMV Mtaani is designed for youth who are out of school or working in the informal sector. We meet you where you are.
-                </p>
-                <Button onClick={handleStartHubClick} className="w-full py-6 rounded-2xl bg-[#0B1E3B] text-white font-bold text-lg hover:bg-[#00C2CB] transition-all cursor-pointer">
-                  Start a Mtaani Hub <ArrowRight className="ml-2" />
-                </Button>
-              </div>
-
-              {/* Log Participation Card */}
-              <div className="p-8 rounded-[2.5rem] bg-[#00C2CB] text-white shadow-xl">
-                <Users size={32} className="mb-4 opacity-50" />
-                <h4 className="font-black text-lg mb-2">Log Your Outreach</h4>
-                <p className="text-white/80 text-sm mb-6">Champions: Record your Baraza attendance for Documentation Quality Score.</p>
-                <Button onClick={() => setShowLogModal(true)} className="w-full h-12 rounded-xl bg-white text-[#00C2CB] hover:bg-[#0B1E3B] hover:text-white font-bold uppercase text-xs">
-                  Open Activity Log
-                </Button>
-              </div>
-
-              <div className="flex items-center gap-6 p-8 rounded-[2.5rem] bg-[#0090C0]/10 border border-[#0090C0]/20">
-                <Users size={32} className="text-[#0090C0]" />
-                <div>
-                  <p className="text-3xl font-black text-[#0B1E3B]">12</p>
-                  <p className="text-xs font-bold text-[#0090C0] uppercase tracking-widest">Active Locations</p>
+        <section className="py-24 bg-[#F6F9FA]">
+          <div className="container mx-auto px-6">
+            <div className="grid lg:grid-cols-12 gap-16">
+              <div className="lg:col-span-5 space-y-12">
+                <div className="p-10 rounded-3xl bg-white border border-slate-100">
+                  <HeartHandshake size={48} className="text-[#0B1E3B] mb-6" />
+                  <h3 className="text-3xl font-black text-[#0B1E3B] mb-4">Community First.</h3>
+                  <p className="text-slate-600">UMV Mtaani is designed for youth who are out of school or working in the informal sector. We meet you where you are.</p>
+                  <Button onClick={handleStartHubClick} className="w-full mt-6 py-4 rounded-2xl bg-[#0B1E3B] text-white font-bold">Start a Mtaani Hub</Button>
                 </div>
-              </div>
-            </div>
 
-            <div className="lg:col-span-7">
-              <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
-                <div>
-                  <h2 className="text-3xl font-black text-[#0B1E3B] tracking-tight">Upcoming Barazas</h2>
-                  <p className="text-sm text-slate-500 mt-2">Community prevention events across Kenya</p>
-                </div>
-                
-                {/* Region Filter Tabs */}
-                <div className="flex gap-2 flex-wrap">
-                  {regions.map((region) => (
-                      <button
-                      key={region}
-                      onClick={() => setSelectedRegion(region.toLowerCase())}
-                      className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${
-                        selectedRegion === region.toLowerCase()
-                          ? 'bg-[#00C2CB] text-white shadow-lg'
-                          : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-                      }`}
-                    >
-                      {region}
-                    </button>
-                  ))}
+                <div className="p-8 rounded-2xl bg-[#00C2CB] text-white shadow-xl">
+                  <Users size={32} className="mb-4 opacity-50" />
+                  <h4 className="font-black text-lg mb-2">Log Your Outreach</h4>
+                  <p className="text-white/80 text-sm mb-6">Champions: Record your Baraza attendance for Documentation Quality Score.</p>
+                  <Button onClick={(e) => { e?.stopPropagation(); const token = localStorage.getItem('unda_token'); const target = encodeURIComponent('/member/events'); if (!token) { navigate(`/portal?next=${target}`); } else { navigate('/member/events'); } }} className="w-full h-12 rounded-xl bg-white text-[#00C2CB] font-bold">Open Activity Log</Button>
                 </div>
               </div>
 
-              {loading ? (
-                <div className="flex items-center justify-center py-16">
-                  <Loader2 className="animate-spin text-[#00C2CB]" size={48} />
+              <div className="lg:col-span-7">
+                <div className="flex items-center justify-between mb-8">
+                  <div>
+                    <h2 className="text-3xl font-black text-[#0B1E3B]">Upcoming Barazas</h2>
+                    <p className="text-sm text-slate-500 mt-2">Community prevention events across Kenya</p>
+                  </div>
+                  <div className="flex gap-2">
+                    {regions.map(r => (
+                      <button key={r} onClick={() => setSelectedRegion(r.toLowerCase())} className={`px-4 py-2 rounded-xl text-xs font-bold ${selectedRegion === r.toLowerCase() ? 'bg-[#00C2CB] text-white' : 'bg-slate-100 text-slate-600'}`}>
+                        {r}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              ) : (
-                <div className="space-y-4">
-                  {upcomingEvents
-                    .filter(event => {
-                      if (selectedRegion === 'all') return true;
-                      const eventRegion = (event.region || event.location?.split(',')[0]?.trim() || '').toLowerCase();
-                      return eventRegion === selectedRegion;
-                    })
-                    .map((event, idx) => {
-                      const eventRegion = event.region || event.location?.split(',')[0]?.trim() || 'Unknown';
-                      
-                        return (
-                        <div key={event.id || idx} className="group p-8 rounded-[2rem] border border-slate-100 bg-white hover:border-[#00C2CB]/30 hover:shadow-xl transition-all">
-                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                            <div className="flex items-center gap-6 flex-1">
-                              <div className="h-16 w-16 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-unda-navy font-bold border border-slate-100 shrink-0">
-                                {event.event_date ? (
-                                  <>
-                                    <span className="text-xs uppercase">{new Date(event.event_date).toLocaleDateString('en-US', { month: 'short' })}</span>
-                                    <span className="text-xl">{new Date(event.event_date).getDate()}</span>
-                                  </>
-                                ) : (
-                                  <Calendar size={24} />
-                                )}
-                              </div>
-                              <div>
-                                <h4 className="text-xl font-black text-[#0B1E3B] group-hover:text-[#00C2CB] transition-colors">{event.title}</h4>
-                                <div className="flex items-center gap-4 mt-2 flex-wrap">
-                                  <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
-                                    <MapPin size={12} /> {event.location}
-                                  </span>
-                                  <span className="px-3 py-1 rounded-full bg-[#00C2CB]/10 text-[#00C2CB] text-[9px] font-black uppercase tracking-widest">
-                                    {eventRegion}
-                                  </span>
-                                  {event.type && (
-                                    <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-[9px] font-black uppercase tracking-widest">
-                                      {event.type}
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                            <Button 
-                              onClick={() => setShowLogModal(true)} 
-                              className="rounded-xl bg-[#00C2CB]/10 hover:bg-[#00C2CB] text-[#00C2CB] hover:text-white font-bold whitespace-nowrap"
-                            >
-                              Log Attendance <CheckCircle size={16} className="ml-2" />
-                            </Button>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  
-                  {upcomingEvents.filter(event => {
-                    if (selectedRegion === 'all') return true;
-                    const eventRegion = (event.region || event.location?.split(',')[0]?.trim() || '').toLowerCase();
-                    return eventRegion === selectedRegion;
-                  }).length === 0 && (
-                    <div className="text-center py-16 px-6">
-                      <MapPin size={48} className="mx-auto text-slate-300 mb-4" />
-                      <p className="text-lg font-medium text-slate-500">
-                        No barazas scheduled for {selectedRegion === 'all' ? 'any region' : selectedRegion.charAt(0).toUpperCase() + selectedRegion.slice(1)} yet.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              )}
+
+                {!loading && upcomingEvents.length === 0 && (
+                  <div className="p-10 rounded-3xl bg-white shadow-lg border border-slate-100 text-center">
+                    <MapPin size={48} className="mx-auto text-slate-400 mb-4" />
+                    <p className="text-lg font-medium text-slate-600">No barazas scheduled yet.</p>
+                    <p className="text-sm text-slate-400 mt-2">Check back soon or create an event via the portal.</p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </section>

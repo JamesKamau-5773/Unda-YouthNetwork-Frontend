@@ -99,7 +99,8 @@ const Programs = () => {
         "Creative performances and thematic panels"
       ],
       cta: "Register",
-      link: "/",
+      link: "/programs/annual-conference",
+      available: true,
       color: "navy"
     },
     {
@@ -113,8 +114,9 @@ const Programs = () => {
                 "Building on the success of UMV in Kenya",
         "Creating global impact through local action"
       ],
-      cta: "",
-      link: "/",
+      cta: "Learn More",
+      link: "/programs/global",
+      available: true,
       color: "teal"
     }
   ];
@@ -220,18 +222,28 @@ const Programs = () => {
                   navy: 'bg-[#0B1E3B] text-white hover:bg-[#00C2CB]'
                 };
 
-                return (
-                  <div key={idx} className={`bg-[#F9FAFB]/30 rounded-2xl p-8 lg:p-12 border-l-4 ${colorMap[program.color]} hover:bg-white hover:shadow-xl transition-all duration-300 group`}>
+                // availability: if `available` is explicitly false the program is not yet live
+                const isAvailable = program.available !== false;
+                const linkValid = isAvailable && program.link && program.link !== '/';
+
+                return linkValid ? (
+                  <Link
+                    key={idx}
+                    to={program.link}
+                    role="button"
+                    aria-label={`Open ${program.title}`}
+                    className={`bg-[#F9FAFB]/30 rounded-2xl p-8 lg:p-12 border-l-4 ${colorMap[program.color]} hover:bg-white hover:shadow-xl transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 group block`}
+                  >
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                       <div>
-                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl ${iconBgMap[program.color]} mb-6`}>
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl ${iconBgMap[program.color]} mb-6 transform transition-transform group-hover:scale-105`}>
                           <Icon size={20} />
                           <span className="text-xs font-black uppercase tracking-widest">{program.title}</span>
                         </div>
                         <h3 className="text-3xl font-black text-[#0B1E3B] mb-2">{program.tagline}</h3>
                         <p className="text-sm font-bold text-[#00C2CB] uppercase tracking-wider mb-4">{program.tagline}</p>
                         <p className="text-slate-600 leading-relaxed mb-6">{program.description}</p>
-                        
+
                         <ul className="space-y-2 mb-6">
                           {program.highlights.map((highlight, hIdx) => (
                             <li key={hIdx} className="flex items-start gap-2 text-sm text-slate-600">
@@ -241,16 +253,46 @@ const Programs = () => {
                           ))}
                         </ul>
 
-                        <Button asChild className={`w-full ${buttonMap[program.color]} font-bold group-hover:translate-x-1 transition-transform`}>
-                          <Link to={program.link}>
-                            {program.cta} <ArrowRight size={16} className="ml-2" />
-                          </Link>
-                        </Button>
+                        <div className={`w-full ${buttonMap[program.color]} font-bold py-4 rounded-xl text-center`}>{program.cta && program.cta.trim() !== '' ? program.cta : 'Learn More'} <ArrowRight size={16} className="ml-2 inline-block" /></div>
                       </div>
-                      
-                      {/* Placeholder for Program Image/Graphic */}
-                      <div className={`aspect-video rounded-2xl ${iconBgMap[program.color]} flex items-center justify-center opacity-50`}>
+
+                      <div className={`aspect-video rounded-2xl ${iconBgMap[program.color]} flex items-center justify-center opacity-50 transform transition-all group-hover:opacity-80 group-hover:scale-105`}>
                         <Icon size={64} className="opacity-20" />
+                      </div>
+                    </div>
+                  </Link>
+                ) : (
+                  <div key={idx} className={`bg-[#F9FAFB]/30 rounded-2xl p-8 lg:p-12 border-l-4 ${colorMap[program.color]} opacity-50 cursor-not-allowed pointer-events-none transition-all duration-300`}>
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                      <div>
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl ${iconBgMap[program.color]} mb-6`}>
+                          <Icon size={20} />
+                          <span className="text-xs font-black uppercase tracking-widest">{program.title}</span>
+                        </div>
+                        <h3 className="text-3xl font-black text-[#0B1E3B] mb-2">{program.tagline}</h3>
+                        <p className="text-sm font-bold text-[#00C2CB] uppercase tracking-wider mb-4">{program.tagline}</p>
+                        <p className="text-slate-600 leading-relaxed mb-6">{program.description}</p>
+
+                        <ul className="space-y-2 mb-6">
+                          {program.highlights.map((highlight, hIdx) => (
+                            <li key={hIdx} className="flex items-start gap-2 text-sm text-slate-600">
+                                <div className="h-1.5 w-1.5 rounded-full bg-[#00C2CB] mt-2 flex-shrink-0" />
+                              <span>{highlight}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        { !isAvailable ? (
+                          <div className="inline-flex items-center px-4 py-2 rounded-full bg-[#F1F5F9] text-[#0B1E3B] font-bold">Coming Soon</div>
+                        ) : (
+                          <div className={`w-full ${buttonMap[program.color]} font-bold py-4 rounded-xl text-center`}>
+                            {program.cta && program.cta.trim() !== '' ? program.cta : 'Learn More'} <ArrowRight size={16} className="ml-2 inline-block" />
+                          </div>
+                        )}
+                      </div>
+
+                      <div className={`aspect-video rounded-2xl ${iconBgMap[program.color]} flex items-center justify-center opacity-30`}>
+                        <Icon size={64} className="opacity-10" />
                       </div>
                     </div>
                   </div>
@@ -273,7 +315,7 @@ const Programs = () => {
                 <Button asChild className="h-14 px-8 rounded-2xl bg-[#0090C0] text-[#0B1E3B] hover:bg-[#00C2CB] hover:text-white text-lg font-bold">
                 <Link to="/membership">Become a Member</Link>
               </Button>
-              <Button asChild variant="outline" className="h-14 px-8 rounded-2xl border-white text-white hover:bg-white hover:text-[#0B1E3B] text-lg font-bold">
+              <Button asChild variant="outline" className="h-14 px-8 rounded-2xl border-white bg-white text-[#0B1E3B] text-lg font-bold">
                 <Link to="/">Partner With Us</Link>
               </Button>
             </div>

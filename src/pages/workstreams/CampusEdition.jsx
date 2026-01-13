@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "@/components/shared/Layout"; // Import the Layout wrapper
 import {
   Lightbulb,
@@ -16,6 +16,7 @@ const CampusEdition = () => {
   const [initiatives, setInitiatives] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hasFunding, setHasFunding] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchInitiatives = async () => {
@@ -74,26 +75,26 @@ const CampusEdition = () => {
                       Checking Availability...
                     </Button>
                   ) : hasFunding ? (
-                    <Button asChild className="h-16 px-8 rounded-2xl bg-[#0B1E3B] text-white hover:bg-[#0090C0] hover:text-[#0B1E3B] text-lg font-bold shadow-xl shadow-[#0B1E3B]/10 transition-all">
+                    <Button asChild className="h-16 px-8 rounded-2xl bg-gradient-to-r from-[#0B1E3B] to-[#00C2CB] text-white text-lg font-bold shadow-2xl transform transition hover:scale-[1.02]">
                       <Link to="/seed-funding-apply">Apply for Seed Funding</Link>
                     </Button>
                   ) : (
-                    <Button disabled className="h-16 px-8 rounded-2xl bg-slate-200 text-slate-500 text-lg font-bold cursor-not-allowed">
+                    <div className="h-16 px-8 rounded-2xl bg-slate-100 text-slate-400 text-lg font-bold flex items-center justify-center opacity-60">
                       No Funding Available Currently
-                    </Button>
+                    </div>
                   )}
                 </div>
               </div>
 
               <div className="lg:col-span-5 relative">
-                <div className="relative aspect-square rounded-[4rem] bg-[#0B1E3B] shadow-2xl overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#0090C0]/20 to-transparent" />
+                <div className="relative aspect-square rounded-[3.5rem] bg-gradient-to-tr from-[#0B1E3B] via-[#003f47] to-[#00C2CB] flex items-center justify-center overflow-hidden shadow-2xl ring-1 ring-black/5 group">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#00C2CB]/30 to-transparent opacity-60" />
                   <GraduationCap
                     size={160}
-                    className="absolute -bottom-10 -right-10 text-white opacity-10 group-hover:scale-110 transition-transform duration-700"
+                    className="absolute -bottom-8 -right-8 text-white opacity-10 transform transition-transform group-hover:scale-110 duration-700"
                   />
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-12">
-                    <Rocket size={64} className="text-[#0090C0] mb-6" />
+                    <Rocket size={64} className="text-[#00C2CB] mb-6" />
                     <p className="text-white text-2xl font-black tracking-tight mb-2">
                       Drive Innovation
                     </p>
@@ -116,38 +117,54 @@ const CampusEdition = () => {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 gap-8">
-              {initiatives.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="p-10 rounded-[3rem] border border-slate-100 bg-white hover:shadow-2xl transition-all duration-500 group"
-                >
-                  <div className="flex justify-between items-start mb-8">
-                    <div className="p-4 rounded-2xl bg-slate-50 text-[#0B1E3B] group-hover:bg-[#0090C0] transition-colors">
-                      <Award size={24} />
+                {initiatives.map((item, idx) => {
+                const dest = item.link || item.apply_link || (item.id ? `/campus/initiative/${item.id}` : null);
+                const CardInner = (
+                  <>
+                    <div className="flex justify-between items-start mb-8">
+                      <div className="p-4 rounded-2xl bg-white shadow-sm text-[#0B1E3B] group-hover:bg-gradient-to-br group-hover:from-[#00C2CB]/20 group-hover:to-transparent transform group-hover:scale-105 transition-all">
+                        <Award size={24} />
+                      </div>
+                      <span className="px-4 py-1.5 rounded-full bg-[#00C2CB]/5 text-[#00C2CB] text-[9px] font-black uppercase tracking-widest">
+                        {item.tag}
+                      </span>
                     </div>
-                    <span className="px-4 py-1.5 rounded-full bg-[#00C2CB]/5 text-[#00C2CB] text-[9px] font-black uppercase tracking-widest">
-                      {item.tag}
-                    </span>
-                  </div>
-                  <h3 className="text-2xl font-black text-[#0B1E3B] mb-4">
-                    {item.title}
-                  </h3>
-                  <p className="text-slate-600 font-medium mb-8 leading-relaxed">
-                    {item.desc}
-                  </p>
-                  <div className="flex items-center justify-between pt-6 border-t border-slate-50">
-                    <span className="text-[10px] font-bold text-[#0B1E3B] uppercase tracking-widest">
-                      {item.status}
-                    </span>
-                    <Button
-                      variant="ghost"
-                      className="text-[#00C2CB] font-black text-xs p-0 h-auto hover:bg-transparent"
+                    <h3 className="text-2xl font-black text-[#0B1E3B] mb-4">{item.title}</h3>
+                    <p className="text-slate-600 font-medium mb-8 leading-relaxed">{item.desc}</p>
+                    <div className="flex items-center justify-between pt-6 border-t border-slate-50">
+                      <span className="text-[10px] font-bold text-[#0B1E3B] uppercase tracking-widest">{item.status}</span>
+                      <Button
+                        variant="ghost"
+                        onClick={(e) => { e.stopPropagation(); if (dest) navigate(dest); }}
+                        className="text-[#00C2CB] font-black text-xs p-0 h-auto hover:bg-transparent"
+                      >
+                        Get Involved <ArrowRight size={14} className="ml-2" />
+                      </Button>
+                    </div>
+                  </>
+                );
+
+                if (dest) {
+                  return (
+                    <div
+                      key={idx}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate(dest); } }}
+                      onClick={() => navigate(dest)}
+                      className="p-10 rounded-[3rem] border border-slate-100 bg-white hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 group cursor-pointer"
                     >
-                      Get Involved <ArrowRight size={14} className="ml-2" />
-                    </Button>
+                      {CardInner}
+                    </div>
+                  );
+                }
+
+                return (
+                  <div key={idx} className="p-10 rounded-[3rem] border border-slate-100 bg-white transition-all duration-300 group">
+                    {CardInner}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </section>

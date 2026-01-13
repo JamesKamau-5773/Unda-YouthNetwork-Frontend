@@ -1,17 +1,57 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import PortalLayout from '../layout/PortalLayout';
 import { Download, Share2, Shield, Calendar, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import undaLogo from '@/assets/logos/unda-logo-main.jpg';
 
 const Certificate = () => {
+    const [toast, setToast] = useState('');
+    const [processing, setProcessing] = useState(false);
+
+    const certRef = useRef(null);
+
+    const handleDownload = () => {
+        const el = certRef.current;
+        if (!el) return;
+        setProcessing(true);
+        // Collect current page styles (stylesheets and style tags)
+        const styles = Array.from(document.querySelectorAll('link[rel="stylesheet"], style'))
+            .map(node => node.outerHTML)
+            .join('\n');
+
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Certificate</title>${styles}</head><body>${el.outerHTML}</body></html>`);
+        printWindow.document.close();
+        printWindow.focus();
+        // Give browser a moment to render styles
+        setTimeout(() => {
+            try {
+                printWindow.print();
+            } catch (e) {
+                console.error('Print failed', e);
+            }
+            // don't forcibly close in case user wants to save
+            setProcessing(false);
+        }, 250);
+    };
+
+    const handleShare = async () => {
+        const url = window.location.href;
+        try {
+            await navigator.clipboard.writeText(url);
+            setToast('Link copied to clipboard');
+        } catch (e) {
+            setToast('Unable to copy link');
+        }
+        setTimeout(() => setToast(''), 3000);
+    };
   return (
     <PortalLayout title="My Certificate" subtitle="Proof of your commitment to mental resilience.">
         <div className="flex flex-col xl:flex-row gap-8 items-start">
             
             {/* Certificate Preview */}
             <div className="flex-1 w-full bg-slate-200 p-8 rounded-2xl shadow-inner flex justify-center overflow-auto">
-                <div className="w-full max-w-[800px] bg-white aspect-[1.414/1] shadow-2xl relative p-12 text-center flex flex-col justify-between border border-slate-300">
+                <div ref={certRef} className="w-full max-w-[800px] bg-white aspect-[1.414/1] shadow-2xl relative p-12 text-center flex flex-col justify-between border border-slate-300">
                     
                     {/* Decorative Background */}
                     <div className="absolute inset-0 z-0 pointer-events-none opacity-5" 
@@ -72,10 +112,10 @@ const Certificate = () => {
                         <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
                     <h3 className="font-bold text-[#0B1E3B] mb-4 text-sm uppercase tracking-wide">Actions</h3>
                     <div className="space-y-3">
-                        <Button className="w-full bg-[#0B1E3B] hover:bg-slate-800 text-white rounded-xl shadow-lg shadow-slate-200 font-bold flex items-center gap-2">
-                            <Download size={16} /> Download PDF
+                        <Button onClick={handleDownload} aria-label="Download certificate" className="w-full bg-[#0B1E3B] hover:bg-slate-800 text-white rounded-xl shadow-lg shadow-slate-200 font-bold flex items-center gap-2">
+                            <Download size={16} /> {processing ? 'Preparing...' : 'Download / Print'}
                         </Button>
-                        <Button variant="outline" className="w-full rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] border-slate-200">
+                        <Button onClick={handleShare} variant="outline" aria-label="Share certificate link" className="w-full rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] border-slate-200">
                             <Share2 size={16} /> Share Link
                         </Button>
                     </div>
@@ -92,6 +132,11 @@ const Certificate = () => {
                             <h3 className="font-bold text-sm">Verified Member</h3>
                             <p className="text-[10px] text-slate-400">Since Jan 2024</p>
                         </div>
+                        {toast && (
+                            <div className="fixed top-8 right-8 z-50 bg-slate-900 text-white px-4 py-2 rounded-md shadow-lg">
+                                {toast}
+                            </div>
+                        )}
                     </div>
                     
                     <div className="space-y-3">

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Check, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Check, ShieldCheck, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
@@ -21,6 +21,10 @@ const Membership = () => {
 				<div className="absolute top-0 right-0 w-1/3 h-full bg-unda-teal/[0.02] -skew-x-12 translate-x-1/2" />
 
 				<div className="container mx-auto px-6 relative z-20">
+							<Link to="/" className="inline-flex items-center text-unda-navy/80 hover:text-unda-navy transition-colors mb-8">
+								<ArrowLeft size={20} className="mr-2" />
+								<span className="font-bold text-sm uppercase tracking-widest">Back to Home</span>
+							</Link>
 					<div className="grid lg:grid-cols-12 gap-16 items-center">
 						{/* LEFT: Information & Context (Left-Aligned) */}
 						<div className="lg:col-span-6 space-y-8">
@@ -72,14 +76,9 @@ const Membership = () => {
 									))}
 								</div>
 
-								{/* Action Button */}
-								{/* Peer Champion Tier */}
-								<Button asChild className="w-full h-16 rounded-2xl bg-unda-navy text-white hover:bg-unda-teal text-lg font-bold transition-all flex items-center justify-between px-8 shadow-xl shadow-unda-navy/10 group">
-									<Link to="/join">Apply as Champion<ArrowRight className="group-hover:translate-x-2 transition-transform" /></Link>
-								</Button>
-								{/* General Member Tier */}
-								<Button asChild variant="secondary" className="w-full h-16 rounded-2xl mt-4 text-lg font-bold flex items-center justify-between px-8">
-									<Link to="/join">Register as Member<ArrowRight className="group-hover:translate-x-2 transition-transform" /></Link>
+								{/* Action Button: Register as Member (single primary CTA) */}
+								<Button asChild className="w-full h-16 rounded-2xl text-lg font-bold flex items-center justify-between px-8 bg-[#00C2CB] text-white hover:bg-[#00C2CB]/90 shadow-lg">
+									<Link to="/portal?mode=signup">Register as Member<ArrowRight className="group-hover:translate-x-2 transition-transform" /></Link>
 								</Button>
 
 								<div className="mt-6 flex justify-center gap-4">

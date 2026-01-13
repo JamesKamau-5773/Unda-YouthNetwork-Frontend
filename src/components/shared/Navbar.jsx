@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Mic, Users, GraduationCap, MapPin, Shield, Activity, ExternalLink, Menu, X, HeartHandshake, Layers, BookOpen, Lightbulb } from 'lucide-react';
+import { ChevronDown, Mic, Users, GraduationCap, MapPin, Shield, Activity, ExternalLink, Menu, X, HeartHandshake, Layers, BookOpen, Lightbulb, Calendar, Globe } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import undaLogo from '@/assets/logos/unda-logo-main.jpg';
 
@@ -17,6 +17,8 @@ const Navbar = () => {
     { name: 'UMV Debaters', path: '/debaters-circle', icon: <Users size={16} />, desc: 'Age-appropriate mental health debates and conversations for 13–17 in school and community settings' },
     { name: 'UMV Campus', path: '/campus', icon: <GraduationCap size={16} />, desc: 'Campus cohorts, events & research' },
     { name: 'UMV Mtaani', path: '/mtaani', icon: <MapPin size={16} />, desc: 'Community outreaches & pillar events' }
+    ,{ name: 'UMV Annual Conference', path: '/programs/annual-conference', icon: <Calendar size={16} />, desc: 'Flagship youth convening' },
+    { name: 'UMV Global', path: '/programs/global', icon: <Globe size={16} />, desc: 'International expansion' }
   ];
 
   return (

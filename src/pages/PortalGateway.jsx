@@ -37,7 +37,7 @@ const PortalGateway = () => {
             </p>
             
             <Button asChild className="w-full py-6 text-lg font-bold bg-[#00C2CB] text-white hover:bg-[#00C2CB]/90 rounded-xl shadow-lg shadow-[#00C2CB]/20">
-              <Link to="/join">
+              <Link to="/portal?mode=signup">
                 Create Account <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
