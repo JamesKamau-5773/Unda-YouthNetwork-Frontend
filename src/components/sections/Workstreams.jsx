@@ -16,6 +16,7 @@ const Workstreams = () => {
       icon: <Mic />,
       desc: "Our social driver — youth-led storytelling and expert conversations.",
       color: "border-[#00C2CB]",
+      iconColor: '#00C2CB',
       link: "/podcast"
     },
     {
@@ -23,6 +24,7 @@ const Workstreams = () => {
       icon: <Users />,
       desc: "Age-appropriate mental health debates and conversations for 13–17 in school and community settings.",
       color: "border-[#00C2CB]",
+      iconColor: '#00C2CB',
       link: "/debaters-circle"
     },
     {
@@ -30,6 +32,7 @@ const Workstreams = () => {
       icon: <GraduationCap />,
       desc: "Campus cohorts, events, and embedded research driving prevention innovation.",
       color: "border-[#0090C0]",
+      iconColor: '#0090C0',
       link: "/campus"
     },
     {
@@ -37,6 +40,7 @@ const Workstreams = () => {
       icon: <MapPin />,
       desc: "Community outreaches, local prevention cohorts, and pillar events.",
       color: "border-[#0B1E3B]",
+      iconColor: '#0B1E3B',
       link: "/mtaani"
     },
     // Keep placeholder removed — primary UMV products now displayed
@@ -54,10 +58,12 @@ const Workstreams = () => {
               <Link
                 key={idx}
                 to={stream.link}
-                className={`p-8 border-t-4 ${stream.color} bg-[#F9FAFB]/30 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group cursor-pointer block flex flex-col h-full justify-between`}
+                role="button"
+                aria-label={`Open ${stream.title}`}
+                className={`p-8 border-t-4 ${stream.color} bg-[#F9FAFB]/30 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group cursor-pointer block flex flex-col h-full justify-between focus:outline-none focus-visible:ring-2`}
               >
                 <div className="mb-6 group-hover:scale-110 transition-transform">
-                  {React.cloneElement(stream.icon, { size: 36, className: "text-[#00C2CB]" })}
+                  {React.cloneElement(stream.icon, { size: 36, style: { color: stream.iconColor } })}
                 </div>
 
                 <div>
@@ -67,7 +73,7 @@ const Workstreams = () => {
                   </p>
                 </div>
 
-                <div className="flex items-center text-[10px] font-bold uppercase text-[#00C2CB] opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex items-center text-[10px] font-bold uppercase opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: stream.iconColor }}>
                   Learn More <ArrowRight size={12} className="ml-1" />
                 </div>
               </Link>
@@ -77,7 +83,7 @@ const Workstreams = () => {
                 className={`p-8 border-t-4 ${stream.color} bg-[#F9FAFB]/30 rounded-2xl opacity-60 cursor-not-allowed flex flex-col h-full justify-between`}
               >
                 <div className="mb-6">
-                  {React.cloneElement(stream.icon, { size: 36, className: "text-[#00C2CB]" })}
+                  {React.cloneElement(stream.icon, { size: 36, style: { color: stream.iconColor } })}
                 </div>
 
                 <div>

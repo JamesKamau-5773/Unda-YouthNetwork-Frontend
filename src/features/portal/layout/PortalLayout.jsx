@@ -21,15 +21,15 @@ const PortalLayout = ({ children, title, subtitle }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex">
+    <div className="min-h-screen flex bg-gradient-to-br from-[#F8FAFC] via-[#E0F7FA] to-[#F8FAFC]">
       {/* Sidebar Navigation */}
       <Sidebar />
 
       {/* Main Content Area */}
-      <main className="flex-1 ml-64 min-w-0">
+      <main className="flex-1 ml-64 min-w-0 relative">
         
         {/* Sticky Header */}
-        <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200 px-8 py-4 flex justify-between items-center">
+        <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-lg border-b border-[#00C2CB]/10 shadow-md px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
              {/* Back Button */}
              <Button 
@@ -88,7 +88,7 @@ const PortalLayout = ({ children, title, subtitle }) => {
         </header>
 
         {/* Content Injector */}
-        <div className="p-8 max-w-7xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+        <div className="p-8 max-w-7xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500 rounded-3xl bg-white/80 shadow-xl mt-8">
           {children}
         </div>
 

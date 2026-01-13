@@ -283,8 +283,8 @@ const Podcast = () => {
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">
-                <Button className="h-16 px-8 rounded-2xl bg-[#0B1E3B] text-white hover:bg-[#00C2CB] text-lg font-bold shadow-xl shadow-[#0B1E3B]/10 group">
-                  <Play className="mr-3 fill-current" size={20} />
+                <Button className="h-16 px-8 rounded-2xl bg-gradient-to-r from-[#0B1E3B] to-[#00C2CB] text-white text-lg font-bold shadow-2xl transform transition hover:scale-[1.02]">
+                  <Play className="mr-3" size={20} />
                   Listen Now
                 </Button>
                 <Button
@@ -297,16 +297,19 @@ const Podcast = () => {
             </div>
 
             <div className="lg:col-span-5 relative">
-              <div className="aspect-square rounded-[4rem] bg-[#0B1E3B] flex items-center justify-center relative overflow-hidden shadow-2xl">
-                <div className="absolute inset-0 bg-gradient-to-tr from-[#00C2CB]/40 to-transparent opacity-50" />
-                <Mic2 size={120} className="text-white opacity-20" />
-                <div className="absolute bottom-10 left-10 right-10 p-6 bg-white/10 backdrop-blur-md rounded-3xl border border-white/10">
-                  <p className="text-white text-xs font-black uppercase tracking-widest mb-2">
-                    Now Playing
-                  </p>
-                  <p className="text-white text-lg font-bold">
-                    Resilience in Modern Kenya
-                  </p>
+              <div className="aspect-square rounded-[3.5rem] bg-gradient-to-tr from-[#0B1E3B] via-[#003f47] to-[#00C2CB] flex items-center justify-center relative overflow-hidden shadow-2xl ring-1 ring-black/5">
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#00C2CB]/30 to-transparent opacity-60" />
+                <Mic2 size={120} className="text-white opacity-18" />
+                <div className="absolute bottom-8 left-8 right-8 p-4 bg-white/6 backdrop-blur-sm rounded-3xl border border-white/10 flex items-center justify-between">
+                  <div>
+                    <p className="text-white text-[11px] font-black uppercase tracking-widest mb-1">
+                      Now Playing
+                    </p>
+                    <p className="text-white text-base font-bold leading-tight">
+                      Resilience in Modern Kenya
+                    </p>
+                  </div>
+                  <div className="text-white/60 text-sm font-medium">▶︎ 03:24</div>
                 </div>
               </div>
             </div>
@@ -345,28 +348,32 @@ const Podcast = () => {
             episodes.map((ep, idx) => (
               <div
                 key={ep.id || idx}
-                className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 hover:border-[#00C2CB]/30 hover:shadow-2xl transition-all duration-500 flex flex-col md:flex-row md:items-center justify-between gap-8"
+                role="button"
+                tabIndex={0}
+                onClick={() => handlePlayEpisode(ep)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handlePlayEpisode(ep); } }}
+                className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 hover:border-[#00C2CB] hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-8 cursor-pointer"
               >
-                <div className="flex items-center gap-8">
+                <div className="flex items-center gap-6">
                   <button 
                     onClick={() => handlePlayEpisode(ep)}
-                    className="h-16 w-16 rounded-2xl bg-slate-50 flex items-center justify-center text-[#00C2CB] group-hover:bg-[#00C2CB] group-hover:text-white transition-all cursor-pointer hover:scale-110"
+                    className="h-16 w-16 rounded-2xl bg-gradient-to-br from-[#00C2CB] to-[#0090C0] text-white flex items-center justify-center shadow-lg transform transition-all hover:scale-110"
                   >
                     <Play size={24} />
                   </button>
                   <div>
                     <div className="flex items-center gap-3 mb-1">
-                      <span className="px-3 py-1 rounded-full bg-[#00C2CB]/5 text-[#00C2CB] text-[9px] font-bold uppercase tracking-widest">
+                      <span className="px-3 py-1 rounded-full bg-[#00C2CB]/5 text-[#00C2CB] text-[10px] font-bold uppercase tracking-widest">
                         {ep.module}
                       </span>
-                      <span className="text-[10px] text-slate-400 font-bold flex items-center gap-1">
+                      <span className="text-[11px] text-slate-400 font-bold flex items-center gap-1">
                         <Calendar size={12} /> {ep.date}
                       </span>
                     </div>
-                    <h3 className="text-xl font-black text-[#0B1E3B] group-hover:text-[#00C2CB] transition-colors">
+                    <h3 className="text-2xl font-black text-[#0B1E3B] group-hover:text-[#00C2CB] transition-colors">
                       {ep.title}
                     </h3>
-                    <p className="text-slate-600 font-semibold text-sm">
+                    <p className="text-slate-600 font-medium text-sm">
                       Guest: {ep.guest}
                     </p>
                   </div>
@@ -378,9 +385,9 @@ const Podcast = () => {
                   </span>
                   <Button
                     variant="ghost"
-                    className="rounded-xl hover:bg-slate-50"
+                    className="rounded-xl hover:bg-[#00C2CB]/10"
                   >
-                    <Share2 size={18} className="text-slate-400" />
+                    <Share2 size={18} className="text-[#0B1E3B]" />
                   </Button>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   MessageSquare,
@@ -150,6 +150,7 @@ const ParticipationModal = ({
 };
 
 const DebatersCircle = () => {
+  const navigate = useNavigate();
   const [showLogModal, setShowLogModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -290,27 +291,33 @@ const DebatersCircle = () => {
         <div className="absolute bottom-0 right-0 w-1/3 h-full bg-[#00C2CB] opacity-10 -skew-x-12 translate-x-1/2" />
 
         <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-3xl space-y-8">
-            <Link to="/" className="inline-flex items-center text-slate-400 hover:text-white transition-colors">
-              <ArrowLeft size={20} className="mr-2" />
-              <span className="font-bold text-sm uppercase tracking-widest">Back to Home</span>
-            </Link>
-            
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 border border-white/20">
-              <MessageSquare size={16} className="text-[#00C2CB]" />
-              <span className="text-[10px] font-bold uppercase tracking-widest">
-                Advocacy & Literacy
-              </span>
+          <div className="grid lg:grid-cols-12 items-center">
+            <div className="lg:col-span-7">
+              <div className="space-y-8">
+                <Link to="/" className="inline-flex items-center text-slate-400 hover:text-white transition-colors">
+                  <ArrowLeft size={20} className="mr-2" />
+                  <span className="font-bold text-sm uppercase tracking-widest">Back to Home</span>
+                </Link>
+
+                <h1 className="text-6xl lg:text-8xl font-black leading-[0.9] tracking-tighter">
+                  UMV <br />
+                  <span className="text-[#00C2CB]">Debaters.</span>
+                </h1>
+
+                <p className="text-slate-300 text-xl font-medium leading-relaxed max-w-xl">
+                  Age-appropriate mental health debates and conversations for 13–17 in school and community settings.
+                </p>
+
+                <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 border border-white/20">
+                  <MessageSquare size={16} className="text-[#00C2CB]" />
+                  <span className="text-[10px] font-bold uppercase tracking-widest">
+                    Advocacy & Literacy
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <h1 className="text-6xl lg:text-8xl font-black leading-[0.9] tracking-tighter">
-              UMV <br />
-              <span className="text-[#00C2CB]">Debaters.</span>
-            </h1>
-
-            <p className="text-slate-300 text-xl font-medium leading-relaxed max-w-xl">
-              Age-appropriate mental health debates and conversations for 13–17 in school and community settings.
-            </p>
+            <div className="lg:col-span-5 hidden lg:block" />
           </div>
         </div>
       </section>
@@ -336,10 +343,14 @@ const DebatersCircle = () => {
                 motions.map((motion, idx) => (
                   <div
                     key={motion.id || idx}
-                    className="rounded-[2.5rem] border border-slate-100 bg-white hover:shadow-2xl transition-all group overflow-hidden"
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => motion.id && navigate(`/events/${motion.id}`)}
+                    onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && motion.id) { e.preventDefault(); navigate(`/events/${motion.id}`); } }}
+                    className="rounded-[2.5rem] border border-slate-100 bg-white hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 group overflow-hidden cursor-pointer"
                   >
                     {/* Cover Image Section */}
-                    {motion.imageUrl ? (
+                      {motion.imageUrl ? (
                       <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[#00C2CB]/20 to-[#0B1E3B]/20">
                         <img 
                           src={motion.imageUrl} 
@@ -425,8 +436,8 @@ const DebatersCircle = () => {
           </div>
 
           {/* RIGHT: Compliance & Toolkits  */}
-          <div className="lg:col-span-5 space-y-12">
-            <div className="p-10 rounded-[3rem] bg-slate-50 border border-slate-100">
+            <div className="lg:col-span-5 space-y-12">
+            <div className="p-10 rounded-[3rem] bg-slate-50 border border-slate-100 shadow-sm">
               <h3 className="text-xl font-black text-[#0B1E3B] mb-6">
                 Institutional Toolkit
               </h3>
@@ -462,16 +473,24 @@ const DebatersCircle = () => {
             </div>
 
             {/* QUICK LINK: Operational Data Log  */}
-            <div className="p-10 rounded-[3rem] bg-[#00C2CB] text-white shadow-2xl shadow-[#00C2CB]/20">
+            <div className="p-10 rounded-[3rem] bg-gradient-to-r from-[#00C2CB] to-[#0090C0] text-white shadow-2xl shadow-[#00C2CB]/20">
               <GraduationCap size={40} className="mb-6 opacity-30" />
               <h3 className="text-xl font-black mb-4">Log Circle Activity</h3>
-              <p className="text-white/80 text-sm font-medium mb-8">
+              <p className="text-white/90 text-sm font-medium mb-8">
                 Champions must log debate participation to maintain high
                 Documentation Quality Scores.
               </p>
               <Button 
-                onClick={() => setShowLogModal(true)}
-                className="w-full h-14 rounded-2xl bg-white text-[#00C2CB] hover:bg-[#0B1E3B] hover:text-white font-black uppercase tracking-widest transition-all"
+                onClick={() => {
+                  const token = localStorage.getItem('unda_token');
+                  const target = encodeURIComponent('/member/events');
+                  if (!token) {
+                    navigate(`/portal?next=${target}`);
+                  } else {
+                    setShowLogModal(true);
+                  }
+                }}
+                className="w-full h-14 rounded-2xl bg-white text-[#00C2CB] hover:bg-[#0B1E3B] hover:text-white font-black uppercase tracking-widest transition-all shadow-md"
               >
                 Open Operational Log
               </Button>

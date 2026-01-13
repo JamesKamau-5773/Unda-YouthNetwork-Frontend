@@ -1,6 +1,7 @@
 import React from 'react';
 import PortalLayout from '../layout/PortalLayout';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const WellnessCheckInPortal = () => {
   return (
@@ -37,10 +38,10 @@ const WellnessCheckInPortal = () => {
                     ))}
                 </div>
 
-                <button className="group bg-white text-teal-700 hover:bg-teal-50 font-bold py-4 px-10 rounded-xl transition-all shadow-xl flex items-center gap-2 text-lg transform hover:-translate-y-1">
+                <Link to="/checkin" className="group bg-white text-teal-700 hover:bg-teal-50 font-bold py-4 px-10 rounded-xl transition-all shadow-xl flex items-center gap-2 text-lg transform hover:-translate-y-1">
                     Start Check-In
                     <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                </button>
+                </Link>
                 
                 <p className="mt-6 text-xs text-white/40 font-medium uppercase tracking-widest">Confidential & Secure</p>
              </div>
