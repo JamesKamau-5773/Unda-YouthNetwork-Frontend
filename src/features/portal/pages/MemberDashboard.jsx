@@ -61,6 +61,11 @@ const MemberDashboard = () => {
       title="Dashboard" 
       subtitle="Overview of your activity and progress."
     >
+         <div className="flex justify-end mb-4">
+             <Button asChild className="bg-white text-unda-navy hover:bg-slate-100 rounded-xl h-10 px-4 font-bold">
+                <Link to="/">Back to Home</Link>
+             </Button>
+         </div>
       
         {/* 1. Quick Stats Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

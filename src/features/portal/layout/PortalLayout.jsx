@@ -33,7 +33,7 @@ const PortalLayout = ({ children, title, subtitle }) => {
           <div className="flex items-center gap-4">
              {/* Back Button */}
              <Button 
-                onClick={() => navigate(-1)} 
+               onClick={() => navigate('/member/dashboard')} 
                 variant="ghost" 
                 size="icon" 
                className="h-8 w-8 rounded-lg text-slate-400 hover:text-[#0B1E3B] hover:bg-slate-100 hidden md:flex"
