@@ -14,13 +14,13 @@ const Podcast = () => {
     const fetchPodcasts = async () => {
       try {
         const response = await api.get('/api/podcasts');
-        console.log('📡 Podcasts API Response:', response.data);
-        console.log('📊 Total podcasts from backend:', response.data?.total || 0);
+        console.log('Podcasts API Response:', response.data);
+        console.log('Total podcasts from backend:', response.data?.total || 0);
         
         if (response.data?.podcasts && Array.isArray(response.data.podcasts)) {
           if (response.data.podcasts.length > 0) {
-            console.log('✅ Using real podcasts from backend:', response.data.podcasts);
-            console.log('🔍 First podcast structure:', response.data.podcasts[0]);
+            console.log('Using real podcasts from backend:', response.data.podcasts);
+            console.log('First podcast structure:', response.data.podcasts[0]);
             
             // Map backend fields to frontend expected fields
             const mappedEpisodes = response.data.podcasts.map(podcast => ({
@@ -34,18 +34,18 @@ const Podcast = () => {
               ...podcast
             }));
             
-            console.log('🗺️ Mapped episodes:', mappedEpisodes);
+            console.log('Mapped episodes:', mappedEpisodes);
             setEpisodes(mappedEpisodes);
           } else {
-            console.warn('⚠️ Backend returned empty podcasts array');
+            console.warn('Backend returned empty podcasts array');
             setEpisodes([]);
           }
         } else {
-          console.error('❌ Unexpected API response structure:', response.data);
+          console.error('Unexpected API response structure:', response.data);
           setEpisodes([]);
         }
       } catch (err) {
-        console.error('❌ Podcasts API error:', err.message);
+        console.error('Podcasts API error:', err.message);
         setEpisodes([]);
         setError('Failed to load podcasts from backend.');
       } finally {

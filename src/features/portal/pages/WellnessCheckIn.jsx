@@ -26,12 +26,12 @@ const WellnessCheckInPortal = () => {
                 
                 <div className="grid md:grid-cols-3 gap-4 w-full max-w-2xl mb-12 text-left">
                     {[
-                        { icon: "📝", title: "Reflect", desc: "Answer 5 simple questions" },
-                        { icon: "📊", title: "Analyze", desc: "Get instant wellness insights" },
-                        { icon: "💡", title: "Grow", desc: "Receive tailored resources" }
+                        { icon: "", title: "Reflect", desc: "Answer 5 simple questions" },
+                        { icon: "", title: "Analyze", desc: "Get instant wellness insights" },
+                        { icon: "", title: "Grow", desc: "Receive tailored resources" }
                     ].map((item, i) => (
                         <div key={i} className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10">
-                            <div className="text-2xl mb-2">{item.icon}</div>
+                            {item.icon ? <div className="text-2xl mb-2">{item.icon}</div> : null}
                             <h3 className="font-bold text-sm mb-1">{item.title}</h3>
                             <p className="text-xs text-teal-100">{item.desc}</p>
                         </div>
