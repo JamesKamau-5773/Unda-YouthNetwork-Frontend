@@ -214,7 +214,17 @@ const PortalLogin = () => {
       };
       if (signupData.email) payload.email = signupData.email;
 
-      const res = await api.post('/api/auth/register', payload);
+      // Use memberService.register to ensure the same registration payload
+      const res = await memberService.register({
+        fullName: signupData.fullName,
+        email: signupData.email,
+        username: signupData.username,
+        phone: signupData.phone,
+        password: signupData.password,
+        dob: signupData.dob,
+        gender: signupData.gender,
+        county: signupData.county
+      });
 
       // Show a clear message: account submitted and pending approval
       const { registration_id, status, message } = res.data || {};

@@ -47,6 +47,8 @@ export const memberService = {
         phone_number: data.phone,
         username: data.username,
         password: data.password,
+        // Mark the new registration as a prevention advocate by default
+        is_prevention_advocate: true,
         // Optional fields
         date_of_birth: data.dob || null,
         gender: data.gender || null,
