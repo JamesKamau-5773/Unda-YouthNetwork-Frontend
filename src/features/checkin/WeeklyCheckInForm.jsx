@@ -45,7 +45,7 @@ export default function WeeklyCheckInForm() {
           setForm(f => ({ ...f, championId: user.username || user.full_name }));
         }
       }
-    } catch (e) {
+    } catch {
       // ignore parse errors
     }
   }, []);
@@ -62,7 +62,7 @@ export default function WeeklyCheckInForm() {
     }
 
     setForm(next);
-    try { localStorage.setItem('checkin_draft', JSON.stringify(next)); } catch (e) {}
+    try { localStorage.setItem('checkin_draft', JSON.stringify(next)); } catch (err) { console.debug('Failed to persist checkin draft', err); }
   };
 
   const handleSubmit = async e => {
@@ -100,7 +100,7 @@ export default function WeeklyCheckInForm() {
     try {
       await checkInService.submitCheckIn({ ...form, isRedFlag });
       // clear saved draft on success
-      try { localStorage.removeItem('checkin_draft'); } catch (e) {}
+      try { localStorage.removeItem('checkin_draft'); } catch (err) { console.debug('Failed to remove checkin draft', err); }
       setSuccess(true);
     } catch (err) {
       console.error(err);
@@ -115,11 +115,11 @@ export default function WeeklyCheckInForm() {
     setSuccess(false);
     setShowRedFlagAlert(false);
     setError('');
-    try { localStorage.removeItem('checkin_draft'); } catch (e) {}
+    try { localStorage.removeItem('checkin_draft'); } catch (err) { console.debug('Failed to remove checkin draft', err); }
   };
 
   const clearDraft = () => {
-    try { localStorage.removeItem('checkin_draft'); } catch (e) {}
+    try { localStorage.removeItem('checkin_draft'); } catch (err) { console.debug('Failed to clear draft', err); }
     setForm(initialState);
   }
 

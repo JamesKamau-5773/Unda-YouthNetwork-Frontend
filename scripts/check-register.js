@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* global process */
 // Quick check script: attempts /api/auth/register then falls back to /auth/register
 // Usage: BASE=https://unda-youth-network-backend.onrender.com node scripts/check-register.js
 

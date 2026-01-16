@@ -33,7 +33,7 @@ const PortalLogin = () => {
     const upperOk = /[A-Z]/.test(pwd);
     const lowerOk = /[a-z]/.test(pwd);
     const numberOk = /[0-9]/.test(pwd);
-    const specialOk = /[!@#$%^&*(),.?"':{}|<>\-_=+\\/]/.test(pwd);
+    const specialOk = /[^A-Za-z0-9]/.test(pwd);
     const score = [lengthOk, upperOk, lowerOk, numberOk, specialOk].filter(Boolean).length;
     let label = 'Very weak';
     if (score >= 4) label = 'Strong';
@@ -93,7 +93,7 @@ const PortalLogin = () => {
     // If server returned a JSON string, try to parse it
     let payload = raw;
     if (typeof raw === 'string') {
-      try { payload = JSON.parse(raw); } catch (e) { payload = raw; }
+      try { payload = JSON.parse(raw); } catch { payload = raw; }
     }
 
     let msg = '';
@@ -103,13 +103,13 @@ const PortalLogin = () => {
       else if (payload.error) msg = payload.error;
       else if (payload.detail) msg = payload.detail;
       else if (payload.msg) msg = payload.msg;
-      else if (payload.errors) {
+        else if (payload.errors) {
         if (Array.isArray(payload.errors)) msg = payload.errors.map(e => (e.message || e)).join('; ');
         else if (typeof payload.errors === 'object') msg = Object.values(payload.errors).flat().join('; ');
         else msg = String(payload.errors);
       } else {
         // fallback to a safe stringify
-        try { msg = JSON.stringify(payload); } catch (e) { msg = String(payload); }
+        try { msg = JSON.stringify(payload); } catch { msg = String(payload); }
       }
     }
 
@@ -125,8 +125,8 @@ const PortalLogin = () => {
     if (lower.includes('phone')) return 'Please enter your phone number.';
     if (lower.includes('weak')) return 'Your password is too weak. Try adding numbers, uppercase letters, and special characters.';
 
-    // final fallback: return a cleaned message snippet
-    if (msg) return msg.replace(/[{}\[\]"]+/g, '').slice(0, 240);
+    // final fallback: return a cleaned message snippet (strip common JSON punctuation)
+    if (msg) return msg.split('').filter(c => !'{}[]"'.includes(c)).join('').slice(0, 240);
     return 'Something went wrong. Please try again.';
   };
 
@@ -399,6 +399,8 @@ const PortalLogin = () => {
                       name="password"
                       value={signupData.password}
                       onChange={handleSignupChange}
+                      onFocus={() => setSignupPwdFocused(true)}
+                      onBlur={() => setSignupPwdFocused(false)}
                       required
                       className="h-12 rounded-xl bg-slate-50 border border-slate-200 pl-10 pr-12"
                     />

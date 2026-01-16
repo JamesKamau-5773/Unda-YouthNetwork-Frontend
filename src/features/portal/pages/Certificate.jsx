@@ -40,7 +40,7 @@ const Certificate = () => {
         try {
             await navigator.clipboard.writeText(url);
             setToast('Link copied to clipboard');
-        } catch (e) {
+        } catch {
             setToast('Unable to copy link');
         }
         setTimeout(() => setToast(''), 3000);

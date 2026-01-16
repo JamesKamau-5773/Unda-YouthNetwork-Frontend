@@ -6,7 +6,7 @@ import api from "@/services/apiService";
 const Podcast = () => {
   const [episodes, setEpisodes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [_error, setError] = useState(null);
   const [showPlayerModal, setShowPlayerModal] = useState(false);
   const [playingEpisode, setPlayingEpisode] = useState(null);
 

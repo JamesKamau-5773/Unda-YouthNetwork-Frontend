@@ -66,7 +66,7 @@ function App() {
           localStorage.removeItem('unda_registration_status');
           if (interval) clearInterval(interval);
         }
-      } catch (e) {
+      } catch {
         // ignore errors — endpoint may not exist on all environments
       }
     };

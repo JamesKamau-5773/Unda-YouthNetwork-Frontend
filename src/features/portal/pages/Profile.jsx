@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PortalLayout from '../layout/PortalLayout';
 import { User, Mail, Phone, MapPin, Save, Loader2, Camera, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';

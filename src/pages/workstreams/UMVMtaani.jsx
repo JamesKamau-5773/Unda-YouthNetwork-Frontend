@@ -150,7 +150,7 @@ const UMVMtaani = () => {
       } else {
         setEvents([]);
       }
-    } catch (err) {
+    } catch {
       setEvents([]);
     } finally {
       setLoading(false);

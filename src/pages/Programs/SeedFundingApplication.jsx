@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
 import { Button } from '@/components/ui/button';
 import { Loader2, CheckCircle, AlertCircle, ArrowLeft, Lightbulb } from 'lucide-react';
 import api from '@/services/apiService';
 
 const SeedFundingApplication = () => {
-  const navigate = useNavigate();
+  
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
   const [formData, setFormData] = useState({
