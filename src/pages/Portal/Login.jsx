@@ -4,7 +4,8 @@ import Layout from '@/components/shared/Layout';
 import { Shield, Lock, ArrowRight, Loader2, AlertCircle, Eye, EyeOff, Mail, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import api from '@/services/apiService';
+import api, { memberService } from '@/services/apiService';
+import { useAlert } from '@/components/shared/GlobalAlert';
 
 const PortalLogin = () => {
   const navigate = useNavigate();
@@ -184,6 +185,8 @@ const PortalLogin = () => {
     }
   };
 
+  const { triggerAlert } = useAlert();
+
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -213,23 +216,19 @@ const PortalLogin = () => {
 
       const res = await api.post('/api/auth/register', payload);
 
-      // If backend returns token, auto-login
-      const { access_token, user } = res.data || {};
-      if (access_token) {
-        localStorage.setItem('unda_token', access_token);
-        if (user) localStorage.setItem('unda_user', JSON.stringify(user));
-        const q = new URLSearchParams(location.search);
-        const next = q.get('next');
-        if (next) {
-          navigate(next);
-        } else {
-          navigate('/member/dashboard');
-        }
-      } else {
-        // fallback — switch to signin and prefill email
-        setMode('signin');
-        setFormData({ email: signupData.email, password: '' });
+      // Show a clear message: account submitted and pending approval
+      const { registration_id, status, message } = res.data || {};
+      triggerAlert(message || 'Application submitted. Your account is under review by an administrator.');
+
+      // Persist registration id so we can poll for approval and notify when approved
+      if (registration_id) {
+        localStorage.setItem('unda_registration_id', registration_id);
+        localStorage.setItem('unda_registration_status', status || 'Pending');
       }
+
+      // Do not auto-signin when registration is pending — show signin form
+      setMode('signin');
+      setFormData({ identifier: signupData.email || signupData.username || '', password: '' });
     } catch (err) {
       const serverData = err?.response?.data;
       const serverMessage = serverData?.message || (typeof serverData === 'string' ? serverData : JSON.stringify(serverData || {}));

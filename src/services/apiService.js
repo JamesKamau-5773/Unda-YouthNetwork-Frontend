@@ -77,6 +77,11 @@ export const memberService = {
     }
 };
 
+  // Check registration status by id (used to notify users when admin approves)
+  memberService.getRegistrationStatus = async (registrationId) => {
+    return await api.get(`/api/auth/registration/${registrationId}`);
+  };
+
 // 5. Define the Champion Application Service (requires login)
 export const championService = {
   // Apply to become a champion (requires authentication)
