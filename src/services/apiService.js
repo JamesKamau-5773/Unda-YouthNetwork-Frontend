@@ -43,18 +43,17 @@ export const memberService = {
     register: async (data) => {
       const payload = {
         full_name: data.fullName,
-        email: data.email,
         phone_number: data.phone,
         username: data.username,
         password: data.password,
-        // Mark the new registration as a prevention champion by default
-        is_prevention_champion: true,
         // Optional fields
+        email: data.email || undefined,
         date_of_birth: data.dob || null,
         gender: data.gender || null,
         county_sub_county: data.county || null
       };
-      // Always post to the public API registration endpoint.
+
+      // POST to the public member registration endpoint as JSON
       return await api.post('/api/auth/register', payload);
     }
 };
@@ -66,7 +65,32 @@ export const memberService = {
 
 // 5. Define the Champion Application Service (requires login)
 export const championService = {
-  // Apply to become a champion (requires authentication)
+  // Champion self-registration (public) — use /api/champions/register
+  register: async (data) => {
+    const payload = {
+      full_name: data.fullName,
+      gender: data.gender,
+      date_of_birth: data.dob,
+      phone_number: data.phone,
+      county_sub_county: data.county,
+      consent_obtained: !!data.consent_obtained,
+      // optional
+      email: data.email || undefined,
+      alternative_phone_number: data.alternativePhone || undefined,
+      emergency_contact_name: data.emergencyName || undefined,
+      emergency_contact_phone: data.emergencyPhone || undefined,
+      current_education_level: data.eduLevel || undefined,
+      education_institution_name: data.institution || undefined,
+      course_field_of_study: data.fieldOfStudy || undefined,
+      year_of_study: data.yearOfStudy || undefined,
+      motivation: data.motivation || undefined,
+      recruitment_source: data.recruitmentSource || undefined
+    };
+
+    return await api.post('/api/champions/register', payload);
+  },
+
+  // Backwards-compatible apply method (keeps previous behaviour if used elsewhere)
   apply: async (data) => {
     const payload = {
       date_of_birth: data.dob,
