@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
-import { Shield, Lock, ArrowRight, Loader2, AlertCircle, Eye, EyeOff, Mail } from 'lucide-react';
+import { Shield, Lock, ArrowRight, Loader2, AlertCircle, Eye, EyeOff, Mail, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import api from '@/services/apiService';
@@ -21,8 +21,113 @@ const PortalLogin = () => {
     email: '',
     password: ''
   });
-  const [signupData, setSignupData] = useState({ fullName: '', email: '', username: '', password: '', confirmPassword: '' });
+  const [signupData, setSignupData] = useState({ fullName: '', email: '', username: '', phone: '', password: '', confirmPassword: '' });
   const [showPassword, setShowPassword] = useState(false);
+  const [loginPwdFocused, setLoginPwdFocused] = useState(false);
+  const [signupPwdFocused, setSignupPwdFocused] = useState(false);
+
+  // Password evaluation helper
+  const evaluatePassword = (pwd) => {
+    const lengthOk = pwd.length >= 8;
+    const upperOk = /[A-Z]/.test(pwd);
+    const lowerOk = /[a-z]/.test(pwd);
+    const numberOk = /[0-9]/.test(pwd);
+    const specialOk = /[!@#$%^&*(),.?"':{}|<>\-_=+\\/]/.test(pwd);
+    const score = [lengthOk, upperOk, lowerOk, numberOk, specialOk].filter(Boolean).length;
+    let label = 'Very weak';
+    if (score >= 4) label = 'Strong';
+    else if (score === 3) label = 'Medium';
+    else if (score === 2) label = 'Weak';
+    return { lengthOk, upperOk, lowerOk, numberOk, specialOk, score, label };
+  };
+
+  const PasswordIndicator = ({ password, focused }) => {
+    if (!password) return null;
+    const p = evaluatePassword(password);
+    // Hide indicator when password is already strong
+    if (p.score >= 4) return null;
+    // Show only when focused
+    if (!focused) return null;
+    const pct = Math.round((p.score / 5) * 100);
+    const barColor = p.score >= 4 ? 'bg-emerald-500' : p.score === 3 ? 'bg-amber-400' : 'bg-red-400';
+    return (
+      <div className="mt-2">
+        <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+          <div className={`${barColor} h-2`} style={{ width: `${pct}%` }} />
+        </div>
+        <div className="flex items-center justify-between text-xs text-slate-500 mt-2">
+          <div className="font-semibold">Strength: {p.label}</div>
+          <div className="text-[11px]">{pct}%</div>
+        </div>
+        <div className="grid grid-cols-2 gap-2 mt-2 text-[12px]">
+          <div className="flex items-center gap-2" style={{ color: p.lengthOk ? undefined : '#dc2626' }}>
+            {p.lengthOk ? <Check size={14} className="text-emerald-500" /> : <X size={14} className="text-red-500" />}
+            <span>Min 8 characters</span>
+          </div>
+          <div className="flex items-center gap-2" style={{ color: p.upperOk ? undefined : '#dc2626' }}>
+            {p.upperOk ? <Check size={14} className="text-emerald-500" /> : <X size={14} className="text-red-500" />}
+            <span>Uppercase letter</span>
+          </div>
+          <div className="flex items-center gap-2" style={{ color: p.lowerOk ? undefined : '#dc2626' }}>
+            {p.lowerOk ? <Check size={14} className="text-emerald-500" /> : <X size={14} className="text-red-500" />}
+            <span>Lowercase letter</span>
+          </div>
+          <div className="flex items-center gap-2" style={{ color: p.numberOk ? undefined : '#dc2626' }}>
+            {p.numberOk ? <Check size={14} className="text-emerald-500" /> : <X size={14} className="text-red-500" />}
+            <span>Number</span>
+          </div>
+          <div className="flex items-center gap-2 col-span-2" style={{ color: p.specialOk ? undefined : '#dc2626' }}>
+            {p.specialOk ? <Check size={14} className="text-emerald-500" /> : <X size={14} className="text-red-500" />}
+            <span>Special character (e.g. !@#$%)</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Format server or axios errors into friendly user-facing messages
+  const formatErrorMessage = (raw) => {
+    if (!raw) return 'Something went wrong. Please try again.';
+
+    // If server returned a JSON string, try to parse it
+    let payload = raw;
+    if (typeof raw === 'string') {
+      try { payload = JSON.parse(raw); } catch (e) { payload = raw; }
+    }
+
+    let msg = '';
+    if (typeof payload === 'string') msg = payload;
+    else if (payload && typeof payload === 'object') {
+      if (payload.message) msg = payload.message;
+      else if (payload.error) msg = payload.error;
+      else if (payload.detail) msg = payload.detail;
+      else if (payload.msg) msg = payload.msg;
+      else if (payload.errors) {
+        if (Array.isArray(payload.errors)) msg = payload.errors.map(e => (e.message || e)).join('; ');
+        else if (typeof payload.errors === 'object') msg = Object.values(payload.errors).flat().join('; ');
+        else msg = String(payload.errors);
+      } else {
+        // fallback to a safe stringify
+        try { msg = JSON.stringify(payload); } catch (e) { msg = String(payload); }
+      }
+    }
+
+    const lower = (msg || '').toLowerCase();
+    if ((lower.includes('missing') && (lower.includes('username') || lower.includes('password') || lower.includes('email'))) || lower.includes('required')) {
+      return 'Please enter both email and password.';
+    }
+    if (lower.includes('invalid credentials') || lower.includes('incorrect') || (lower.includes('invalid') && lower.includes('password'))) {
+      return 'Email or password is incorrect. Please check and try again.';
+    }
+    if (lower.includes('user not found') || lower.includes('no user')) return 'No account found with that email address.';
+    if (lower.includes('already exists') || lower.includes('user exists')) return 'An account with this email already exists. Try signing in or resetting your password.';
+    if (lower.includes('phone')) return 'Please enter your phone number.';
+    if (lower.includes('weak')) return 'Your password is too weak. Try adding numbers, uppercase letters, and special characters.';
+
+    // final fallback: return a cleaned message snippet
+    if (msg) return msg.replace(/[{}\[\]"]+/g, '').slice(0, 240);
+    return 'Something went wrong. Please try again.';
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -44,8 +149,12 @@ const PortalLogin = () => {
     setError('');
 
     try {
-      // 1. Attempt Login
-      const response = await api.post('/auth/login', formData);
+      // 1. Attempt Login - some backends expect `username` instead of `email`
+      const payload = {
+        username: formData.email,
+        password: formData.password
+      };
+      const response = await api.post('/api/auth/login', payload);
       
       // 2. Extract Token & User
       const { access_token, user } = response.data;
@@ -66,8 +175,10 @@ const PortalLogin = () => {
       }
 
     } catch (err) {
-      console.error('Login Failed:', err);
-      setError(err.response?.data?.message || 'Invalid email or password. Please try again.');
+      const serverData = err?.response?.data;
+      const serverMessage = serverData?.message || (typeof serverData === 'string' ? serverData : JSON.stringify(serverData || {}));
+      console.error('Login Failed:', { err, serverData });
+      setError(formatErrorMessage(serverData || serverMessage || err.message));
     } finally {
       setLoading(false);
     }
@@ -78,7 +189,7 @@ const PortalLogin = () => {
     setLoading(true);
     setError('');
     try {
-      if (!signupData.fullName || !signupData.email || !signupData.password) {
+      if (!signupData.fullName || !signupData.password) {
         setError('Please complete all required fields.');
         setLoading(false);
         return;
@@ -90,12 +201,17 @@ const PortalLogin = () => {
       }
 
       // Call registration endpoint
-      const res = await api.post('/auth/register', {
+      // Build payload: allow email to be optional, but ensure username exists
+      const derivedUsername = signupData.username || signupData.email || (signupData.fullName ? signupData.fullName.replace(/\s+/g, '').toLowerCase().slice(0, 16) + Math.floor(Math.random() * 900 + 100) : 'user' + Date.now());
+      const payload = {
         full_name: signupData.fullName,
-        email: signupData.email,
-        username: signupData.username || signupData.email,
+        username: derivedUsername,
+        phone_number: signupData.phone,
         password: signupData.password
-      });
+      };
+      if (signupData.email) payload.email = signupData.email;
+
+      const res = await api.post('/api/auth/register', payload);
 
       // If backend returns token, auto-login
       const { access_token, user } = res.data || {};
@@ -115,8 +231,10 @@ const PortalLogin = () => {
         setFormData({ email: signupData.email, password: '' });
       }
     } catch (err) {
-      console.error('Signup failed', err);
-      setError(err.response?.data?.message || 'Registration failed.');
+      const serverData = err?.response?.data;
+      const serverMessage = serverData?.message || (typeof serverData === 'string' ? serverData : JSON.stringify(serverData || {}));
+      console.error('Signup failed', { err, serverData });
+      setError(formatErrorMessage(serverData || serverMessage || err.message));
     } finally {
       setLoading(false);
     }
@@ -135,7 +253,7 @@ const PortalLogin = () => {
                     {mode === 'signup' && (
                           <button
                             type="button"
-                            onClick={() => navigate(-1)}
+                            onClick={() => navigate('/member/dashboard')}
                             className="absolute left-4 top-4 text-sm text-slate-500 hover:text-unda-navy"
                             aria-label="Go back"
                           >
@@ -145,7 +263,7 @@ const PortalLogin = () => {
                     {mode === 'signin' && (
                           <button
                             type="button"
-                            onClick={() => navigate(-1)}
+                            onClick={() => navigate('/member/dashboard')}
                             className="absolute left-4 top-4 text-sm text-slate-500 hover:text-unda-navy"
                             aria-label="Go back"
                           >
@@ -210,12 +328,15 @@ const PortalLogin = () => {
                       className="h-12 rounded-xl bg-slate-50 border border-slate-200 pl-10 pr-12 focus:ring-2 focus:ring-unda-teal/40 focus:border-unda-teal"
                       value={formData.password}
                       onChange={handleChange}
+                      onFocus={() => setLoginPwdFocused(true)}
+                      onBlur={() => setLoginPwdFocused(false)}
                       required
                     />
                     <button type="button" onClick={() => setShowPassword(s => !s)} aria-label={showPassword ? 'Hide password' : 'Show password'} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-unda-navy">
                       {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   </div>
+                  <PasswordIndicator password={formData.password} focused={loginPwdFocused} />
                 </div>
               </div>
 
@@ -256,6 +377,10 @@ const PortalLogin = () => {
                   <Input type="email" name="email" value={signupData.email} onChange={handleSignupChange} required className="h-12 rounded-xl bg-slate-50 border border-slate-200" />
                 </div>
                 <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Phone Number</label>
+                  <Input type="tel" name="phone" value={signupData.phone} onChange={handleSignupChange} required placeholder="e.g. +254712345678" className="h-12 rounded-xl bg-slate-50 border border-slate-200" />
+                </div>
+                <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Choose Password</label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"><Lock size={16} /></span>
@@ -272,6 +397,7 @@ const PortalLogin = () => {
                       {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   </div>
+                  <PasswordIndicator password={signupData.password} focused={signupPwdFocused} />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Confirm Password</label>
