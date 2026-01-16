@@ -47,35 +47,15 @@ export const memberService = {
         phone_number: data.phone,
         username: data.username,
         password: data.password,
-        // Mark the new registration as a prevention advocate by default
-        is_prevention_advocate: true,
+        // Mark the new registration as a prevention champion by default
+        is_prevention_champion: true,
         // Optional fields
         date_of_birth: data.dob || null,
         gender: data.gender || null,
         county_sub_county: data.county || null
       };
-
-      try {
-        // Primary (correct) endpoint
-        return await api.post('/api/auth/register', payload);
-      } catch (err) {
-        // Safety net: Some deployed builds or proxies return an HTML redirect
-        // (Content-Type: text/html) causing Axios to surface a 400 with HTML.
-        // In that case, retry the non-API path as a fallback so the frontend
-        // still works while a deployment / env fix is performed.
-        const contentType = err?.response?.headers?.['content-type'] || '';
-        const respData = err?.response?.data;
-        const looksLikeHtml = typeof respData === 'string' && respData.trim().toLowerCase().startsWith('<!doctype')
-          || contentType.toLowerCase().includes('text/html');
-
-        if (looksLikeHtml) {
-          console.warn('memberService.register: primary /api/auth/register returned HTML — retrying /auth/register as fallback');
-          return await api.post('/auth/register', payload);
-        }
-
-        // otherwise rethrow the original error for normal handling
-        throw err;
-      }
+      // Always post to the public API registration endpoint.
+      return await api.post('/api/auth/register', payload);
     }
 };
 
