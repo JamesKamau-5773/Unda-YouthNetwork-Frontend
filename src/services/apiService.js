@@ -43,43 +43,54 @@ export const memberService = {
     register: async (data) => {
       const payload = {
         full_name: data.fullName,
-        email: data.email,
         phone_number: data.phone,
         username: data.username,
         password: data.password,
         // Optional fields
+        email: data.email || undefined,
         date_of_birth: data.dob || null,
         gender: data.gender || null,
         county_sub_county: data.county || null
       };
 
-      try {
-        // Primary (correct) endpoint
-        return await api.post('/api/auth/register', payload);
-      } catch (err) {
-        // Safety net: Some deployed builds or proxies return an HTML redirect
-        // (Content-Type: text/html) causing Axios to surface a 400 with HTML.
-        // In that case, retry the non-API path as a fallback so the frontend
-        // still works while a deployment / env fix is performed.
-        const contentType = err?.response?.headers?.['content-type'] || '';
-        const respData = err?.response?.data;
-        const looksLikeHtml = typeof respData === 'string' && respData.trim().toLowerCase().startsWith('<!doctype')
-          || contentType.toLowerCase().includes('text/html');
-
-        if (looksLikeHtml) {
-          console.warn('memberService.register: primary /api/auth/register returned HTML — retrying /auth/register as fallback');
-          return await api.post('/auth/register', payload);
-        }
-
-        // otherwise rethrow the original error for normal handling
-        throw err;
-      }
+      // POST to the public member registration endpoint as JSON
+      return await api.post('/api/auth/register', payload);
     }
 };
 
+  // Check registration status by id (used to notify users when admin approves)
+  memberService.getRegistrationStatus = async (registrationId) => {
+    return await api.get(`/api/auth/registration/${registrationId}`);
+  };
+
 // 5. Define the Champion Application Service (requires login)
 export const championService = {
-  // Apply to become a champion (requires authentication)
+  // Champion self-registration (public) — use /api/champions/register
+  register: async (data) => {
+    const payload = {
+      full_name: data.fullName,
+      gender: data.gender,
+      date_of_birth: data.dob,
+      phone_number: data.phone,
+      county_sub_county: data.county,
+      consent_obtained: !!data.consent_obtained,
+      // optional
+      email: data.email || undefined,
+      alternative_phone_number: data.alternativePhone || undefined,
+      emergency_contact_name: data.emergencyName || undefined,
+      emergency_contact_phone: data.emergencyPhone || undefined,
+      current_education_level: data.eduLevel || undefined,
+      education_institution_name: data.institution || undefined,
+      course_field_of_study: data.fieldOfStudy || undefined,
+      year_of_study: data.yearOfStudy || undefined,
+      motivation: data.motivation || undefined,
+      recruitment_source: data.recruitmentSource || undefined
+    };
+
+    return await api.post('/api/champions/register', payload);
+  },
+
+  // Backwards-compatible apply method (keeps previous behaviour if used elsewhere)
   apply: async (data) => {
     const payload = {
       date_of_birth: data.dob,

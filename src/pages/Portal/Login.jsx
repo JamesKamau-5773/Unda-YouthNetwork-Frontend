@@ -4,7 +4,8 @@ import Layout from '@/components/shared/Layout';
 import { Shield, Lock, ArrowRight, Loader2, AlertCircle, Eye, EyeOff, Mail, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import api from '@/services/apiService';
+import api, { memberService } from '@/services/apiService';
+import { useAlert } from '@/components/shared/GlobalAlert';
 
 const PortalLogin = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const PortalLogin = () => {
     if (q.get('mode') === 'signup') setMode('signup');
   }, [location.search]);
   const [formData, setFormData] = useState({
-    email: '',
+    identifier: '', // email or username
     password: ''
   });
   const [signupData, setSignupData] = useState({ fullName: '', email: '', username: '', phone: '', password: '', confirmPassword: '' });
@@ -32,7 +33,7 @@ const PortalLogin = () => {
     const upperOk = /[A-Z]/.test(pwd);
     const lowerOk = /[a-z]/.test(pwd);
     const numberOk = /[0-9]/.test(pwd);
-    const specialOk = /[!@#$%^&*(),.?"':{}|<>\-_=+\\/]/.test(pwd);
+    const specialOk = /[^A-Za-z0-9]/.test(pwd);
     const score = [lengthOk, upperOk, lowerOk, numberOk, specialOk].filter(Boolean).length;
     let label = 'Very weak';
     if (score >= 4) label = 'Strong';
@@ -92,7 +93,7 @@ const PortalLogin = () => {
     // If server returned a JSON string, try to parse it
     let payload = raw;
     if (typeof raw === 'string') {
-      try { payload = JSON.parse(raw); } catch (e) { payload = raw; }
+      try { payload = JSON.parse(raw); } catch { payload = raw; }
     }
 
     let msg = '';
@@ -102,13 +103,13 @@ const PortalLogin = () => {
       else if (payload.error) msg = payload.error;
       else if (payload.detail) msg = payload.detail;
       else if (payload.msg) msg = payload.msg;
-      else if (payload.errors) {
+        else if (payload.errors) {
         if (Array.isArray(payload.errors)) msg = payload.errors.map(e => (e.message || e)).join('; ');
         else if (typeof payload.errors === 'object') msg = Object.values(payload.errors).flat().join('; ');
         else msg = String(payload.errors);
       } else {
         // fallback to a safe stringify
-        try { msg = JSON.stringify(payload); } catch (e) { msg = String(payload); }
+        try { msg = JSON.stringify(payload); } catch { msg = String(payload); }
       }
     }
 
@@ -124,8 +125,8 @@ const PortalLogin = () => {
     if (lower.includes('phone')) return 'Please enter your phone number.';
     if (lower.includes('weak')) return 'Your password is too weak. Try adding numbers, uppercase letters, and special characters.';
 
-    // final fallback: return a cleaned message snippet
-    if (msg) return msg.replace(/[{}\[\]"]+/g, '').slice(0, 240);
+    // final fallback: return a cleaned message snippet (strip common JSON punctuation)
+    if (msg) return msg.split('').filter(c => !'{}[]"'.includes(c)).join('').slice(0, 240);
     return 'Something went wrong. Please try again.';
   };
 
@@ -149,11 +150,11 @@ const PortalLogin = () => {
     setError('');
 
     try {
-      // 1. Attempt Login - some backends expect `username` instead of `email`
-      const payload = {
-        username: formData.email,
-        password: formData.password
-      };
+      // 1. Attempt Login - accept either username or email in a single identifier field
+      const identifier = (formData.identifier || '').trim();
+      const payload = identifier.includes('@')
+        ? { username: identifier, email: identifier, password: formData.password }
+        : { username: identifier, password: formData.password };
       const response = await api.post('/api/auth/login', payload);
       
       // 2. Extract Token & User
@@ -184,6 +185,8 @@ const PortalLogin = () => {
     }
   };
 
+  const { triggerAlert } = useAlert();
+
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -211,25 +214,31 @@ const PortalLogin = () => {
       };
       if (signupData.email) payload.email = signupData.email;
 
-      const res = await api.post('/api/auth/register', payload);
+      // Use memberService.register to ensure the same registration payload
+      const res = await memberService.register({
+        fullName: signupData.fullName,
+        email: signupData.email,
+        username: signupData.username,
+        phone: signupData.phone,
+        password: signupData.password,
+        dob: signupData.dob,
+        gender: signupData.gender,
+        county: signupData.county
+      });
 
-      // If backend returns token, auto-login
-      const { access_token, user } = res.data || {};
-      if (access_token) {
-        localStorage.setItem('unda_token', access_token);
-        if (user) localStorage.setItem('unda_user', JSON.stringify(user));
-        const q = new URLSearchParams(location.search);
-        const next = q.get('next');
-        if (next) {
-          navigate(next);
-        } else {
-          navigate('/member/dashboard');
-        }
-      } else {
-        // fallback — switch to signin and prefill email
-        setMode('signin');
-        setFormData({ email: signupData.email, password: '' });
+      // Show a clear message: account submitted and pending approval
+      const { registration_id, status, message } = res.data || {};
+      triggerAlert(message || 'Application submitted. Your account is under review by an administrator.');
+
+      // Persist registration id so we can poll for approval and notify when approved
+      if (registration_id) {
+        localStorage.setItem('unda_registration_id', registration_id);
+        localStorage.setItem('unda_registration_status', status || 'Pending');
       }
+
+      // Do not auto-signin when registration is pending — show signin form
+      setMode('signin');
+      setFormData({ identifier: signupData.email || signupData.username || '', password: '' });
     } catch (err) {
       const serverData = err?.response?.data;
       const serverMessage = serverData?.message || (typeof serverData === 'string' ? serverData : JSON.stringify(serverData || {}));
@@ -299,15 +308,15 @@ const PortalLogin = () => {
 
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Email Address</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Email or Username</label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"><Mail size={16} /></span>
                     <Input 
-                      type="email" 
-                      name="email"
-                      aria-label="Email address"
+                      type="text" 
+                      name="identifier"
+                      aria-label="Email or username"
                       className="h-12 rounded-xl bg-slate-50 border border-slate-200 pl-10 focus:ring-2 focus:ring-unda-teal/40 focus:border-unda-teal"
-                      value={formData.email}
+                      value={formData.identifier}
                       onChange={handleChange}
                       required
                     />
@@ -390,6 +399,8 @@ const PortalLogin = () => {
                       name="password"
                       value={signupData.password}
                       onChange={handleSignupChange}
+                      onFocus={() => setSignupPwdFocused(true)}
+                      onBlur={() => setSignupPwdFocused(false)}
                       required
                       className="h-12 rounded-xl bg-slate-50 border border-slate-200 pl-10 pr-12"
                     />

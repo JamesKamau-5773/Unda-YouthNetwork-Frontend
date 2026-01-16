@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 // Dummy login for demonstration. Replace with real auth logic.
 export default function PortalLogin() {

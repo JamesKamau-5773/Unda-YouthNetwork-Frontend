@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState } from 'react';
 
 const ReferralContext = createContext();
@@ -12,7 +13,7 @@ export function ReferralProvider({ children }) {
   const [error, setError] = useState(null);
 
   // Trigger referral logic (called when a red flag is detected)
-  const triggerReferral = async ({ championId, reason, supervisorNotes, destination, checkInData }) => {
+  const triggerReferral = async ({ reason, supervisorNotes, destination }) => {
     setLoading(true);
     setError(null);
     // No backend call, just show alert

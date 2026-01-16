@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { memberService, championService } from '@/services/apiService'; 
+import { memberService } from '@/services/apiService';
 import { User, ShieldAlert, GraduationCap, Link2, ArrowRight, ArrowLeft, CheckCircle, Loader2, Eye, EyeOff, XCircle, Calendar } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import Layout from '../../components/shared/Layout';
@@ -12,7 +12,7 @@ const checkPasswordStrength = (password) => {
     hasUpperCase: /[A-Z]/.test(password),
     hasLowerCase: /[a-z]/.test(password),
     hasNumber: /[0-9]/.test(password),
-    hasSpecialChar: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password),
+    hasSpecialChar: /[^A-Za-z0-9]/.test(password),
   };
 
   const metRequirements = Object.values(requirements).filter(Boolean).length;
@@ -51,6 +51,7 @@ const InputField = ({ label, type = "text", value, onChange, placeholder, min, m
           type={isPasswordField && !showPassword ? 'password' : type} 
           value={value}
           onChange={onChange}
+          placeholder={placeholder}
           onFocus={isDateField ? openDatePicker : undefined}
           onClick={isDateField ? openDatePicker : undefined}
           min={min}

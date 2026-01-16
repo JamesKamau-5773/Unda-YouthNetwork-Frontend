@@ -169,7 +169,7 @@ const DebatersCircle = () => {
       setLoading(true);
       try {
         const response = await api.get('/api/events/?category=debate');
-        console.log('📡 Debates API Response:', response.data);
+        console.log('Debates API Response:', response.data);
         
         if (response.data?.events && Array.isArray(response.data.events)) {
           // Map backend fields to frontend expected fields
@@ -188,7 +188,7 @@ const DebatersCircle = () => {
             imageUrl: debate.image_url || debate.imageUrl,
           }));
           
-          console.log('✅ Loaded debates with motions:', mappedDebates);
+          console.log('Loaded debates with motions:', mappedDebates);
           setMotions(mappedDebates);
         }
       } catch (err) {

@@ -13,7 +13,7 @@ const checkPasswordStrength = (password) => {
     hasUpperCase: /[A-Z]/.test(password),
     hasLowerCase: /[a-z]/.test(password),
     hasNumber: /[0-9]/.test(password),
-    hasSpecialChar: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password),
+      hasSpecialChar: /[^A-Za-z0-9]/.test(password),
   };
 
   const metRequirements = Object.values(requirements).filter(Boolean).length;

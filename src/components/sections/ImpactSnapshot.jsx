@@ -3,7 +3,7 @@ import { useMetrics } from '../../hooks/useMetrics';
 
 const ImpactSnapshot = () => {
 
-  const [isVisible, setIsVisible] = useState(false);
+  const [_isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const ImpactSnapshot = () => {
     return () => observer.disconnect();
   }, []);
   
-  const { activeChampions, referralConversionRate, trainingComplianceRate, loading } = useMetrics();
+  const { activeChampions: _activeChampions, referralConversionRate, trainingComplianceRate, loading } = useMetrics();
 
   // Temporarily hide active champions until a later update
   const stats = [

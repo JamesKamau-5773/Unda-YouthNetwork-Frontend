@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export function useMetrics() {
   // Production-ready default (no seeded demo data)

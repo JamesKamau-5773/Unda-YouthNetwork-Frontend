@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAlert } from './components/shared/GlobalAlert';
+import { memberService } from '@/services/apiService';
 import { ReferralProvider } from './context/ReferralContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -44,6 +46,36 @@ import AnnualConference from './pages/programs/AnnualConference';
 import Global from './pages/programs/Global';
 
 function App() {
+  const { triggerAlert } = useAlert();
+
+  // Poll for registration approval if a registration_id exists in localStorage
+  useEffect(() => {
+    let interval = null;
+    const regId = localStorage.getItem('unda_registration_id');
+    if (!regId) return;
+
+    const check = async () => {
+      try {
+        const res = await memberService.getRegistrationStatus(regId);
+        const data = res.data || {};
+        // backend should return status or approved flag
+        const status = data.status || (data.approved ? 'Approved' : null) || data.state || null;
+        if (status && String(status).toLowerCase() === 'approved') {
+          triggerAlert('Your membership application has been approved — please sign in.');
+          localStorage.removeItem('unda_registration_id');
+          localStorage.removeItem('unda_registration_status');
+          if (interval) clearInterval(interval);
+        }
+      } catch {
+        // ignore errors — endpoint may not exist on all environments
+      }
+    };
+
+    // initial check + interval
+    check();
+    interval = setInterval(check, 30 * 1000);
+    return () => interval && clearInterval(interval);
+  }, [triggerAlert]);
   return (
     <ReferralProvider>
       <Router>
