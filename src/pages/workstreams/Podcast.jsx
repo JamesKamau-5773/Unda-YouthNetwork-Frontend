@@ -115,7 +115,16 @@ const Podcast = () => {
 
     return (
       <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-3xl max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div className="bg-white rounded-3xl max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto relative">
+          {/* Floating close control for extra discoverability */}
+          <button
+            onClick={() => { setShowPlayerModal(false); setPlayingEpisode(null); }}
+            aria-label="Close player"
+            className="absolute top-4 right-4 bg-white/90 p-2 rounded-full shadow-md hover:bg-white z-30"
+          >
+            <X size={18} className="text-slate-600" />
+          </button>
+
           <div className="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10 rounded-t-3xl">
             <div>
               <h2 className="text-xl font-black text-[#0B1E3B]">{playingEpisode?.title}</h2>
@@ -300,7 +309,15 @@ const Podcast = () => {
               <div className="aspect-square rounded-[3.5rem] bg-gradient-to-tr from-[#0B1E3B] via-[#003f47] to-[#00C2CB] flex items-center justify-center relative overflow-hidden shadow-2xl ring-1 ring-black/5">
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#00C2CB]/30 to-transparent opacity-60" />
                 <Mic2 size={120} className="text-white opacity-18" />
-                <div className="absolute bottom-8 left-8 right-8 p-4 bg-white/6 backdrop-blur-sm rounded-3xl border border-white/10 flex items-center justify-between">
+                <div className="absolute bottom-8 left-8 right-8 p-4 bg-white/6 backdrop-blur-sm rounded-3xl border border-white/10 flex items-center justify-between relative">
+                  {/* Hero small player dismiss */}
+                  <button
+                    onClick={() => { setShowPlayerModal(false); setPlayingEpisode(null); }}
+                    aria-label="Dismiss now playing"
+                    className="absolute top-3 right-3 p-1.5 bg-white/90 rounded-full hover:bg-white shadow-sm"
+                  >
+                    <X size={16} className="text-slate-700" />
+                  </button>
                   <div>
                     <p className="text-white text-[11px] font-black uppercase tracking-widest mb-1">
                       Now Playing

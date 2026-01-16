@@ -374,7 +374,7 @@ const PortalLogin = () => {
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Email</label>
-                  <Input type="email" name="email" value={signupData.email} onChange={handleSignupChange} required className="h-12 rounded-xl bg-slate-50 border border-slate-200" />
+                  <Input type="email" name="email" value={signupData.email} onChange={handleSignupChange} className="h-12 rounded-xl bg-slate-50 border border-slate-200" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Phone Number</label>
