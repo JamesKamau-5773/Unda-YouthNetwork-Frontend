@@ -18,7 +18,7 @@ const PortalLogin = () => {
     if (q.get('mode') === 'signup') setMode('signup');
   }, [location.search]);
   const [formData, setFormData] = useState({
-    email: '',
+    identifier: '', // email or username
     password: ''
   });
   const [signupData, setSignupData] = useState({ fullName: '', email: '', username: '', phone: '', password: '', confirmPassword: '' });
@@ -149,11 +149,11 @@ const PortalLogin = () => {
     setError('');
 
     try {
-      // 1. Attempt Login - some backends expect `username` instead of `email`
-      const payload = {
-        username: formData.email,
-        password: formData.password
-      };
+      // 1. Attempt Login - accept either username or email in a single identifier field
+      const identifier = (formData.identifier || '').trim();
+      const payload = identifier.includes('@')
+        ? { username: identifier, email: identifier, password: formData.password }
+        : { username: identifier, password: formData.password };
       const response = await api.post('/api/auth/login', payload);
       
       // 2. Extract Token & User
@@ -299,15 +299,15 @@ const PortalLogin = () => {
 
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Email Address</label>
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Email or Username</label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"><Mail size={16} /></span>
                     <Input 
-                      type="email" 
-                      name="email"
-                      aria-label="Email address"
+                      type="text" 
+                      name="identifier"
+                      aria-label="Email or username"
                       className="h-12 rounded-xl bg-slate-50 border border-slate-200 pl-10 focus:ring-2 focus:ring-unda-teal/40 focus:border-unda-teal"
-                      value={formData.email}
+                      value={formData.identifier}
                       onChange={handleChange}
                       required
                     />
