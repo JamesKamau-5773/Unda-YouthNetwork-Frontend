@@ -4,6 +4,8 @@ import axios from 'axios';
 const api = axios.create({
   // Use local backend in development, production backend in production
   baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000',
+  // Send cookies for session-based auth
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -38,21 +40,41 @@ api.interceptors.response.use(
 // 4. Define the Member Registration Service (Public API)
 export const memberService = {
   // Register a new member (public endpoint - no auth required)
-  register: async (data) => {
-    const payload = {
-      full_name: data.fullName,
-      email: data.email,
-      phone_number: data.phone,
-      username: data.username,
-      password: data.password,
-      // Optional fields
-      date_of_birth: data.dob || null,
-      gender: data.gender || null,
-      county_sub_county: data.county || null
-    };
+    register: async (data) => {
+      const payload = {
+        full_name: data.fullName,
+        email: data.email,
+        phone_number: data.phone,
+        username: data.username,
+        password: data.password,
+        // Optional fields
+        date_of_birth: data.dob || null,
+        gender: data.gender || null,
+        county_sub_county: data.county || null
+      };
 
-    return await api.post('/api/auth/register', payload);
-  }
+      try {
+        // Primary (correct) endpoint
+        return await api.post('/api/auth/register', payload);
+      } catch (err) {
+        // Safety net: Some deployed builds or proxies return an HTML redirect
+        // (Content-Type: text/html) causing Axios to surface a 400 with HTML.
+        // In that case, retry the non-API path as a fallback so the frontend
+        // still works while a deployment / env fix is performed.
+        const contentType = err?.response?.headers?.['content-type'] || '';
+        const respData = err?.response?.data;
+        const looksLikeHtml = typeof respData === 'string' && respData.trim().toLowerCase().startsWith('<!doctype')
+          || contentType.toLowerCase().includes('text/html');
+
+        if (looksLikeHtml) {
+          console.warn('memberService.register: primary /api/auth/register returned HTML — retrying /auth/register as fallback');
+          return await api.post('/auth/register', payload);
+        }
+
+        // otherwise rethrow the original error for normal handling
+        throw err;
+      }
+    }
 };
 
 // 5. Define the Champion Application Service (requires login)
