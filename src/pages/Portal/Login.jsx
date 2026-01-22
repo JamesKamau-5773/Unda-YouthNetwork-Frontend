@@ -170,6 +170,21 @@ const PortalLogin = () => {
         localStorage.setItem('unda_user', JSON.stringify(user));
       }
 
+      // Clear any saved registration flags — user is now authenticated/approved
+      try {
+        localStorage.removeItem('unda_registration_id');
+        localStorage.removeItem('unda_registration_status');
+      } catch (err) {
+        // ignore
+      }
+      try {
+        if (typeof setRegId === 'function') setRegId(null);
+        if (typeof setRegStatus === 'function') setRegStatus(null);
+        if (typeof setRegMessage === 'function') setRegMessage(null);
+      } catch (err) {
+        // ignore
+      }
+
       // 4. Redirect (respect `next` query param when present)
       const q = new URLSearchParams(location.search);
       const next = q.get('next');
@@ -298,6 +313,29 @@ const PortalLogin = () => {
     }
   };
 
+  const cancelRegistration = async () => {
+    if (!regId) return;
+    const ok = window.confirm('Are you sure you want to cancel your pending registration? This cannot be undone.');
+    if (!ok) return;
+    setCheckingReg(true);
+    try {
+      await memberService.cancelRegistration(regId);
+      // Clear local flags and state
+      localStorage.removeItem('unda_registration_id');
+      localStorage.removeItem('unda_registration_status');
+      setRegId(null);
+      setRegStatus(null);
+      setRegMessage(null);
+      triggerAlert('Your registration has been cancelled. You may re-apply if needed.');
+    } catch (err) {
+      console.error('Cancel registration failed', err);
+      const msg = err?.response?.data?.message || 'Unable to cancel registration. Please try again later.';
+      triggerAlert(msg);
+    } finally {
+      setCheckingReg(false);
+    }
+  };
+
   return (
     <Layout>
       <div className="min-h-screen bg-transparent flex flex-col items-center justify-center py-20 px-6">
@@ -367,6 +405,12 @@ const PortalLogin = () => {
                     <button onClick={refreshRegistrationStatus} disabled={checkingReg} className="px-3 py-1 rounded-md bg-white border text-sm shadow-sm hover:bg-slate-50">
                       {checkingReg ? 'Checking...' : 'Refresh'}
                     </button>
+                    {/* Show Cancel when registration appears to be pending */}
+                    {!regStatus?.toLowerCase()?.includes('approve') && !regStatus?.toLowerCase()?.includes('approved') && !regStatus?.toLowerCase()?.includes('deny') && !regStatus?.toLowerCase()?.includes('reject') && (
+                      <button onClick={cancelRegistration} disabled={checkingReg} className="px-3 py-1 rounded-md bg-white border text-sm shadow-sm hover:bg-slate-50 text-red-600">
+                        Cancel
+                      </button>
+                    )}
                   </div>
                 </div>
               )}

@@ -103,6 +103,13 @@ export const memberService = {
     return await api.get(`/api/auth/registration/${registrationId}`);
   };
 
+  // Cancel or withdraw a pending registration (public endpoint)
+  memberService.cancelRegistration = async (registrationId) => {
+    // Many backends support DELETE /api/auth/registration/:id to cancel
+    // If your backend expects a different path (e.g. POST /cancel), adjust accordingly.
+    return await api.delete(`/api/auth/registration/${registrationId}`);
+  };
+
 // 5. Define the Champion Application Service (requires login)
 export const championService = {
   // Champion self-registration (public) — use /api/champions/register
