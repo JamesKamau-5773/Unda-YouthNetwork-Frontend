@@ -23,7 +23,7 @@ const MemberNav = () => {
   };
 
   return (
-    <nav className="flex items-center gap-2 md:gap-3">
+    <nav className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
       <div className="hidden md:flex items-center gap-2">
         {items.map(i => {
           const active = location.pathname === i.path || location.pathname.startsWith(i.path + '/');
@@ -35,14 +35,27 @@ const MemberNav = () => {
         })}
       </div>
 
-      {/* Mobile scrollable mini-nav */}
-      <div className="md:hidden flex gap-2 overflow-x-auto no-scrollbar">
-        {items.map(i => (
-          <Link key={i.path} to={i.path} className="px-3 py-2 rounded-xl text-sm font-bold text-[#0B1E3B] bg-slate-50 whitespace-nowrap">{i.name}</Link>
-        ))}
+      {/* Mobile full-width centered scrollable nav */}
+      <div className="md:hidden flex gap-2 overflow-x-auto no-scrollbar justify-center w-full py-2">
+        {items.map(i => {
+          const active = location.pathname === i.path || location.pathname.startsWith(i.path + '/');
+          return (
+            <Link
+              key={i.path}
+              to={i.path}
+              className={`px-3 py-2 rounded-full text-sm font-semibold whitespace-nowrap ${active ? 'bg-[#0B1E3B] text-white' : 'bg-slate-50 text-[#0B1E3B]/90'}`}
+            >
+              {i.name}
+            </Link>
+          );
+        })}
       </div>
 
-      <button onClick={handleSignOut} className="ml-2 px-3 py-1.5 rounded-full text-sm font-medium text-red-500 bg-white border border-red-100 hover:bg-red-50">Sign Out</button>
+      {/* Sign out: hidden on mobile inside header, shown as small button below mobile nav */}
+      <button onClick={handleSignOut} className="hidden md:inline-flex ml-2 px-3 py-1.5 rounded-full text-sm font-medium text-red-500 bg-white border border-red-100 hover:bg-red-50">Sign Out</button>
+      <div className="md:hidden w-full flex justify-center">
+        <button onClick={handleSignOut} className="mt-2 px-3 py-1 rounded-full text-sm font-medium text-red-500 bg-white border border-red-100 hover:bg-red-50">Sign Out</button>
+      </div>
     </nav>
   );
 };
