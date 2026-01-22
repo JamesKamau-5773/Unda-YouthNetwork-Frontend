@@ -81,7 +81,7 @@ const PortalLayout = ({ children, title, subtitle }) => {
   
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-br from-[#F8FAFC] via-[#E0F7FA] to-[#F8FAFC]">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#F8FAFC] via-[#E0F7FA] to-[#F8FAFC]">
       {/* Sidebar removed; navigation now in top navbar */}
 
       {/* Mobile sidebar overlay (controlled via state) */}
