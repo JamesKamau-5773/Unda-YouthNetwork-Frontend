@@ -256,11 +256,19 @@ const Navbar = () => {
                </div>
             </div>
             
-            <Button asChild className="w-full bg-[#0B1E3B] text-white mt-4 h-12 rounded-xl">
-              <a href="https://unda-youth-network-backend.onrender.com/auth/login" target="_blank" rel="noopener noreferrer">
-                Portal Login <ExternalLink size={14} className="ml-2" />
-              </a>
-            </Button>
+            <div className="flex flex-col gap-2">
+              <Button asChild className="w-full bg-[#0B1E3B] text-white mt-4 h-12 rounded-xl">
+                <Link to="/portal" onClick={() => setIsMobileMenuOpen(false)}>
+                  Member Portal
+                </Link>
+              </Button>
+
+              <Button asChild className="w-full bg-white text-[#0B1E3B] border border-slate-200 h-12 rounded-xl">
+                <a href="https://unda-youth-network-backend.onrender.com/auth/login" target="_blank" rel="noopener noreferrer">
+                  Staff Login <ExternalLink size={14} className="ml-2" />
+                </a>
+              </Button>
+            </div>
           </div>
         )}
       </div>

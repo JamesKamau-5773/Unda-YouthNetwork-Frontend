@@ -1,38 +1,49 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PortalLayout from '../layout/PortalLayout';
 import { Download, Share2, Shield, Calendar, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import undaLogo from '@/assets/logos/unda-logo-main.jpg';
+import { memberService, profileService } from '@/services/apiService';
+import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription, DialogClose, DialogTrigger } from '@/components/ui/dialog';
 
 const Certificate = () => {
     const [toast, setToast] = useState('');
     const [processing, setProcessing] = useState(false);
+    const [profile, setProfile] = useState(null);
+    const [certInfo, setCertInfo] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [showCancelDialog, setShowCancelDialog] = useState(false);
+    const [showReissueDialog, setShowReissueDialog] = useState(false);
 
     const certRef = useRef(null);
 
-    const handleDownload = () => {
-        const el = certRef.current;
-        if (!el) return;
+    const handleDownload = async () => {
+        if (!certInfo || !certInfo.issued) {
+            setToast('Certificate not yet issued. Complete required training.');
+            setTimeout(() => setToast(''), 3000);
+            return;
+        }
         setProcessing(true);
-        // Collect current page styles (stylesheets and style tags)
-        const styles = Array.from(document.querySelectorAll('link[rel="stylesheet"], style'))
-            .map(node => node.outerHTML)
-            .join('\n');
-
-        const printWindow = window.open('', '_blank');
-        printWindow.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Certificate</title>${styles}</head><body>${el.outerHTML}</body></html>`);
-        printWindow.document.close();
-        printWindow.focus();
-        // Give browser a moment to render styles
-        setTimeout(() => {
-            try {
-                printWindow.print();
-            } catch (e) {
-                console.error('Print failed', e);
-            }
-            // don't forcibly close in case user wants to save
+        try {
+            const res = await memberService.downloadCertificate();
+            const blob = new Blob([res.data], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const filename = (certInfo && certInfo.certificate_filename) || 'unda-certificate.pdf';
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (e) {
+            console.error('Download failed', e);
+            setToast('Unable to download certificate.');
+            setTimeout(() => setToast(''), 3000);
+        } finally {
             setProcessing(false);
-        }, 250);
+        }
     };
 
     const handleShare = async () => {
@@ -44,6 +55,76 @@ const Certificate = () => {
             setToast('Unable to copy link');
         }
         setTimeout(() => setToast(''), 3000);
+    };
+
+    useEffect(() => {
+        let mounted = true;
+        (async () => {
+            setLoading(true);
+            try {
+                const p = await profileService.getProfile();
+                if (!mounted) return;
+                setProfile(p.data || null);
+            } catch (e) {
+                console.debug('Profile fetch failed', e);
+            }
+            try {
+                const c = await memberService.getMyCertificate();
+                if (!mounted) return;
+                setCertInfo(c.data || null);
+            } catch (e) {
+                // Certificate endpoint may not exist yet; don't fatal.
+                console.debug('Certificate fetch failed', e);
+                setCertInfo(null);
+            } finally {
+                if (mounted) setLoading(false);
+            }
+        })();
+        return () => { mounted = false; };
+    }, []);
+
+    const refreshCertificate = async () => {
+        setLoading(true);
+        try {
+            const c = await memberService.getMyCertificate();
+            setCertInfo(c.data || null);
+        } catch (e) {
+            console.debug('Certificate refresh failed', e);
+            setCertInfo(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleCancelCertificate = async () => {
+        setProcessing(true);
+        try {
+            await memberService.cancelCertificate();
+            setToast('Certificate cancelled successfully');
+            setCertInfo(prev => ({ ...(prev||{}), issued: false }));
+        } catch (e) {
+            console.error('Cancel failed', e);
+            setToast('Unable to cancel certificate');
+        } finally {
+            setProcessing(false);
+            setShowCancelDialog(false);
+            setTimeout(() => setToast(''), 3000);
+        }
+    };
+
+    const handleRequestReissue = async () => {
+        setProcessing(true);
+        try {
+            await memberService.requestCertificateReissue();
+            setToast('Re-issue requested. You will be notified when ready.');
+        } catch (e) {
+            console.error('Reissue failed', e);
+            setToast('Unable to request re-issue');
+        } finally {
+            setProcessing(false);
+            setShowReissueDialog(false);
+            setTimeout(() => setToast(''), 3000);
+        }
     };
   return (
     <PortalLayout title="My Certificate" subtitle="Proof of your commitment to mental resilience.">
@@ -75,8 +156,8 @@ const Certificate = () => {
 
                     <div className="relative z-10 py-8">
                         <p className="text-slate-500 font-serif italic text-lg mb-6">This certifies that</p>
-                        <h3 className="text-3xl md:text-5xl font-serif font-bold text-[#0B1E3B] mb-2">James Mwangi</h3>
-                        <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-8">Member ID: UMV-2026-8821</p>
+                        <h3 className="text-3xl md:text-5xl font-serif font-bold text-[#0B1E3B] mb-2">{profile?.full_name || profile?.name || '—'}</h3>
+                        <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-8">Member ID: {profile?.member_id || profile?.id || '—'}</p>
                         
                         <p className="text-slate-600 max-w-xl mx-auto text-sm md:text-base leading-relaxed font-serif italic">
                             Is a recognized member of the Unda Youth Network, having demonstrated commitment to promoting mental health resilience and peer support within the community.
@@ -101,7 +182,7 @@ const Certificate = () => {
 
                         <div className="text-right">
                             <p className="text-[10px] font-bold uppercase text-slate-400 tracking-widest mb-1">Date</p>
-                            <p className="font-bold text-[#0B1E3B] text-sm">Jan 06, 2026</p>
+                            <p className="font-bold text-[#0B1E3B] text-sm">{(certInfo && certInfo.issued_at) ? new Date(certInfo.issued_at).toLocaleDateString() : '—'}</p>
                         </div>
                     </div>
                 </div>
@@ -112,9 +193,29 @@ const Certificate = () => {
                         <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
                     <h3 className="font-bold text-[#0B1E3B] mb-4 text-sm uppercase tracking-wide">Actions</h3>
                     <div className="space-y-3">
-                        <Button onClick={handleDownload} aria-label="Download certificate" className="w-full bg-[#0B1E3B] hover:bg-slate-800 text-white rounded-xl shadow-lg shadow-slate-200 font-bold flex items-center gap-2">
+                        <Button
+                            onClick={handleDownload}
+                            aria-label="Download certificate"
+                            disabled={processing || !(certInfo && certInfo.issued && certInfo.trainings_completed)}
+                            className={`w-full ${processing ? 'opacity-70 cursor-wait' : ''} bg-[#0B1E3B] hover:bg-slate-800 text-white rounded-xl shadow-lg shadow-slate-200 font-bold flex items-center gap-2 ${!(certInfo && certInfo.issued && certInfo.trainings_completed) ? 'opacity-50 pointer-events-none' : ''}`}
+                        >
                             <Download size={16} /> {processing ? 'Preparing...' : 'Download / Print'}
                         </Button>
+
+                        {!certInfo || !certInfo.trainings_completed ? (
+                            <div className="text-xs text-slate-500">
+                                Certificate is issued only after required training is completed. <a href="/member/events" className="font-bold text-amber-500 hover:underline">View training sessions</a>
+                            </div>
+                        ) : null}
+                        <div className="flex gap-2">
+                            <Button onClick={refreshCertificate} variant="outline" aria-label="Refresh certificate status" className="flex-1 rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] border-slate-200">
+                                Check Eligibility
+                            </Button>
+                            <Button onClick={() => setShowReissueDialog(true)} variant="ghost" aria-label="Request reissue" className="rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] border-slate-200">
+                                Request Re-issue
+                            </Button>
+                        </div>
+
                         <Button onClick={handleShare} variant="outline" aria-label="Share certificate link" className="w-full rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] border-slate-200">
                             <Share2 size={16} /> Share Link
                         </Button>
@@ -139,24 +240,52 @@ const Certificate = () => {
                         )}
                     </div>
                     
-                    <div className="space-y-3">
+                        <div className="space-y-3">
                         <div className="flex justify-between text-xs text-slate-300">
-                            <span>Status</span>
-                            <span className="font-bold text-emerald-400">Active</span>
+                            <span>Certificate</span>
+                            <span className="font-bold text-emerald-400">{certInfo && certInfo.issued ? 'Issued' : (loading ? 'Checking' : 'Not issued')}</span>
                         </div>
                         <div className="flex justify-between text-xs text-slate-300">
-                            <span>Tier</span>
-                            <span className="font-bold text-amber-400">Gold Champion</span>
+                            <span>Training Complete</span>
+                            <span className="font-bold text-amber-400">{certInfo && typeof certInfo.trainings_completed !== 'undefined' ? (certInfo.trainings_completed ? 'Yes' : 'No') : (loading ? 'Checking' : 'Unknown')}</span>
                         </div>
                         <div className="flex justify-between text-xs text-slate-300">
-                            <span>Next Renewal</span>
-                            <span className="font-bold">Jan 2027</span>
+                            <span>Issued On</span>
+                            <span className="font-bold">{certInfo && certInfo.issued_at ? new Date(certInfo.issued_at).toLocaleDateString() : '—'}</span>
                         </div>
                     </div>
                 </div>
             </div>
 
         </div>
+
+        {/* Cancel Certificate Confirmation Dialog */}
+        <Dialog open={showCancelDialog} onOpenChange={setShowCancelDialog}>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Cancel Certificate</DialogTitle>
+                    <DialogDescription>Are you sure you want to cancel (revoke) your certificate? This action cannot be undone.</DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                    <Button variant="ghost" onClick={() => setShowCancelDialog(false)}>Close</Button>
+                    <Button onClick={handleCancelCertificate} className="bg-rose-600 text-white">Yes, Cancel Certificate</Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+
+        {/* Request Re-issue Confirmation Dialog */}
+        <Dialog open={showReissueDialog} onOpenChange={setShowReissueDialog}>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Request Certificate Re-issue</DialogTitle>
+                    <DialogDescription>Requesting a re-issue will create a new certificate if you meet eligibility. Proceed?</DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                    <Button variant="ghost" onClick={() => setShowReissueDialog(false)}>Cancel</Button>
+                    <Button onClick={handleRequestReissue} className="bg-amber-500 text-white">Request Re-issue</Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     </PortalLayout>
   );
 };

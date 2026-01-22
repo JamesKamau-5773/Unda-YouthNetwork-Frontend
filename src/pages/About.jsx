@@ -221,7 +221,11 @@ const About = () => {
               </div>
 
               <div className="mt-12 text-center">
-                <Button asChild className="h-14 px-8 rounded-2xl bg-unda-navy text-white hover:bg-unda-teal text-lg font-bold shadow-xl">
+                <Button
+                  asChild
+                  className="h-14 px-8 rounded-2xl text-lg font-bold shadow-2xl"
+                  style={{ backgroundColor: '#0B1E3B', color: '#ffffff', zIndex: 20 }}
+                >
                   <Link to="/partner">Partner With Us</Link>
                 </Button>
               </div>
