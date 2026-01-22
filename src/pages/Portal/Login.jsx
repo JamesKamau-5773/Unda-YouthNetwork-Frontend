@@ -260,20 +260,20 @@ const PortalLogin = () => {
 
               <div className="text-center mb-6 relative z-10">
                     {mode === 'signup' && (
-                          <button
-                            type="button"
-                            onClick={() => navigate('/member/dashboard')}
-                            className="absolute left-4 top-4 text-sm text-slate-500 hover:text-unda-navy"
-                            aria-label="Go back"
-                          >
-                            ← Back
-                          </button>
+                                <button
+                                  type="button"
+                                  onClick={() => navigate('/member/dashboard')}
+                                  className="absolute top-4 -left-4 md:left-4 text-sm text-slate-500 hover:text-unda-navy"
+                                  aria-label="Go back"
+                                >
+                                  ← Back
+                                </button>
                         )}
                     {mode === 'signin' && (
                           <button
                             type="button"
                             onClick={() => navigate('/member/dashboard')}
-                            className="absolute left-4 top-4 text-sm text-slate-500 hover:text-unda-navy"
+                            className="absolute top-4 -left-4 md:left-4 text-sm text-slate-500 hover:text-unda-navy"
                             aria-label="Go back"
                           >
                             ← Back
