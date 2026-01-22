@@ -24,12 +24,20 @@ const ResetPassword = () => {
     try {
       await api.post('/auth/reset-password', { token, password });
       setMessage('Password reset successful. You can now sign in.');
-      setTimeout(() => navigate('/portal'), 1400);
+      setTimeout(() => handleBack(), 1400);
     } catch (err) {
       console.error('Reset password error', err);
       setError(err.response?.data?.message || 'Unable to reset password. The link may be invalid or expired.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleBack = () => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      navigate('/');
+    } else {
+      navigate('/portal');
     }
   };
 
@@ -68,7 +76,7 @@ const ResetPassword = () => {
 
             <div className="flex items-center gap-3">
               <Button type="submit" className="h-12" disabled={loading}>{loading ? <><Loader2 className="animate-spin mr-2" size={16}/> Resetting...</> : 'Reset Password'}</Button>
-              <Button type="button" variant="ghost" onClick={() => navigate('/portal')}>Back</Button>
+              <Button type="button" variant="ghost" onClick={handleBack}>Back</Button>
             </div>
           </form>
         </div>

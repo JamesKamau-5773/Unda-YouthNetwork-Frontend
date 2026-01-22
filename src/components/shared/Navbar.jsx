@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ChevronDown, Mic, Users, GraduationCap, MapPin, Shield, Activity, ExternalLink, Menu, X, HeartHandshake, Layers, BookOpen, Lightbulb, Calendar, Globe } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import undaLogo from '@/assets/logos/unda-logo-main.jpg';
@@ -20,6 +20,16 @@ const Navbar = () => {
     ,{ name: 'UMV Annual Conference', path: '/programs/annual-conference', icon: <Calendar size={16} />, desc: 'Flagship youth convening' },
     { name: 'UMV Global', path: '/programs/global', icon: <Globe size={16} />, desc: 'International expansion' }
   ];
+
+  const memberItems = [
+    { name: 'Dashboard', path: '/member/dashboard' },
+    { name: 'Wellness Check-In', path: '/member/check-in' },
+    { name: 'Events & Training', path: '/member/events' },
+    { name: 'My Certificate', path: '/member/certificate' },
+    { name: 'Profile & Settings', path: '/member/profile' },
+  ];
+
+  const navigate = useNavigate();
 
   return (
     <nav className="fixed top-0 w-full z-[100] px-6 py-6 transition-all duration-300">
@@ -149,6 +159,30 @@ const Navbar = () => {
              >
                Gallery
              </Link>
+
+            {/* Member / Portal Dropdown (moved from sidebar) */}
+            <div className="relative" onMouseEnter={() => handleMouseEnter('member')} onMouseLeave={handleMouseLeave}>
+              <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                activeDropdown === 'member' ? 'text-[#00C2CB] bg-[#00C2CB]/5' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]'
+              }`}>
+                Member <ChevronDown size={10} className={`transition-transform duration-300 ${activeDropdown === 'member' ? 'rotate-180' : ''}`} />
+              </button>
+
+              {activeDropdown === 'member' && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 w-[280px] animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="bg-white border border-slate-100 rounded-[2rem] shadow-xl p-4 flex flex-col gap-2 relative overflow-hidden">
+                    {memberItems.map(mi => (
+                      <Link key={mi.path} to={mi.path} className="px-3 py-2 rounded-xl hover:bg-slate-50 transition-all text-sm font-medium text-[#0B1E3B]">
+                        {mi.name}
+                      </Link>
+                    ))}
+                    <button onClick={() => { localStorage.removeItem('unda_token'); localStorage.removeItem('unda_user'); navigate('/portal'); }} className="px-3 py-2 rounded-xl hover:bg-slate-50 transition-all text-sm font-medium text-red-500 text-left">
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
 
@@ -254,6 +288,16 @@ const Navbar = () => {
                   <Link to="/membership" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Membership</Link>
                   <Link to="/support" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Support</Link>
                </div>
+            </div>
+
+            <div className="py-2 border-b border-slate-50">
+              <span className="text-[10px] font-black uppercase text-[#00C2CB] mb-3 block tracking-widest">Portal</span>
+              <div className="grid grid-cols-1 gap-3 pl-2">
+                {memberItems.map(mi => (
+                  <Link key={mi.path} to={mi.path} className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>{mi.name}</Link>
+                ))}
+                <button onClick={() => { localStorage.removeItem('unda_token'); localStorage.removeItem('unda_user'); setIsMobileMenuOpen(false); navigate('/portal'); }} className="text-sm font-medium text-red-500 text-left pl-0">Sign Out</button>
+              </div>
             </div>
             
             <div className="flex flex-col gap-2">

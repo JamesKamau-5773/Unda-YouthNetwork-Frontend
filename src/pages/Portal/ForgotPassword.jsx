@@ -30,6 +30,14 @@ const ForgotPassword = () => {
     }
   };
 
+  const handleBack = () => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      navigate('/');
+    } else {
+      navigate('/portal');
+    }
+  };
+
   return (
     <Layout>
       <div className="min-h-screen flex items-center justify-center py-20 px-6">
@@ -66,7 +74,7 @@ const ForgotPassword = () => {
               <Button type="submit" className="h-12" disabled={loading}>
                 {loading ? <><Loader2 className="animate-spin mr-2" size={16}/> Sending...</> : 'Send Reset Link'}
               </Button>
-              <Button type="button" variant="ghost" onClick={() => navigate('/portal')}>Back</Button>
+              <Button type="button" variant="ghost" onClick={handleBack}>Back</Button>
             </div>
           </form>
         </div>
