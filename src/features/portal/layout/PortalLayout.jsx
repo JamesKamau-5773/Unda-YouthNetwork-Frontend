@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from './Sidebar';
-import { Bell, Search, ArrowLeft, LogOut } from 'lucide-react';
+import { Bell, Search, ArrowLeft, LogOut, Menu } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -20,17 +20,29 @@ const PortalLayout = ({ children, title, subtitle }) => {
       navigate('/portal');
   };
 
+  const [sidebarOpen, setSidebarOpen] = React.useState(false);
+
   return (
     <div className="min-h-screen flex bg-gradient-to-br from-[#F8FAFC] via-[#E0F7FA] to-[#F8FAFC]">
-      {/* Sidebar Navigation */}
-      <Sidebar />
+      {/* Sidebar Navigation (desktop) */}
+      <div className="hidden md:block">
+        <Sidebar />
+      </div>
+
+      {/* Mobile sidebar overlay (controlled via state) */}
 
       {/* Main Content Area */}
       <main className="flex-1 ml-64 min-w-0 relative">
         
         {/* Sticky Header */}
-        <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-lg border-b border-[#00C2CB]/10 shadow-md px-8 py-4 flex justify-between items-center">
+        <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-lg border-b border-[#00C2CB]/10 shadow-md px-4 md:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
+             {/* Mobile menu toggle */}
+             <div className="md:hidden">
+               <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-md text-slate-500 hover:text-[#0B1E3B] hover:bg-slate-100">
+                 <Menu size={20} />
+               </button>
+             </div>
              {/* Back Button */}
              <Button 
                onClick={() => navigate('/member/dashboard')} 
@@ -86,6 +98,9 @@ const PortalLayout = ({ children, title, subtitle }) => {
             </div>
           </div>
         </header>
+
+        {/* Mobile Sidebar Overlay */}
+        <Sidebar mobile isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {/* Content Injector */}
         <div className="p-8 max-w-7xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500 rounded-3xl bg-white/80 shadow-xl mt-8">
