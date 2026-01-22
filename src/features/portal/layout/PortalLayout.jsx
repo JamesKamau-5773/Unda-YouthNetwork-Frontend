@@ -34,8 +34,8 @@ const PortalLayout = ({ children, title, subtitle }) => {
       {/* Main Content Area */}
       <main className="flex-1 ml-64 min-w-0 relative">
         
-        {/* Sticky Header */}
-        <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-lg border-b border-[#00C2CB]/10 shadow-md px-4 md:px-8 py-4 flex justify-between items-center">
+        {/* Sticky Header styled to match main site navbar */}
+        <header className="sticky top-0 z-30 bg-white text-[#0B1E3B] shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/20 rounded-[2.5rem] px-4 md:px-8 py-3 flex items-center justify-between mx-4 md:mx-0">
           <div className="flex items-center gap-4">
              {/* Mobile menu toggle */}
              <div className="md:hidden">
@@ -54,9 +54,16 @@ const PortalLayout = ({ children, title, subtitle }) => {
                 <ArrowLeft size={18} />
              </Button>
 
-             <div>
-                <h1 className="text-xl font-bold text-[#0B1E3B] leading-none">{title}</h1>
-                {subtitle && <p className="text-slate-500 text-xs font-medium mt-1">{subtitle}</p>}
+             <div className="flex items-center gap-4">
+               <Link to="/" className="flex items-center gap-3 group">
+                 <div className="h-8 w-8 rounded-xl overflow-hidden flex items-center justify-center bg-white/90 border border-white/50 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+                   <img src="/unda-logo-main.jpg" alt="Unda" className="w-full h-full object-contain" />
+                 </div>
+               </Link>
+               <div>
+                 <h1 className="text-lg font-black text-[#0B1E3B] leading-none">{title || 'Dashboard'}</h1>
+                 {subtitle && <p className="text-slate-500 text-xs font-medium mt-1">{subtitle}</p>}
+               </div>
              </div>
           </div>
 

@@ -110,6 +110,27 @@ export const memberService = {
     return await api.delete(`/api/auth/registration/${registrationId}`);
   };
 
+  // Certificate endpoints (frontend client)
+  // Expected to return an object like: { issued: boolean, issued_at: string, certificate_url: string, trainings_completed: boolean }
+  memberService.getMyCertificate = async () => {
+    return await api.get('/api/members/me/certificate');
+  };
+
+  // Download server-generated certificate PDF (returns blob)
+  memberService.downloadCertificate = async () => {
+    return await api.get('/api/members/me/certificate/download', { responseType: 'blob' });
+  };
+
+  // Cancel a previously issued certificate (withdraw/revoke) - backend should verify ownership/permissions
+  memberService.cancelCertificate = async () => {
+    return await api.delete('/api/members/me/certificate');
+  };
+
+  // Request a re-issue of a certificate (e.g., lost copy) - backend will validate training and create a new certificate
+  memberService.requestCertificateReissue = async () => {
+    return await api.post('/api/members/me/certificate/reissue');
+  };
+
 // 5. Define the Champion Application Service (requires login)
 export const championService = {
   // Champion self-registration (public) — use /api/champions/register

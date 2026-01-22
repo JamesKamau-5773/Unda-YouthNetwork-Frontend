@@ -41,8 +41,9 @@ export default function WeeklyCheckInForm() {
       const userStr = localStorage.getItem('unda_user');
       if (userStr) {
         const user = JSON.parse(userStr);
-        if (user && (user.username || user.full_name)) {
-          setForm(f => ({ ...f, championId: user.username || user.full_name }));
+        // Prefer numeric `id` if available (backend expects an id), fall back to username/full_name
+        if (user && (user.id || user.username || user.full_name)) {
+          setForm(f => ({ ...f, championId: user.id || user.username || user.full_name }));
         }
       }
     } catch {
@@ -103,8 +104,10 @@ export default function WeeklyCheckInForm() {
       try { localStorage.removeItem('checkin_draft'); } catch (err) { console.debug('Failed to remove checkin draft', err); }
       setSuccess(true);
     } catch (err) {
-      console.error(err);
-      setError('Failed to submit check-in. Please try again.');
+      console.error('Check-in submit error:', err?.response?.data || err);
+      // Prefer server-provided message when available for clearer feedback
+      const serverMsg = err?.response?.data?.message || err?.response?.data || err?.message;
+      setError(serverMsg || 'Failed to submit check-in. Please try again.');
     } finally {
       setLoading(false);
     }

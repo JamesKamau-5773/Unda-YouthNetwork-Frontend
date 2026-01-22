@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Activity, Calendar, ShieldCheck, Settings, LogOut, User, X } from 'lucide-react';
 import undaLogo from '@/assets/logos/unda-logo-main.jpg';
@@ -14,13 +14,55 @@ const Sidebar = ({ mobile = false, isOpen = true, onClose = null }) => {
     { icon: ShieldCheck, label: 'My Certificate', path: '/member/certificate' },
   ];
 
-  // Mobile variant: show overlay when `mobile` is true and `isOpen` is true
+  // Mobile variant: overlay with slide animation, focus trap and escape-to-close
   if (mobile) {
-    if (!isOpen) return null;
+    const panelRef = useRef(null);
+    const overlayRef = useRef(null);
+
+    useEffect(() => {
+      if (!isOpen) return;
+      const panel = panelRef.current;
+      const focusable = panel.querySelectorAll('a,button,input,textarea,select,[tabindex]:not([tabindex="-1"])');
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const prevActive = document.activeElement;
+      if (first) first.focus();
+
+      const onKey = (e) => {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          onClose && onClose();
+        }
+        if (e.key === 'Tab') {
+          if (focusable.length === 0) {
+            e.preventDefault();
+            return;
+          }
+          if (e.shiftKey) {
+            if (document.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            }
+          } else {
+            if (document.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        }
+      };
+
+      document.addEventListener('keydown', onKey);
+      return () => {
+        document.removeEventListener('keydown', onKey);
+        prevActive && prevActive.focus && prevActive.focus();
+      };
+    }, [isOpen, onClose]);
+
     return (
       <>
-        <div className="fixed inset-0 bg-black/40 z-40" onClick={onClose} />
-        <aside className="fixed left-0 top-0 h-screen w-64 bg-[#07142a] border-r border-[#042033]/60 flex flex-col z-50 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.12)]">
+        <div ref={overlayRef} className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={onClose} />
+        <aside ref={panelRef} aria-hidden={!isOpen} className={`fixed left-0 top-0 h-screen w-64 bg-[#07142a] border-r border-[#042033]/60 flex flex-col z-50 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.12)] transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           <div className="p-4 border-b border-[#042033]/40 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3 group">
               <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-[#00C2CB] to-[#0B1E3B] flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105 shadow-md">
