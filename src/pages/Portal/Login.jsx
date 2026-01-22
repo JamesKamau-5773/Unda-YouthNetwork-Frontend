@@ -26,6 +26,10 @@ const PortalLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginPwdFocused, setLoginPwdFocused] = useState(false);
   const [signupPwdFocused, setSignupPwdFocused] = useState(false);
+  const [regId, setRegId] = useState(null);
+  const [regStatus, setRegStatus] = useState(null);
+  const [regMessage, setRegMessage] = useState(null);
+  const [checkingReg, setCheckingReg] = useState(false);
 
   // Password evaluation helper
   const evaluatePassword = (pwd) => {
@@ -249,6 +253,51 @@ const PortalLogin = () => {
     }
   };
 
+  // Check for existing registration stored in localStorage and fetch status
+  React.useEffect(() => {
+    const id = localStorage.getItem('unda_registration_id');
+    const localStatus = localStorage.getItem('unda_registration_status');
+    if (!id) return;
+    setRegId(id);
+    if (localStatus) setRegStatus(localStatus);
+
+    const fetchStatus = async () => {
+      setCheckingReg(true);
+      try {
+        const res = await memberService.getRegistrationStatus(id);
+        const status = (res?.data?.status || res?.data?.state || '').toString();
+        const message = res?.data?.message || res?.data?.detail || '';
+        setRegStatus(status);
+        setRegMessage(message);
+        localStorage.setItem('unda_registration_status', status);
+      } catch (err) {
+        // ignore — we'll keep local info
+      } finally {
+        setCheckingReg(false);
+      }
+    };
+
+    // Fetch immediately
+    fetchStatus();
+  }, []);
+
+  const refreshRegistrationStatus = async () => {
+    if (!regId) return;
+    setCheckingReg(true);
+    try {
+      const res = await memberService.getRegistrationStatus(regId);
+      const status = (res?.data?.status || res?.data?.state || '').toString();
+      const message = res?.data?.message || res?.data?.detail || '';
+      setRegStatus(status);
+      setRegMessage(message);
+      localStorage.setItem('unda_registration_status', status);
+    } catch (err) {
+      // noop
+    } finally {
+      setCheckingReg(false);
+    }
+  };
+
   return (
     <Layout>
       <div className="min-h-screen bg-transparent flex flex-col items-center justify-center py-20 px-6">
@@ -295,6 +344,32 @@ const PortalLogin = () => {
                 <h1 className="text-2xl md:text-3xl font-extrabold text-unda-navy">Portal Access</h1>
                 <p className="text-slate-500 font-medium text-sm mt-2">Enter your credentials to continue.</p>
               </div>
+
+              {/* Persistent registration banner (if registration exists) */}
+              {regId && regStatus && (
+                <div className={`mb-6 p-4 rounded-xl flex items-start gap-3 ${regStatus.toLowerCase().includes('approve') || regStatus.toLowerCase() === 'approved' ? 'bg-emerald-50 text-emerald-800 border border-emerald-100' : regStatus.toLowerCase().includes('deny') || regStatus.toLowerCase().includes('reject') ? 'bg-red-50 text-red-800 border border-red-100' : 'bg-amber-50 text-amber-800 border border-amber-100'}`}>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="text-sm font-bold">Registration status: <span className="uppercase">{regStatus}</span></div>
+                      <div className="text-xs text-slate-500">ID: {regId}</div>
+                    </div>
+                    <div className="text-sm mt-2 text-slate-700">
+                      {regStatus && regStatus.toLowerCase().includes('approve') ? (
+                        'Your account has been approved. Please sign in.'
+                      ) : regStatus && (regStatus.toLowerCase().includes('deny') || regStatus.toLowerCase().includes('reject')) ? (
+                        (regMessage && <>{regMessage} — please correct any issues and reapply.</>) || 'Your registration was denied. Fix any issues and reapply.'
+                      ) : (
+                        (regMessage && <>{regMessage}</>) || 'Your registration is pending admin approval. Please wait; this may take a few days.'
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex-shrink-0 flex items-center gap-2">
+                    <button onClick={refreshRegistrationStatus} disabled={checkingReg} className="px-3 py-1 rounded-md bg-white border text-sm shadow-sm hover:bg-slate-50">
+                      {checkingReg ? 'Checking...' : 'Refresh'}
+                    </button>
+                  </div>
+                </div>
+              )}
 
           {/* Login / Signup Form */}
           {mode === 'signin' ? (
