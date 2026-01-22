@@ -131,8 +131,8 @@ const Certificate = () => {
         <div className="flex flex-col xl:flex-row gap-8 items-start">
             
             {/* Certificate Preview */}
-            <div className="flex-1 w-full bg-slate-200 p-8 rounded-2xl shadow-inner flex justify-center overflow-auto">
-                <div ref={certRef} className="w-full max-w-[800px] bg-white aspect-[1.414/1] shadow-2xl relative p-12 text-center flex flex-col justify-between border border-slate-300">
+            <div className="flex-1 w-full bg-slate-200 p-4 md:p-8 rounded-2xl shadow-inner flex justify-center overflow-x-auto">
+                <div ref={certRef} className="w-full max-w-[800px] md:mx-0 mx-auto bg-white md:aspect-[1.414/1] aspect-auto shadow-2xl relative p-6 md:p-12 text-center flex flex-col justify-between border border-slate-300">
                     
                     {/* Decorative Background */}
                     <div className="absolute inset-0 z-0 pointer-events-none opacity-5" 
