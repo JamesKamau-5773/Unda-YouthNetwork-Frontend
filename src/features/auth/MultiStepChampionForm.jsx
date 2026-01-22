@@ -5,6 +5,7 @@ import { Eye, EyeOff, CheckCircle, XCircle, ArrowLeft, User, Lock } from 'lucide
 import Layout from '@/components/shared/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import parseErrorForUser from '@/lib/errorUtils';
 
 // Password strength checker
 const checkPasswordStrength = (password) => {
@@ -96,7 +97,7 @@ export default function MultiStepChampionForm() {
         setError('Registration failed. Please try again.');
       }
     } catch (err) {
-      const errorMessage = err.response?.data?.error || 'Registration failed. Please try again.';
+      const errorMessage = parseErrorForUser(err) || 'Registration failed. Please try again.';
       setError(errorMessage);
     } finally {
       setIsSubmitting(false);

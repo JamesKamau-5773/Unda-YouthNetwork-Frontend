@@ -5,6 +5,7 @@ import { Mail, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import api from '@/services/apiService';
+import parseErrorForUser from '@/lib/errorUtils';
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const ForgotPassword = () => {
       setMessage('If an account exists for this email, a password reset link was sent. Check your inbox.');
     } catch (err) {
       console.error('Forgot password error', err);
-      setError(err.response?.data?.message || 'Unable to process request. Please try again later.');
+      setError(parseErrorForUser(err));
     } finally {
       setLoading(false);
     }

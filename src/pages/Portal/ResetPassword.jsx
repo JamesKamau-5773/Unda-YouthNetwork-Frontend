@@ -5,6 +5,7 @@ import { Lock, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import api from '@/services/apiService';
+import parseErrorForUser from '@/lib/errorUtils';
 
 const ResetPassword = () => {
   const { token } = useParams();
@@ -27,7 +28,7 @@ const ResetPassword = () => {
       setTimeout(() => handleBack(), 1400);
     } catch (err) {
       console.error('Reset password error', err);
-      setError(err.response?.data?.message || 'Unable to reset password. The link may be invalid or expired.');
+      setError(parseErrorForUser(err));
     } finally {
       setLoading(false);
     }
