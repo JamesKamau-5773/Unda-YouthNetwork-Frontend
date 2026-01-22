@@ -206,6 +206,14 @@ const PortalLogin = () => {
 
   const { triggerAlert } = useAlert();
 
+  const handleBack = () => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      navigate('/');
+    } else {
+      navigate('/member/dashboard');
+    }
+  };
+
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -349,7 +357,7 @@ const PortalLogin = () => {
                     {mode === 'signup' && (
                                 <button
                                   type="button"
-                                  onClick={() => navigate('/member/dashboard')}
+                                  onClick={handleBack}
                                   className="absolute top-4 -left-4 md:left-4 text-sm text-slate-500 hover:text-unda-navy"
                                   aria-label="Go back"
                                 >
@@ -359,7 +367,7 @@ const PortalLogin = () => {
                     {mode === 'signin' && (
                           <button
                             type="button"
-                            onClick={() => navigate('/member/dashboard')}
+                            onClick={handleBack}
                             className="absolute top-4 -left-4 md:left-4 text-sm text-slate-500 hover:text-unda-navy"
                             aria-label="Go back"
                           >
