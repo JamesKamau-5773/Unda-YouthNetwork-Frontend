@@ -87,22 +87,23 @@ const PortalLayout = ({ children, title, subtitle }) => {
       {/* Mobile sidebar overlay (controlled via state) */}
 
       {/* Use a compact portal header styled like the main site navbar (removed global Navbar here) */}
-      <div className="w-full px-6 pt-6">
-        <div className="max-w-7xl mx-auto bg-white text-[#0B1E3B] shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/20 rounded-[2.5rem] px-8 py-3 flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-extrabold tracking-tight">{headerTitle}</h2>
-            {/* Optionally show a small subtitle under the title in the header */}
-            {subtitle && <p className="text-[12px] text-slate-500">{subtitle}</p>}
+      <div className="w-full px-4 pt-4 md:px-6 md:pt-6">
+        <div className="max-w-7xl mx-auto bg-white text-[#0B1E3B] shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/20 rounded-[2.5rem] px-4 py-3 md:px-8 md:py-3 flex flex-col md:flex-row items-start md:items-center md:justify-between gap-3">
+          <div className="w-full md:w-auto">
+            <h2 className="text-lg md:text-xl font-extrabold tracking-tight">{headerTitle}</h2>
+            {subtitle && <p className="text-[12px] text-slate-500 mt-1">{subtitle}</p>}
           </div>
 
-          <div>
-            <MemberNav />
+          <div className="w-full md:w-auto">
+            <div className="flex justify-end">
+              <MemberNav />
+            </div>
           </div>
         </div>
       </div>
 
       {/* Main Content Area (add top padding to account for the fixed navbar) */}
-      <main className="flex-1 min-w-0 relative pt-28 md:pt-32">
+      <main className="flex-1 min-w-0 relative pt-6 md:pt-10">
 
         {/* Mobile sidebar removed - mobile nav is handled by top navbar */}
 
