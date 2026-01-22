@@ -5,6 +5,7 @@ import { Shield, Lock, ArrowRight, Loader2, AlertCircle, Eye, EyeOff, Mail, Chec
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import api, { memberService } from '@/services/apiService';
+import parseErrorForUser from '@/lib/errorUtils';
 import { useAlert } from '@/components/shared/GlobalAlert';
 
 const PortalLogin = () => {
@@ -198,7 +199,7 @@ const PortalLogin = () => {
       const serverData = err?.response?.data;
       const serverMessage = serverData?.message || (typeof serverData === 'string' ? serverData : JSON.stringify(serverData || {}));
       console.error('Login Failed:', { err, serverData });
-      setError(formatErrorMessage(serverData || serverMessage || err.message));
+      setError(parseErrorForUser(err));
     } finally {
       setLoading(false);
     }
@@ -270,7 +271,7 @@ const PortalLogin = () => {
       const serverData = err?.response?.data;
       const serverMessage = serverData?.message || (typeof serverData === 'string' ? serverData : JSON.stringify(serverData || {}));
       console.error('Signup failed', { err, serverData });
-      setError(formatErrorMessage(serverData || serverMessage || err.message));
+      setError(parseErrorForUser(err));
     } finally {
       setLoading(false);
     }

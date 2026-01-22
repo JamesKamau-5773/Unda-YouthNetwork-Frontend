@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { checkInService } from '../../services/apiService';
 import { useReferral } from '../../context/ReferralContext';
+import parseErrorForUser from '@/lib/errorUtils';
 import Layout from '@/components/shared/Layout';
 import { ArrowLeft, Activity, Heart, AlertTriangle, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -105,35 +106,7 @@ export default function WeeklyCheckInForm() {
       setSuccess(true);
     } catch (err) {
       console.error('Check-in submit error:', err?.response?.data || err);
-      // Friendly error messaging (keep it KISS)
-      const getFriendlyError = (err) => {
-        if (!err) return 'Failed to submit check-in. Please try again.';
-        const status = err?.response?.status;
-        const data = err?.response?.data;
-
-        if (status === 401) return 'You are not signed in. Please sign in and try again.';
-        if (status === 403) return 'You do not have permission to perform this action.';
-        if (status === 400) {
-          if (data && typeof data === 'string') {
-            const txt = data.replace(/<[^>]*>/g, '').trim();
-            return txt || 'Invalid input. Please check your entries.';
-          }
-          if (data && typeof data === 'object' && data.message) return data.message;
-          return 'Invalid input. Please check your entries.';
-        }
-        if (status >= 500) return 'Server error. Please try again later.';
-
-        // If backend returned HTML (e.g., an HTML error page), avoid showing raw HTML
-        if (data && typeof data === 'string' && data.trim().startsWith('<')) {
-          return 'Unexpected server response. Please try again later.';
-        }
-
-        if (data && typeof data === 'object' && data.message) return data.message;
-        if (err.message) return err.message;
-        return 'Failed to submit check-in. Please try again.';
-      };
-
-      setError(getFriendlyError(err));
+      setError(parseErrorForUser(err));
     } finally {
       setLoading(false);
     }
