@@ -1,6 +1,5 @@
 import React from 'react';
 import { Bell, Search, ArrowLeft, LogOut } from 'lucide-react';
-import Navbar from '@/components/shared/Navbar';
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
@@ -87,11 +86,24 @@ const PortalLayout = ({ children, title, subtitle }) => {
 
       {/* Mobile sidebar overlay (controlled via state) */}
 
-      {/* Render main site Navbar so portal pages get full navigation */}
-      <Navbar />
+      {/* Use a compact portal header styled like the main site navbar (removed global Navbar here) */}
+      <div className="w-full px-4 pt-4 md:px-6 md:pt-6">
+        <div className="max-w-7xl mx-auto bg-white text-[#0B1E3B] shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/20 rounded-[2.5rem] px-4 py-3 md:px-8 md:py-3 flex flex-col md:flex-row items-start md:items-center md:justify-between gap-3">
+          <div className="w-full md:w-auto">
+            <h2 className="text-lg md:text-xl font-extrabold tracking-tight">{headerTitle}</h2>
+            {subtitle && <p className="text-[12px] text-slate-500 mt-1">{subtitle}</p>}
+          </div>
+
+          <div className="w-full md:w-auto">
+            <div className="flex justify-end">
+              <MemberNav />
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Main Content Area (add top padding to account for the fixed navbar) */}
-      <main className="flex-1 min-w-0 relative pt-28 md:pt-32">
+      <main className="flex-1 min-w-0 relative pt-6 md:pt-10">
 
         {/* Mobile sidebar removed - mobile nav is handled by top navbar */}
 
@@ -99,13 +111,8 @@ const PortalLayout = ({ children, title, subtitle }) => {
         <div className="p-6 max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-2 duration-500 mt-8">
           <div className="rounded-3xl bg-white/90 shadow-xl p-6">
             {/* Portal header: title, subtitle and compact member nav */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div>
-                <h1 className="text-2xl md:text-3xl font-extrabold text-[#0B1E3B]">{headerTitle}</h1>
-                {subtitle && <p className="text-sm text-slate-500 mt-1">{subtitle}</p>}
-              </div>
-
-              <MemberNav />
+            <div className="flex flex-col">
+              {/* Content now rendered below the header bar; keep this area minimal */}
             </div>
 
             {/* Children container */}
