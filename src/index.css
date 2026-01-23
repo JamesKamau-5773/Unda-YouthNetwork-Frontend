@@ -49,8 +49,9 @@
     border-color: var(--border);
   }
   body {
-    background-color: #F9FAFB; /* UMV background */
-    color: var(--foreground);
+    /* Crisp Horizon: top 30% brand navy, bottom 70% white */
+    background: linear-gradient(to bottom, #0B1E3B 0%, #0B1E3B 30%, #ffffff 30%, #ffffff 100%);
+    color: #1e293b; /* Deep Navy for body text */
   }
 }
 
@@ -63,6 +64,16 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(180deg, rgba(11,30,59,0.45), rgba(0,194,203,0.08));
+  /* remove heavy gradient — keep subtle glow */
+  background: linear-gradient(180deg, rgba(11,30,59,0.18), rgba(0,194,203,0.02));
   pointer-events: none;
+}
+
+@layer components {
+  .glow-teal {
+    box-shadow: 0 12px 30px rgba(0,194,203,0.08);
+  }
+  .glow-teal-sm {
+    box-shadow: 0 8px 20px rgba(0,194,203,0.06);
+  }
 }

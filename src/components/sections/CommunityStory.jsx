@@ -17,7 +17,7 @@ const CommunityStory = () => {
              {/* Decorative 'frame' for depth */}
             <div className="absolute -inset-4 border border-[#00C2CB]/10 rounded-[4rem] scale-105 group-hover:scale-100 transition-transform duration-700" />
             
-            <div className="relative rounded-[3.5rem] overflow-hidden shadow-2xl border-[12px] border-white rotate-1 group-hover:rotate-0 transition-transform duration-500">
+            <div className="relative rounded-[3.5rem] overflow-hidden glow-teal border-[12px] border-white rotate-1 group-hover:rotate-0 transition-transform duration-500">
               <img 
                 src="https://i.pinimg.com/736x/ac/34/0f/ac340f495ae1469a2dec12f6232045a3.jpg" 
                 alt="Unda Youth Community" 

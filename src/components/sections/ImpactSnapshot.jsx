@@ -39,7 +39,7 @@ const ImpactSnapshot = () => {
           ) : (
             stats.map((stat, index) => (
               <div key={index}
-                className={`flex-1 min-w-[280px] max-w-[360px] p-12 ${stat.color} rounded-[2.5rem] text-center shadow-2xl ${stat.glow} transition-all duration-500 hover:-translate-y-3`}
+                className={`flex-1 min-w-[280px] max-w-[360px] p-12 ${stat.color} rounded-[2.5rem] text-center glow-teal transition-all duration-500 hover:-translate-y-3`}
               >
                 <h3 className="text-5xl font-black text-white mb-2 tracking-tighter">{stat.number}</h3>
                 <p className="text-white/70 font-bold uppercase text-[10px] tracking-widest">{stat.label}</p>
