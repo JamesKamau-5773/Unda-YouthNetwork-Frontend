@@ -187,7 +187,7 @@ const Certificate = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </GlassCard>
 
             {/* Actions Sidebar */}
             <div className="w-full xl:w-80 space-y-6">
