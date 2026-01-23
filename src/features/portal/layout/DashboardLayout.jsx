@@ -1,16 +1,17 @@
 import React from 'react';
-import { Activity, Zap, Calendar, ArrowRight } from 'lucide-react';
+import { Activity, Zap, ArrowRight } from 'lucide-react'; // Removed unused 'Calendar' import
 
 const Dashboard = () => {
   return (
-    // Main Container with Top Padding to separate from Navbar
+    // Main Container
+    // pt-8 separates it from the Navbar. pb-20 gives space at bottom.
     <div className="w-full max-w-7xl mx-auto px-6 pt-8 pb-20">
       
-      {/* --- ROW 1: WELCOME CARD (Full Width) --- */}
-      {/* Aligned perfectly with the grid below */}
+      {/* --- ROW 1: WELCOME CARD (Unified Hero) --- */}
+      {/* Background: #E0F7FA (Mint) - Distinct from the Page Background (#F2F9FA) */}
       <div className="w-full bg-[#E0F7FA] rounded-[2.5rem] p-10 mb-8 shadow-sm border border-[#B2EBF2]/30 flex flex-col md:flex-row justify-between items-center gap-8">
          
-         {/* Left: Text & Buttons */}
+         {/* Left Side: Welcome Text & Actions */}
          <div className="flex-1">
             <h1 className="text-4xl font-extrabold text-[#0B1E3B] mb-3 tracking-tight">
                Welcome back, Champion
@@ -29,7 +30,7 @@ const Dashboard = () => {
             </div>
          </div>
 
-         {/* Right: Streak Stats (On White Glass) */}
+         {/* Right Side: Streak Stats (Glass Effect) */}
          <div className="bg-white/60 backdrop-blur-md px-10 py-6 rounded-3xl border border-white/50 flex items-center gap-10 shadow-sm">
             <div className="text-center">
                <span className="block text-xs font-bold text-[#00838F] uppercase tracking-wider mb-1">Streak</span>
@@ -38,6 +39,7 @@ const Dashboard = () => {
                   <span className="text-2xl">🔥</span>
                </div>
             </div>
+            {/* Divider */}
             <div className="w-px h-12 bg-[#B2EBF2]"></div>
             <div className="text-center">
                <span className="block text-xs font-bold text-[#00838F] uppercase tracking-wider mb-1">Points</span>
@@ -46,8 +48,7 @@ const Dashboard = () => {
          </div>
       </div>
 
-      {/* --- ROW 2: METRICS GRID (Strict 4-Column Layout) --- */}
-      {/* gap-6 ensures even spacing between all cards */}
+      {/* --- ROW 2: METRICS GRID (4 Columns) --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
          
          {/* 1. Sessions Card */}
@@ -58,7 +59,8 @@ const Dashboard = () => {
             </div>
             <div>
                <span className="block text-5xl font-black text-[#0B1E3B] mb-1">12</span>
-               <span className="text-xs text-slate-400 font-bold">This Month</span>
+               {/* FIX: Changed slate-400 to Brand Teal for Zero Grey consistency */}
+               <span className="text-xs text-[#00838F] font-bold opacity-80">This Month</span>
             </div>
          </div>
 
@@ -88,7 +90,7 @@ const Dashboard = () => {
             </div>
          </div>
 
-         {/* 4. Events Card (Matches the other 3 perfectly) */}
+         {/* 4. Events Card */}
          <div className="bg-white border-2 border-[#E0F7FA] p-6 rounded-[2rem] shadow-sm h-full flex flex-col relative overflow-hidden group hover:border-[#00ACC1] transition-colors">
             <div className="flex justify-between items-center mb-4">
                <h3 className="font-bold text-[#0B1E3B]">Next Event</h3>
@@ -106,8 +108,8 @@ const Dashboard = () => {
                </div>
             </div>
             
-            <button className="w-full mt-3 py-2 bg-[#00ACC1] text-white font-bold rounded-xl text-xs hover:bg-[#0097A7] transition-colors">
-               Add Event
+            <button className="w-full mt-3 py-2 bg-[#00ACC1] text-white font-bold rounded-xl text-xs hover:bg-[#0097A7] transition-colors flex items-center justify-center gap-2">
+               Add Event <ArrowRight size={14} />
             </button>
          </div>
 
