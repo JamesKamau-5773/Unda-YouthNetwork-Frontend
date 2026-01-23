@@ -78,7 +78,7 @@ const Navbar = () => {
               to="/"
               className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
                 location.pathname === '/'
-                  ? (isPortal ? 'text-[#0B1E3B] bg-white shadow-[0_10px_30px_rgba(0,194,203,0.12)]' : 'text-white bg-[#0B1E3B] shadow-[0_10px_30px_rgba(0,194,203,0.12)]')
+                  ? 'text-[#00C2CB] bg-[#00C2CB]/5'
                   : (isPortal ? 'text-white/90 hover:text-white hover:bg-white/10 hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.06)]')
               }`}
             >
