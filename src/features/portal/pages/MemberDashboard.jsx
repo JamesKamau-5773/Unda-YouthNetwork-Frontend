@@ -1,3 +1,116 @@
+import React from 'react';
 import DashboardLayout from '../layout/DashboardLayout';
+import GlassCard from '@/components/ui/GlassCard';
+import { Link } from 'react-router-dom';
+import { Calendar, Users } from 'lucide-react';
 
-export default DashboardLayout;
+const ActionButton = ({ children, className = '', ...props }) => (
+	<button
+		className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-[#00C2CB] to-[#0090C0] shadow-lg shadow-[#00C2CB]/20 transition-transform hover:-translate-y-0.5 ${className}`}
+		{...props}
+	>
+		{children}
+	</button>
+);
+
+const MemberDashboard = () => {
+	return (
+		<DashboardLayout headerContent={(
+			<div className="max-w-7xl mx-auto px-6">
+				<div className="rounded-3xl bg-white p-6 md:px-8 md:py-4 shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/10">
+					<h2 className="text-lg md:text-xl font-extrabold tracking-tight text-[#0B1E3B]">Dashboard</h2>
+					<p className="text-sm text-[#334155] mt-1">Your wellness snapshot and recent activity.</p>
+				</div>
+			</div>
+		)}>
+
+			<div className="grid grid-cols-12 gap-6">
+				<div className="col-span-12">
+					<GlassCard className="p-8">
+						<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+							<div>
+								<h1 className="text-2xl md:text-3xl font-extrabold text-[#1e293b]">Welcome back, Champion</h1>
+								<p className="mt-2 text-[#334155]">Here's your wellness snapshot and upcoming activities.</p>
+								<div className="mt-4 flex items-center gap-3">
+									<ActionButton>Start Check-In</ActionButton>
+									<ActionButton className="bg-white border border-[#E6EEF2] text-[#1e293b] shadow-none">View Resources</ActionButton>
+								</div>
+							</div>
+							<div className="flex gap-4 items-center">
+								<div className="text-right">
+									<div className="text-sm text-[#334155]">Streak</div>
+									<div className="text-[#1e293b] text-3xl font-extrabold">7 🔥</div>
+								</div>
+								<div className="w-px h-12 bg-[#0090C0]/20" />
+								<div className="text-right">
+									<div className="text-sm text-[#334155]">Points</div>
+									<div className="text-[#1e293b] text-3xl font-extrabold">1,240</div>
+								</div>
+							</div>
+						</div>
+					</GlassCard>
+				</div>
+
+				<div className="col-span-12 md:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+					<GlassCard>
+						<div>
+							<div className="text-sm text-[#334155]">Sessions this month</div>
+							<div className="text-[#1e293b] text-2xl font-bold mt-2">12</div>
+						</div>
+					</GlassCard>
+
+					<GlassCard>
+						<div>
+							<div className="text-sm text-[#334155]">Average mood</div>
+							<div className="text-[#1e293b] text-2xl font-bold mt-2">Good 😊</div>
+						</div>
+					</GlassCard>
+
+					<GlassCard>
+						<div>
+							<div className="text-sm text-[#334155]">Active challenges</div>
+							<div className="text-[#1e293b] text-2xl font-bold mt-2">3</div>
+						</div>
+					</GlassCard>
+				</div>
+
+				<div className="col-span-12 md:col-span-4">
+					<GlassCard className="flex flex-col gap-4">
+						<div className="flex items-center justify-between">
+							<div>
+								<div className="text-sm text-[#334155]">Upcoming Events</div>
+								<div className="text-[#1e293b] font-bold">Next 7 days</div>
+							</div>
+							<Link to="/member/events" className="text-[#00C2CB] font-semibold">See all</Link>
+						</div>
+
+						<ul className="flex flex-col gap-3">
+							<li className="flex items-start gap-3">
+								<div className="p-2 rounded-lg bg-[#F0F7FF] text-[#1e293b]"><Calendar size={18} /></div>
+								<div>
+									<div className="text-[#1e293b] font-semibold">Peer Support Group</div>
+									<div className="text-sm text-[#334155]">Tomorrow · 16:00</div>
+								</div>
+							</li>
+
+							<li className="flex items-start gap-3">
+								<div className="p-2 rounded-lg bg-[#F0F7FF] text-[#1e293b]"><Users size={18} /></div>
+								<div>
+									<div className="text-[#1e293b] font-semibold">Community Meetup</div>
+									<div className="text-sm text-[#334155]">Fri · 18:00</div>
+								</div>
+							</li>
+						</ul>
+
+						<div className="mt-2">
+							<ActionButton className="w-full justify-center">Add Event</ActionButton>
+						</div>
+					</GlassCard>
+				</div>
+			</div>
+
+		</DashboardLayout>
+	);
+};
+
+export default MemberDashboard;
