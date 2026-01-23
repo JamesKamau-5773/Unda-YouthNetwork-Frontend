@@ -44,7 +44,7 @@ const Resources = () => {
               <div className="space-y-6">
                 <div className="bg-white rounded-2xl p-12 border border-slate-100 shadow-sm text-center">
                   <h3 className="text-3xl font-black text-[#0B1E3B] mb-3">Coming soon</h3>
-                  <p className="text-slate-500">Publications and downloadable reports will appear here once they're published from our backend.</p>
+                  <p className="text-slate-500">Publications and downloadable reports will appear here once they're published.</p>
                 </div>
               </div>
             </div>
@@ -146,10 +146,10 @@ const Resources = () => {
               Looking for <span className="text-[#0090C0]">More Resources?</span>
             </h2>
             <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-12">
-              New resources are added regularly. Subscribe to our newsletter to stay updated on the latest tools, guides, and research.
+              New resources are added regularly. Join the network to stay updated on the latest tools, guides, and research.
             </p>
             <Button className="h-14 px-8 rounded-2xl bg-[#0090C0] text-[#0B1E3B] hover:bg-[#00C2CB] hover:text-white text-lg font-bold">
-              Subscribe for Updates
+             Join the Network
             </Button>
           </div>
         </section>
