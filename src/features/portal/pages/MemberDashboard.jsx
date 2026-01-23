@@ -28,8 +28,8 @@ const MemberDashboard = () => {
 				<div className="col-span-12 relative">
 					<div className="px-6 py-12 md:py-20 lg:py-24 relative z-20">
 						<div className="max-w-4xl">
-							<h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white drop-shadow-lg">Welcome back, Champion</h1>
-							<p className="mt-3 text-[#E0F2FE] text-lg drop-shadow">Here's your wellness snapshot and upcoming activities.</p>
+							<h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">Welcome back, Champion</h1>
+							<p className="mt-3 text-[#E0F2FE] text-lg">Here's your wellness snapshot and upcoming activities.</p>
 							<div className="mt-6 flex items-center gap-3">
 								<ActionButton>Start Check-In</ActionButton>
 								<ActionButton className="bg-white text-[#0B1E3B] shadow-none border border-white/10">View Resources</ActionButton>
