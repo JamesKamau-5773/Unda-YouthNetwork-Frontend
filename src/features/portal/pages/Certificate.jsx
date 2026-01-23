@@ -139,7 +139,7 @@ const Certificate = () => {
                     <div className="absolute inset-0 z-0 pointer-events-none opacity-5" 
                          style={{ backgroundImage: 'radial-gradient(#0c3b5e 1px, transparent 1px)', backgroundSize: '30px 30px' }} 
                     />
-                    <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#0B1E3B] via-[#00C2CB] to-[#0B1E3B]" />
+                    <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#1e293b] via-[#00C2CB] to-[#1e293b]" />
 
                     <div className="relative z-10">
                         <div className="flex items-center justify-center gap-3 mb-8 opacity-90">
@@ -147,7 +147,7 @@ const Certificate = () => {
                                 <img src={undaLogo} alt="Logo" className="w-full h-full object-contain" />
                             </div>
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-serif font-black text-[#0B1E3B] uppercase tracking-widest mb-3">Certificate</h2>
+                        <h2 className="text-4xl md:text-5xl font-serif font-black text-[#1e293b] uppercase tracking-widest mb-3">Certificate</h2>
                         <div className="flex items-center justify-center gap-4">
                             <div className="h-px bg-[#00C2CB] w-12" />
                             <p className="text-[#00C2CB] font-bold uppercase tracking-[0.2em] text-xs">Of Membership</p>
@@ -157,7 +157,7 @@ const Certificate = () => {
 
                     <div className="relative z-10 py-8">
                         <p className="text-slate-500 font-serif italic text-lg mb-6">This certifies that</p>
-                        <h3 className="text-3xl md:text-5xl font-serif font-bold text-[#0B1E3B] mb-2">{profile?.full_name || profile?.name || '—'}</h3>
+                        <h3 className="text-3xl md:text-5xl font-serif font-bold text-[#1e293b] mb-2">{profile?.full_name || profile?.name || '—'}</h3>
                         <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-8">Member ID: {profile?.member_id || profile?.id || '—'}</p>
                         
                         <p className="text-slate-600 max-w-xl mx-auto text-sm md:text-base leading-relaxed font-serif italic">
@@ -168,7 +168,7 @@ const Certificate = () => {
                     <div className="relative z-10 flex justify-between items-end mt-8 pt-8 border-t border-slate-100">
                         <div className="text-left">
                             <div className="h-10 border-b border-black/20 mb-2 w-40 flex items-end">
-                                <span className="font-signature text-xl text-[#0B1E3B]">Dr. Amani</span>
+                                <span className="font-signature text-xl text-[#1e293b]">Dr. Amani</span>
                             </div>
                             <p className="text-[10px] font-bold uppercase text-slate-400 tracking-widest">Program Director</p>
                         </div>
@@ -183,7 +183,7 @@ const Certificate = () => {
 
                         <div className="text-right">
                             <p className="text-[10px] font-bold uppercase text-slate-400 tracking-widest mb-1">Date</p>
-                            <p className="font-bold text-[#0B1E3B] text-sm">{(certInfo && certInfo.issued_at) ? new Date(certInfo.issued_at).toLocaleDateString() : '—'}</p>
+                            <p className="font-bold text-[#1e293b] text-sm">{(certInfo && certInfo.issued_at) ? new Date(certInfo.issued_at).toLocaleDateString() : '—'}</p>
                         </div>
                     </div>
                 </div>
@@ -192,7 +192,7 @@ const Certificate = () => {
             {/* Actions Sidebar */}
             <div className="w-full xl:w-80 space-y-6">
                         <GlassCard className="p-6">
-                    <h3 className="font-bold text-[#0B1E3B] mb-4 text-sm uppercase tracking-wide">Actions</h3>
+                    <h3 className="font-bold text-[#1e293b] mb-4 text-sm uppercase tracking-wide">Actions</h3>
                     <div className="space-y-3">
                         <Button
                             onClick={handleDownload}
@@ -209,25 +209,25 @@ const Certificate = () => {
                             </div>
                         ) : null}
                         <div className="flex gap-2">
-                            <Button onClick={refreshCertificate} variant="outline" aria-label="Refresh certificate status" className="flex-1 rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] dark:hover:text-white border-slate-200">
+                            <Button onClick={refreshCertificate} variant="outline" aria-label="Refresh certificate status" className="flex-1 rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#1e293b] dark:hover:text-white border-slate-200">
                                 Check Eligibility
                             </Button>
-                            <Button onClick={() => setShowReissueDialog(true)} variant="ghost" aria-label="Request reissue" className="rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] dark:hover:text-white border-slate-200">
+                            <Button onClick={() => setShowReissueDialog(true)} variant="ghost" aria-label="Request reissue" className="rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#1e293b] dark:hover:text-white border-slate-200">
                                 Request Re-issue
                             </Button>
                         </div>
 
-                        <Button onClick={handleShare} variant="outline" aria-label="Share certificate link" className="w-full rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] dark:hover:text-white border-slate-200">
+                        <Button onClick={handleShare} variant="outline" aria-label="Share certificate link" className="w-full rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#1e293b] dark:hover:text-white border-slate-200">
                             <Share2 size={16} /> Share Link
                         </Button>
                     </div>
                 </GlassCard>
 
-                <div className="bg-white/90 p-6 rounded-2xl text-[#0B1E3B] relative overflow-hidden shadow">
+                <div className="bg-white/90 p-6 rounded-2xl text-[#1e293b] relative overflow-hidden shadow">
                     <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#00C2CB]/10 rounded-full blur-2xl" />
                     
                     <div className="flex items-center gap-3 mb-4">
-                        <div className="p-2 bg-slate-50 rounded-lg">
+                        <div className="p-2 bg-[#F0F7FF] rounded-lg">
                             <Shield size={20} className="text-emerald-600" />
                         </div>
                         <div>
@@ -235,7 +235,7 @@ const Certificate = () => {
                             <p className="text-[10px] text-slate-500">Since Jan 2024</p>
                         </div>
                         {toast && (
-                            <div className="fixed top-8 right-8 z-50 bg-white text-[#0B1E3B] px-4 py-2 rounded-md shadow-lg">
+                            <div className="fixed top-8 right-8 z-50 bg-white text-[#1e293b] px-4 py-2 rounded-md shadow-lg">
                                 {toast}
                             </div>
                         )}

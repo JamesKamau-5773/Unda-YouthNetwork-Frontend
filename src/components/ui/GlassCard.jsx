@@ -7,7 +7,8 @@ import React from 'react';
  */
 const GlassCard = ({ children, className = '', variant = 'light', ...props }) => {
   const base = 'backdrop-filter backdrop-blur-lg rounded-2xl p-4 shadow-sm';
-  const light = 'bg-white/90 border border-[#E6EEF2] text-[#0B1E3B]';
+  // light variant: subtle cyan-tinted glass to reduce stark white and match Unda brand
+  const light = 'bg-[rgba(0,194,203,0.06)] border border-[#DFF8FB] text-[#0B1E3B] shadow-[0_12px_30px_rgba(0,194,203,0.06)]';
   const dark = 'bg-[rgba(11,30,59,0.6)] border border-[#0090C0]/20 text-white';
   const classes = `${base} ${variant === 'dark' ? dark : light} ${className}`;
   return (

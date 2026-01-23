@@ -66,7 +66,7 @@ const About = () => {
         </section>
 
         {/* Mission & Vision */}
-        <section className="py-24 bg-white/50">
+        <section className="py-24 bg-[#F0F7FF]">
           <div className="container mx-auto px-6">
             <div className="grid lg:grid-cols-2 gap-16">
               <div className="space-y-6">
@@ -77,7 +77,7 @@ const About = () => {
                 <h2 className="text-4xl font-black text-unda-navy leading-tight font-unda">
                   Promoting Prevention, Increasing Access, Advocating Change
                 </h2>
-                <p className="text-lg text-slate-600 leading-relaxed">
+                <p className="text-lg text-[#0B1E3B] leading-relaxed">
                   To promote awareness of Adolescents and Youth Mental Health Prevention, increase access to preventative services, and advocate for meaningful engagement and funding.
                 </p>
               </div>
@@ -90,7 +90,7 @@ const About = () => {
                 <h2 className="text-4xl font-black text-unda-navy leading-tight font-unda">
                   Making Prevention a Global Priority
                 </h2>
-                <p className="text-lg text-slate-600 leading-relaxed">
+                <p className="text-lg text-[#0B1E3B] leading-relaxed">
                   To make Adolescents and Youth Mental Health Prevention a visible global priority through digital innovation, storytelling, community activation, and strategic partnerships.
                 </p>
               </div>
@@ -99,33 +99,33 @@ const About = () => {
         </section>
 
         {/* Global Alignment */}
-        <section className="py-24 bg-slate-50">
+        <section className="py-24 bg-[#F0F7FF]">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-16">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-slate-200 mb-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-[#E6EEF2] mb-6">
                   <Globe size={18} className="text-unda-teal" />
                   <span className="text-xs font-black uppercase tracking-widest text-unda-navy">Global Alignment</span>
                 </div>
                 <h2 className="text-5xl font-black text-unda-navy mb-6">
                   Aligned with WHO <span className="text-unda-teal">HAT Guidelines</span>
                 </h2>
-                <p className="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+                <p className="text-lg text-[#0B1E3B] leading-relaxed max-w-3xl mx-auto">
                   Our work aligns strongly with global mental-health guidance, particularly the World Health Organization's "Helping Adolescents Thrive (HAT)" Guidelines, which emphasize promotive and preventive interventions for young people across schools, communities, and digital spaces.
                 </p>
               </div>
 
               <div className="space-y-8">
                 {alignmentPoints.map((point, idx) => (
-                  <div key={idx} className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm">
+                  <div key={idx} className="bg-white rounded-2xl p-8 border border-[#E6EEF2] shadow-sm">
                     <h3 className="text-2xl font-black text-unda-navy mb-4">{point.title}</h3>
-                    <p className="text-slate-600 leading-relaxed">{point.description}</p>
+                    <p className="text-[#0B1E3B] leading-relaxed">{point.description}</p>
                   </div>
                 ))}
               </div>
 
               <div className="mt-12 p-8 bg-unda-navy/5 rounded-2xl border border-unda-navy/10">
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-[#0B1E3B] leading-relaxed">
                   <strong className="text-unda-navy">Global Youth Mental Health Priorities:</strong> UMV supports the recent WHO/UN joint call for sustained investment in child and youth mental health as a global policy priority. Our approach, combining youth participation, digital innovation, and whole-of-society collaboration, reflects global guidance for rights-based, community-led, cross-sectoral strategies.
                 </p>
               </div>
@@ -134,13 +134,13 @@ const About = () => {
         </section>
 
         {/* UMV Program Strategic Goals */}
-        <section className="py-24 bg-white/50">
+        <section className="py-24 bg-[#F0F7FF]">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
               <h2 className="text-5xl font-black text-unda-navy mb-6">
                 UMV Program <span className="text-unda-teal">Strategic Goals</span>
               </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xl text-[#0B1E3B] max-w-3xl mx-auto leading-relaxed">
                 To strengthen adolescent and youth mental-health prevention through the UMV Prevention Program by advancing holistic wellbeing via collaborative, youth-centered, and evidence-informed interventions in Kenya, the United States, and beyond.
               </p>
             </div>
@@ -149,13 +149,13 @@ const About = () => {
               {objectives.map((objective, idx) => {
                 const Icon = objective.icon;
                 return (
-                  <div key={idx} className="bg-white rounded-3xl p-8 border border-slate-100 shadow-lg hover:shadow-xl transition-shadow">
+                  <div key={idx} className="bg-white rounded-3xl p-8 border border-[#E6EEF2] shadow-lg hover:shadow-xl transition-shadow">
                     <div className="h-16 w-16 rounded-2xl bg-unda-teal/10 flex items-center justify-center mb-6">
                       <Icon size={32} className="text-unda-teal" />
                     </div>
                     <h3 className="text-2xl font-black text-unda-navy mb-2">{objective.title}</h3>
                     <p className="text-lg font-bold text-unda-teal mb-4">{objective.goal}</p>
-                    <p className="text-slate-600 leading-relaxed">{objective.description}</p>
+                    <p className="text-[#0B1E3B] leading-relaxed">{objective.description}</p>
                   </div>
                 );
               })}
@@ -164,26 +164,26 @@ const About = () => {
         </section>
 
         {/* Target Regions */}
-        <section className="py-24 bg-slate-50">
+        <section className="py-24 bg-[#F0F7FF]">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
-              <div className="bg-white rounded-3xl p-12 border border-slate-100 shadow-lg">
+                <div className="bg-white rounded-3xl p-12 border border-[#E6EEF2] shadow-lg">
                 <h2 className="text-4xl font-black text-unda-navy mb-6">Target Regions & Population</h2>
                 <p className="text-lg text-slate-600 leading-relaxed mb-8">
                   The UMV Prevention Program will pilot in <strong className="text-unda-navy">Kenya and U.S.A regions</strong>, reaching adolescents and youth across urban, peri-urban, and rural contexts, including high schools, tertiary institutions, and community settings.
                 </p>
                 <div className="grid md:grid-cols-3 gap-6 mt-8">
-                  <div className="text-center p-6 bg-slate-50 rounded-2xl">
+                  <div className="text-center p-6 bg-[#F0F7FF] rounded-2xl">
                     <p className="text-4xl font-black text-unda-teal mb-2">Adolescents and youth</p>
-                    <p className="text-sm font-bold text-slate-600 uppercase tracking-wider">Age Range</p>
+                    <p className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Age Range</p>
                   </div>
-                  <div className="text-center p-6 bg-slate-50 rounded-2xl">
+                  <div className="text-center p-6 bg-[#F0F7FF] rounded-2xl">
                     <p className="text-4xl font-black text-unda-navy mb-2">2</p>
-                    <p className="text-sm font-bold text-slate-600 uppercase tracking-wider"> Regions</p>
+                    <p className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider"> Regions</p>
                   </div>
-                  <div className="text-center p-6 bg-slate-50 rounded-2xl">
+                  <div className="text-center p-6 bg-[#F0F7FF] rounded-2xl">
                     <p className="text-4xl font-black text-unda-yellow mb-2">50K+</p>
-                    <p className="text-sm font-bold text-slate-600 uppercase tracking-wider">Target Reach</p>
+                    <p className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Target Reach</p>
                   </div>
                 </div>
               </div>

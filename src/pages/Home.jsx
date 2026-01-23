@@ -13,19 +13,16 @@ import Hero from '@/components/Hero';
 const Home = () => {
   return (
     <Layout>
-      <main className="relative bg-[#F7FBFC]">
+      <main className="relative bg-[#F9FAFB]/30">
         {/* BackgroundElements is now global in App.jsx */}
         <Hero />
-
-        <div className="max-w-7xl mx-auto px-6 -mt-20 space-y-12">
-          <CommunityStory />
-          <ImpactSnapshot />
-          <PreventionPackage />
-          <Workstreams />
-          <GetInvolved />
-          <UpcomingEvents />
-          <LatestBlog />
-        </div>
+        <CommunityStory />
+        <ImpactSnapshot />
+        <PreventionPackage />
+        <Workstreams />
+        <GetInvolved />
+        <UpcomingEvents />
+        <LatestBlog />
       </main>
     </Layout>
   );
