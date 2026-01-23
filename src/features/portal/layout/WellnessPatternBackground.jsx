@@ -7,8 +7,8 @@ import React from 'react';
 
 const Symbol = ({ children, className = '', color = '#0090C0', style = {} }) => (
   <div
-    className={`absolute ${className} mix-blend-multiply blur-2xl`} 
-    style={{ color, opacity: 0.04, ...style }}
+    className={`absolute ${className} blur-2xl`} 
+    style={{ color, opacity: 0.05, ...style }}
     aria-hidden="true"
   >
     {children}
