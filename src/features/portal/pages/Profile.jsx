@@ -97,7 +97,7 @@ const Profile = () => {
                                         name="fullName"
                                         value={formData.fullName} 
                                         onChange={handleChange}
-                                        className="pl-10 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-[#083049] focus:bg-white dark:focus:bg-white/10"
+                                        className="pl-10 bg-slate-50 border-slate-200 focus:bg-white"
                                     />
                                 </div>
                             </div>
@@ -111,7 +111,7 @@ const Profile = () => {
                                         type="email"
                                         value={formData.email} 
                                         onChange={handleChange}
-                                        className="pl-10 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-[#083049] focus:bg-white dark:focus:bg-white/10"
+                                        className="pl-10 bg-slate-50 border-slate-200 focus:bg-white"
                                     />
                                 </div>
                             </div>
@@ -124,7 +124,7 @@ const Profile = () => {
                                         name="phone"
                                         value={formData.phone} 
                                         onChange={handleChange}
-                                        className="pl-10 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-[#083049] focus:bg-white dark:focus:bg-white/10"
+                                        className="pl-10 bg-slate-50 border-slate-200 focus:bg-white"
                                     />
                                 </div>
                             </div>
@@ -137,7 +137,7 @@ const Profile = () => {
                                         name="location"
                                         value={formData.location} 
                                         onChange={handleChange}
-                                        className="pl-10 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-[#083049] focus:bg-white dark:focus:bg-white/10"
+                                        className="pl-10 bg-slate-50 border-slate-200 focus:bg-white"
                                     />
                                 </div>
                             </div>
