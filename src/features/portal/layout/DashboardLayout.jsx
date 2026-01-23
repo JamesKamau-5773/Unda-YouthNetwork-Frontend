@@ -8,13 +8,13 @@ import WellnessPatternBackground from './WellnessPatternBackground';
 
 const DashboardLayout = ({ children, headerContent }) => {
   return (
-    <div className="min-h-screen bg-[#F0F7FF] text-[#1e293b]">
+    <div className="min-h-screen bg-portal-ice text-portal-navyInk">
       {/* Split background: top navy, remainder white (320px top) */}
       <div className="relative">
         {/* Wellness pattern sits behind everything (z-0) so it doesn't wash out the navy header or content */}
         <WellnessPatternBackground />
 
-        <div className="absolute inset-x-0 top-0 h-[320px] bg-[#0B1E3B] z-10" />
+        <div className="absolute inset-x-0 top-0 h-[280px] bg-[#0B1E3B] z-10" />
 
         {/* Navbar sits above the navy header */}
         <div className="relative z-20">
@@ -22,7 +22,7 @@ const DashboardLayout = ({ children, headerContent }) => {
         </div>
 
         {/* Main container: content will overlap the navy with negative margin */}
-        <main className="relative z-20 max-w-7xl mx-auto px-6 -mt-32">
+        <main className="relative z-20 max-w-7xl mx-auto px-6 -mt-20">
           {/* Header content can be passed in, and sits atop the white cards */}
           {headerContent && (
             <div className="mb-6">

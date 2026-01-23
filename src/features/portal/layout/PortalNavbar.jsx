@@ -32,7 +32,7 @@ const PortalNavbar = () => {
               </div>
             </div>
 
-            <div className="hidden md:flex items-center pl-4 border-l border-white/20">
+                    <div className="hidden md:flex items-center pl-4 border-l border-white/20">
               <nav className="flex items-center gap-3">
                 {navItems.map(i => {
                   const active = location.pathname === i.path || location.pathname.startsWith(i.path + '/');
@@ -43,7 +43,7 @@ const PortalNavbar = () => {
                       className={`px-4 py-2 rounded-full font-semibold text-sm transition-shadow ${
                         active
                           ? 'bg-white text-[#0B1E3B] shadow-[0_8px_24px_rgba(0,194,203,0.15)]'
-                          : 'text-white/80 hover:text-white hover:bg-white/5'
+                                  : 'text-white/80 hover:text-white hover:bg-white/5'
                       }`}
                     >
                       {i.name}
@@ -84,12 +84,12 @@ const PortalNavbar = () => {
                   <div className="text-sm text-[#475569]">Member Portal</div>
                 </div>
               </div>
-              <button onClick={() => setOpen(false)} aria-label="Close" className="text-[#0B1E3B]"><X size={20} /></button>
+              <button onClick={() => setOpen(false)} aria-label="Close" className="text-portal-navyInk"><X size={20} /></button>
             </div>
 
-            <nav className="flex flex-col gap-3">
+                <nav className="flex flex-col gap-3">
               {navItems.map(i => (
-                <Link key={i.path} to={i.path} onClick={() => setOpen(false)} className={`text-lg font-semibold ${location.pathname === i.path ? 'text-[#0B1E3B]' : 'text-[#475569]'}`}>
+                <Link key={i.path} to={i.path} onClick={() => setOpen(false)} className={`text-lg font-semibold ${location.pathname === i.path ? 'text-portal-navyInk' : 'text-portal-muted'}`}>
                   {i.name}
                 </Link>
               ))}
