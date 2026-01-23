@@ -20,39 +20,47 @@ const PortalNavbar = () => {
     <header className="w-full">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between py-6">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-lg overflow-hidden bg-white flex items-center justify-center">
-              <img src={undaLogo} alt="Unda" className="w-full h-full object-contain" />
+          {/* Left: Logo + Nav grouped together */}
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-lg overflow-hidden bg-white flex items-center justify-center">
+                <img src={undaLogo} alt="Unda" className="w-full h-full object-contain" />
+              </div>
+              <div className="flex flex-col leading-none">
+                <span className="font-extrabold text-white text-lg">Unda</span>
+                <span className="text-blue-100 text-xs uppercase tracking-widest">Youth Network</span>
+              </div>
             </div>
-            <div className="flex flex-col leading-none">
-              <span className="font-extrabold text-white text-lg">Unda</span>
-              <span className="text-white/90 text-xs uppercase tracking-widest">Youth Network</span>
+
+            <div className="hidden md:flex items-center pl-4 border-l border-white/20">
+              <nav className="flex items-center gap-3">
+                {navItems.map(i => {
+                  const active = location.pathname === i.path || location.pathname.startsWith(i.path + '/');
+                  return (
+                    <Link
+                      key={i.path}
+                      to={i.path}
+                      className={`px-4 py-2 rounded-full font-semibold text-sm transition-shadow ${
+                        active
+                          ? 'bg-white text-[#0B1E3B] shadow-[0_8px_24px_rgba(0,194,203,0.15)]'
+                          : 'text-blue-100 hover:text-white hover:bg-white/5'
+                      }`}
+                    >
+                      {i.name}
+                    </Link>
+                  );
+                })}
+              </nav>
             </div>
           </div>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-3">
-            {navItems.map(i => {
-              const active = location.pathname === i.path || location.pathname.startsWith(i.path + '/');
-              return (
-                <Link
-                  key={i.path}
-                  to={i.path}
-                  className={`px-4 py-2 rounded-full font-semibold text-sm transition-shadow ${
-                    active
-                      ? 'bg-white text-[#0B1E3B] shadow-[0_8px_24px_rgba(0,194,203,0.15)]'
-                          : 'text-white hover:text-white/100 hover:bg-white/5'
-                  }`}
-                >
-                  {i.name}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Right actions (desktop) */}
+          {/* Right actions (desktop): CTA + Profile pill */}
           <div className="hidden md:flex items-center gap-3">
             <Link to="/member/dashboard" className="px-4 py-2 rounded-full bg-[#00C2CB] text-white font-semibold shadow-[0_8px_24px_rgba(0,194,203,0.15)]">Get Started</Link>
+            <Link to="/member/profile" className="px-3 py-2 rounded-full flex items-center gap-3 bg-transparent border border-white/10 text-white hover:bg-white/5">
+              <span className="h-6 w-6 rounded-full bg-white/20 flex items-center justify-center text-sm">U</span>
+              <span className="text-sm font-medium">Profile</span>
+            </Link>
           </div>
 
           {/* Mobile toggle */}
