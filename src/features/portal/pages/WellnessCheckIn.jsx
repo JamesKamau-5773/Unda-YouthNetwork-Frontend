@@ -54,8 +54,8 @@ const WellnessCheckInPortal = () => {
              </div>
           </div>
 
-       </div>
-    </PortalLayout>
+         </div>
+     </DashboardLayout>
   );
 };
 

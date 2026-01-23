@@ -86,8 +86,8 @@ const Events = () => {
                     </div>
                 </GlassCard>
             ))}
-        </div>
-    </PortalLayout>
+                </div>
+        </DashboardLayout>
   );
 };
 
