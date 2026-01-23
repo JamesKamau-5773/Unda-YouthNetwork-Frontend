@@ -41,7 +41,7 @@ const PortalNavbar = () => {
                   className={`px-4 py-2 rounded-full font-semibold text-sm transition-shadow ${
                     active
                       ? 'bg-white text-[#0B1E3B] shadow-[0_8px_24px_rgba(0,194,203,0.15)]'
-                      : 'text-white/90 hover:text-white/100 hover:bg-white/5'
+                          : 'text-white hover:text-white/100 hover:bg-white/5'
                   }`}
                 >
                   {i.name}
@@ -73,7 +73,7 @@ const PortalNavbar = () => {
                 </div>
                 <div>
                   <div className="font-bold text-[#0B1E3B]">Unda</div>
-                  <div className="text-sm text-[#334155]">Member Portal</div>
+                  <div className="text-sm text-[#475569]">Member Portal</div>
                 </div>
               </div>
               <button onClick={() => setOpen(false)} aria-label="Close" className="text-[#0B1E3B]"><X size={20} /></button>
@@ -81,7 +81,7 @@ const PortalNavbar = () => {
 
             <nav className="flex flex-col gap-3">
               {navItems.map(i => (
-                <Link key={i.path} to={i.path} onClick={() => setOpen(false)} className={`text-lg font-semibold ${location.pathname === i.path ? 'text-[#0B1E3B]' : 'text-[#334155]'}`}>
+                <Link key={i.path} to={i.path} onClick={() => setOpen(false)} className={`text-lg font-semibold ${location.pathname === i.path ? 'text-[#0B1E3B]' : 'text-[#475569]'}`}>
                   {i.name}
                 </Link>
               ))}
