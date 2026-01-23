@@ -29,39 +29,6 @@
   /* Brand colors moved into explicit classes in components; variables removed */
 }
 
-/* Dark theme variables: toggled by adding `dark` class to <html> */
-.dark :root {
-  --background: #071226; /* deep navy */
-  --foreground: #E6F9FA; /* pale cyan text */
-  --card: #0A2536;
-  --card-foreground: #E6F9FA;
-  --primary: #00C2CB; /* brand accent */
-  --primary-foreground: #03121a;
-  --secondary: #0090C0;
-  --muted: #092034;
-  --destructive: #ff6b6b;
-  --border: #083049;
-  --input: #083049;
-  --ring: #00C2CB;
-}
-
-/* Dark-mode surface helpers */
-.dark body {
-  background-color: #03121a;
-  color: var(--foreground);
-}
-
-/* Navbar surface override (targeted) */
-.site-surface {
-  transition: background-color 200ms ease, color 200ms ease;
-}
-.dark .site-surface {
-  background-color: #071226 !important;
-  color: var(--foreground) !important;
-  box-shadow: 0 20px 50px rgba(0,194,203,0.04) !important;
-  border-color: rgba(0,194,203,0.08) !important;
-}
-
 /* 2. Map variables to Tailwind v4 Theme (TOP LEVEL) */
 @theme {
   /* Removed UNDA color aliases; components use explicit hex classes */
