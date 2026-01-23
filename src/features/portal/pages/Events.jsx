@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DashboardLayout from "../layout/DashboardLayout";
 import {
   Video,
@@ -11,6 +11,11 @@ import {
 import { Button } from "@/components/ui/button";
 
 const Events = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [registering, setRegistering] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+
   const events = [
     {
       title: "Q1 Pro-Bono Therapy Session",
@@ -42,8 +47,84 @@ const Events = () => {
     },
   ];
 
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const auto = params.get('autoRegister');
+      const idx = parseInt(params.get('index') || '0', 10);
+      if (auto === '1') {
+        setSelectedIndex(Number.isNaN(idx) ? 0 : idx);
+        setModalOpen(true);
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
+  const openRegisterFor = (i) => {
+    setSelectedIndex(i);
+    setModalOpen(true);
+  };
+
+  const handleRegister = async () => {
+    const token = localStorage.getItem('unda_token');
+    const params = new URLSearchParams(window.location.search);
+    // If not logged in, redirect to portal and preserve next
+    if (!token) {
+      const next = encodeURIComponent(window.location.pathname + window.location.search);
+      window.location.href = `/portal?next=${next}`;
+      return;
+    }
+
+    setRegistering(true);
+    // Simulate registration API call; replace with real API when available
+    try {
+      await new Promise((res) => setTimeout(res, 900));
+      setSuccessMessage('Reservation confirmed — check your email for details.');
+      // Optionally remove autoRegister from URL
+      const url = new URL(window.location.href);
+      url.searchParams.delete('autoRegister');
+      url.searchParams.delete('index');
+      window.history.replaceState({}, '', url.toString());
+      setTimeout(() => {
+        setModalOpen(false);
+      }, 1200);
+    } catch (err) {
+      setSuccessMessage('Failed to confirm reservation. Please try again.');
+    } finally {
+      setRegistering(false);
+    }
+  };
+
   return (
     <DashboardLayout>
+      {modalOpen && events[selectedIndex] && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <h3 className="text-lg font-black text-[#0B1E3B]">Register for event</h3>
+                <p className="text-sm text-slate-500">{events[selectedIndex].title}</p>
+              </div>
+              <button onClick={() => setModalOpen(false)} className="text-slate-400">✕</button>
+            </div>
+
+            <div className="mb-4">
+              <p className="text-sm text-slate-600">{events[selectedIndex].date} • {events[selectedIndex].time || 'Time TBA'}</p>
+              {events[selectedIndex].location && <p className="text-sm text-slate-600">Location: {events[selectedIndex].location}</p>}
+            </div>
+
+            {successMessage ? (
+              <div className="p-4 rounded-lg bg-green-50 text-green-700">{successMessage}</div>
+            ) : (
+              <div className="flex gap-2">
+                <button onClick={handleRegister} disabled={registering} className="flex-1 bg-[#00ACC1] text-white py-3 rounded-xl font-bold">{registering ? 'Confirming...' : 'Confirm Reservation'}</button>
+                <button onClick={() => setModalOpen(false)} className="flex-1 bg-white border border-slate-200 py-3 rounded-xl">Cancel</button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
       {/* --- HEADER (High Visibility Glass) --- */}
       {/* bg-white/90 ensures text is always readable, even over the pattern */}
       <div className="rounded-[2rem] bg-white/90 backdrop-blur-xl p-8 mb-8 shadow-sm border border-white/60 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden">
@@ -131,6 +212,7 @@ const Events = () => {
             {/* Button */}
             <div className="w-full md:w-auto relative z-10">
               <Button
+                onClick={() => openRegisterFor(idx)}
                 className={`w-full md:w-auto rounded-xl font-bold text-xs h-12 px-8 shadow-lg transition-transform hover:-translate-y-0.5 ${
                   evt.status === "Waitlist"
                     ? "bg-white text-[#00838F] border border-[#E0F7FA] hover:bg-[#F2F9FA]"

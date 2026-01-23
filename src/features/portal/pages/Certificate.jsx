@@ -3,6 +3,8 @@ import React, { useState, useRef, useEffect } from 'react';
 // If not, you can wrap this content in <DashboardLayout> as before.
 import { Download, Share2, Shield, Award, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import DashboardLayout from '../layout/DashboardLayout';
 import undaLogo from '@/assets/logos/unda-logo-main.jpg';
 import { memberService, profileService } from '@/services/apiService';
 import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from '@/components/ui/dialog';
@@ -106,8 +108,9 @@ const Certificate = () => {
     };
 
     return (
-        // Main Container: Matches Dashboard Layout
-        <div className="w-full max-w-7xl mx-auto px-6 pt-8 pb-20">
+        <DashboardLayout>
+            {/* Main Container: Matches Dashboard Layout */}
+            <div className="w-full max-w-7xl mx-auto px-6 pt-8 pb-20">
             
             {/* --- HEADER --- */}
             <div className="rounded-[2rem] bg-white p-8 mb-8 shadow-sm border border-[#E0F7FA] flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -223,7 +226,7 @@ const Certificate = () => {
                             {/* Eligibility Status */}
                             {!certInfo || !certInfo.trainings_completed ? (
                                 <div className="p-3 bg-amber-50 rounded-xl border border-amber-100 text-xs text-amber-800">
-                                    Certificate is issued after training. <a href="/member/events" className="font-bold underline">View events</a>
+                                    Certificate is issued after training. <Link to="/member/events" className="font-bold underline">View events</Link>
                                 </div>
                             ) : null}
 
@@ -326,7 +329,8 @@ const Certificate = () => {
                     <span className="text-sm font-bold">{toast}</span>
                 </div>
             )}
-        </div>
+            </div>
+        </DashboardLayout>
     );
 };
 
