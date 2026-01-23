@@ -1,11 +1,13 @@
 import React from 'react';
 
-// DashboardCard: pure white background, 4px top border in Brand Teal, dark navy text.
+// DashboardCard: standardized card used across the portal.
+// - Pure white surface
+// - 4px top accent border in Brand Teal
+// - Consistent padding and vertical layout so cards align in grids
 const DashboardCard = ({ children, className = '' }) => {
   return (
-    <div className={`${className} bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,194,203,0.08)]`}>
-      <div className="border-t-4 border-[#00C2CB] rounded-t-2xl" />
-      <div className="p-6 text-[#0B1E3B]">
+    <div className={`${className} bg-white rounded-2xl border-t-4 border-[#00C2CB] shadow-[0_18px_40px_rgba(0,194,203,0.06)]`}>
+      <div className="p-6 text-[#0B1E3B] flex flex-col h-full">
         {children}
       </div>
     </div>
