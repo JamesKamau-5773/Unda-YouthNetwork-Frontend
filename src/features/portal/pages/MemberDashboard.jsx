@@ -1,121 +1,129 @@
 import React from 'react';
-import DashboardLayout from '../layout/DashboardLayout';
-import DashboardCard from '@/components/ui/DashboardCard';
 import { Link } from 'react-router-dom';
-import { Calendar, Users } from 'lucide-react';
+import { Calendar, Users, ArrowRight, Activity, Zap, BarChart3 } from 'lucide-react';
+import DashboardLayout from '../layout/DashboardLayout';
 
+// Styled Action Button
 const ActionButton = ({ children, className = '', ...props }) => (
-	<button
-		className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-[#00C2CB] to-[#0090C0] shadow-lg shadow-[#00C2CB]/20 transition-transform hover:-translate-y-0.5 ${className}`}
-		{...props}
-	>
-		{children}
-	</button>
+   <button
+      className={`inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white bg-[#00C2CB] hover:bg-[#0097A7] shadow-lg shadow-[#00C2CB]/20 transition-transform hover:-translate-y-0.5 ${className}`}
+      {...props}
+   >
+      {children}
+   </button>
 );
 
 const MemberDashboard = () => {
-	return (
-		<DashboardLayout headerContent={(
-			<div className="max-w-7xl mx-auto px-6">
-				<div className="rounded-3xl bg-[#F0F7FF] p-6 md:px-8 md:py-8 shadow-[0_20px_50px_rgba(0,194,203,0.06)] border border-[#E6F6FB]">
-					<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-						<div className="max-w-3xl">
-							<h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-portal-navyInk">Welcome back, Champion</h1>
-							<p className="mt-3 text-portal-muted text-lg">Here's your wellness snapshot and upcoming activities.</p>
-							<div className="mt-6 flex items-center gap-3">
-								<button className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-[#00C2CB] to-[#0090C0] shadow-lg shadow-[#00C2CB]/20">Start Check-In</button>
-								<button className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold text-[#0B1E3B] bg-white/80 shadow-sm border border-white/10">View Resources</button>
-							</div>
-						</div>
+   return (
+      <DashboardLayout headerContent={(
+         // HERO SECTION: Full Width
+         <div className="rounded-[2.5rem] bg-[#E0F7FA] p-8 md:p-10 shadow-sm border border-[#B2EBF2]/50">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+               
+               {/* Welcome Text */}
+               <div className="max-w-2xl">
+                  <h1 className="text-3xl md:text-4xl font-black text-[#0B1E3B] tracking-tight">Welcome back, Champion</h1>
+                  <p className="mt-2 text-[#006064] text-lg font-medium">Here is your wellness snapshot for today.</p>
+                  
+                  <div className="mt-8 flex flex-wrap items-center gap-3">
+                     <ActionButton>Start Check-In</ActionButton>
+                     <button className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-[#00838F] bg-white hover:bg-[#F0FDFF] border border-[#B2EBF2] transition-colors">
+                        View Resources
+                     </button>
+                  </div>
+               </div>
 
-						<div className="flex items-center gap-6">
-							<div className="text-center">
-								<div className="text-sm text-portal-muted">Streak</div>
-								<div className="text-3xl font-extrabold text-portal-navyInk">7 <span className="text-xl">🔥</span></div>
-							</div>
-							<div className="w-px h-10 bg-[#E6F6FB]" />
-							<div className="text-center">
-								<div className="text-sm text-portal-muted">Points</div>
-								<div className="text-3xl font-extrabold text-portal-navyInk">1,240</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		)}>
+               {/* Streak Stats (Floating Glass Pill) */}
+               <div className="flex items-center gap-8 bg-white/60 backdrop-blur-sm px-8 py-6 rounded-3xl border border-white/60 shadow-sm min-w-fit">
+                  <div className="text-center">
+                     <div className="text-xs font-bold text-[#00838F] uppercase tracking-wider mb-1">Streak</div>
+                     <div className="text-3xl font-black text-[#0B1E3B]">7 <span className="text-2xl">🔥</span></div>
+                  </div>
+                  <div className="w-px h-12 bg-[#B2EBF2]" />
+                  <div className="text-center">
+                     <div className="text-xs font-bold text-[#00838F] uppercase tracking-wider mb-1">Points</div>
+                     <div className="text-3xl font-black text-[#0B1E3B]">1,240</div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      )}>
 
-			<div className="grid grid-cols-12 gap-6">
+         {/* MAIN GRID: Perfectly Aligned 4 Columns */}
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
+            {/* CARD 1: SESSIONS */}
+            <div className="bg-white border border-[#E0F7FA] p-6 rounded-[2rem] hover:border-[#B2EBF2] transition-colors shadow-sm flex flex-col justify-between h-full min-h-[180px]">
+               <div className="flex justify-between items-start">
+                  <span className="font-bold text-[#00838F] text-xs uppercase tracking-wider">Sessions</span>
+                  <div className="p-2 bg-[#F0FDFF] rounded-lg text-[#00ACC1]">
+                     <BarChart3 size={20} />
+                  </div>
+               </div>
+               <div>
+                  <div className="text-[#0B1E3B] text-4xl font-black mt-2">12</div>
+                  <span className="text-xs text-[#00838F] font-bold opacity-80 mt-1 block">This month</span>
+               </div>
+            </div>
 
-				<div className="col-span-12 md:col-span-8 -mt-8">
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-						<DashboardCard className="min-h-[140px] h-full">
-							<div className="flex flex-col justify-between h-full">
-								<div>
-									<div className="text-sm text-portal-muted">Sessions this month</div>
-									<div className="text-portal-navyInk text-3xl font-bold mt-2">12</div>
-								</div>
-							</div>
-						</DashboardCard>
+            {/* CARD 2: MOOD */}
+            <div className="bg-white border border-[#E0F7FA] p-6 rounded-[2rem] hover:border-[#B2EBF2] transition-colors shadow-sm flex flex-col justify-between h-full min-h-[180px]">
+               <div className="flex justify-between items-start">
+                  <span className="font-bold text-[#00838F] text-xs uppercase tracking-wider">Avg Mood</span>
+                  <div className="p-2 bg-[#F0FDFF] rounded-lg text-[#00ACC1]">
+                     <Activity size={20} />
+                  </div>
+               </div>
+               <div>
+                  <div className="text-[#0B1E3B] text-4xl font-black mt-2">Good</div>
+                  <span className="text-xs text-[#00838F] font-bold opacity-80 mt-1 block">Stable trend</span>
+               </div>
+            </div>
 
-						<DashboardCard className="min-h-[140px] h-full">
-							<div className="flex flex-col justify-between h-full">
-								<div>
-									<div className="text-sm text-portal-muted">Average mood</div>
-									<div className="text-portal-navyInk text-3xl font-bold mt-2">Good 😊</div>
-								</div>
-							</div>
-						</DashboardCard>
+            {/* CARD 3: CHALLENGES */}
+            <div className="bg-white border border-[#E0F7FA] p-6 rounded-[2rem] hover:border-[#B2EBF2] transition-colors shadow-sm flex flex-col justify-between h-full min-h-[180px]">
+               <div className="flex justify-between items-start">
+                  <span className="font-bold text-[#00838F] text-xs uppercase tracking-wider">Active</span>
+                  <div className="p-2 bg-[#F0FDFF] rounded-lg text-[#00ACC1]">
+                     <Zap size={20} fill="currentColor" />
+                  </div>
+               </div>
+               <div>
+                  <div className="text-[#0B1E3B] text-4xl font-black mt-2">3</div>
+                  <div className="w-full bg-[#E0F7FA] h-1.5 rounded-full mt-3">
+                     <div className="bg-[#00ACC1] h-1.5 rounded-full w-3/5"></div>
+                  </div>
+               </div>
+            </div>
 
-						<DashboardCard className="min-h-[140px] h-full">
-							<div className="flex flex-col justify-between h-full">
-								<div>
-									<div className="text-sm text-portal-muted">Active challenges</div>
-									<div className="text-portal-navyInk text-3xl font-bold mt-2">3</div>
-								</div>
-							</div>
-						</DashboardCard>
-						</div>
+            {/* CARD 4: NEXT EVENT (Interactive) */}
+            <div className="bg-white border-2 border-[#E0F7FA] p-5 rounded-[2rem] shadow-sm hover:border-[#00ACC1] transition-colors h-full flex flex-col">
+               <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-bold text-[#0B1E3B] text-sm">Next Event</h3>
+                  <Link to="/member/events" className="text-[10px] font-bold text-[#00ACC1] hover:underline uppercase">View All</Link>
+               </div>
+               
+               {/* Event Pill */}
+               <div className="mt-auto bg-[#F0FDFF] p-3 rounded-xl flex items-center gap-3 border border-[#E0F7FA]">
+                  <div className="text-center min-w-[36px] bg-white rounded-lg py-1 shadow-sm">
+                     <span className="block text-[8px] font-bold text-[#00838F] uppercase">TOM</span>
+                     <span className="block text-sm font-black text-[#0B1E3B] leading-none">16</span>
+                  </div>
+                  <div className="min-w-0">
+                     <p className="font-bold text-[#0B1E3B] text-xs truncate">Peer Support</p>
+                     <p className="text-[10px] text-[#00838F] font-bold">16:00 - 17:00</p>
+                  </div>
+               </div>
+               
+               <button className="w-full mt-3 py-2.5 bg-[#00ACC1] text-white font-bold rounded-xl text-xs hover:bg-[#0097A7] transition-colors flex items-center justify-center gap-1">
+                  Join <ArrowRight size={14} />
+               </button>
+            </div>
 
-					</div>
+         </div>
 
-				<div className="col-span-12 md:col-span-4">
-					<DashboardCard className="flex flex-col gap-4">
-						<div className="flex items-center justify-between">
-								<div>
-								<div className="text-sm text-[#475569]">Upcoming Events</div>
-								<div className="text-[#0B1E3B] font-bold">Next 7 days</div>
-							</div>
-							<Link to="/member/events" className="text-[#00C2CB] font-semibold">See all</Link>
-						</div>
-
-						<ul className="flex flex-col gap-3">
-							<li className="flex items-start gap-3">
-								<div className="p-2 rounded-lg bg-[#F0F7FF] text-[#0B1E3B]"><Calendar size={18} /></div>
-								<div>
-									<div className="text-[#0B1E3B] font-semibold">Peer Support Group</div>
-									<div className="text-sm text-[#475569]">Tomorrow · 16:00</div>
-								</div>
-							</li>
-
-							<li className="flex items-start gap-3">
-								<div className="p-2 rounded-lg bg-[#F0F7FF] text-[#0B1E3B]"><Users size={18} /></div>
-								<div>
-									<div className="text-[#0B1E3B] font-semibold">Community Meetup</div>
-									<div className="text-sm text-[#475569]">Fri · 18:00</div>
-								</div>
-							</li>
-						</ul>
-
-						<div className="mt-2">
-							<ActionButton className="w-full justify-center">Add Event</ActionButton>
-						</div>
-					</DashboardCard>
-				</div>
-			</div>
-
-		</DashboardLayout>
-	);
+      </DashboardLayout>
+   );
 };
 
 export default MemberDashboard;

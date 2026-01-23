@@ -1,20 +1,51 @@
-import React, { useState } from 'react';
-import DashboardLayout from '../layout/DashboardLayout';
-import GlassCard from '@/components/ui/GlassCard';
-import { User, Mail, Phone, MapPin, Save, Loader2, Camera, Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { profileService } from '../../../services/apiService';
+import React, { useState, useEffect } from "react";
+import DashboardLayout from "../layout/DashboardLayout";
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Save,
+  Loader2,
+  Camera,
+  Shield,
+  Lock,
+  Key,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { profileService } from "@/services/apiService"; // Ensure this path matches your project structure
 
 const Profile = () => {
-    const [formData, setFormData] = useState({
-        fullName: '',
-        email: '',
-        phone: '',
-        location: ''
-    });
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    location: "",
+  });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  // Simulated Fetch on Mount (Optional: Connect to your actual API)
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        // const res = await profileService.getProfile();
+        // setFormData(res.data);
+
+        // Placeholder data for visual checking
+        setFormData({
+          fullName: "Champion User",
+          email: "champion@undayouth.org",
+          phone: "+254 700 000000",
+          location: "Nairobi, Kenya",
+        });
+      } catch (error) {
+        console.error("Failed to load profile", error);
+      }
+    };
+    fetchProfile();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,143 +57,240 @@ const Profile = () => {
     setSuccess(false);
 
     try {
-        await profileService.updateProfile(formData);
-        setSuccess(true);
-        setTimeout(() => setSuccess(false), 3000);
+      await profileService.updateProfile(formData);
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 3000);
     } catch (error) {
-        console.error("Update failed", error);
+      console.error("Update failed", error);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
-    return (
-        <DashboardLayout headerContent={(
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="rounded-3xl bg-white p-6 md:px-8 md:py-4 shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/10">
-                    <h2 className="text-lg md:text-xl font-extrabold tracking-tight text-portal-navyInk">Profile</h2>
-                    <p className="text-sm text-portal-muted mt-1">Manage your account settings.</p>
-                </div>
-            </div>
-        )}>
-        
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-            
-            {/* Left Col: Avatar & Badges */}
-                <div className="md:col-span-4 lg:col-span-3 space-y-6">
-                <GlassCard className="p-6 flex flex-col items-center text-center">
-                            <div className="relative mb-4 group cursor-pointer">
-                            <div className="h-28 w-28 rounded-full bg-portal-ice border-4 border-white shadow-md flex items-center justify-center text-3xl font-bold text-portal-muted overflow-hidden">
-                             {/* Placeholder for actual image */}
-                             {formData.fullName.split(' ').map(n=>n[0]).join('')}
-                        </div>
-                        <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <Camera className="text-white" size={24} />
-                        </div>
-                    </div>
-                    
-                    <h2 className="text-lg font-bold text-portal-navyInk dark:text-white">{formData.fullName || '—'}</h2>
-                    
-                    <div className="w-full pt-4 border-t border-[#E6EEF2]">
-                        <div className="flex items-center justify-between text-xs mb-2">
-                           <span className="text-portal-muted font-medium">Membership</span>
-                           <span className="text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded-full">Active</span>
-                        </div>
-                                <div className="flex items-center justify-between text-xs">
-                                    <span className="text-portal-muted font-medium">Role</span>
-                                    <span className="text-portal-navyInk dark:text-white font-bold">Champion</span>
-                                </div>
-                    </div>
-                </GlassCard>
-
-                {/* Security Card */}
-                 <GlassCard className="p-6">
-                        <div className="flex items-center gap-2 mb-4">
-                        <Shield size={16} className="text-portal-teal" />
-                        <h3 className="font-bold text-portal-navyInk dark:text-white text-sm">Security</h3>
-                    </div>
-                    <Button variant="outline" className="w-full text-xs h-9 justify-start">Change Password</Button>
-                    <Button variant="outline" className="w-full text-xs h-9 justify-start mt-2">Two-Factor Auth</Button>
-                  </GlassCard>
-            </div>
-
-            {/* Right Col: Form */}
-                <div className="md:col-span-8 lg:col-span-9">
-                <GlassCard className="p-8">
-                    <div className="mb-6">
-                                <h3 className="text-lg font-bold text-portal-navyInk dark:text-white">Personal Information</h3>
-                                <p className="text-sm text-portal-muted">Update your contact details here.</p>
-                    </div>
-
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-portal-muted uppercase">Full Name</label>
-                                <div className="relative">
-                                    <User className="absolute left-3 top-2.5 text-portal-muted" size={18} />
-                                    <Input 
-                                        name="fullName"
-                                        value={formData.fullName} 
-                                        onChange={handleChange}
-                                        className="pl-10 bg-portal-ice border-[#E6EEF2] focus:bg-white"
-                                    />
-                                </div>
-                            </div>
-                            
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-portal-muted uppercase">Email Address</label>
-                                <div className="relative">
-                                    <Mail className="absolute left-3 top-2.5 text-portal-muted" size={18} />
-                                    <Input 
-                                        name="email"
-                                        type="email"
-                                        value={formData.email} 
-                                        onChange={handleChange}
-                                        className="pl-10 bg-portal-ice border-[#E6EEF2] focus:bg-white"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-portal-muted uppercase">Phone Number</label>
-                                <div className="relative">
-                                    <Phone className="absolute left-3 top-2.5 text-portal-muted" size={18} />
-                                    <Input 
-                                        name="phone"
-                                        value={formData.phone} 
-                                        onChange={handleChange}
-                                        className="pl-10 bg-portal-ice border-[#E6EEF2] focus:bg-white"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-portal-muted uppercase">Location</label>
-                                <div className="relative">
-                                    <MapPin className="absolute left-3 top-2.5 text-portal-muted" size={18} />
-                                    <Input 
-                                        name="location"
-                                        value={formData.location} 
-                                        onChange={handleChange}
-                                        className="pl-10 bg-portal-ice border-[#E6EEF2] focus:bg-white"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="pt-6 border-t border-[#E6EEF2] flex items-center justify-end gap-4">
-                                {success && <span className="text-green-600 text-sm font-bold animate-in fade-in">Saved Successfully!</span>}
-                                    <Button type="button" variant="ghost" className="text-portal-muted hover:text-portal-navyInk dark:hover:text-white">Cancel</Button>
-                                <Button type="submit" disabled={loading} className="bg-portal-teal hover:bg-portal-tealDark text-white font-bold px-6">
-                                {loading ? <Loader2 className="animate-spin mr-2" size={18} /> : <Save className="mr-2" size={18} />}
-                                Save Changes
-                            </Button>
-                        </div>
-                    </form>
-                </GlassCard>
-            </div>
+  return (
+    <DashboardLayout>
+      {/* --- HEADER --- */}
+      <div className="rounded-[2rem] bg-white p-8 mb-8 shadow-sm border border-[#E0F7FA] flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h2 className="text-2xl font-extrabold tracking-tight text-[#0B1E3B]">
+            My Profile
+          </h2>
+          <p className="text-sm text-[#00838F] font-medium mt-1">
+            Manage your account settings and preferences.
+          </p>
         </div>
-        </DashboardLayout>
+
+        {/* Status Badge */}
+        <div className="px-4 py-2 rounded-full bg-[#E0F7FA] border border-[#00ACC1] text-[#006064] flex items-center gap-2">
+          <Shield size={16} className="text-[#00ACC1]" />
+          <span className="text-xs font-bold uppercase tracking-wider">
+            Secure Account
+          </span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+        {/* --- LEFT COL: AVATAR & SECURITY --- */}
+        <div className="md:col-span-4 lg:col-span-4 space-y-6">
+          {/* 1. Avatar Card */}
+          <div className="bg-white p-8 rounded-[2rem] border border-[#E0F7FA] shadow-sm flex flex-col items-center text-center">
+            <div className="relative mb-6 group cursor-pointer">
+              <div className="h-32 w-32 rounded-full bg-[#E0F7FA] border-4 border-white shadow-lg shadow-[#00ACC1]/10 flex items-center justify-center text-4xl font-black text-[#00ACC1] overflow-hidden">
+                {formData.fullName
+                  ? formData.fullName
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .substring(0, 2)
+                  : "U"}
+              </div>
+              <div className="absolute inset-0 bg-[#0B1E3B]/60 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm">
+                <Camera className="text-white" size={24} />
+              </div>
+            </div>
+
+            <h2 className="text-xl font-extrabold text-[#0B1E3B]">
+              {formData.fullName || "Member"}
+            </h2>
+            <p className="text-sm text-[#00838F] font-medium">
+              {formData.email}
+            </p>
+
+            <div className="w-full pt-6 mt-6 border-t border-[#E0F7FA]">
+              <div className="flex items-center justify-between text-xs mb-3">
+                <span className="text-[#00838F] font-bold uppercase tracking-wide">
+                  Status
+                </span>
+                <span className="text-emerald-600 font-bold bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full">
+                  Active
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-[#00838F] font-bold uppercase tracking-wide">
+                  Role
+                </span>
+                <span className="text-[#0B1E3B] font-bold">Champion</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 2. Security Actions */}
+          <div className="bg-white p-6 rounded-[2rem] border border-[#E0F7FA] shadow-sm">
+            <div className="flex items-center gap-2 mb-4">
+              <Lock size={18} className="text-[#00ACC1]" />
+              <h3 className="font-bold text-[#0B1E3B] text-sm uppercase tracking-wide">
+                Security
+              </h3>
+            </div>
+            <div className="space-y-3">
+              <Button
+                variant="outline"
+                className="w-full justify-start rounded-xl font-bold text-[#0B1E3B] border-[#E0F7FA] hover:bg-[#F0FDFF] h-10"
+              >
+                <Key size={14} className="mr-2 text-[#00838F]" /> Change
+                Password
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full justify-start rounded-xl font-bold text-[#0B1E3B] border-[#E0F7FA] hover:bg-[#F0FDFF] h-10"
+              >
+                <Shield size={14} className="mr-2 text-[#00838F]" /> Two-Factor
+                Auth
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* --- RIGHT COL: EDIT FORM --- */}
+        <div className="md:col-span-8 lg:col-span-8">
+          <div className="bg-white p-8 md:p-10 rounded-[2rem] border border-[#E0F7FA] shadow-sm h-full">
+            <div className="mb-8 border-b border-[#E0F7FA] pb-6">
+              <h3 className="text-xl font-black text-[#0B1E3B]">
+                Personal Information
+              </h3>
+              <p className="text-sm text-[#00838F] font-medium mt-1">
+                Update your personal details and contact info.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Full Name */}
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-[#00838F] uppercase tracking-wider ml-1">
+                    Full Name
+                  </label>
+                  <div className="relative">
+                    <User
+                      className="absolute left-4 top-3.5 text-[#00ACC1]"
+                      size={18}
+                    />
+                    <Input
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      className="pl-11 h-12 bg-white border-[#E0F7FA] focus:border-[#00ACC1] focus:ring-1 focus:ring-[#00ACC1] rounded-xl text-[#0B1E3B] font-bold placeholder:text-[#00838F]/40"
+                      placeholder="John Doe"
+                    />
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-[#00838F] uppercase tracking-wider ml-1">
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <Mail
+                      className="absolute left-4 top-3.5 text-[#00ACC1]"
+                      size={18}
+                    />
+                    <Input
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="pl-11 h-12 bg-white border-[#E0F7FA] focus:border-[#00ACC1] focus:ring-1 focus:ring-[#00ACC1] rounded-xl text-[#0B1E3B] font-bold placeholder:text-[#00838F]/40"
+                      placeholder="john@example.com"
+                    />
+                  </div>
+                </div>
+
+                {/* Phone */}
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-[#00838F] uppercase tracking-wider ml-1">
+                    Phone Number
+                  </label>
+                  <div className="relative">
+                    <Phone
+                      className="absolute left-4 top-3.5 text-[#00ACC1]"
+                      size={18}
+                    />
+                    <Input
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="pl-11 h-12 bg-white border-[#E0F7FA] focus:border-[#00ACC1] focus:ring-1 focus:ring-[#00ACC1] rounded-xl text-[#0B1E3B] font-bold placeholder:text-[#00838F]/40"
+                      placeholder="+254..."
+                    />
+                  </div>
+                </div>
+
+                {/* Location */}
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-[#00838F] uppercase tracking-wider ml-1">
+                    Location
+                  </label>
+                  <div className="relative">
+                    <MapPin
+                      className="absolute left-4 top-3.5 text-[#00ACC1]"
+                      size={18}
+                    />
+                    <Input
+                      name="location"
+                      value={formData.location}
+                      onChange={handleChange}
+                      className="pl-11 h-12 bg-white border-[#E0F7FA] focus:border-[#00ACC1] focus:ring-1 focus:ring-[#00ACC1] rounded-xl text-[#0B1E3B] font-bold placeholder:text-[#00838F]/40"
+                      placeholder="City, Country"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="pt-8 mt-4 border-t border-[#E0F7FA] flex items-center justify-end gap-4">
+                {success && (
+                  <span className="text-emerald-600 text-sm font-bold flex items-center gap-2 animate-in fade-in">
+                    <Shield size={14} /> Saved!
+                  </span>
+                )}
+
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="text-[#00838F] hover:text-[#0B1E3B] font-bold rounded-xl hover:bg-[#F0FDFF]"
+                >
+                  Cancel
+                </Button>
+
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="bg-[#00C2CB] hover:bg-[#0097A7] text-white font-bold px-8 rounded-xl h-12 shadow-lg shadow-[#00C2CB]/20 transition-transform hover:-translate-y-0.5"
+                >
+                  {loading ? (
+                    <Loader2 className="animate-spin mr-2" size={18} />
+                  ) : (
+                    <Save className="mr-2" size={18} />
+                  )}
+                  Save Changes
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </DashboardLayout>
   );
 };
 

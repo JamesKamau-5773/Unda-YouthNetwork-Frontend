@@ -1,93 +1,153 @@
-import React from 'react';
-import DashboardLayout from '../layout/DashboardLayout';
-import { Calendar, MapPin, Video, Users, Clock, ArrowUpRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import GlassCard from '@/components/ui/GlassCard';
+import React from "react";
+import DashboardLayout from "../layout/DashboardLayout";
+import {
+  Video,
+  Users,
+  Clock,
+  MapPin,
+  Calendar,
+  ArrowUpRight,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Events = () => {
-    const events = [
-        {
-            title: "Q1 Pro-Bono Therapy Session",
-            type: "Virtual",
-            category: "Wellness",
-            date: "Jan 14, 2026",
-            time: "10:00 AM - 12:00 PM",
-            host: "Dr. Amani",
-            status: "Open"
-        },
-        {
-            title: "Mtaani Peer Workshop",
-            type: "Physical",
-            category: "Training",
-            location: "Kibera Community Hall",
-            date: "Feb 02, 2026",
-            time: "2:00 PM - 5:00 PM",
-            host: "Local Champions",
-            status: "Waitlist"
-        },
-        {
-            title: "Digital Resilience Webinar",
-            type: "Webinar",
-            category: "Education",
-            date: "Feb 15, 2026",
-            time: "6:00 PM - 7:30 PM",
-            host: "Unda Tech Team",
-            status: "Upcoming"
-        }
-    ];
+  const events = [
+    {
+      title: "Q1 Pro-Bono Therapy Session",
+      type: "Virtual",
+      category: "Wellness",
+      date: "Jan 14, 2026",
+      time: "10:00 AM - 12:00 PM",
+      host: "Dr. Amani",
+      status: "Open",
+    },
+    {
+      title: "Mtaani Peer Workshop",
+      type: "Physical",
+      category: "Training",
+      location: "Kibera Community Hall",
+      date: "Feb 02, 2026",
+      time: "2:00 PM - 5:00 PM",
+      host: "Local Champions",
+      status: "Waitlist",
+    },
+    {
+      title: "Digital Resilience Webinar",
+      type: "Webinar",
+      category: "Education",
+      date: "Feb 15, 2026",
+      time: "6:00 PM - 7:30 PM",
+      host: "Unda Tech Team",
+      status: "Upcoming",
+    },
+  ];
 
-    return (
-        <DashboardLayout headerContent={(
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="rounded-3xl bg-white p-6 md:px-8 md:py-4 shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/10">
-                    <h2 className="text-lg md:text-xl font-extrabold tracking-tight text-portal-navyInk">Events & Training</h2>
-                    <p className="text-sm text-portal-muted mt-1">Connect with professionals and peers.</p>
-                </div>
-            </div>
-        )}>
-        <div className="grid gap-4">
-            {events.map((evt, idx) => (
-                <GlassCard key={idx} className="p-5 rounded-2xl flex flex-col md:flex-row items-center gap-6 glow-teal-sm hover:glow-teal transition-all group">
-                    
-                    {/* Date Block */}
-                            <div className="h-16 w-16 bg-portal-ice text-portal-navyInk rounded-xl flex flex-col items-center justify-center font-bold flex-shrink-0 group-hover:bg-portal-teal group-hover:text-white transition-colors">
-                                <span className="text-xl leading-none">{evt.date.split(' ')[1].replace(',','')}</span>
-                                <span className="text-[10px] uppercase tracking-wide">{evt.date.split(' ')[0]}</span>
-                            </div>
+  return (
+    <DashboardLayout>
+      {/* --- HEADER (High Visibility Glass) --- */}
+      {/* bg-white/90 ensures text is always readable, even over the pattern */}
+      <div className="rounded-[2rem] bg-white/90 backdrop-blur-xl p-8 mb-8 shadow-sm border border-white/60 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden">
+        {/* Subtle Shine */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-transparent to-transparent opacity-80 pointer-events-none" />
 
-                    <div className="flex-1 text-center md:text-left min-w-0 w-full">
-                        <div className="flex items-center justify-center md:justify-start gap-2 mb-1.5 flex-wrap">
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${
-                                evt.category === 'Wellness' ? 'bg-purple-50 text-purple-600 border-purple-100' : 
-                                evt.category === 'Training' ? 'bg-orange-50 text-orange-600 border-orange-100' :
-                                'bg-blue-50 text-blue-600 border-blue-100'
-                            }`}>
-                                {evt.category}
-                            </span>
-                                      <span className="text-[11px] text-portal-muted font-medium flex items-center gap-1">
-                                {evt.type === 'Physical' ? <MapPin size={12}/> : <Video size={12}/>}
-                                {evt.type}
-                             </span>
-                        </div>
-                                <h3 className="text-lg font-bold text-portal-navyInk dark:text-white truncate">{evt.title}</h3>
-                        <div className="flex items-center justify-center md:justify-start gap-4 mt-1 text-xs text-portal-muted font-medium">
-                            <span className="flex items-center gap-1"><Users size={12}/> By {evt.host}</span>
-                            <span className="flex items-center gap-1"><Clock size={12}/> {evt.time}</span>
-                        </div>
-                    </div>
-
-                    <div className="w-full md:w-auto">
-                            <Button 
-                            className={`w-full md:w-auto rounded-xl font-bold text-xs h-10 px-6 ${evt.status === 'Waitlist' ? 'bg-portal-ice text-portal-muted' : 'bg-gradient-to-r from-portal-teal to-portal-tealDark text-white'}`}
-                            disabled={evt.status === 'Waitlist'}
-                        >
-                            {evt.status === 'Waitlist' ? 'Waitlist Only' : 'Register Now'}
-                        </Button>
-                    </div>
-                </GlassCard>
-            ))}
+        <div className="relative z-10">
+          {/* READABILITY FIX: Explicit Navy Text */}
+          <h2 className="text-2xl font-extrabold tracking-tight text-[#0B1E3B]">
+            Events & Training
+          </h2>
+          <p className="text-sm text-[#00838F] font-bold mt-1">
+            Connect with professionals and peers.
+          </p>
         </div>
-        </DashboardLayout>
+
+        <div className="relative z-10 px-4 py-2 rounded-full bg-[#E0F7FA] border border-[#00ACC1]/30 text-[#006064] flex items-center gap-2">
+          <Calendar size={16} className="text-[#00ACC1]" />
+          <span className="text-xs font-bold uppercase tracking-wider">
+            Upcoming
+          </span>
+        </div>
+      </div>
+
+      {/* --- EVENT CARDS --- */}
+      <div className="grid gap-4">
+        {events.map((evt, idx) => (
+          // CARD: "Frosted Ice" - High Opacity (90%) for readability
+          <div
+            key={idx}
+            className="relative bg-white/90 backdrop-blur-xl p-6 rounded-[2rem] border border-white/80 flex flex-col md:flex-row items-center gap-6 shadow-[0_8px_30px_rgba(0,194,203,0.06)] hover:shadow-[0_8px_30px_rgba(0,194,203,0.15)] hover:bg-white transition-all group overflow-hidden"
+          >
+            {/* Date Block (Solid Color for max contrast) */}
+            <div className="relative z-10 h-20 w-20 bg-[#E0F7FA] text-[#0B1E3B] rounded-3xl flex flex-col items-center justify-center font-bold flex-shrink-0 group-hover:bg-[#00ACC1] group-hover:text-white transition-colors shadow-inner">
+              <span className="text-2xl leading-none font-black">
+                {evt.date.split(" ")[1].replace(",", "")}
+              </span>
+              <span className="text-[10px] uppercase tracking-wide mt-1">
+                {evt.date.split(" ")[0]}
+              </span>
+            </div>
+
+            {/* Content Area */}
+            <div className="flex-1 text-center md:text-left min-w-0 w-full relative z-10">
+              {/* Tags */}
+              <div className="flex items-center justify-center md:justify-start gap-2 mb-2 flex-wrap">
+                <span
+                  className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase border bg-white ${
+                    evt.category === "Wellness"
+                      ? "text-purple-700 border-purple-200"
+                      : evt.category === "Training"
+                        ? "text-orange-700 border-orange-200"
+                        : "text-blue-700 border-blue-200"
+                  }`}
+                >
+                  {evt.category}
+                </span>
+
+                <span className="px-2 py-1 rounded-full bg-white border border-[#E0F7FA] text-[10px] font-bold text-[#00838F] uppercase flex items-center gap-1 shadow-sm">
+                  {evt.type === "Physical" ? (
+                    <MapPin size={10} />
+                  ) : (
+                    <Video size={10} />
+                  )}
+                  {evt.type}
+                </span>
+              </div>
+
+              {/* TITLE FIX: Darkest Navy (#0B1E3B) for max readability */}
+              <h3 className="text-xl font-black text-[#0B1E3B] truncate mb-1">
+                {evt.title}
+              </h3>
+
+              {/* METADATA FIX: Deep Teal (#00838F) */}
+              <div className="flex items-center justify-center md:justify-start gap-4 text-xs text-[#00838F] font-bold">
+                <span className="flex items-center gap-1">
+                  <Users size={12} /> By {evt.host}
+                </span>
+                <span className="flex items-center gap-1">
+                  <Clock size={12} /> {evt.time}
+                </span>
+              </div>
+            </div>
+
+            {/* Button */}
+            <div className="w-full md:w-auto relative z-10">
+              <Button
+                className={`w-full md:w-auto rounded-xl font-bold text-xs h-12 px-8 shadow-lg transition-transform hover:-translate-y-0.5 ${
+                  evt.status === "Waitlist"
+                    ? "bg-white text-[#00838F] border border-[#E0F7FA] hover:bg-[#F2F9FA]"
+                    : "bg-[#00ACC1] hover:bg-[#0097A7] text-white shadow-[#00ACC1]/20"
+                }`}
+                disabled={evt.status === "Waitlist"}
+              >
+                {evt.status === "Waitlist" ? "Join Waitlist" : "Register Now"}
+                {evt.status !== "Waitlist" && (
+                  <ArrowUpRight size={14} className="ml-1" />
+                )}
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </DashboardLayout>
   );
 };
 
