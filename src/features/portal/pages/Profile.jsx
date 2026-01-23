@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PortalLayout from '../layout/PortalLayout';
+import GlassCard from '@/components/ui/GlassCard';
 import { User, Mail, Phone, MapPin, Save, Loader2, Camera, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -41,8 +42,8 @@ const Profile = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
             
             {/* Left Col: Avatar & Badges */}
-            <div className="md:col-span-4 lg:col-span-3 space-y-6">
-                <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center">
+                <div className="md:col-span-4 lg:col-span-3 space-y-6">
+                <GlassCard className="p-6 flex flex-col items-center text-center">
                     <div className="relative mb-4 group cursor-pointer">
                         <div className="h-28 w-28 rounded-full bg-slate-50 border-4 border-white shadow-md flex items-center justify-center text-3xl font-bold text-slate-300 overflow-hidden">
                              {/* Placeholder for actual image */}
@@ -53,7 +54,7 @@ const Profile = () => {
                         </div>
                     </div>
                     
-                    <h2 className="text-lg font-bold text-[#0B1E3B]">{formData.fullName || '—'}</h2>
+                    <h2 className="text-lg font-bold text-[#0B1E3B] dark:text-white">{formData.fullName || '—'}</h2>
                     
                     <div className="w-full pt-4 border-t border-slate-50">
                         <div className="flex items-center justify-between text-xs mb-2">
@@ -62,27 +63,27 @@ const Profile = () => {
                         </div>
                         <div className="flex items-center justify-between text-xs">
                            <span className="text-slate-400 font-medium">Role</span>
-                           <span className="text-[#0B1E3B] font-bold">Champion</span>
+                           <span className="text-[#0B1E3B] dark:text-white font-bold">Champion</span>
                         </div>
                     </div>
-                </div>
+                </GlassCard>
 
                 {/* Security Card */}
-                 <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                 <GlassCard className="p-6">
                         <div className="flex items-center gap-2 mb-4">
                         <Shield size={16} className="text-[#00C2CB]" />
-                        <h3 className="font-bold text-[#0B1E3B] text-sm">Security</h3>
+                        <h3 className="font-bold text-[#0B1E3B] dark:text-white text-sm">Security</h3>
                     </div>
                     <Button variant="outline" className="w-full text-xs h-9 justify-start">Change Password</Button>
                     <Button variant="outline" className="w-full text-xs h-9 justify-start mt-2">Two-Factor Auth</Button>
-                 </div>
+                  </GlassCard>
             </div>
 
             {/* Right Col: Form */}
-            <div className="md:col-span-8 lg:col-span-9">
-                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="md:col-span-8 lg:col-span-9">
+                <GlassCard className="p-8">
                     <div className="mb-6">
-                        <h3 className="text-lg font-bold text-[#0B1E3B]">Personal Information</h3>
+                        <h3 className="text-lg font-bold text-[#0B1E3B] dark:text-white">Personal Information</h3>
                         <p className="text-sm text-slate-500">Update your contact details here.</p>
                     </div>
 
@@ -96,7 +97,7 @@ const Profile = () => {
                                         name="fullName"
                                         value={formData.fullName} 
                                         onChange={handleChange}
-                                        className="pl-10 bg-slate-50 border-slate-200 focus:bg-white"
+                                        className="pl-10 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-[#083049] focus:bg-white dark:focus:bg-white/10"
                                     />
                                 </div>
                             </div>
@@ -110,7 +111,7 @@ const Profile = () => {
                                         type="email"
                                         value={formData.email} 
                                         onChange={handleChange}
-                                        className="pl-10 bg-slate-50 border-slate-200 focus:bg-white"
+                                        className="pl-10 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-[#083049] focus:bg-white dark:focus:bg-white/10"
                                     />
                                 </div>
                             </div>
@@ -123,7 +124,7 @@ const Profile = () => {
                                         name="phone"
                                         value={formData.phone} 
                                         onChange={handleChange}
-                                        className="pl-10 bg-slate-50 border-slate-200 focus:bg-white"
+                                        className="pl-10 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-[#083049] focus:bg-white dark:focus:bg-white/10"
                                     />
                                 </div>
                             </div>
@@ -136,7 +137,7 @@ const Profile = () => {
                                         name="location"
                                         value={formData.location} 
                                         onChange={handleChange}
-                                        className="pl-10 bg-slate-50 border-slate-200 focus:bg-white"
+                                        className="pl-10 bg-slate-50 dark:bg-white/5 border-slate-200 dark:border-[#083049] focus:bg-white dark:focus:bg-white/10"
                                     />
                                 </div>
                             </div>
@@ -144,14 +145,14 @@ const Profile = () => {
 
                         <div className="pt-6 border-t border-slate-100 flex items-center justify-end gap-4">
                             {success && <span className="text-green-600 text-sm font-bold animate-in fade-in">Saved Successfully!</span>}
-                            <Button type="button" variant="ghost" className="text-slate-500 hover:text-[#0B1E3B]">Cancel</Button>
+                            <Button type="button" variant="ghost" className="text-slate-500 hover:text-[#0B1E3B] dark:hover:text-white">Cancel</Button>
                             <Button type="submit" disabled={loading} className="bg-[#00C2CB] hover:bg-[#0090C0] text-white font-bold px-6">
                                 {loading ? <Loader2 className="animate-spin mr-2" size={18} /> : <Save className="mr-2" size={18} />}
                                 Save Changes
                             </Button>
                         </div>
                     </form>
-                </div>
+                </GlassCard>
             </div>
         </div>
     </PortalLayout>

@@ -38,7 +38,7 @@ const WellnessCheckInPortal = () => {
                     ))}
                 </div>
 
-                <Link to="/checkin" className="group bg-white text-teal-700 hover:bg-teal-50 font-bold py-4 px-10 rounded-xl transition-all shadow-xl flex items-center gap-2 text-lg transform hover:-translate-y-1">
+                <Link to="/checkin" className="group bg-gradient-to-r from-[#00C2CB] to-[#0090C0] text-white font-bold py-4 px-10 rounded-xl transition-all shadow-xl flex items-center gap-2 text-lg transform hover:-translate-y-1">
                     Start Check-In
                     <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
