@@ -43,7 +43,7 @@ const Events = () => {
                 <GlassCard key={idx} className="p-5 rounded-2xl flex flex-col md:flex-row items-center gap-6 shadow-sm hover:shadow-md transition-all group">
                     
                     {/* Date Block */}
-                            <div className="h-16 w-16 bg-slate-50 text-slate-600 rounded-xl flex flex-col items-center justify-center font-bold flex-shrink-0 group-hover:bg-[#0B1E3B] group-hover:text-white transition-colors">
+                            <div className="h-16 w-16 bg-slate-50 text-slate-600 rounded-xl flex flex-col items-center justify-center font-bold flex-shrink-0 group-hover:bg-[#00C2CB] group-hover:text-white transition-colors">
                         <span className="text-xl leading-none">{evt.date.split(' ')[1].replace(',','')}</span>
                         <span className="text-[10px] uppercase tracking-wide">{evt.date.split(' ')[0]}</span>
                     </div>
@@ -71,7 +71,7 @@ const Events = () => {
 
                     <div className="w-full md:w-auto">
                         <Button 
-                            className={`w-full md:w-auto rounded-xl font-bold text-xs h-10 px-6 ${evt.status === 'Waitlist' ? 'bg-slate-100 dark:bg-white/5 text-slate-400' : 'bg-gradient-to-r from-[#00C2CB] to-[#0090C0] text-white'}`}
+                            className={`w-full md:w-auto rounded-xl font-bold text-xs h-10 px-6 ${evt.status === 'Waitlist' ? 'bg-slate-100 text-slate-400' : 'bg-gradient-to-r from-[#00C2CB] to-[#0090C0] text-white'}`}
                             disabled={evt.status === 'Waitlist'}
                         >
                             {evt.status === 'Waitlist' ? 'Waitlist Only' : 'Register Now'}

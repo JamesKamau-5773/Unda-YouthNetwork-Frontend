@@ -198,7 +198,7 @@ const Certificate = () => {
                             onClick={handleDownload}
                             aria-label="Download certificate"
                             disabled={processing || !(certInfo && certInfo.issued && certInfo.trainings_completed)}
-                            className={`w-full ${processing ? 'opacity-70 cursor-wait' : ''} bg-[#0B1E3B] hover:bg-slate-800 text-white rounded-xl shadow-lg shadow-slate-200 font-bold flex items-center gap-2 ${!(certInfo && certInfo.issued && certInfo.trainings_completed) ? 'opacity-50 pointer-events-none' : ''}`}
+                            className={`w-full ${processing ? 'opacity-70 cursor-wait' : ''} bg-gradient-to-r from-[#00C2CB] to-[#0090C0] text-white rounded-xl shadow-lg shadow-slate-200 font-bold flex items-center gap-2 ${!(certInfo && certInfo.issued && certInfo.trainings_completed) ? 'opacity-50 pointer-events-none' : ''}`}
                         >
                             <Download size={16} /> {processing ? 'Preparing...' : 'Download / Print'}
                         </Button>
@@ -223,34 +223,34 @@ const Certificate = () => {
                     </div>
                 </GlassCard>
 
-                <div className="bg-[#1E293B] p-6 rounded-2xl text-white relative overflow-hidden shadow-lg">
-                    <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#00C2CB]/20 rounded-full blur-2xl" />
+                <div className="bg-white/90 p-6 rounded-2xl text-[#0B1E3B] relative overflow-hidden shadow">
+                    <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#00C2CB]/10 rounded-full blur-2xl" />
                     
                     <div className="flex items-center gap-3 mb-4">
-                        <div className="p-2 bg-white/10 rounded-lg">
-                            <Shield size={20} className="text-emerald-400" />
+                        <div className="p-2 bg-slate-50 rounded-lg">
+                            <Shield size={20} className="text-emerald-600" />
                         </div>
                         <div>
                             <h3 className="font-bold text-sm">Verified Member</h3>
-                            <p className="text-[10px] text-slate-400">Since Jan 2024</p>
+                            <p className="text-[10px] text-slate-500">Since Jan 2024</p>
                         </div>
                         {toast && (
-                            <div className="fixed top-8 right-8 z-50 bg-slate-900 text-white px-4 py-2 rounded-md shadow-lg">
+                            <div className="fixed top-8 right-8 z-50 bg-white text-[#0B1E3B] px-4 py-2 rounded-md shadow-lg">
                                 {toast}
                             </div>
                         )}
                     </div>
                     
                         <div className="space-y-3">
-                        <div className="flex justify-between text-xs text-slate-300">
+                        <div className="flex justify-between text-xs text-slate-500">
                             <span>Certificate</span>
-                            <span className="font-bold text-emerald-400">{certInfo && certInfo.issued ? 'Issued' : (loading ? 'Checking' : 'Not issued')}</span>
+                            <span className="font-bold text-emerald-600">{certInfo && certInfo.issued ? 'Issued' : (loading ? 'Checking' : 'Not issued')}</span>
                         </div>
-                        <div className="flex justify-between text-xs text-slate-300">
+                        <div className="flex justify-between text-xs text-slate-500">
                             <span>Training Complete</span>
-                            <span className="font-bold text-amber-400">{certInfo && typeof certInfo.trainings_completed !== 'undefined' ? (certInfo.trainings_completed ? 'Yes' : 'No') : (loading ? 'Checking' : 'Unknown')}</span>
+                            <span className="font-bold text-amber-500">{certInfo && typeof certInfo.trainings_completed !== 'undefined' ? (certInfo.trainings_completed ? 'Yes' : 'No') : (loading ? 'Checking' : 'Unknown')}</span>
                         </div>
-                        <div className="flex justify-between text-xs text-slate-300">
+                        <div className="flex justify-between text-xs text-slate-500">
                             <span>Issued On</span>
                             <span className="font-bold">{certInfo && certInfo.issued_at ? new Date(certInfo.issued_at).toLocaleDateString() : '—'}</span>
                         </div>
