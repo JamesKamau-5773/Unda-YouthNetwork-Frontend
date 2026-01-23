@@ -30,7 +30,7 @@ const Resources = () => {
           </div>
         </section>
 
-        {/* Publications */}
+        {/* Publications (placeholder until backend supplies materials) */}
         <section className="py-24 bg-white">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
@@ -40,24 +40,11 @@ const Resources = () => {
                 </div>
                 <h2 className="text-4xl font-black text-[#0B1E3B]">Publications</h2>
               </div>
-              
-                <div className="space-y-6">
-                <div className="bg-[#F9FAFB]/30 rounded-2xl p-8 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300">
-                  <h3 className="text-2xl font-black text-[#0B1E3B] mb-3">Research Summaries</h3>
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    Brief insights from UMV and partner research on youth mental health, preventive interventions, and evidence-based practices.
-                  </p>
-                  {/* resource download not yet available */}
-                  <p className="text-xs text-slate-400 italic font-bold">Coming soon</p>
-                </div>
 
-                <div className="bg-[#F9FAFB]/30 rounded-2xl p-8 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300">
-                  <h3 className="text-2xl font-black text-[#0B1E3B] mb-3">UMV Reports</h3>
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    Annual and quarterly program reports highlighting achievements, learnings, and program impact across schools, campuses, and communities.
-                  </p>
-                  {/* resource download not yet available */}
-                  <p className="text-xs text-slate-400 italic font-bold">Coming soon</p>
+              <div className="space-y-6">
+                <div className="bg-white rounded-2xl p-12 border border-slate-100 shadow-sm text-center">
+                  <h3 className="text-3xl font-black text-[#0B1E3B] mb-3">Coming soon</h3>
+                  <p className="text-slate-500">Publications and downloadable reports will appear here once they're published from our backend.</p>
                 </div>
               </div>
             </div>

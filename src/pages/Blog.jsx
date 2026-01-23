@@ -5,34 +5,8 @@ import { ArrowLeft, Newspaper, TrendingUp, FileText, Award, ArrowRight } from 'l
 import { Button } from '@/components/ui/button';
 
 const Blog = () => {
-  const articles = [
-    {
-      title: "Unda Youth Network UMV Program Featured on EpicPulse Magazine",
-      excerpt: "A preview of how our prevention-first model is shaping conversations ahead of our official rollout in January.",
-      category: "Media",
-      date: "December 2025"
-    },
-    {
-      title: "What to Expect: Launching UMV in January 2026",
-      excerpt: "An inside look at our awareness, access and advocacy pillars and how young people will take the lead.",
-      category: "Update",
-      date: "January 2026"
-    },
-    {
-      title: "Youth Voices Setting the Pace for 2026",
-      excerpt: "Early stories from schools, campuses and communities preparing to participate in Debaters, Campus and Mtaani.",
-      category: "Success Story",
-      date: "January 2026"
-    }
-    ,
-    {
-      title: "MindRoots Parent Circle",
-      excerpt: "Prevention-first support for parents and caregivers — now part of our Resources and Blog.",
-      category: "Resource",
-      date: "January 2026",
-      link: "/mindroots-parent-circle"
-    }
-  ];
+  // Articles will come from the backend later. Show placeholder until available.
+  const articles = [];
 
   return (
     <Layout>
@@ -70,25 +44,32 @@ const Blog = () => {
               </div>
               
               <div className="space-y-6">
-                {articles.map((article, idx) => (
-                  <div key={idx} className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:border-unda-teal/30 transition-all duration-300 group">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-unda-bg text-unda-navy">
-                        {article.category}
-                      </span>
-                      <span className="text-sm text-slate-400 font-medium">{article.date}</span>
-                    </div>
-                    <h3 className="text-2xl font-black text-unda-navy mb-3 group-hover:text-unda-teal transition-colors">
-                      {article.title}
-                    </h3>
-                    <p className="text-slate-600 leading-relaxed mb-4">
-                      {article.excerpt}
-                    </p>
-                    <Button variant="ghost" className="text-unda-teal font-bold p-0 h-auto hover:bg-transparent group-hover:translate-x-1 transition-transform">
-                      Read More <ArrowRight size={16} className="ml-2" />
-                    </Button>
+                {articles.length === 0 ? (
+                  <div className="bg-white rounded-2xl p-12 border border-dashed border-slate-200 shadow-sm text-center">
+                    <h3 className="text-3xl font-black text-unda-navy mb-3">Coming soon</h3>
+                    <p className="text-slate-500">Stories will be available here once published from our backend.</p>
                   </div>
-                ))}
+                ) : (
+                  articles.map((article, idx) => (
+                    <div key={idx} className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:border-unda-teal/30 transition-all duration-300 group">
+                      <div className="flex items-center gap-3 mb-4">
+                        <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-unda-bg text-unda-navy">
+                          {article.category}
+                        </span>
+                        <span className="text-sm text-slate-400 font-medium">{article.date}</span>
+                      </div>
+                      <h3 className="text-2xl font-black text-unda-navy mb-3 group-hover:text-unda-teal transition-colors">
+                        {article.title}
+                      </h3>
+                      <p className="text-slate-600 leading-relaxed mb-4">
+                        {article.excerpt}
+                      </p>
+                      <Button variant="ghost" className="text-unda-teal font-bold p-0 h-auto hover:bg-transparent group-hover:translate-x-1 transition-transform">
+                        Read More <ArrowRight size={16} className="ml-2" />
+                      </Button>
+                    </div>
+                  ))
+                )}
               </div>
 
               <div className="mt-12 text-center">

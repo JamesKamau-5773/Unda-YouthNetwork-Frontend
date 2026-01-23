@@ -73,16 +73,16 @@ const Navbar = () => {
           {/* Center Navigation Links - Expanded */}
           <div className="hidden md:flex items-center gap-1">
 
-            {/* Home Link */}
+            {/* Home Link (previously Dashboard) */}
             <Link
-              to="/member/dashboard"
+              to="/"
               className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                location.pathname === '/member/dashboard'
-                  ? (isPortal ? 'text-[#0B1E3B] bg-white shadow-[0_10px_30px_rgba(0,194,203,0.12)]' : 'text-white bg-[#0B1E3B] shadow-[0_10px_30px_rgba(0,194,203,0.12)]')
+                location.pathname === '/'
+                  ? 'text-[#00C2CB] bg-[#00C2CB]/5'
                   : (isPortal ? 'text-white/90 hover:text-white hover:bg-white/10 hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.06)]')
               }`}
             >
-              Dashboard
+              Home
             </Link>
             
             {/* About Link */}
@@ -252,7 +252,7 @@ const Navbar = () => {
         {/* Mobile Menu Drawer */}
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-t border-slate-100 shadow-xl p-6 flex flex-col gap-4 animate-in slide-in-from-top-5 z-50">
-            <Link to="/member/dashboard" className="text-sm font-bold text-[#0B1E3B] py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Dashboard</Link>
+            <Link to="/" className="text-sm font-bold text-[#0B1E3B] py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
             <Link to="/about" className="text-sm font-bold text-[#0B1E3B] py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
             
             <div className="py-2 border-b border-slate-50">
