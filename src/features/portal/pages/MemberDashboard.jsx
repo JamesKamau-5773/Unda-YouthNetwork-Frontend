@@ -25,33 +25,29 @@ const MemberDashboard = () => {
 		)}>
 
 			<div className="grid grid-cols-12 gap-6">
-				<div className="col-span-12">
-					<DashboardCard className="p-8 -mt-12 lg:-mt-16">
-						<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-							<div>
-								<h1 className="text-2xl md:text-3xl font-extrabold text-[#0B1E3B]">Welcome back, Champion</h1>
-								<p className="mt-2 text-[#334155]">Here's your wellness snapshot and upcoming activities.</p>
-								<div className="mt-4 flex items-center gap-3">
-									<ActionButton>Start Check-In</ActionButton>
-									<ActionButton className="bg-white text-[#0B1E3B] shadow-none border border-[#E6EEF2]">View Resources</ActionButton>
-								</div>
-							</div>
-							<div className="flex gap-6 items-center">
-								<div className="text-right">
-									<div className="text-sm text-[#334155]">Streak</div>
-									<div className="text-[#0B1E3B] text-3xl font-extrabold">7 🔥</div>
-								</div>
-								<div className="w-px h-12 bg-[#00C2CB]/15 rounded" />
-								<div className="text-right">
-									<div className="text-sm text-[#334155]">Points</div>
-									<div className="text-[#0B1E3B] text-3xl font-extrabold">1,240</div>
-								</div>
+				<div className="col-span-12 relative">
+					<div className="px-6 py-12 md:py-20 lg:py-24 relative z-20">
+						<div className="max-w-4xl">
+							<h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">Welcome back, Champion</h1>
+							<p className="mt-3 text-white/90 text-lg">Here's your wellness snapshot and upcoming activities.</p>
+							<div className="mt-6 flex items-center gap-3">
+								<ActionButton>Start Check-In</ActionButton>
+								<ActionButton className="bg-white text-[#0B1E3B] shadow-none border border-white/10">View Resources</ActionButton>
 							</div>
 						</div>
-					</DashboardCard>
+
+						{/* Streak / Points - glass style */}
+						<div className="absolute right-6 top-6 md:top-10 z-20">
+							<div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3 text-right">
+								<div className="text-sm text-white/80">Streak</div>
+								<div className="text-white text-2xl font-extrabold">7 🔥</div>
+								<div className="text-sm text-white/80 mt-1">Points <span className="font-bold">1,240</span></div>
+							</div>
+						</div>
+					</div>
 				</div>
 
-				<div className="col-span-12 md:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+				<div className="col-span-12 md:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-4 -mt-12">
 					<DashboardCard className="min-h-[140px] flex items-start">
 						<div>
 							<div className="text-sm text-[#334155]">Sessions this month</div>
