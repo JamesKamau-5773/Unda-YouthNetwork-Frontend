@@ -1,7 +1,6 @@
 /* global module */
 // Tailwind config locked to UMV Modern Corporate tokens
 module.exports = {
-  darkMode: 'class',
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
