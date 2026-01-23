@@ -17,35 +17,35 @@ const MemberDashboard = () => {
 	return (
 		<DashboardLayout headerContent={(
 			<div className="max-w-7xl mx-auto px-6">
-								<div className="rounded-3xl bg-white p-6 md:px-8 md:py-4 shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/10">
-									<h2 className="text-lg md:text-xl font-extrabold tracking-tight text-[#0B1E3B]">Dashboard</h2>
-									<p className="text-sm text-[#475569] mt-1">Your wellness snapshot and recent activity.</p>
-								</div>
+				<div className="rounded-3xl bg-[#F0F7FF] p-6 md:px-8 md:py-8 shadow-[0_20px_50px_rgba(0,194,203,0.06)] border border-[#E6F6FB]">
+					<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+						<div className="max-w-3xl">
+							<h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#0B1E3B]">Welcome back, Champion</h1>
+							<p className="mt-3 text-[#475569] text-lg">Here's your wellness snapshot and upcoming activities.</p>
+							<div className="mt-6 flex items-center gap-3">
+								<button className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-[#00C2CB] to-[#0090C0] shadow-lg shadow-[#00C2CB]/20">Start Check-In</button>
+								<button className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold text-[#0B1E3B] bg-white/80 shadow-sm border border-white/10">View Resources</button>
+							</div>
+						</div>
+
+						<div className="flex items-center gap-6">
+							<div className="text-center">
+								<div className="text-sm text-[#475569]">Streak</div>
+								<div className="text-3xl font-extrabold text-[#0B1E3B]">7 <span className="text-xl">🔥</span></div>
+							</div>
+							<div className="w-px h-10 bg-[#E6F6FB]" />
+							<div className="text-center">
+								<div className="text-sm text-[#475569]">Points</div>
+								<div className="text-3xl font-extrabold text-[#0B1E3B]">1,240</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		)}>
 
 			<div className="grid grid-cols-12 gap-6">
-				<div className="col-span-12 relative">
-					<div className="px-6 py-12 md:py-20 lg:py-24 relative z-20">
-						<div className="max-w-4xl">
-							<h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">Welcome back, Champion</h1>
-							<p className="mt-3 text-[#E0F2FE] text-lg">Here's your wellness snapshot and upcoming activities.</p>
-							<div className="mt-6 flex items-center gap-3">
-								<ActionButton>Start Check-In</ActionButton>
-								<ActionButton className="bg-white text-[#0B1E3B] shadow-none border border-white/10">View Resources</ActionButton>
-							</div>
-						</div>
 
-						{/* Streak / Points - glass style */}
-												<div className="absolute right-6 top-6 md:top-10 z-20">
-													<div className="bg-white/20 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3 text-right">
-															<div className="text-sm text-blue-200">Streak</div>
-															<div className="text-white text-2xl font-extrabold">7 🔥</div>
-															<div className="text-sm text-blue-200 mt-1">Points <span className="font-bold text-white">1,240</span></div>
-														</div>
-												</div>
-					</div>
-				</div>
 
 				<div className="col-span-12 md:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-4 -mt-12">
 					<DashboardCard className="min-h-[140px] flex items-start">
