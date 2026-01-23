@@ -294,7 +294,7 @@ const Certificate = () => {
                 </DialogFooter>
             </DialogContent>
         </Dialog>
-    </PortalLayout>
+        </DashboardLayout>
   );
 };
 

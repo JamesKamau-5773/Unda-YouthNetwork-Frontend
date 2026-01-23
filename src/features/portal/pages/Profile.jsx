@@ -162,7 +162,7 @@ const Profile = () => {
                 </GlassCard>
             </div>
         </div>
-    </PortalLayout>
+        </DashboardLayout>
   );
 };
 
