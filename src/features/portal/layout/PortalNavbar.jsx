@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { NavLink, useNavigate, Link } from 'react-router-dom';
+import { NavLink, useNavigate, Link, useLocation } from 'react-router-dom';
 import { Menu, X, Bell, ChevronDown, LogOut, User, Award } from 'lucide-react';
 import undaLogo from '@/assets/logos/unda-logo-main.jpg'; // Ensure path is correct
 
@@ -8,6 +8,14 @@ const PortalNavbar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false); // Desktop Dropdown
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Determine where the "Back to site" button should go:
+  // - If on the portal home/dashboard, send user to the portal login (`/portal`).
+  // - Otherwise (other member pages), send user back to the portal home/dashboard.
+  const backLinkTarget = (location.pathname === '/member/dashboard' || location.pathname === '/portal' || location.pathname === '/member')
+    ? '/portal'
+    : '/member/dashboard';
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -32,7 +40,7 @@ const PortalNavbar = () => {
   // Main Navigation Links
   const navLinks = [
     { name: 'Dashboard', path: '/member/dashboard' },
-    { name: 'Wellness', path: '/member/check-in' },
+    { name: 'Wellness Check-In', path: '/member/check-in' },
     { name: 'Events', path: '/member/events' },
     { name: 'Certificates', path: '/member/certificate' },
   ];
@@ -44,13 +52,20 @@ const PortalNavbar = () => {
       : "text-[#0B1E3B] font-bold text-sm px-5 py-2.5 hover:bg-[#F0FDFF] rounded-full transition-all opacity-80 hover:opacity-100";
 
   return (
-    <nav className="w-full bg-white border-b border-[#E0F7FA] sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex justify-between items-center h-20">
+    <>
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-full px-6 z-50 pointer-events-auto">
+        <div className="max-w-7xl mx-auto">
+          <div className="backdrop-blur-md bg-white/90 text-[#0B1E3B] shadow-[0_20px_50px_rgba(0,194,203,0.06)] border border-[#00C2CB]/12 rounded-[2.5rem] px-6 py-3 flex justify-between items-center h-20">
           
           {/* --- LEFT: LOGO & MAIN NAV --- */}
           <div className="flex items-center gap-12">
             {/* Logo */}
+            {/* Back to main site (desktop only) */}
+            {(location.pathname.startsWith('/member') || location.pathname.startsWith('/portal')) && (
+              <Link to={backLinkTarget} className="hidden md:inline-block px-4 py-2 rounded-full text-sm font-semibold border border-[#E6EEF2] bg-white hover:bg-white/90 mr-4">
+                ← Back to site
+              </Link>
+            )}
             <Link to="/member/dashboard" className="flex items-center gap-3">
                <div className="w-10 h-10 bg-white border border-[#E0F7FA] rounded-xl flex items-center justify-center p-1">
                  <img src={undaLogo} alt="Unda" className="w-full h-full object-contain" />
@@ -144,8 +159,12 @@ const PortalNavbar = () => {
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
+          </div>
         </div>
-      </div>
+      </nav>
+
+      {/* Spacer to preserve original layout spacing when navbar is fixed */}
+      <div className="h-24" />
 
       {/* --- MOBILE MENU (Drawer) --- */}
       {isOpen && (
@@ -208,7 +227,7 @@ const PortalNavbar = () => {
           <div className="flex-1 bg-[#0B1E3B]/20 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
         </div>
       )}
-    </nav>
+    </>
   );
 };
 

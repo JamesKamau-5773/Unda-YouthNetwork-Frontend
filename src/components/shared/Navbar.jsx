@@ -8,7 +8,11 @@ const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const isPortal = location.pathname.startsWith('/member') || location.pathname.startsWith('/portal');
+
+  // Hide the global navbar on the portal login/signup page (exact `/portal` path)
+  if (location.pathname === '/portal') return null;
 
   const handleMouseEnter = (name) => setActiveDropdown(name);
   const handleMouseLeave = () => setActiveDropdown(null);
@@ -30,7 +34,6 @@ const Navbar = () => {
     { name: 'Profile & Settings', path: '/member/profile' },
   ];
 
-  const navigate = useNavigate();
 
   return (
     <nav className="fixed top-0 w-full z-[100] px-6 py-6 transition-all duration-300">
@@ -177,31 +180,7 @@ const Navbar = () => {
                Gallery
              </Link>
 
-            {/* Member / Portal Dropdown (moved from sidebar) */}
-            <div className="relative" onMouseEnter={() => handleMouseEnter('member')} onMouseLeave={handleMouseLeave}>
-              <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                activeDropdown === 'member'
-                  ? 'text-[#00C2CB] bg-[#00C2CB]/5'
-                  : (isPortal ? 'text-white/90 hover:text-white hover:bg-white/10 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]')
-              }`}>
-                Member <ChevronDown size={10} className={`transition-transform duration-300 ${activeDropdown === 'member' ? 'rotate-180' : ''}`} />
-              </button>
-
-              {activeDropdown === 'member' && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 w-[280px] animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="bg-white border border-slate-100 rounded-[2rem] shadow-xl p-4 flex flex-col gap-2 relative overflow-hidden">
-                    {memberItems.map(mi => (
-                      <Link key={mi.path} to={mi.path} className="px-3 py-2 rounded-xl hover:bg-slate-50 transition-all text-sm font-medium text-[#0B1E3B]">
-                        {mi.name}
-                      </Link>
-                    ))}
-                    <button onClick={() => { localStorage.removeItem('unda_token'); localStorage.removeItem('unda_user'); navigate('/portal'); }} className="px-3 py-2 rounded-xl hover:bg-slate-50 transition-all text-sm font-medium text-red-500 text-left">
-                      Sign Out
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+            
           </div>
 
 

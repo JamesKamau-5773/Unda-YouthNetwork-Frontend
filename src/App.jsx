@@ -16,6 +16,7 @@ import WellnessCheckInPortal from './features/portal/pages/WellnessCheckIn';
 import Events from './features/portal/pages/Events';
 import Certificate from './features/portal/pages/Certificate';
 import Profile from './features/portal/pages/Profile';
+import ProfileTwoFactor from './features/portal/pages/ProfileTwoFactor';
 import ProtectedRoute from './features/portal/ProtectedRoute';
 
 // Main Pages
@@ -90,6 +91,7 @@ function App() {
             <Route path="/member/events" element={<ProtectedRoute><Events /></ProtectedRoute>} />
             <Route path="/member/certificate" element={<ProtectedRoute><Certificate /></ProtectedRoute>} />
             <Route path="/member/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/member/profile/2fa" element={<ProtectedRoute><ProfileTwoFactor /></ProtectedRoute>} />
 
             {/* MAIN WEBSITE ROUTES */}
             <Route path="*" element={

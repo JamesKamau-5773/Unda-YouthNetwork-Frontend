@@ -26,10 +26,12 @@ const MemberDashboard = () => {
                   <p className="mt-2 text-[#006064] text-lg font-medium">Here is your wellness snapshot for today.</p>
                   
                   <div className="mt-8 flex flex-wrap items-center gap-3">
-                     <ActionButton>Start Check-In</ActionButton>
-                     <button className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-[#00838F] bg-white hover:bg-[#F0FDFF] border border-[#B2EBF2] transition-colors">
-                        View Resources
-                     </button>
+                     <Link to="/member/check-in/start" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white bg-[#00C2CB] hover:bg-[#0097A7] shadow-lg shadow-[#00C2CB]/20 transition-transform hover:-translate-y-0.5">
+                        Start Check-In
+                     </Link>
+                     <Link to="/member/check-in" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-[#00838F] bg-white hover:bg-[#F0FDFF] border border-[#B2EBF2] transition-colors">
+                        Learn More
+                     </Link>
                   </div>
                </div>
 
@@ -115,9 +117,12 @@ const MemberDashboard = () => {
                   </div>
                </div>
                
-               <button className="w-full mt-3 py-2.5 bg-[#00ACC1] text-white font-bold rounded-xl text-xs hover:bg-[#0097A7] transition-colors flex items-center justify-center gap-1">
-                  Join <ArrowRight size={14} />
-               </button>
+                      <button
+                         onClick={() => { window.location.href = '/member/events?autoRegister=1&index=0'; }}
+                         className="w-full mt-3 py-2.5 bg-[#00ACC1] text-white font-bold rounded-xl text-xs hover:bg-[#0097A7] transition-colors flex items-center justify-center gap-1"
+                      >
+                         Join <ArrowRight size={14} />
+                      </button>
             </div>
 
          </div>

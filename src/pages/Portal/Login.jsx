@@ -208,11 +208,8 @@ const PortalLogin = () => {
   const { triggerAlert } = useAlert();
 
   const handleBack = () => {
-    if (typeof window !== 'undefined' && window.innerWidth < 768) {
-      navigate('/');
-    } else {
-      navigate('/member/dashboard');
-    }
+    // Always navigate back to the main home page
+    navigate('/');
   };
 
   const handleSignup = async (e) => {

@@ -210,6 +210,23 @@ export const profileService = {
   updateProfile: async (data) => {
     return await api.put('/api/members/me', data);
   }
+  ,
+  // Upload avatar/profile photo: attempt dedicated avatar endpoint, fallback to multipart PUT
+  uploadAvatar: async (file) => {
+    const form = new FormData();
+    form.append('avatar', file);
+    // Try dedicated endpoint first
+    try {
+      return await api.post('/api/members/me/avatar', form, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+    } catch (err) {
+      // Fallback: some backends accept multipart PUT to member endpoint
+      return await api.put('/api/members/me', form, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+    }
+  }
 };
 
 // 5. Single Default Export

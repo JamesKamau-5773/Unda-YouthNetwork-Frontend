@@ -133,7 +133,7 @@ export default function WeeklyCheckInForm() {
           <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
           
           <div className="container mx-auto px-6 relative z-10">
-            <Link to="/portal" className="inline-flex items-center text-white/70 hover:text-white transition-colors mb-8">
+            <Link to="/member/dashboard" className="inline-flex items-center text-white/70 hover:text-white transition-colors mb-8">
               <ArrowLeft size={20} className="mr-2" />
               <span className="font-bold text-sm uppercase tracking-widest">Back to Portal</span>
             </Link>
@@ -336,7 +336,7 @@ export default function WeeklyCheckInForm() {
                       asChild
                       className="bg-[#0B1E3B] text-white hover:bg-[#00C2CB]"
                     >
-                      <Link to="/portal">Back to Portal</Link>
+                      <Link to="/member/dashboard">Back to Portal</Link>
                     </Button>
                   </div>
                 </div>
