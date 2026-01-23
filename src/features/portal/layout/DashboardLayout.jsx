@@ -11,10 +11,10 @@ const DashboardLayout = ({ children, headerContent }) => {
     <div className="min-h-screen bg-[#F0F7FF] text-[#1e293b]">
       {/* Split background: top navy, remainder white (320px top) */}
       <div className="relative">
-        <div className="absolute inset-x-0 top-0 h-[320px] bg-[#0B1E3B]" />
+        <div className="absolute inset-x-0 top-0 h-[320px] bg-[#0B1E3B] z-10" />
 
-        {/* Navbar sits inside navy area */}
-        <div className="relative z-10">
+        {/* Navbar sits inside navy area (above pattern) */}
+        <div className="relative z-20">
           <PortalNavbar />
         </div>
 
