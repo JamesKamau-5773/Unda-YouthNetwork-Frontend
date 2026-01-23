@@ -1,5 +1,5 @@
 import React from 'react';
-import PortalLayout from '../layout/PortalLayout';
+import DashboardLayout from '../layout/DashboardLayout';
 import { Calendar, MapPin, Video, Users, Clock, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import GlassCard from '@/components/ui/GlassCard';
@@ -36,8 +36,15 @@ const Events = () => {
         }
     ];
 
-  return (
-    <PortalLayout title="Events & Training" subtitle="Connect with professionals and peers.">
+    return (
+        <DashboardLayout headerContent={(
+            <div className="max-w-7xl mx-auto px-6">
+                <div className="rounded-3xl bg-white p-6 md:px-8 md:py-4 shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/10">
+                    <h2 className="text-lg md:text-xl font-extrabold tracking-tight text-[#0B1E3B]">Events & Training</h2>
+                    <p className="text-sm text-[#334155] mt-1">Connect with professionals and peers.</p>
+                </div>
+            </div>
+        )}>
         <div className="grid gap-4">
             {events.map((evt, idx) => (
                 <GlassCard key={idx} className="p-5 rounded-2xl flex flex-col md:flex-row items-center gap-6 glow-teal-sm hover:glow-teal transition-all group">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PortalLayout from '../layout/PortalLayout';
+import DashboardLayout from '../layout/DashboardLayout';
 import GlassCard from '@/components/ui/GlassCard';
 import { User, Mail, Phone, MapPin, Save, Loader2, Camera, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -36,8 +36,15 @@ const Profile = () => {
     }
   };
 
-  return (
-    <PortalLayout title="Profile" subtitle="Manage your account settings.">
+    return (
+        <DashboardLayout headerContent={(
+            <div className="max-w-7xl mx-auto px-6">
+                <div className="rounded-3xl bg-white p-6 md:px-8 md:py-4 shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/10">
+                    <h2 className="text-lg md:text-xl font-extrabold tracking-tight text-[#0B1E3B]">Profile</h2>
+                    <p className="text-sm text-[#334155] mt-1">Manage your account settings.</p>
+                </div>
+            </div>
+        )}>
         
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
             
