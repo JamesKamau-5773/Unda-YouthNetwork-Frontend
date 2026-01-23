@@ -1,11 +1,18 @@
 import React from 'react';
-import PortalLayout from '../layout/PortalLayout';
+import DashboardLayout from '../layout/DashboardLayout';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const WellnessCheckInPortal = () => {
-  return (
-    <PortalLayout title="Wellness Check-In" subtitle="Your weekly mental resilience tracker.">
+    return (
+        <DashboardLayout headerContent={(
+            <div className="max-w-7xl mx-auto px-6">
+                <div className="rounded-3xl bg-white p-6 md:px-8 md:py-4 shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/10">
+                    <h2 className="text-lg md:text-xl font-extrabold tracking-tight text-[#0B1E3B]">Wellness Check-In</h2>
+                    <p className="text-sm text-[#334155] mt-1">Your weekly mental resilience tracker.</p>
+                </div>
+            </div>
+        )}>
        <div className="max-w-4xl mx-auto">
           
           <div className="bg-gradient-to-br from-[#00C2CB] to-[#155e75] rounded-3xl p-8 md:p-12 text-center text-white shadow-2xl shadow-teal-900/10 relative overflow-hidden">

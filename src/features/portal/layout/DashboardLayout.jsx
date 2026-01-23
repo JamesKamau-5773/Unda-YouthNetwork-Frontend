@@ -1,4 +1,45 @@
 import React from 'react';
+import PortalNavbar from './PortalNavbar';
+
+// DashboardLayout implements the "Crisp Horizon" split background:
+// Top 320px: Brand Navy (#0B1E3B). Bottom: Pure White / Brand Ice for body.
+// Children content is placed in a centered container and card surfaces overlap the navy boundary.
+
+const DashboardLayout = ({ children, headerContent }) => {
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Split background: top navy, remainder white (320px top) */}
+      <div className="relative">
+        <div className="absolute inset-x-0 top-0 h-[320px] bg-[#0B1E3B]" />
+
+        {/* Navbar sits inside navy area */}
+        <div className="relative z-10">
+          <PortalNavbar />
+        </div>
+
+        {/* Main container: content will overlap the navy with negative margin */}
+        <main className="relative z-20 max-w-7xl mx-auto px-6 -mt-32">
+          {/* Header content can be passed in, and sits atop the white cards */}
+          {headerContent && (
+            <div className="mb-6">
+              {headerContent}
+            </div>
+          )}
+
+          <div className="space-y-6">
+            {children}
+          </div>
+        </main>
+
+        {/* Bottom filler to ensure navy behind header extends visually */}
+        <div className="h-40 bg-white" />
+      </div>
+    </div>
+  );
+};
+
+export default DashboardLayout;
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Bell, Calendar, Users, Activity } from 'lucide-react';
 import GlassCard from '@/components/ui/GlassCard';

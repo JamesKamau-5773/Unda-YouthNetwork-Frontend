@@ -8,6 +8,7 @@ const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const isPortal = location.pathname.startsWith('/member') || location.pathname.startsWith('/portal');
 
   const handleMouseEnter = (name) => setActiveDropdown(name);
   const handleMouseLeave = () => setActiveDropdown(null);
@@ -39,17 +40,21 @@ const Navbar = () => {
         {/* 1. TOP UTILITY BAR */}
         <div className="flex justify-between items-center px-8 mb-3 animate-in fade-in slide-in-from-top-2">
           <div className="flex gap-6 items-center">
-            <span className="flex items-center gap-1.5 text-[8px] font-black uppercase tracking-[0.2em] text-[#0B1E3B]/40">
+            <span className={`flex items-center gap-1.5 text-[8px] font-black uppercase tracking-[0.2em] ${isPortal ? 'text-white/70' : 'text-[#0B1E3B]/40'}`}>
               <Shield size={10} className="text-[#00C2CB]" /> Safeguarding Active
             </span>
-            <span className="flex items-center gap-1.5 text-[8px] font-black uppercase tracking-[0.2em] text-[#0B1E3B]/40">
+            <span className={`flex items-center gap-1.5 text-[8px] font-black uppercase tracking-[0.2em] ${isPortal ? 'text-white/70' : 'text-[#0B1E3B]/40'}`}>
               <Activity size={10} className="text-[#00C2CB]" /> Real-time Metrics
             </span>
           </div>
         </div>
 
         {/* 2. MAIN NAV */}
-        <div className="backdrop-blur-md bg-[rgba(255,255,255,0.72)] text-[#0B1E3B] shadow-[0_20px_50px_rgba(0,194,203,0.06)] border border-[#00C2CB]/12 rounded-[2.5rem] px-8 py-3 flex items-center justify-between">
+        <div className={
+          isPortal
+            ? 'backdrop-blur-md bg-[#0B1E3B]/10 text-white shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-transparent rounded-[2.5rem] px-8 py-3 flex items-center justify-between'
+            : 'backdrop-blur-md bg-[rgba(255,255,255,0.72)] text-[#0B1E3B] shadow-[0_20px_50px_rgba(0,194,203,0.06)] border border-[#00C2CB]/12 rounded-[2.5rem] px-8 py-3 flex items-center justify-between'
+        }>
           
           {/* Logo Section */}
           <Link to="/" className="flex items-center gap-3 group mr-8">
@@ -57,8 +62,8 @@ const Navbar = () => {
               <img src={undaLogo} alt="Unda Logo" className="w-full h-full object-contain" />
             </div>
             <div className="flex flex-col">
-              <span className="font-black text-[#0B1E3B] text-lg tracking-tighter leading-none">Unda</span>
-              <span className="text-[6px] font-bold text-[#0B1E3B]/70 uppercase tracking-[0.3em] mt-0.5">Youth Network</span>
+              <span className={`font-black text-lg tracking-tighter leading-none ${isPortal ? 'text-white' : 'text-[#0B1E3B]'}`}>Unda</span>
+              <span className={`text-[6px] font-bold uppercase tracking-[0.3em] mt-0.5 ${isPortal ? 'text-white/80' : 'text-[#0B1E3B]/70'}`}>Youth Network</span>
             </div>
           </Link>
 
@@ -66,20 +71,24 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-1">
 
             {/* Home Link */}
-            <Link 
-              to="/member/dashboard" 
+            <Link
+              to="/member/dashboard"
               className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                location.pathname === '/member/dashboard' ? 'text-white bg-[#0B1E3B] shadow-[0_10px_30px_rgba(0,194,203,0.12)]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.06)]'
+                location.pathname === '/member/dashboard'
+                  ? (isPortal ? 'text-[#0B1E3B] bg-white shadow-[0_10px_30px_rgba(0,194,203,0.12)]' : 'text-white bg-[#0B1E3B] shadow-[0_10px_30px_rgba(0,194,203,0.12)]')
+                  : (isPortal ? 'text-white/90 hover:text-white hover:bg-white/10 hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.06)]')
               }`}
             >
               Dashboard
             </Link>
             
             {/* About Link */}
-            <Link 
-              to="/about" 
+            <Link
+              to="/about"
               className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                location.pathname === '/about' ? 'text-[#00C2CB] bg-[#00C2CB]/5' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]'
+                location.pathname === '/about'
+                  ? 'text-[#00C2CB] bg-[#00C2CB]/5'
+                  : (isPortal ? 'text-white/90 hover:text-white hover:bg-white/10 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]')
               }`}
             >
               About Us
@@ -88,15 +97,17 @@ const Navbar = () => {
             {/* Programs Dropdown */}
             <div className="relative" onMouseEnter={() => handleMouseEnter('programs')} onMouseLeave={handleMouseLeave}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                activeDropdown === 'programs' ? 'text-[#00C2CB] bg-[#00C2CB]/5' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]'
+                activeDropdown === 'programs'
+                  ? 'text-[#00C2CB] bg-[#00C2CB]/5'
+                  : (isPortal ? 'text-white/90 hover:text-white hover:bg-white/10 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]')
               }`}>
                 Programs <ChevronDown size={10} className={`transition-transform duration-300 ${activeDropdown === 'programs' ? 'rotate-180' : ''}`} />
               </button>
 
               {activeDropdown === 'programs' && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 w-[480px] animate-in fade-in slide-in-from-top-2 duration-200">
-                    <div className="bg-white border border-slate-100 rounded-[2rem] shadow-xl p-5 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#00C2CB]/5 blur-2xl pointer-events-none"/>
+                  <div className="bg-white border border-slate-100 rounded-[2rem] shadow-xl p-5 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#00C2CB]/5 blur-2xl pointer-events-none"/>
                     
                       <div className="flex gap-4 mb-4 pb-4 border-b border-white/10">
                         <Link to="/programs" className="flex-1 bg-[#00C2CB]/10 hover:bg-[#00C2CB]/20 p-4 rounded-xl transition-colors group/main">
@@ -131,30 +142,36 @@ const Navbar = () => {
             </div>
 
             {/* Resources (Direct Link) */}
-            <Link 
-              to="/resources" 
+            <Link
+              to="/resources"
               className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                  location.pathname === '/resources' ? 'text-[#00C2CB] bg-[#00C2CB]/5' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]'
+                  location.pathname === '/resources'
+                    ? 'text-[#00C2CB] bg-[#00C2CB]/5'
+                    : (isPortal ? 'text-white/90 hover:text-white hover:bg-white/10 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]')
                 }`}
             >
               Resources
             </Link>
 
             {/* Blog & Media (Direct Link) */}
-            <Link 
-               to="/blog" 
+             <Link
+               to="/blog"
                className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                 location.pathname === '/blog' ? 'text-[#0090C0] bg-[#0090C0]/5' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]'
+                 location.pathname === '/blog'
+                   ? 'text-[#0090C0] bg-[#0090C0]/5'
+                   : (isPortal ? 'text-white/90 hover:text-white hover:bg-white/10 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]')
                }`}
              >
                Stories
              </Link>
 
              {/* Gallery (Direct Link) */}
-             <Link 
-               to="/gallery" 
+             <Link
+               to="/gallery"
                className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                 location.pathname === '/gallery' ? 'text-[#00C2CB] bg-[#00C2CB]/5' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]'
+                 location.pathname === '/gallery'
+                   ? 'text-[#00C2CB] bg-[#00C2CB]/5'
+                   : (isPortal ? 'text-white/90 hover:text-white hover:bg-white/10 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]')
                }`}
              >
                Gallery
@@ -163,7 +180,9 @@ const Navbar = () => {
             {/* Member / Portal Dropdown (moved from sidebar) */}
             <div className="relative" onMouseEnter={() => handleMouseEnter('member')} onMouseLeave={handleMouseLeave}>
               <button className={`flex items-center gap-1.5 px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                activeDropdown === 'member' ? 'text-[#00C2CB] bg-[#00C2CB]/5' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]'
+                activeDropdown === 'member'
+                  ? 'text-[#00C2CB] bg-[#00C2CB]/5'
+                  : (isPortal ? 'text-white/90 hover:text-white hover:bg-white/10 hover:shadow-[0_8px_20px_rgba(0,0,0,0.04)]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.04)]')
               }`}>
                 Member <ChevronDown size={10} className={`transition-transform duration-300 ${activeDropdown === 'member' ? 'rotate-180' : ''}`} />
               </button>
@@ -191,7 +210,7 @@ const Navbar = () => {
              {/* Get Involved Dropdown */}
              <div className="relative" onMouseEnter={() => handleMouseEnter('join')} onMouseLeave={handleMouseLeave}>
                 <button className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
-                  activeDropdown === 'join' ? 'text-[#00C2CB]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B]'
+                  activeDropdown === 'join' ? 'text-[#00C2CB]' : (isPortal ? 'text-white/90 hover:text-white' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B]')
                 }`}>
                   Get Involved <ChevronDown size={10} />
                 </button>
@@ -223,19 +242,19 @@ const Navbar = () => {
              </div>
 
             {/* Creative Combined Portal Button */}
-            <div className="flex items-center bg-slate-100 p-1 rounded-2xl group border border-slate-200 hover:border-[#00C2CB]/30 hover:shadow-lg transition-all duration-300">
+            <div className={`${isPortal ? 'flex items-center bg-transparent p-1 rounded-2xl group' : 'flex items-center bg-slate-100 p-1 rounded-2xl group border border-slate-200 hover:border-[#00C2CB]/30 hover:shadow-lg transition-all duration-300'}`}>
                 <Link 
                   to="/member/dashboard" 
-                  className="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-[#0B1E3B] hover:text-white hover:bg-[#0B1E3B] transition-all duration-300 flex items-center gap-2"
+                  className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest ${isPortal ? 'text-white bg-white/10 hover:bg-white/20' : 'text-[#0B1E3B] hover:text-white hover:bg-[#0B1E3B]'} transition-all duration-300 flex items-center gap-2`}
                 >
                   Member <div className="h-1.5 w-1.5 bg-green-500 rounded-full animate-pulse" />
                 </Link>
-                <div className="w-px h-4 bg-slate-300 mx-1 group-hover:opacity-50 transition-opacity" />
-                <a 
-                  href="https://unda-youth-network-backend.onrender.com/auth/login" 
-                  target="_blank" 
+                <div className={`w-px h-4 mx-1 transition-opacity ${isPortal ? 'bg-white/30' : 'bg-slate-300 group-hover:opacity-50'}`} />
+                <a
+                  href="https://unda-youth-network-backend.onrender.com/auth/login"
+                  target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-[#00C2CB] hover:bg-white transition-all duration-300"
+                  className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest ${isPortal ? 'text-white/90 hover:text-white' : 'text-slate-400 hover:text-[#00C2CB] hover:bg-white'} transition-all duration-300`}
                 >
                   Staff
                 </a>
@@ -243,8 +262,8 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Toggle */}
-          <button 
-            className="md:hidden p-2 text-[#0B1E3B]"
+          <button
+            className={`md:hidden p-2 ${isPortal ? 'text-white' : 'text-[#0B1E3B]'}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}

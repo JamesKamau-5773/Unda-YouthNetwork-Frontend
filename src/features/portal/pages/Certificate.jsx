@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PortalLayout from '../layout/PortalLayout';
+import DashboardLayout from '../layout/DashboardLayout';
 import { Download, Share2, Shield, Calendar, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import GlassCard from '@/components/ui/GlassCard';
@@ -127,8 +127,15 @@ const Certificate = () => {
             setTimeout(() => setToast(''), 3000);
         }
     };
-  return (
-    <PortalLayout title="My Certificate" subtitle="Proof of your commitment to mental resilience.">
+    return (
+        <DashboardLayout headerContent={(
+            <div className="max-w-7xl mx-auto px-6">
+                <div className="rounded-3xl bg-white p-6 md:px-8 md:py-4 shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/10">
+                    <h2 className="text-lg md:text-xl font-extrabold tracking-tight text-[#0B1E3B]">My Certificate</h2>
+                    <p className="text-sm text-[#334155] mt-1">Proof of your commitment to mental resilience.</p>
+                </div>
+            </div>
+        )}>
         <div className="flex flex-col xl:flex-row gap-8 items-start">
             
             {/* Certificate Preview */}
