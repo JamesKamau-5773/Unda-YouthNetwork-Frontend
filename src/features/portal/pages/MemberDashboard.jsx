@@ -47,28 +47,37 @@ const MemberDashboard = () => {
 			<div className="grid grid-cols-12 gap-6">
 
 
-				<div className="col-span-12 md:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-4 -mt-12">
-					<DashboardCard className="min-h-[140px] flex items-start">
-						<div>
-							<div className="text-sm text-[#475569]">Sessions this month</div>
-							<div className="text-[#0B1E3B] text-3xl font-bold mt-2">12</div>
-						</div>
-					</DashboardCard>
+				<div className="col-span-12 md:col-span-8 -mt-8">
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+						<DashboardCard className="min-h-[140px] h-full">
+							<div className="flex flex-col justify-between h-full">
+								<div>
+									<div className="text-sm text-[#475569]">Sessions this month</div>
+									<div className="text-[#0B1E3B] text-3xl font-bold mt-2">12</div>
+								</div>
+							</div>
+						</DashboardCard>
 
-					<DashboardCard className="min-h-[140px] flex items-start">
-						<div>
-							<div className="text-sm text-[#475569]">Average mood</div>
-							<div className="text-[#0B1E3B] text-3xl font-bold mt-2">Good 😊</div>
-						</div>
-					</DashboardCard>
+						<DashboardCard className="min-h-[140px] h-full">
+							<div className="flex flex-col justify-between h-full">
+								<div>
+									<div className="text-sm text-[#475569]">Average mood</div>
+									<div className="text-[#0B1E3B] text-3xl font-bold mt-2">Good 😊</div>
+								</div>
+							</div>
+						</DashboardCard>
 
-					<DashboardCard className="min-h-[140px] flex items-start">
-						<div>
-							<div className="text-sm text-[#475569]">Active challenges</div>
-							<div className="text-[#0B1E3B] text-3xl font-bold mt-2">3</div>
+						<DashboardCard className="min-h-[140px] h-full">
+							<div className="flex flex-col justify-between h-full">
+								<div>
+									<div className="text-sm text-[#475569]">Active challenges</div>
+									<div className="text-[#0B1E3B] text-3xl font-bold mt-2">3</div>
+								</div>
+							</div>
+						</DashboardCard>
 						</div>
-					</DashboardCard>
-				</div>
+
+					</div>
 
 				<div className="col-span-12 md:col-span-4">
 					<DashboardCard className="flex flex-col gap-4">

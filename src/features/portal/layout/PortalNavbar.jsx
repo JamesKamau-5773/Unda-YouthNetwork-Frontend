@@ -26,9 +26,9 @@ const PortalNavbar = () => {
               <div className="h-10 w-10 rounded-lg overflow-hidden bg-white flex items-center justify-center">
                 <img src={undaLogo} alt="Unda" className="w-full h-full object-contain" />
               </div>
-              <div className="flex flex-col leading-none">
+                <div className="flex flex-col leading-none">
                 <span className="font-extrabold text-white text-lg">Unda</span>
-                <span className="text-blue-100 text-xs uppercase tracking-widest">Youth Network</span>
+                <span className="text-white/80 text-xs uppercase tracking-widest">Youth Network</span>
               </div>
             </div>
 
@@ -43,7 +43,7 @@ const PortalNavbar = () => {
                       className={`px-4 py-2 rounded-full font-semibold text-sm transition-shadow ${
                         active
                           ? 'bg-white text-[#0B1E3B] shadow-[0_8px_24px_rgba(0,194,203,0.15)]'
-                          : 'text-blue-100 hover:text-white hover:bg-white/5'
+                          : 'text-white/80 hover:text-white hover:bg-white/5'
                       }`}
                     >
                       {i.name}
