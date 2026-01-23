@@ -123,7 +123,7 @@ const PortalLayout = ({ children, title, subtitle }) => {
         <div className="max-w-7xl mx-auto site-surface text-[#1e293b] dark:text-white shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/20 rounded-[2.5rem] px-4 py-3 md:px-8 md:py-3 flex flex-col md:flex-row items-start md:items-center md:justify-between gap-3">
           <div className="w-full md:w-auto">
             <h2 className="text-lg md:text-xl font-extrabold tracking-tight">{headerTitle}</h2>
-            {subtitle && <p className="text-[12px] text-slate-500 mt-1">{subtitle}</p>}
+            {subtitle && <p className="text-[12px] text-[#334155] mt-1">{subtitle}</p>}
           </div>
 
           <div className="w-full md:w-auto">

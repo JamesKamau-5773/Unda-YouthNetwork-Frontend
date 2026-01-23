@@ -133,7 +133,7 @@ const Certificate = () => {
             
             {/* Certificate Preview */}
             <GlassCard className="flex-1 w-full p-4 md:p-8 rounded-2xl shadow-inner flex justify-center overflow-x-auto">
-                <div ref={certRef} className="w-full max-w-3xl mx-auto bg-white shadow-2xl relative p-6 md:p-12 text-center flex flex-col justify-between border border-slate-300 overflow-hidden">
+                <div ref={certRef} className="w-full max-w-3xl mx-auto bg-white shadow-2xl relative p-6 md:p-12 text-center flex flex-col justify-between border border-[#E6EEF2] overflow-hidden">
                     
                     {/* Decorative Background */}
                     <div className="absolute inset-0 z-0 pointer-events-none opacity-5" 
@@ -156,21 +156,21 @@ const Certificate = () => {
                     </div>
 
                     <div className="relative z-10 py-8">
-                        <p className="text-slate-500 font-serif italic text-lg mb-6">This certifies that</p>
+                        <p className="text-[#334155] font-serif italic text-lg mb-6">This certifies that</p>
                         <h3 className="text-3xl md:text-5xl font-serif font-bold text-[#1e293b] mb-2">{profile?.full_name || profile?.name || '—'}</h3>
-                        <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-8">Member ID: {profile?.member_id || profile?.id || '—'}</p>
+                        <p className="text-sm font-bold text-[#334155] uppercase tracking-widest mb-8">Member ID: {profile?.member_id || profile?.id || '—'}</p>
                         
-                        <p className="text-slate-600 max-w-xl mx-auto text-sm md:text-base leading-relaxed font-serif italic">
+                        <p className="text-[#334155] max-w-xl mx-auto text-sm md:text-base leading-relaxed font-serif italic">
                             Is a recognized member of the Unda Youth Network, having demonstrated commitment to promoting mental health resilience and peer support within the community.
                         </p>
                     </div>
 
-                    <div className="relative z-10 flex justify-between items-end mt-8 pt-8 border-t border-slate-100">
+                    <div className="relative z-10 flex justify-between items-end mt-8 pt-8 border-t border-[#E6EEF2]">
                         <div className="text-left">
                             <div className="h-10 border-b border-black/20 mb-2 w-40 flex items-end">
                                 <span className="font-signature text-xl text-[#1e293b]">Dr. Amani</span>
                             </div>
-                            <p className="text-[10px] font-bold uppercase text-slate-400 tracking-widest">Program Director</p>
+                            <p className="text-[10px] font-bold uppercase text-[#334155] tracking-widest">Program Director</p>
                         </div>
                         
                         {/* Seal */}
@@ -182,7 +182,7 @@ const Certificate = () => {
                         </div>
 
                         <div className="text-right">
-                            <p className="text-[10px] font-bold uppercase text-slate-400 tracking-widest mb-1">Date</p>
+                            <p className="text-[10px] font-bold uppercase text-[#334155] tracking-widest mb-1">Date</p>
                             <p className="font-bold text-[#1e293b] text-sm">{(certInfo && certInfo.issued_at) ? new Date(certInfo.issued_at).toLocaleDateString() : '—'}</p>
                         </div>
                     </div>
@@ -198,26 +198,26 @@ const Certificate = () => {
                             onClick={handleDownload}
                             aria-label="Download certificate"
                             disabled={processing || !(certInfo && certInfo.issued && certInfo.trainings_completed)}
-                            className={`w-full ${processing ? 'opacity-70 cursor-wait' : ''} bg-gradient-to-r from-[#00C2CB] to-[#0090C0] text-white rounded-xl shadow-lg shadow-slate-200 font-bold flex items-center gap-2 ${!(certInfo && certInfo.issued && certInfo.trainings_completed) ? 'opacity-50 pointer-events-none' : ''}`}
+                            className={`w-full ${processing ? 'opacity-70 cursor-wait' : ''} bg-gradient-to-r from-[#00C2CB] to-[#0090C0] text-white rounded-xl shadow-lg shadow-[0_8px_30px_rgba(0,194,203,0.06)] font-bold flex items-center gap-2 ${!(certInfo && certInfo.issued && certInfo.trainings_completed) ? 'opacity-50 pointer-events-none' : ''}`}
                         >
                             <Download size={16} /> {processing ? 'Preparing...' : 'Download / Print'}
                         </Button>
 
                         {!certInfo || !certInfo.trainings_completed ? (
-                            <div className="text-xs text-slate-500">
+                            <div className="text-xs text-[#334155]">
                                 Certificate is issued only after required training is completed. <a href="/member/events" className="font-bold text-amber-500 hover:underline">View training sessions</a>
                             </div>
                         ) : null}
                         <div className="flex gap-2">
-                            <Button onClick={refreshCertificate} variant="outline" aria-label="Refresh certificate status" className="flex-1 rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#1e293b] dark:hover:text-white border-slate-200">
+                            <Button onClick={refreshCertificate} variant="outline" aria-label="Refresh certificate status" className="flex-1 rounded-xl font-bold flex items-center gap-2 text-[#334155] hover:text-[#1e293b] dark:hover:text-white border-[#E6EEF2]">
                                 Check Eligibility
                             </Button>
-                            <Button onClick={() => setShowReissueDialog(true)} variant="ghost" aria-label="Request reissue" className="rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#1e293b] dark:hover:text-white border-slate-200">
+                            <Button onClick={() => setShowReissueDialog(true)} variant="ghost" aria-label="Request reissue" className="rounded-xl font-bold flex items-center gap-2 text-[#334155] hover:text-[#1e293b] dark:hover:text-white border-[#E6EEF2]">
                                 Request Re-issue
                             </Button>
                         </div>
 
-                        <Button onClick={handleShare} variant="outline" aria-label="Share certificate link" className="w-full rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#1e293b] dark:hover:text-white border-slate-200">
+                        <Button onClick={handleShare} variant="outline" aria-label="Share certificate link" className="w-full rounded-xl font-bold flex items-center gap-2 text-[#334155] hover:text-[#1e293b] dark:hover:text-white border-[#E6EEF2]">
                             <Share2 size={16} /> Share Link
                         </Button>
                     </div>
@@ -232,7 +232,7 @@ const Certificate = () => {
                         </div>
                         <div>
                             <h3 className="font-bold text-sm">Verified Member</h3>
-                            <p className="text-[10px] text-slate-500">Since Jan 2024</p>
+                            <p className="text-[10px] text-[#334155]">Since Jan 2024</p>
                         </div>
                         {toast && (
                             <div className="fixed top-8 right-8 z-50 bg-white text-[#1e293b] px-4 py-2 rounded-md shadow-lg">
@@ -242,15 +242,15 @@ const Certificate = () => {
                     </div>
                     
                         <div className="space-y-3">
-                        <div className="flex justify-between text-xs text-slate-500">
+                        <div className="flex justify-between text-xs text-[#334155]">
                             <span>Certificate</span>
                             <span className="font-bold text-emerald-600">{certInfo && certInfo.issued ? 'Issued' : (loading ? 'Checking' : 'Not issued')}</span>
                         </div>
-                        <div className="flex justify-between text-xs text-slate-500">
+                        <div className="flex justify-between text-xs text-[#334155]">
                             <span>Training Complete</span>
                             <span className="font-bold text-amber-500">{certInfo && typeof certInfo.trainings_completed !== 'undefined' ? (certInfo.trainings_completed ? 'Yes' : 'No') : (loading ? 'Checking' : 'Unknown')}</span>
                         </div>
-                        <div className="flex justify-between text-xs text-slate-500">
+                        <div className="flex justify-between text-xs text-[#334155]">
                             <span>Issued On</span>
                             <span className="font-bold">{certInfo && certInfo.issued_at ? new Date(certInfo.issued_at).toLocaleDateString() : '—'}</span>
                         </div>
