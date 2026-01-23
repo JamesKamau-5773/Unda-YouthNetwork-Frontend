@@ -8,14 +8,14 @@ const WellnessCheckInPortal = () => {
         <DashboardLayout headerContent={(
             <div className="max-w-7xl mx-auto px-6">
                 <div className="rounded-3xl bg-white p-6 md:px-8 md:py-4 shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/10">
-                    <h2 className="text-lg md:text-xl font-extrabold tracking-tight text-[#0B1E3B]">Wellness Check-In</h2>
-                    <p className="text-sm text-[#334155] mt-1">Your weekly mental resilience tracker.</p>
+                    <h2 className="text-lg md:text-xl font-extrabold tracking-tight text-portal-navyInk">Wellness Check-In</h2>
+                    <p className="text-sm text-portal-muted mt-1">Your weekly mental resilience tracker.</p>
                 </div>
             </div>
         )}>
        <div className="max-w-4xl mx-auto">
           
-          <div className="bg-gradient-to-br from-[#00C2CB] to-[#155e75] rounded-3xl p-8 md:p-12 text-center text-white shadow-2xl shadow-teal-900/10 relative overflow-hidden">
+          <div className="bg-gradient-to-br from-portal-teal to-portal-tealDark rounded-3xl p-8 md:p-12 text-center text-white shadow-2xl shadow-teal-900/10 relative overflow-hidden">
              
              {/* Background Decoration */}
              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
@@ -45,7 +45,7 @@ const WellnessCheckInPortal = () => {
                     ))}
                 </div>
 
-                <Link to="/checkin" className="group bg-gradient-to-r from-[#00C2CB] to-[#0090C0] text-white font-bold py-4 px-10 rounded-xl transition-all shadow-xl flex items-center gap-2 text-lg transform hover:-translate-y-1">
+                <Link to="/checkin" className="group bg-gradient-to-r from-portal-teal to-portal-tealDark text-white font-bold py-4 px-10 rounded-xl transition-all shadow-xl flex items-center gap-2 text-lg transform hover:-translate-y-1">
                     Start Check-In
                     <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Link>

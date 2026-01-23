@@ -131,8 +131,8 @@ const Certificate = () => {
         <DashboardLayout headerContent={(
             <div className="max-w-7xl mx-auto px-6">
                 <div className="rounded-3xl bg-white p-6 md:px-8 md:py-4 shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/10">
-                    <h2 className="text-lg md:text-xl font-extrabold tracking-tight text-[#0B1E3B]">My Certificate</h2>
-                    <p className="text-sm text-[#334155] mt-1">Proof of your commitment to mental resilience.</p>
+                    <h2 className="text-lg md:text-xl font-extrabold tracking-tight text-portal-navyInk">My Certificate</h2>
+                    <p className="text-sm text-portal-muted mt-1">Proof of your commitment to mental resilience.</p>
                 </div>
             </div>
         )}>
@@ -154,30 +154,30 @@ const Certificate = () => {
                                 <img src={undaLogo} alt="Logo" className="w-full h-full object-contain" />
                             </div>
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-serif font-black text-[#1e293b] uppercase tracking-widest mb-3">Certificate</h2>
+                        <h2 className="text-4xl md:text-5xl font-serif font-black text-portal-navyInk uppercase tracking-widest mb-3">Certificate</h2>
                         <div className="flex items-center justify-center gap-4">
-                            <div className="h-px bg-[#00C2CB] w-12" />
-                            <p className="text-[#00C2CB] font-bold uppercase tracking-[0.2em] text-xs">Of Membership</p>
-                            <div className="h-px bg-[#00C2CB] w-12" />
+                            <div className="h-px bg-portal-teal w-12" />
+                            <p className="text-portal-teal font-bold uppercase tracking-[0.2em] text-xs">Of Membership</p>
+                            <div className="h-px bg-portal-teal w-12" />
                         </div>
                     </div>
 
                     <div className="relative z-10 py-8">
-                        <p className="text-[#334155] font-serif italic text-lg mb-6">This certifies that</p>
-                        <h3 className="text-3xl md:text-5xl font-serif font-bold text-[#1e293b] mb-2">{profile?.full_name || profile?.name || '—'}</h3>
-                        <p className="text-sm font-bold text-[#334155] uppercase tracking-widest mb-8">Member ID: {profile?.member_id || profile?.id || '—'}</p>
+                        <p className="text-portal-muted font-serif italic text-lg mb-6">This certifies that</p>
+                        <h3 className="text-3xl md:text-5xl font-serif font-bold text-portal-navyInk mb-2">{profile?.full_name || profile?.name || '—'}</h3>
+                        <p className="text-sm font-bold text-portal-muted uppercase tracking-widest mb-8">Member ID: {profile?.member_id || profile?.id || '—'}</p>
                         
                         <p className="text-[#334155] max-w-xl mx-auto text-sm md:text-base leading-relaxed font-serif italic">
                             Is a recognized member of the Unda Youth Network, having demonstrated commitment to promoting mental health resilience and peer support within the community.
                         </p>
                     </div>
 
-                    <div className="relative z-10 flex flex-col md:flex-row justify-between items-end mt-8 pt-8 border-t border-[#E6EEF2]">
+                        <div className="relative z-10 flex flex-col md:flex-row justify-between items-end mt-8 pt-8 border-t border-[#E6EEF2]">
                         <div className="text-left">
                             <div className="h-10 border-b border-black/20 mb-2 w-40 flex items-end">
-                                <span className="font-signature text-xl text-[#1e293b]">Dr. Amani</span>
+                                <span className="font-signature text-xl text-portal-navyInk">Dr. Amani</span>
                             </div>
-                            <p className="text-[10px] font-bold uppercase text-[#334155] tracking-widest">Program Director</p>
+                            <p className="text-[10px] font-bold uppercase text-portal-muted tracking-widest">Program Director</p>
                         </div>
                         
                         {/* Seal */}
@@ -189,8 +189,8 @@ const Certificate = () => {
                         </div>
 
                         <div className="text-right">
-                            <p className="text-[10px] font-bold uppercase text-[#334155] tracking-widest mb-1">Date</p>
-                            <p className="font-bold text-[#1e293b] text-sm">{(certInfo && certInfo.issued_at) ? new Date(certInfo.issued_at).toLocaleDateString() : '—'}</p>
+                            <p className="text-[10px] font-bold uppercase text-portal-muted tracking-widest mb-1">Date</p>
+                            <p className="font-bold text-portal-navyInk text-sm">{(certInfo && certInfo.issued_at) ? new Date(certInfo.issued_at).toLocaleDateString() : '—'}</p>
                         </div>
                     </div>
                 </div>

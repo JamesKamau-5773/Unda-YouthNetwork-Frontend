@@ -40,8 +40,8 @@ const Events = () => {
         <DashboardLayout headerContent={(
             <div className="max-w-7xl mx-auto px-6">
                 <div className="rounded-3xl bg-white p-6 md:px-8 md:py-4 shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/10">
-                    <h2 className="text-lg md:text-xl font-extrabold tracking-tight text-[#0B1E3B]">Events & Training</h2>
-                    <p className="text-sm text-[#334155] mt-1">Connect with professionals and peers.</p>
+                    <h2 className="text-lg md:text-xl font-extrabold tracking-tight text-portal-navyInk">Events & Training</h2>
+                    <p className="text-sm text-portal-muted mt-1">Connect with professionals and peers.</p>
                 </div>
             </div>
         )}>
@@ -50,7 +50,7 @@ const Events = () => {
                 <GlassCard key={idx} className="p-5 rounded-2xl flex flex-col md:flex-row items-center gap-6 glow-teal-sm hover:glow-teal transition-all group">
                     
                     {/* Date Block */}
-                            <div className="h-16 w-16 bg-[#F0F7FF] text-[#0B1E3B] rounded-xl flex flex-col items-center justify-center font-bold flex-shrink-0 group-hover:bg-[#00C2CB] group-hover:text-white transition-colors">
+                            <div className="h-16 w-16 bg-portal-ice text-portal-navyInk rounded-xl flex flex-col items-center justify-center font-bold flex-shrink-0 group-hover:bg-portal-teal group-hover:text-white transition-colors">
                                 <span className="text-xl leading-none">{evt.date.split(' ')[1].replace(',','')}</span>
                                 <span className="text-[10px] uppercase tracking-wide">{evt.date.split(' ')[0]}</span>
                             </div>
@@ -64,21 +64,21 @@ const Events = () => {
                             }`}>
                                 {evt.category}
                             </span>
-                                      <span className="text-[11px] text-[#334155] font-medium flex items-center gap-1">
+                                      <span className="text-[11px] text-portal-muted font-medium flex items-center gap-1">
                                 {evt.type === 'Physical' ? <MapPin size={12}/> : <Video size={12}/>}
                                 {evt.type}
                              </span>
                         </div>
-                                <h3 className="text-lg font-bold text-[#1e293b] dark:text-white truncate">{evt.title}</h3>
-                        <div className="flex items-center justify-center md:justify-start gap-4 mt-1 text-xs text-[#334155] font-medium">
+                                <h3 className="text-lg font-bold text-portal-navyInk dark:text-white truncate">{evt.title}</h3>
+                        <div className="flex items-center justify-center md:justify-start gap-4 mt-1 text-xs text-portal-muted font-medium">
                             <span className="flex items-center gap-1"><Users size={12}/> By {evt.host}</span>
                             <span className="flex items-center gap-1"><Clock size={12}/> {evt.time}</span>
                         </div>
                     </div>
 
                     <div className="w-full md:w-auto">
-                        <Button 
-                            className={`w-full md:w-auto rounded-xl font-bold text-xs h-10 px-6 ${evt.status === 'Waitlist' ? 'bg-[#F0F7FF] text-[#334155]' : 'bg-gradient-to-r from-[#00C2CB] to-[#0090C0] text-white'}`}
+                            <Button 
+                            className={`w-full md:w-auto rounded-xl font-bold text-xs h-10 px-6 ${evt.status === 'Waitlist' ? 'bg-portal-ice text-portal-muted' : 'bg-gradient-to-r from-portal-teal to-portal-tealDark text-white'}`}
                             disabled={evt.status === 'Waitlist'}
                         >
                             {evt.status === 'Waitlist' ? 'Waitlist Only' : 'Register Now'}

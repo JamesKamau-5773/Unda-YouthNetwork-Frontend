@@ -20,8 +20,8 @@ const MemberDashboard = () => {
 				<div className="rounded-3xl bg-[#F0F7FF] p-6 md:px-8 md:py-8 shadow-[0_20px_50px_rgba(0,194,203,0.06)] border border-[#E6F6FB]">
 					<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
 						<div className="max-w-3xl">
-							<h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#0B1E3B]">Welcome back, Champion</h1>
-							<p className="mt-3 text-[#475569] text-lg">Here's your wellness snapshot and upcoming activities.</p>
+							<h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-portal-navyInk">Welcome back, Champion</h1>
+							<p className="mt-3 text-portal-muted text-lg">Here's your wellness snapshot and upcoming activities.</p>
 							<div className="mt-6 flex items-center gap-3">
 								<button className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-[#00C2CB] to-[#0090C0] shadow-lg shadow-[#00C2CB]/20">Start Check-In</button>
 								<button className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold text-[#0B1E3B] bg-white/80 shadow-sm border border-white/10">View Resources</button>
@@ -30,13 +30,13 @@ const MemberDashboard = () => {
 
 						<div className="flex items-center gap-6">
 							<div className="text-center">
-								<div className="text-sm text-[#475569]">Streak</div>
-								<div className="text-3xl font-extrabold text-[#0B1E3B]">7 <span className="text-xl">🔥</span></div>
+								<div className="text-sm text-portal-muted">Streak</div>
+								<div className="text-3xl font-extrabold text-portal-navyInk">7 <span className="text-xl">🔥</span></div>
 							</div>
 							<div className="w-px h-10 bg-[#E6F6FB]" />
 							<div className="text-center">
-								<div className="text-sm text-[#475569]">Points</div>
-								<div className="text-3xl font-extrabold text-[#0B1E3B]">1,240</div>
+								<div className="text-sm text-portal-muted">Points</div>
+								<div className="text-3xl font-extrabold text-portal-navyInk">1,240</div>
 							</div>
 						</div>
 					</div>
@@ -52,8 +52,8 @@ const MemberDashboard = () => {
 						<DashboardCard className="min-h-[140px] h-full">
 							<div className="flex flex-col justify-between h-full">
 								<div>
-									<div className="text-sm text-[#475569]">Sessions this month</div>
-									<div className="text-[#0B1E3B] text-3xl font-bold mt-2">12</div>
+									<div className="text-sm text-portal-muted">Sessions this month</div>
+									<div className="text-portal-navyInk text-3xl font-bold mt-2">12</div>
 								</div>
 							</div>
 						</DashboardCard>
@@ -61,8 +61,8 @@ const MemberDashboard = () => {
 						<DashboardCard className="min-h-[140px] h-full">
 							<div className="flex flex-col justify-between h-full">
 								<div>
-									<div className="text-sm text-[#475569]">Average mood</div>
-									<div className="text-[#0B1E3B] text-3xl font-bold mt-2">Good 😊</div>
+									<div className="text-sm text-portal-muted">Average mood</div>
+									<div className="text-portal-navyInk text-3xl font-bold mt-2">Good 😊</div>
 								</div>
 							</div>
 						</DashboardCard>
@@ -70,8 +70,8 @@ const MemberDashboard = () => {
 						<DashboardCard className="min-h-[140px] h-full">
 							<div className="flex flex-col justify-between h-full">
 								<div>
-									<div className="text-sm text-[#475569]">Active challenges</div>
-									<div className="text-[#0B1E3B] text-3xl font-bold mt-2">3</div>
+									<div className="text-sm text-portal-muted">Active challenges</div>
+									<div className="text-portal-navyInk text-3xl font-bold mt-2">3</div>
 								</div>
 							</div>
 						</DashboardCard>
