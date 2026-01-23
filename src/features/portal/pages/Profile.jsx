@@ -161,7 +161,7 @@ const Profile = () => {
                     </form>
                 </GlassCard>
             </div>
-                </div>
+        </div>
         </DashboardLayout>
   );
 };

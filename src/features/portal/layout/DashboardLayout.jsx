@@ -8,7 +8,7 @@ import WellnessPatternBackground from './WellnessPatternBackground';
 
 const DashboardLayout = ({ children, headerContent }) => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F0F7FF] text-[#1e293b]">
       {/* Split background: top navy, remainder white (320px top) */}
       <div className="relative">
         <div className="absolute inset-x-0 top-0 h-[320px] bg-[#0B1E3B]" />

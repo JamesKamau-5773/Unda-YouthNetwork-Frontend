@@ -293,7 +293,7 @@ const Certificate = () => {
                     <Button onClick={handleRequestReissue} className="bg-amber-500 text-white">Request Re-issue</Button>
                 </DialogFooter>
             </DialogContent>
-                </Dialog>
+        </Dialog>
         </DashboardLayout>
   );
 };

@@ -86,7 +86,7 @@ const Events = () => {
                     </div>
                 </GlassCard>
             ))}
-                </div>
+        </div>
         </DashboardLayout>
   );
 };
