@@ -58,7 +58,7 @@ const Hero = () => {
         {/* Right Content - Fixed Image Sizing */}
         <div className="lg:col-span-5 relative flex flex-col items-center">
           {/* We use h-auto and max-w-sm to ensure the full portrait fits without zooming */}
-          <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-700 border-[12px] border-white max-w-sm">
+          <div className="relative z-10 rounded-[2.5rem] overflow-hidden glow-teal rotate-2 hover:rotate-0 transition-transform duration-700 border-[12px] border-white max-w-sm">
             <img
               src="https://i.pinimg.com/736x/b6/06/a8/b606a84bb3dd6679105d163c7dcadf70.jpg"
               alt="Confident young Kenyan person representing the Thrive pillar"
