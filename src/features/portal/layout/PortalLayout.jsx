@@ -9,7 +9,7 @@ const MemberNav = () => {
   const navigate = useNavigate();
 
   const items = [
-    { name: 'Dashboard', path: '/member/dashboard' },
+    { name: 'Home', path: '/member/dashboard' },
     { name: 'Wellness', path: '/member/check-in' },
     { name: 'Events', path: '/member/events' },
     { name: 'Certificate', path: '/member/certificate' },
@@ -23,27 +23,15 @@ const MemberNav = () => {
   };
 
   return (
-    <nav className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-      <div className="hidden md:flex items-center gap-2">
-        {items.map(i => {
-          const active = location.pathname === i.path || location.pathname.startsWith(i.path + '/');
-          return (
-            <Link key={i.path} to={i.path} className={`px-3 py-1.5 rounded-full text-[12px] font-semibold uppercase tracking-wide transition ${active ? 'bg-[#0B1E3B] text-white shadow' : 'bg-slate-50 dark:bg-white/5 text-[#0B1E3B]/80 dark:text-[#94A3B8] hover:bg-slate-100 dark:hover:bg-white/6'}`}>
-              {i.name}
-            </Link>
-          );
-        })}
-      </div>
-
-      {/* Mobile full-width centered scrollable nav (hidden — replaced by mobile menu overlay) */}
-      <div className="hidden flex gap-2 overflow-x-auto no-scrollbar justify-center w-full py-2">
+    <nav className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+      <div className="hidden md:flex items-center gap-3">
         {items.map(i => {
           const active = location.pathname === i.path || location.pathname.startsWith(i.path + '/');
           return (
             <Link
               key={i.path}
               to={i.path}
-              className={`px-3 py-2 rounded-full text-sm font-semibold whitespace-nowrap ${active ? 'bg-[#0B1E3B] text-white' : 'bg-slate-50 dark:bg-white/5 text-[#0B1E3B]/90 dark:text-[#94A3B8]'}`}
+              className={`px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wider transition-border border ${active ? 'bg-white text-[#0B1E3B] border-transparent shadow' : 'bg-white/0 text-[#0B1E3B] border-[#E6EEF2] hover:border-[#00C2CB]'}`}
             >
               {i.name}
             </Link>
@@ -51,10 +39,22 @@ const MemberNav = () => {
         })}
       </div>
 
-      {/* Sign out: hidden on mobile inside header, shown as small button below mobile nav */}
-      <button onClick={handleSignOut} className="hidden md:inline-flex ml-2 px-3 py-1.5 rounded-full text-sm font-medium text-red-500 bg-white dark:bg-white/5 border border-red-100 dark:border-red-800 hover:bg-red-50 dark:hover:bg-red-600">Sign Out</button>
-      <div className="md:hidden w-full flex justify-center">
-        <button onClick={handleSignOut} className="mt-2 px-3 py-1 rounded-full text-sm font-medium text-red-500 bg-white dark:bg-white/5 border border-red-100 dark:border-red-800 hover:bg-red-50 dark:hover:bg-red-600">Sign Out</button>
+      {/* Mobile centered scrollable nav (hidden when overlay used) */}
+      <div className="hidden md:hidden flex gap-2 overflow-x-auto no-scrollbar justify-center w-full py-2">
+        {items.map(i => {
+          const active = location.pathname === i.path || location.pathname.startsWith(i.path + '/');
+          return (
+            <Link key={i.path} to={i.path} className={`px-3 py-2 rounded-full text-sm font-semibold whitespace-nowrap ${active ? 'bg-[#0B1E3B] text-white' : 'bg-white text-[#0B1E3B]'}`}>
+              {i.name}
+            </Link>
+          );
+        })}
+      </div>
+
+      {/* Sign out and Back to Home */}
+      <div className="flex items-center gap-2 ml-2">
+        <Link to="/" className="hidden md:inline-block px-4 py-2 rounded-full text-sm font-semibold border border-[#E6EEF2] bg-white hover:bg-slate-50">Back to Home</Link>
+        <button onClick={handleSignOut} className="px-3 py-1.5 rounded-full text-sm font-medium text-red-600 bg-white border border-red-100 hover:bg-red-50">Sign Out</button>
       </div>
     </nav>
   );
@@ -102,12 +102,12 @@ const PortalLayout = ({ children, title, subtitle }) => {
 
       {/* Mobile slim floating header (logo + menu) */}
       <div className="md:hidden fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-4">
-        <div className="mx-auto rounded-full backdrop-blur-md bg-[#0B1E3B]/80 border border-white/10 px-4 py-2 flex items-center justify-between">
+        <div className="mx-auto rounded-full backdrop-blur-md bg-white/90 border border-[#E6EEF2] px-4 py-2 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="h-8 w-8 rounded-lg overflow-hidden bg-white/5 flex items-center justify-center">
               <img src="/assets/logos/unda-logo-main.jpg" alt="Unda" className="w-full h-full object-contain" />
             </div>
-            <div className="text-white font-bold">Unda</div>
+            <div className="text-[#0B1E3B] font-bold">Unda</div>
           </div>
           <button aria-label="Open menu" onClick={() => setMobileMenuOpen(true)} className="p-2 rounded-md text-[#00C2CB]">
             <Menu size={20} />
@@ -155,19 +155,19 @@ const PortalLayout = ({ children, title, subtitle }) => {
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-60 bg-[#0B1E3B]/95 backdrop-blur-md flex items-center justify-center px-6">
-          <div className="w-full max-w-md text-center relative">
-            <button onClick={() => setMobileMenuOpen(false)} className="absolute top-6 right-6 text-white p-2 rounded-md">
+        <div className="fixed inset-0 z-60 bg-white/90 backdrop-blur-sm flex items-center justify-center px-6">
+          <div className="w-full max-w-md text-center relative bg-white rounded-2xl shadow-lg p-6">
+            <button onClick={() => setMobileMenuOpen(false)} className="absolute top-4 right-4 text-[#0B1E3B] p-2 rounded-md">
               <X size={26} />
             </button>
-            <nav className="flex flex-col gap-6 py-12">
-              <a href="/member/dashboard" className="text-2xl font-bold text-white">Dashboard</a>
-              <a href="/member/check-in" className="text-2xl font-bold text-white">Wellness</a>
-              <a href="/member/events" className="text-2xl font-bold text-white">Events</a>
-              <a href="/member/certificate" className="text-2xl font-bold text-white">Certificate</a>
-              <a href="/member/profile" className="text-2xl font-bold text-white">Profile</a>
-              <div className="mt-6">
-                <button onClick={() => { localStorage.removeItem('unda_token'); localStorage.removeItem('unda_user'); setMobileMenuOpen(false); navigate('/portal'); }} className="px-6 py-3 rounded-full bg-white text-[#0B1E3B] font-semibold">Sign Out</button>
+            <nav className="flex flex-col gap-4 py-4">
+              <Link to="/member/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Home</Link>
+              <Link to="/member/check-in" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Wellness</Link>
+              <Link to="/member/events" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Events</Link>
+              <Link to="/member/certificate" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Certificate</Link>
+              <Link to="/member/profile" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Profile</Link>
+              <div className="mt-4">
+                <button onClick={() => { localStorage.removeItem('unda_token'); localStorage.removeItem('unda_user'); setMobileMenuOpen(false); navigate('/portal'); }} className="w-full px-4 py-3 rounded-full bg-[#0B1E3B] text-white font-semibold">Sign Out</button>
               </div>
             </nav>
           </div>
