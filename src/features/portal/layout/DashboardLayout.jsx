@@ -2,42 +2,37 @@ import React from 'react';
 import PortalNavbar from './PortalNavbar';
 import WellnessPatternBackground from './WellnessPatternBackground';
 
-// DashboardLayout implements the "Crisp Horizon" split background:
-// Top 320px: Brand Navy (#0B1E3B). Bottom: Pure White / Brand Ice for body.
-// Children content is placed in a centered container and card surfaces overlap the navy boundary.
-
 const DashboardLayout = ({ children, headerContent }) => {
   return (
-    <div className="min-h-screen bg-portal-ice text-portal-navyInk">
-      {/* Split background: top navy, remainder white (320px top) */}
-      <div className="relative">
-        {/* Wellness pattern sits behind everything (z-0) so it doesn't wash out the navy header or content */}
-        <WellnessPatternBackground />
-
-        <div className="absolute inset-x-0 top-0 h-[280px] bg-portal-navy z-10" />
-
-        {/* Navbar sits above the navy header */}
-        <div className="relative z-20">
-          <PortalNavbar />
-        </div>
-
-        {/* Main container: content will overlap the navy with negative margin */}
-        <main className="relative z-20 max-w-7xl mx-auto px-6 -mt-20">
-          {/* Header content can be passed in, and sits atop the white cards */}
-          {headerContent && (
-            <div className="mb-6">
-              {headerContent}
-            </div>
-          )}
-
-          <div className="space-y-6">
-            {children}
-          </div>
-        </main>
-
-        {/* Bottom filler to ensure navy behind header extends visually */}
-        <div className="h-40 bg-white" />
+    // GLOBAL THEME: Anti-Glare Mint Background
+    <div className="min-h-screen bg-[#F2F9FA] text-[#0B1E3B] relative font-sans selection:bg-[#E0F7FA] selection:text-[#006064]">
+      
+      {/* 1. Global Texture */}
+      <div className="fixed inset-0 z-0">
+         <WellnessPatternBackground />
       </div>
+
+      {/* 2. Global Navbar (Sticky & High Z-Index) */}
+      <div className="relative z-50">
+        <PortalNavbar />
+      </div>
+
+      {/* 3. Global Content Container */}
+      <main className="relative z-20 max-w-7xl mx-auto px-6 pt-8 pb-20 animate-in fade-in duration-500">
+        
+        {/* Header Section (Welcome Cards, Page Titles) */}
+        {headerContent && (
+          <div className="mb-8 w-full">
+            {headerContent}
+          </div>
+        )}
+
+        {/* Page Content */}
+        <div className="w-full">
+          {children}
+        </div>
+      </main>
+
     </div>
   );
 };
