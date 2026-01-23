@@ -93,7 +93,7 @@ const DashboardLayout = () => {
           </div>
 
           {/* Stats row */}
-          <div className="col-span-8 grid grid-cols-3 gap-4">
+          <div className="col-span-12 md:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-4">
             <GlassCard>
               <div>
                 <div className="text-sm text-[#94A3B8]">Sessions this month</div>
@@ -117,7 +117,7 @@ const DashboardLayout = () => {
           </div>
 
           {/* Side events */}
-          <div className="col-span-4">
+          <div className="col-span-12 md:col-span-4">
             <GlassCard className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <div>

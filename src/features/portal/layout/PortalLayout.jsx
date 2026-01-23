@@ -132,12 +132,12 @@ const PortalLayout = ({ children, title, subtitle }) => {
       </div>
 
       {/* Main Content Area (add top padding to account for the fixed mobile header) */}
-      <main className="flex-1 min-w-0 relative pt-20 md:pt-10">
+      <main className="flex-1 min-w-0 relative pt-28 md:pt-10">
 
         {/* Mobile sidebar removed - mobile nav is handled by top navbar */}
 
         {/* Content Injector with portal header + member nav */}
-          <div className="p-6 max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-2 duration-500 mt-8">
+          <div className="p-6 max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-2 duration-500 mt-8 pb-28">
             <div className="rounded-3xl bg-white/90 dark:bg-[rgba(11,30,59,0.6)] shadow-xl p-6">
             {/* Portal header: title, subtitle and compact member nav */}
             <div className="flex flex-col">
