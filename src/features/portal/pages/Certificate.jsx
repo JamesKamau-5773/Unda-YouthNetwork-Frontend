@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PortalLayout from '../layout/PortalLayout';
 import { Download, Share2, Shield, Calendar, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import GlassCard from '@/components/ui/GlassCard';
 import undaLogo from '@/assets/logos/unda-logo-main.jpg';
 import { memberService, profileService } from '@/services/apiService';
 import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription, DialogClose, DialogTrigger } from '@/components/ui/dialog';
@@ -131,8 +132,8 @@ const Certificate = () => {
         <div className="flex flex-col xl:flex-row gap-8 items-start">
             
             {/* Certificate Preview */}
-            <div className="flex-1 w-full bg-slate-200 p-4 md:p-8 rounded-2xl shadow-inner flex justify-center overflow-x-auto">
-                <div ref={certRef} className="w-full max-w-[800px] md:mx-0 mx-auto bg-white md:aspect-[1.414/1] aspect-auto shadow-2xl relative p-6 md:p-12 text-center flex flex-col justify-between border border-slate-300">
+            <GlassCard className="flex-1 w-full p-4 md:p-8 rounded-2xl shadow-inner flex justify-center overflow-x-auto">
+                <div ref={certRef} className="w-full max-w-3xl mx-auto bg-white shadow-2xl relative p-6 md:p-12 text-center flex flex-col justify-between border border-slate-300 overflow-hidden">
                     
                     {/* Decorative Background */}
                     <div className="absolute inset-0 z-0 pointer-events-none opacity-5" 
@@ -190,7 +191,7 @@ const Certificate = () => {
 
             {/* Actions Sidebar */}
             <div className="w-full xl:w-80 space-y-6">
-                        <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                        <GlassCard className="p-6">
                     <h3 className="font-bold text-[#0B1E3B] mb-4 text-sm uppercase tracking-wide">Actions</h3>
                     <div className="space-y-3">
                         <Button
@@ -208,19 +209,19 @@ const Certificate = () => {
                             </div>
                         ) : null}
                         <div className="flex gap-2">
-                            <Button onClick={refreshCertificate} variant="outline" aria-label="Refresh certificate status" className="flex-1 rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] border-slate-200">
+                            <Button onClick={refreshCertificate} variant="outline" aria-label="Refresh certificate status" className="flex-1 rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] dark:hover:text-white border-slate-200">
                                 Check Eligibility
                             </Button>
-                            <Button onClick={() => setShowReissueDialog(true)} variant="ghost" aria-label="Request reissue" className="rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] border-slate-200">
+                            <Button onClick={() => setShowReissueDialog(true)} variant="ghost" aria-label="Request reissue" className="rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] dark:hover:text-white border-slate-200">
                                 Request Re-issue
                             </Button>
                         </div>
 
-                        <Button onClick={handleShare} variant="outline" aria-label="Share certificate link" className="w-full rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] border-slate-200">
+                        <Button onClick={handleShare} variant="outline" aria-label="Share certificate link" className="w-full rounded-xl font-bold flex items-center gap-2 text-slate-600 hover:text-[#0B1E3B] dark:hover:text-white border-slate-200">
                             <Share2 size={16} /> Share Link
                         </Button>
                     </div>
-                </div>
+                </GlassCard>
 
                 <div className="bg-[#1E293B] p-6 rounded-2xl text-white relative overflow-hidden shadow-lg">
                     <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#00C2CB]/20 rounded-full blur-2xl" />

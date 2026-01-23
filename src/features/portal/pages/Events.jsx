@@ -2,6 +2,7 @@ import React from 'react';
 import PortalLayout from '../layout/PortalLayout';
 import { Calendar, MapPin, Video, Users, Clock, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import GlassCard from '@/components/ui/GlassCard';
 
 const Events = () => {
     const events = [
@@ -39,7 +40,7 @@ const Events = () => {
     <PortalLayout title="Events & Training" subtitle="Connect with professionals and peers.">
         <div className="grid gap-4">
             {events.map((evt, idx) => (
-                <div key={idx} className="bg-white p-5 rounded-2xl border border-slate-100 flex flex-col md:flex-row items-center gap-6 shadow-sm hover:shadow-md hover:border-slate-200 transition-all group">
+                <GlassCard key={idx} className="p-5 rounded-2xl flex flex-col md:flex-row items-center gap-6 shadow-sm hover:shadow-md transition-all group">
                     
                     {/* Date Block */}
                             <div className="h-16 w-16 bg-slate-50 text-slate-600 rounded-xl flex flex-col items-center justify-center font-bold flex-shrink-0 group-hover:bg-[#0B1E3B] group-hover:text-white transition-colors">
@@ -61,7 +62,7 @@ const Events = () => {
                                 {evt.type}
                              </span>
                         </div>
-                                <h3 className="text-lg font-bold text-[#0B1E3B] truncate">{evt.title}</h3>
+                                <h3 className="text-lg font-bold text-[#0B1E3B] dark:text-white truncate">{evt.title}</h3>
                         <div className="flex items-center justify-center md:justify-start gap-4 mt-1 text-xs text-slate-500 font-medium">
                             <span className="flex items-center gap-1"><Users size={12}/> By {evt.host}</span>
                             <span className="flex items-center gap-1"><Clock size={12}/> {evt.time}</span>
@@ -70,17 +71,13 @@ const Events = () => {
 
                     <div className="w-full md:w-auto">
                         <Button 
-                            className={`w-full md:w-auto rounded-xl font-bold text-xs h-10 px-6 ${
-                                evt.status === 'Waitlist' 
-                                ? 'bg-slate-100 text-slate-400 hover:bg-slate-200' 
-                                        : 'bg-white border border-slate-200 text-[#0B1E3B] hover:bg-[#0B1E3B] hover:text-white'
-                            }`}
+                            className={`w-full md:w-auto rounded-xl font-bold text-xs h-10 px-6 ${evt.status === 'Waitlist' ? 'bg-slate-100 dark:bg-white/5 text-slate-400' : 'bg-gradient-to-r from-[#00C2CB] to-[#0090C0] text-white'}`}
                             disabled={evt.status === 'Waitlist'}
                         >
                             {evt.status === 'Waitlist' ? 'Waitlist Only' : 'Register Now'}
                         </Button>
                     </div>
-                </div>
+                </GlassCard>
             ))}
         </div>
     </PortalLayout>

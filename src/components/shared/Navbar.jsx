@@ -1,13 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ChevronDown, Mic, Users, GraduationCap, MapPin, Shield, Activity, ExternalLink, Menu, X, HeartHandshake, Layers, BookOpen, Lightbulb, Calendar, Globe } from 'lucide-react';
+import { ChevronDown, Mic, Users, GraduationCap, MapPin, Shield, Activity, ExternalLink, Menu, X, HeartHandshake, Layers, BookOpen, Lightbulb, Calendar, Globe, Sun, Moon } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import undaLogo from '@/assets/logos/unda-logo-main.jpg';
 
 const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('unda_theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialDark = stored ? stored === 'dark' : prefersDark;
+      if (initialDark) document.documentElement.classList.add('dark');
+      setIsDark(initialDark);
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const next = !isDark;
+    setIsDark(next);
+    if (next) document.documentElement.classList.add('dark'); else document.documentElement.classList.remove('dark');
+    try { localStorage.setItem('unda_theme', next ? 'dark' : 'light'); } catch (e) {}
+  };
 
   const handleMouseEnter = (name) => setActiveDropdown(name);
   const handleMouseLeave = () => setActiveDropdown(null);
@@ -34,7 +54,20 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 w-full z-[100] px-6 py-6 transition-all duration-300">
       <div className="max-w-7xl mx-auto">
-        
+        {/* Mobile slim floating header */}
+        <div className="md:hidden fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-4">
+          <div className="mx-auto rounded-full backdrop-blur-md bg-[#0B1E3B]/80 border border-white/10 px-4 py-2 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 rounded-lg overflow-hidden bg-white/5 flex items-center justify-center">
+                <img src={undaLogo} alt="Unda" className="w-full h-full object-contain" />
+              </div>
+              <div className="text-white font-bold">Unda</div>
+            </div>
+            <button aria-label="Open menu" onClick={() => setIsMobileMenuOpen(true)} className="p-2 rounded-md text-[#00C2CB]">
+              <Menu size={20} />
+            </button>
+          </div>
+        </div>
 
         {/* 1. TOP UTILITY BAR */}
         <div className="flex justify-between items-center px-8 mb-3 animate-in fade-in slide-in-from-top-2">
@@ -49,7 +82,7 @@ const Navbar = () => {
         </div>
 
         {/* 2. MAIN NAV */}
-        <div className="bg-white text-[#0B1E3B] shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/20 rounded-[2.5rem] px-8 py-3 flex items-center justify-between">
+        <div className="site-surface bg-white text-[#0B1E3B] shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/20 rounded-[2.5rem] px-8 py-3 flex items-center justify-between">
           
           {/* Logo Section */}
           <Link to="/" className="flex items-center gap-3 group mr-8">
@@ -188,6 +221,10 @@ const Navbar = () => {
 
           {/* Right Action Cluster */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Theme toggle */}
+            <button onClick={toggleTheme} aria-label="Toggle theme" className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+              {isDark ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
              {/* Get Involved Dropdown */}
              <div className="relative" onMouseEnter={() => handleMouseEnter('join')} onMouseLeave={handleMouseLeave}>
                 <button className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
@@ -242,76 +279,38 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <button 
-            className="md:hidden p-2 text-[#0B1E3B]"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
+          {/* Mobile Menu Toggle (hidden — handled by slim header on mobile) */}
+          <button className="hidden" aria-hidden>
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-
-        {/* Mobile Menu Drawer */}
+        {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-t border-slate-100 shadow-xl p-6 flex flex-col gap-4 animate-in slide-in-from-top-5 z-50">
-            <Link to="/" className="text-sm font-bold text-[#0B1E3B] py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-            <Link to="/about" className="text-sm font-bold text-[#0B1E3B] py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
-            
-            <div className="py-2 border-b border-slate-50">
-              <span className="text-[10px] font-black uppercase text-[#00C2CB] mb-3 block tracking-widest">Programs</span>
-              <div className="grid grid-cols-1 gap-3 pl-2">
-                 <Link to="/programs" className="flex items-center gap-2 text-sm text-slate-600 font-medium" onClick={() => setIsMobileMenuOpen(false)}>
-                    View All Programs
-                 </Link>
+          <div className="md:hidden fixed inset-0 z-50 bg-[#0B1E3B]/95 backdrop-blur-md p-6 flex flex-col items-center justify-center gap-6">
+            <button onClick={() => setIsMobileMenuOpen(false)} className="absolute top-6 right-6 text-white p-2 rounded-md">
+              <X size={26} />
+            </button>
+            <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-bold text-white">Home</Link>
+            <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-bold text-white">About</Link>
+
+            <div className="w-full max-w-sm text-center">
+              <div className="flex flex-col gap-4 py-4">
+                <Link to="/programs" onClick={() => setIsMobileMenuOpen(false)} className="text-white text-lg">Programs</Link>
                 {workstreams.map(ws => (
-                  <Link key={ws.path} to={ws.path} className="flex items-center gap-2 text-sm text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>
-                    <span className="text-[#00C2CB]">{ws.icon}</span>
-                    {ws.name}
-                  </Link>
+                  <Link key={ws.path} to={ws.path} onClick={() => setIsMobileMenuOpen(false)} className="text-white text-lg flex items-center justify-center gap-2">{ws.icon}<span>{ws.name}</span></Link>
                 ))}
               </div>
-            </div>
-
-            <div className="py-2 border-b border-slate-50">
-              <span className="text-[10px] font-black uppercase text-[#00C2CB] mb-3 block tracking-widest">Hub</span>
-               <div className="grid grid-cols-1 gap-3 pl-2">
-                  <Link to="/resources" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Resources</Link>
-                  <Link to="/blog" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Blog & Media</Link>
-                  <Link to="/gallery" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Gallery</Link>
-               </div>
-            </div>
-
-            <div className="py-2 border-b border-slate-50">
-              <span className="text-[10px] font-black uppercase text-[#0B1E3B] mb-3 block tracking-widest">Get Involved</span>
-               <div className="grid grid-cols-1 gap-3 pl-2">
-                  <Link to="/partner" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Partner / Support</Link>
-                  <Link to="/membership" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Membership</Link>
-                  <Link to="/support" className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>Support</Link>
-               </div>
-            </div>
-
-            <div className="py-2 border-b border-slate-50">
-              <span className="text-[10px] font-black uppercase text-[#00C2CB] mb-3 block tracking-widest">Portal</span>
-              <div className="grid grid-cols-1 gap-3 pl-2">
+              <div className="mt-6">
+                <Link to="/resources" onClick={() => setIsMobileMenuOpen(false)} className="block text-white text-lg">Resources</Link>
+                <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)} className="block text-white text-lg">Stories</Link>
+                <Link to="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="block text-white text-lg">Gallery</Link>
+              </div>
+              <div className="mt-6">
                 {memberItems.map(mi => (
-                  <Link key={mi.path} to={mi.path} className="text-sm font-medium text-slate-600" onClick={() => setIsMobileMenuOpen(false)}>{mi.name}</Link>
+                  <Link key={mi.path} to={mi.path} onClick={() => setIsMobileMenuOpen(false)} className="block text-white text-lg">{mi.name}</Link>
                 ))}
-                <button onClick={() => { localStorage.removeItem('unda_token'); localStorage.removeItem('unda_user'); setIsMobileMenuOpen(false); navigate('/portal'); }} className="text-sm font-medium text-red-500 text-left pl-0">Sign Out</button>
+                <button onClick={() => { localStorage.removeItem('unda_token'); localStorage.removeItem('unda_user'); setIsMobileMenuOpen(false); navigate('/portal'); }} className="mt-4 px-6 py-3 rounded-full bg-white text-[#0B1E3B] font-semibold">Sign Out</button>
               </div>
-            </div>
-            
-            <div className="flex flex-col gap-2">
-              <Button asChild className="w-full bg-[#0B1E3B] text-white mt-4 h-12 rounded-xl">
-                <Link to="/portal" onClick={() => setIsMobileMenuOpen(false)}>
-                  Member Portal
-                </Link>
-              </Button>
-
-              <Button asChild className="w-full bg-white text-[#0B1E3B] border border-slate-200 h-12 rounded-xl">
-                <a href="https://unda-youth-network-backend.onrender.com/auth/login" target="_blank" rel="noopener noreferrer">
-                  Staff Login <ExternalLink size={14} className="ml-2" />
-                </a>
-              </Button>
             </div>
           </div>
         )}
