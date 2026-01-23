@@ -47,7 +47,7 @@ const Blog = () => {
                 {articles.length === 0 ? (
                   <div className="bg-white rounded-2xl p-12 border border-dashed border-slate-200 shadow-sm text-center">
                     <h3 className="text-3xl font-black text-unda-navy mb-3">Coming soon</h3>
-                    <p className="text-slate-500">Stories will be available here once published from our backend.</p>
+                    <p className="text-slate-500">Stories will be available here once published .</p>
                   </div>
                 ) : (
                   articles.map((article, idx) => (
