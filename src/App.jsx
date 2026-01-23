@@ -86,6 +86,7 @@ function App() {
             {/* PORTAL ROUTES (No Main Navbar/Footer) */}
             <Route path="/member/dashboard" element={<ProtectedRoute><MemberDashboard /></ProtectedRoute>} />
             <Route path="/member/check-in" element={<ProtectedRoute><WellnessCheckInPortal /></ProtectedRoute>} />
+            <Route path="/member/check-in/start" element={<ProtectedRoute><WeeklyCheckInForm /></ProtectedRoute>} />
             <Route path="/member/events" element={<ProtectedRoute><Events /></ProtectedRoute>} />
             <Route path="/member/certificate" element={<ProtectedRoute><Certificate /></ProtectedRoute>} />
             <Route path="/member/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
