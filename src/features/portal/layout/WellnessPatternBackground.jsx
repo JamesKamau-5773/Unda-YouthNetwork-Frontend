@@ -7,8 +7,8 @@ import React from 'react';
 
 const Symbol = ({ children, className = '', color = '#0090C0', style = {} }) => (
   <div
-    className={`absolute ${className} opacity-5 mix-blend-multiply blur-xl`} 
-    style={{ color, ...style }}
+    className={`absolute ${className} mix-blend-multiply blur-2xl`} 
+    style={{ color, opacity: 0.04, ...style }}
     aria-hidden="true"
   >
     {children}
@@ -17,12 +17,14 @@ const Symbol = ({ children, className = '', color = '#0090C0', style = {} }) => 
 
 const WellnessPatternBackground = () => {
   return (
-    <div className="pointer-events-none absolute inset-x-0 top-[320px] bottom-0 -z-10 overflow-hidden">
-      {/* Base subtle gradient for the portal body */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#E0F2FE] to-[#F0F7FF]" />
-
-      {/* Lotus (outline) - Brand Teal */}
-      <Symbol className="-left-24 -top-12 w-80 h-80" color="#00C2CB">
+    <div className="pointer-events-none absolute inset-x-0 top-[320px] bottom-0 -z-10 overflow-hidden flex justify-center">
+      <div className="w-full max-w-7xl px-6 relative">
+        {/* Base subtle gradient for the portal body, limited to the page container */}
+        <div className="absolute inset-0 rounded-2xl overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#E0F2FE] to-[#F0F7FF]" />
+        
+          {/* Lotus (outline) - Brand Teal */}
+          <Symbol className="-left-24 -top-12 w-80 h-80" color="#00C2CB">
         <svg viewBox="0 0 120 120" width="320" height="320" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g stroke="#00C2CB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none">
             <path d="M60 90c12-18 32-30 44-36-8-6-20-14-44-14-24 0-36 8-44 14 12 6 32 18 44 36z" />
@@ -76,6 +78,8 @@ const WellnessPatternBackground = () => {
           </g>
         </svg>
       </Symbol>
+        </div>
+      </div>
     </div>
   );
 };

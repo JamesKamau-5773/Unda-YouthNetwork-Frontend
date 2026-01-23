@@ -138,9 +138,9 @@ const Certificate = () => {
         )}>
         <div className="flex flex-col xl:flex-row gap-8 items-start">
             
-            {/* Certificate Preview */}
-            <GlassCard className="flex-1 w-full p-4 md:p-8 rounded-2xl shadow-inner flex justify-center overflow-x-auto">
-                <div ref={certRef} className="w-full max-w-3xl mx-auto bg-white shadow-2xl relative p-6 md:p-12 text-center flex flex-col justify-between border border-[#E6EEF2] overflow-hidden">
+                {/* Certificate Preview */}
+                <GlassCard className="flex-1 min-w-0 w-full p-4 md:p-8 rounded-2xl shadow-inner flex justify-center overflow-auto">
+                    <div ref={certRef} className="w-full mx-auto bg-white shadow-2xl relative p-6 md:p-12 text-center flex flex-col justify-between border border-[#E6EEF2] overflow-hidden min-w-0">
                     
                     {/* Decorative Background */}
                     <div className="absolute inset-0 z-0 pointer-events-none opacity-5" 
@@ -172,7 +172,7 @@ const Certificate = () => {
                         </p>
                     </div>
 
-                    <div className="relative z-10 flex justify-between items-end mt-8 pt-8 border-t border-[#E6EEF2]">
+                    <div className="relative z-10 flex flex-col md:flex-row justify-between items-end mt-8 pt-8 border-t border-[#E6EEF2]">
                         <div className="text-left">
                             <div className="h-10 border-b border-black/20 mb-2 w-40 flex items-end">
                                 <span className="font-signature text-xl text-[#1e293b]">Dr. Amani</span>
