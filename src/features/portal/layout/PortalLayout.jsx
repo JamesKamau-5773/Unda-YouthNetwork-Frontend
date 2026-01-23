@@ -9,7 +9,7 @@ const MemberNav = () => {
   const navigate = useNavigate();
 
   const items = [
-    { name: 'Home', path: '/member/dashboard' },
+    { name: 'Dashboard', path: '/member/dashboard' },
     { name: 'Wellness', path: '/member/check-in' },
     { name: 'Events', path: '/member/events' },
     { name: 'Certificate', path: '/member/certificate' },
@@ -53,7 +53,7 @@ const MemberNav = () => {
 
       {/* Sign out and Back to Home */}
       <div className="flex items-center gap-2 ml-2">
-        <Link to="/" className="hidden md:inline-block px-4 py-2 rounded-full text-sm font-semibold border border-[#E6EEF2] bg-white hover:bg-slate-50">Back to Home</Link>
+        <Link to="/member/dashboard" className="hidden md:inline-block px-4 py-2 rounded-full text-sm font-semibold border border-[#E6EEF2] bg-white hover:bg-slate-50">Back to Dashboard</Link>
         <button onClick={handleSignOut} className="px-3 py-1.5 rounded-full text-sm font-medium text-red-600 bg-white border border-red-100 hover:bg-red-50">Sign Out</button>
       </div>
     </nav>
@@ -155,13 +155,13 @@ const PortalLayout = ({ children, title, subtitle }) => {
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-60 bg-white/90 backdrop-blur-sm flex items-center justify-center px-6">
+            <div className="fixed inset-0 z-60 bg-white/90 backdrop-blur-sm flex items-center justify-center px-6">
           <div className="w-full max-w-md text-center relative bg-white rounded-2xl shadow-lg p-6">
             <button onClick={() => setMobileMenuOpen(false)} className="absolute top-4 right-4 text-[#0B1E3B] p-2 rounded-md">
               <X size={26} />
             </button>
             <nav className="flex flex-col gap-4 py-4">
-              <Link to="/member/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Home</Link>
+              <Link to="/member/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Dashboard</Link>
               <Link to="/member/check-in" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Wellness</Link>
               <Link to="/member/events" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Events</Link>
               <Link to="/member/certificate" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Certificate</Link>
