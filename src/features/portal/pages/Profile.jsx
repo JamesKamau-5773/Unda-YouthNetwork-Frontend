@@ -83,8 +83,8 @@ const Profile = () => {
                 <div className="md:col-span-8 lg:col-span-9">
                 <GlassCard className="p-8">
                     <div className="mb-6">
-                        <h3 className="text-lg font-bold text-[#1e293b] dark:text-white">Personal Information</h3>
-                        <p className="text-sm text-slate-500">Update your contact details here.</p>
+                                <h3 className="text-lg font-bold text-[#1e293b] dark:text-white">Personal Information</h3>
+                                <p className="text-sm text-[#334155]">Update your contact details here.</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
@@ -143,9 +143,9 @@ const Profile = () => {
                             </div>
                         </div>
 
-                        <div className="pt-6 border-t border-slate-100 flex items-center justify-end gap-4">
+                        <div className="pt-6 border-t border-[#E6EEF2] flex items-center justify-end gap-4">
                             {success && <span className="text-green-600 text-sm font-bold animate-in fade-in">Saved Successfully!</span>}
-                            <Button type="button" variant="ghost" className="text-slate-500 hover:text-[#1e293b] dark:hover:text-white">Cancel</Button>
+                                    <Button type="button" variant="ghost" className="text-[#334155] hover:text-[#1e293b] dark:hover:text-white">Cancel</Button>
                             <Button type="submit" disabled={loading} className="bg-[#00C2CB] hover:bg-[#0090C0] text-white font-bold px-6">
                                 {loading ? <Loader2 className="animate-spin mr-2" size={18} /> : <Save className="mr-2" size={18} />}
                                 Save Changes
