@@ -49,7 +49,7 @@ const Navbar = () => {
         </div>
 
         {/* 2. MAIN NAV */}
-        <div className="bg-white text-[#0B1E3B] shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/20 rounded-[2.5rem] px-8 py-3 flex items-center justify-between">
+        <div className="backdrop-blur-md bg-[rgba(255,255,255,0.72)] text-[#0B1E3B] shadow-[0_20px_50px_rgba(0,194,203,0.06)] border border-[#00C2CB]/12 rounded-[2.5rem] px-8 py-3 flex items-center justify-between">
           
           {/* Logo Section */}
           <Link to="/" className="flex items-center gap-3 group mr-8">
@@ -67,12 +67,12 @@ const Navbar = () => {
 
             {/* Home Link */}
             <Link 
-              to="/" 
+              to="/member/dashboard" 
               className={`px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                location.pathname === '/' ? 'text-white bg-[#0B1E3B] shadow-[0_10px_30px_rgba(0,194,203,0.12)]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.06)]'
+                location.pathname === '/member/dashboard' ? 'text-white bg-[#0B1E3B] shadow-[0_10px_30px_rgba(0,194,203,0.12)]' : 'text-[#0B1E3B]/60 hover:text-[#0B1E3B] hover:bg-slate-50 hover:shadow-[0_8px_20px_rgba(0,194,203,0.06)]'
               }`}
             >
-              Home
+              Dashboard
             </Link>
             
             {/* About Link */}
@@ -254,7 +254,7 @@ const Navbar = () => {
         {/* Mobile Menu Drawer */}
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-t border-slate-100 shadow-xl p-6 flex flex-col gap-4 animate-in slide-in-from-top-5 z-50">
-            <Link to="/" className="text-sm font-bold text-[#0B1E3B] py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+            <Link to="/member/dashboard" className="text-sm font-bold text-[#0B1E3B] py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Dashboard</Link>
             <Link to="/about" className="text-sm font-bold text-[#0B1E3B] py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
             
             <div className="py-2 border-b border-slate-50">
