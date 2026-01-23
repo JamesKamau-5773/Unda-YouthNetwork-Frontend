@@ -31,7 +31,7 @@ const MemberNav = () => {
             <Link
               key={i.path}
               to={i.path}
-              className={`px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wider transition-border border ${active ? 'bg-white text-[#0B1E3B] border-transparent shadow' : 'bg-white/0 text-[#0B1E3B] border-[#E6EEF2] hover:border-[#00C2CB]'}`}
+              className={`px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wider transition-border border ${active ? 'bg-white text-[#1e293b] border-transparent shadow' : 'bg-white/0 text-[#1e293b] border-[#E6EEF2] hover:border-[#00C2CB]'}`}
             >
               {i.name}
             </Link>
@@ -44,7 +44,7 @@ const MemberNav = () => {
         {items.map(i => {
           const active = location.pathname === i.path || location.pathname.startsWith(i.path + '/');
           return (
-            <Link key={i.path} to={i.path} className={`px-3 py-2 rounded-full text-sm font-semibold whitespace-nowrap ${active ? 'bg-[#0B1E3B] text-white' : 'bg-white text-[#0B1E3B]'}`}>
+            <Link key={i.path} to={i.path} className={`px-3 py-2 rounded-full text-sm font-semibold whitespace-nowrap ${active ? 'bg-[#1e293b] text-white' : 'bg-white text-[#1e293b]'}`}>
               {i.name}
             </Link>
           );
@@ -53,7 +53,7 @@ const MemberNav = () => {
 
       {/* Sign out and Back to Home */}
       <div className="flex items-center gap-2 ml-2">
-        <Link to="/member/dashboard" className="hidden md:inline-block px-4 py-2 rounded-full text-sm font-semibold border border-[#E6EEF2] bg-white hover:bg-slate-50">Back to Dashboard</Link>
+        <Link to="/member/dashboard" className="hidden md:inline-block px-4 py-2 rounded-full text-sm font-semibold border border-[#E6EEF2] bg-white hover:bg-white/90">Back to Dashboard</Link>
         <button onClick={handleSignOut} className="px-3 py-1.5 rounded-full text-sm font-medium text-red-600 bg-white border border-red-100 hover:bg-red-50">Sign Out</button>
       </div>
     </nav>
@@ -95,7 +95,10 @@ const PortalLayout = ({ children, title, subtitle }) => {
   
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#F8FAFC] via-[#E0F7FA] to-[#F8FAFC] dark:bg-[#061225] dark:text-[#94A3B8]">
+    <div
+      className="min-h-screen flex flex-col"
+      style={{ background: 'linear-gradient(to bottom, #1e293b 0%, #1e293b 30%, #ffffff 30%, #ffffff 100%)', color: '#1e293b' }}
+    >
       {/* Sidebar removed; navigation now in top navbar */}
 
       {/* Mobile sidebar overlay (controlled via state) */}
@@ -107,7 +110,7 @@ const PortalLayout = ({ children, title, subtitle }) => {
             <div className="h-8 w-8 rounded-lg overflow-hidden bg-white/5 flex items-center justify-center">
               <img src="/assets/logos/unda-logo-main.jpg" alt="Unda" className="w-full h-full object-contain" />
             </div>
-            <div className="text-[#0B1E3B] font-bold">Unda</div>
+            <div className="text-[#1e293b] font-bold">Unda</div>
           </div>
           <button aria-label="Open menu" onClick={() => setMobileMenuOpen(true)} className="p-2 rounded-md text-[#00C2CB]">
             <Menu size={20} />
@@ -117,7 +120,7 @@ const PortalLayout = ({ children, title, subtitle }) => {
 
       {/* Use a compact portal header styled like the main site navbar (desktop) */}
       <div className="w-full px-4 pt-4 md:px-6 md:pt-6">
-        <div className="max-w-7xl mx-auto site-surface text-[#0B1E3B] dark:text-white shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/20 rounded-[2.5rem] px-4 py-3 md:px-8 md:py-3 flex flex-col md:flex-row items-start md:items-center md:justify-between gap-3">
+        <div className="max-w-7xl mx-auto site-surface text-[#1e293b] dark:text-white shadow-[0_20px_50px_rgba(0,194,203,0.08)] border border-[#00C2CB]/20 rounded-[2.5rem] px-4 py-3 md:px-8 md:py-3 flex flex-col md:flex-row items-start md:items-center md:justify-between gap-3">
           <div className="w-full md:w-auto">
             <h2 className="text-lg md:text-xl font-extrabold tracking-tight">{headerTitle}</h2>
             {subtitle && <p className="text-[12px] text-slate-500 mt-1">{subtitle}</p>}
@@ -157,17 +160,17 @@ const PortalLayout = ({ children, title, subtitle }) => {
       {mobileMenuOpen && (
             <div className="fixed inset-0 z-60 bg-white/90 backdrop-blur-sm flex items-center justify-center px-6">
           <div className="w-full max-w-md text-center relative bg-white rounded-2xl shadow-lg p-6">
-            <button onClick={() => setMobileMenuOpen(false)} className="absolute top-4 right-4 text-[#0B1E3B] p-2 rounded-md">
+            <button onClick={() => setMobileMenuOpen(false)} className="absolute top-4 right-4 text-[#1e293b] p-2 rounded-md">
               <X size={26} />
             </button>
             <nav className="flex flex-col gap-4 py-4">
-              <Link to="/member/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Dashboard</Link>
-              <Link to="/member/check-in" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Wellness</Link>
-              <Link to="/member/events" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Events</Link>
-              <Link to="/member/certificate" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Certificate</Link>
-              <Link to="/member/profile" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#0B1E3B]">Profile</Link>
-              <div className="mt-4">
-                <button onClick={() => { localStorage.removeItem('unda_token'); localStorage.removeItem('unda_user'); setMobileMenuOpen(false); navigate('/portal'); }} className="w-full px-4 py-3 rounded-full bg-[#0B1E3B] text-white font-semibold">Sign Out</button>
+              <Link to="/member/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#1e293b]">Dashboard</Link>
+              <Link to="/member/check-in" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#1e293b]">Wellness</Link>
+              <Link to="/member/events" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#1e293b]">Events</Link>
+              <Link to="/member/certificate" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#1e293b]">Certificate</Link>
+              <Link to="/member/profile" onClick={() => setMobileMenuOpen(false)} className="text-lg font-bold text-[#1e293b]">Profile</Link>
+                <div className="mt-4">
+                <button onClick={() => { localStorage.removeItem('unda_token'); localStorage.removeItem('unda_user'); setMobileMenuOpen(false); navigate('/portal'); }} className="w-full px-4 py-3 rounded-full bg-[#1e293b] text-white font-semibold">Sign Out</button>
               </div>
             </nav>
           </div>
