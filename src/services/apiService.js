@@ -198,6 +198,17 @@ export const checkInService = {
       referral_destination: data.destination,
       red_flag_detected: data.isRedFlag || false
     };
+    // Debug: log token and payload to help diagnose 401s in network requests
+    try {
+      const token = typeof window !== 'undefined' ? localStorage.getItem('unda_token') : null;
+      console.debug('checkInService.submitCheckIn token=', token);
+      console.debug('checkInService.submitCheckIn expected Authorization=', token ? `Bearer ${token}` : null);
+      console.debug('checkInService.submitCheckIn payload=', payload);
+      console.debug('checkInService.submitCheckIn axios.defaults.headers=', api && api.defaults && api.defaults.headers);
+    } catch (e) {
+      // ignore logging errors
+    }
+
     return await api.post('/api/checkin', payload);
   }
 };
