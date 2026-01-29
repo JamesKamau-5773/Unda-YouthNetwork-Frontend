@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { checkInService } from '../../services/apiService';
 import { useReferral } from '../../context/ReferralContext';
 import parseErrorForUser from '@/lib/errorUtils';
@@ -51,6 +51,16 @@ export default function WeeklyCheckInForm() {
       // ignore parse errors
     }
   }, []);
+
+  // Inline guard: redirect to portal login when not authenticated
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('unda_token') : null;
+    if (!token) {
+      const next = encodeURIComponent('/checkin');
+      navigate(`/portal?next=${next}`);
+    }
+  }, [navigate]);
 
   const handleChange = e => {
     const { name, value } = e.target;
