@@ -119,7 +119,7 @@ function App() {
                     {/* /join route removed — public Join form deprecated; membership actions happen in the portal */}
                     <Route path="/partner" element={<Partner />} />
                     <Route path="/support" element={<Support />} />
-                    <Route path="/checkin" element={<WeeklyCheckInForm />} />
+                    <Route path="/checkin" element={<ProtectedRoute><WeeklyCheckInForm /></ProtectedRoute>} />
                     <Route path="/podcast" element={<PodcastPage />} />
                     <Route path="/mindroots-parent-circle" element={<MindRootsParentCircle />} />
                     <Route path="/campus" element={<CampusEdition />} />
