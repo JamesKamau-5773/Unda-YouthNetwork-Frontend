@@ -161,11 +161,16 @@ const PortalLogin = () => {
         ? { username: identifier, email: identifier, password: formData.password }
         : { username: identifier, password: formData.password };
       const response = await api.post('/api/auth/login', payload);
-      
+      // Log full response for troubleshooting token persistence
+      console.debug('Login response data:', response?.data);
+
       // 2. Extract Token & User
       const { access_token, user } = response.data;
       
       // 3. Save to Storage
+      if (!access_token) {
+        console.warn('Login did not return access_token — token will not be persisted.');
+      }
       localStorage.setItem('unda_token', access_token);
       if (user) {
         localStorage.setItem('unda_user', JSON.stringify(user));
