@@ -1,0 +1,47 @@
+// UNDA / UMV color tokens
+$umv-primary: #0B1E3B;
+$umv-accent: #00C2CB;
+$umv-surface: #F8FAFC;
+$umv-dark: #008ba3;
+
+$portal-navy: #0B1E3B;
+$portal-navy-ink: #1E293B;
+$portal-ice: #F0F7FF;
+$portal-teal: #00C2CB;
+$portal-teal-dark: #0090C0;
+$portal-muted: #475569;
+$portal-subtitle: #E0F2FE;
+$portal-surface: #FFFFFF;
+
+$body-background: #F9FAFB;
+
+// Gradients
+$gradient-energy: linear-gradient(90deg, #00C2CB 0%, #0090C0 100%);
+$gradient-editorial: linear-gradient(to bottom right, #00E5FF, #00C2CB, #008ba3);
+
+// Hero overlay stops
+$hero-overlay-start: rgba(11, 30, 59, 0.45);
+$hero-overlay-end: rgba(0, 194, 203, 0.08);
+
+// Map for convenience
+$unda-colors: (
+  "umv": (
+    "primary": $umv-primary,
+    "accent": $umv-accent,
+    "surface": $umv-surface,
+    "dark": $umv-dark
+  ),
+  "portal": (
+    "navy": $portal-navy,
+    "navyInk": $portal-navy-ink,
+    "ice": $portal-ice,
+    "teal": $portal-teal,
+    "tealDark": $portal-teal-dark,
+    "muted": $portal-muted,
+    "subtitle": $portal-subtitle,
+    "surface": $portal-surface
+  ),
+  "misc": (
+    "bodyBackground": $body-background
+  )
+);

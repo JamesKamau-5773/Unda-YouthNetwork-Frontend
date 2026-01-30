@@ -1,4 +1,6 @@
 import axios from 'axios';
+import auth from '@/lib/auth';
+import { Navigate } from 'react-router-dom';
 
 // 1. Initialize Axios with Backend URL (auto-detects local vs production)
 const api = axios.create({
@@ -16,24 +18,78 @@ const api = axios.create({
 // 2. Request Interceptor: Attaches the Token to every request automatically
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('unda_token');
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
+    const token = auth.getAccessToken();
+    if (token) config.headers['Authorization'] = `Bearer ${token}`;
     return config;
   },
   (error) => Promise.reject(error)
 );
 
 // 3. Response Interceptor: Handles 401 Unauthorized (Logout logic)
+// Helper: queue requests while refreshing
+let isRefreshing = false;
+let refreshQueue = [];
+
+function processQueue(error, token = null) {
+  refreshQueue.forEach(prom => {
+    if (error) prom.reject(error);
+    else prom.resolve(token);
+  });
+  refreshQueue = [];
+}
+
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    // If the backend says "Token Invalid" or "Unauthorized", clear storage
+  async (error) => {
+    const originalRequest = error.config;
+
+    // If 401 and we haven't already tried refreshing, attempt refresh
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+      // mark as retrying to avoid loops
+      originalRequest._retry = true;
+
+      if (isRefreshing) {
+        // queue the request until refresh finishes
+        return new Promise(function(resolve, reject) {
+          refreshQueue.push({ resolve, reject });
+        }).then((token) => {
+          if (token) {
+            originalRequest.headers['Authorization'] = `Bearer ${token}`;
+            return api(originalRequest);
+          }
+          return Promise.reject(error);
+        });
+      }
+
+      isRefreshing = true;
+      try {
+        // Attempt to refresh token. Backend should set refresh token in HttpOnly cookie and
+        // return a new access token in the JSON response: { access_token: '...' }
+        const resp = await api.post('/api/auth/refresh');
+        const newToken = resp?.data?.access_token || null;
+        if (newToken) {
+          auth.setAccessToken(newToken);
+          processQueue(null, newToken);
+          originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
+          isRefreshing = false;
+          return api(originalRequest);
+        }
+        // no token returned — fallthrough to clear auth
+        processQueue(new Error('No refresh token'), null);
+        isRefreshing = false;
+        auth.clearAuth();
+        return Promise.reject(error);
+      } catch (refreshErr) {
+        isRefreshing = false;
+        processQueue(refreshErr, null);
+        auth.clearAuth();
+        return Promise.reject(refreshErr);
+      }
+    }
+
+    // For other 401s (or if retry failed), clear auth to force login
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem('unda_token');
-      // Optional: You can force a reload or redirect here if strictly needed
-      // window.location.href = '/portal'; 
+      auth.clearAuth();
     }
     return Promise.reject(error);
   }

@@ -56,7 +56,9 @@ export default function WeeklyCheckInForm() {
   const navigate = useNavigate();
   useEffect(() => {
     const token = typeof window !== 'undefined' ? localStorage.getItem('unda_token') : null;
-    if (!token) {
+    const user = typeof window !== 'undefined' ? localStorage.getItem('unda_user') : null;
+    const hasToken = token && token !== 'undefined' && token !== 'null';
+    if (!hasToken && !user) {
       const next = encodeURIComponent('/checkin');
       navigate(`/portal?next=${next}`);
     }
