@@ -166,12 +166,15 @@ const PortalLogin = () => {
 
       // 2. Extract Token & User
       const { access_token, user } = response.data;
-      
-      // 3. Save to Storage
-      if (!access_token) {
+
+      // 3. Save to Storage / in-memory handlers
+      if (access_token) {
+        // use auth helper so token is available in-memory and persisted
+        const authModule = await import('@/lib/auth');
+        authModule.setAccessToken(access_token);
+      } else {
         console.warn('Login did not return access_token — token will not be persisted.');
       }
-      localStorage.setItem('unda_token', access_token);
       if (user) {
         localStorage.setItem('unda_user', JSON.stringify(user));
       }
