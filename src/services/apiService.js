@@ -3,10 +3,14 @@ import auth from '@/lib/auth';
 import { Navigate } from 'react-router-dom';
 
 // 1. Initialize Axios with Backend URL (auto-detects local vs production)
+// In dev we prefer a relative baseURL so Vite's dev proxy (if enabled) forwards `/api` requests
+// to the backend and avoids CORS. In production, prefer an explicit `VITE_API_URL` or the
+// hard-coded production backend.
+const baseURL = import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? '' : 'https://unda-youth-network-backend.onrender.com');
+
 const api = axios.create({
-  // Use local backend in development, production backend in production
-  // Prefer explicit env var; fallback to the production backend host (HTTPS) to avoid accidental HTTP/local redirects.
-  baseURL: import.meta.env.VITE_API_URL || 'https://unda-youth-network-backend.onrender.com',
+  // Use the resolved baseURL
+  baseURL,
   // Send cookies for session-based auth
   withCredentials: true,
   headers: {
