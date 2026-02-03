@@ -161,7 +161,8 @@ const PortalLogin = () => {
         ? { username: identifier, email: identifier, password: formData.password }
         : { username: identifier, password: formData.password };
       // Ensure this request includes credentials and explicitly requests JSON from the API
-      const response = await api.post('/api/auth/login', payload, {
+      // POST to the public login endpoint as requested by the backend
+      const response = await api.post('/api/auth/login-public', payload, {
         withCredentials: true,
         headers: { Accept: 'application/json' }
       });
