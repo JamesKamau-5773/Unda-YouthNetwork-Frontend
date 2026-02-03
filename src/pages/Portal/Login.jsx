@@ -160,7 +160,11 @@ const PortalLogin = () => {
       const payload = identifier.includes('@')
         ? { username: identifier, email: identifier, password: formData.password }
         : { username: identifier, password: formData.password };
-      const response = await api.post('/api/auth/login', payload);
+      // Ensure this request includes credentials and explicitly requests JSON from the API
+      const response = await api.post('/api/auth/login', payload, {
+        withCredentials: true,
+        headers: { Accept: 'application/json' }
+      });
       // Log full response for troubleshooting token persistence
       console.debug('Login response data:', response?.data);
 
@@ -204,10 +208,23 @@ const PortalLogin = () => {
       }
 
     } catch (err) {
-      const serverData = err?.response?.data;
-      const serverMessage = serverData?.message || (typeof serverData === 'string' ? serverData : JSON.stringify(serverData || {}));
-      console.error('Login Failed:', { err, serverData });
-      setError(parseErrorForUser(err));
+      // Log details for developers, but show a sanitized message to users
+      const resp = err?.response;
+      const serverData = resp?.data;
+      const serverStatus = resp?.status;
+      const serverHeaders = resp?.headers;
+      console.error('Login failed (sanitized):', { serverStatus, serverHeaders });
+
+      // If server returned HTML (redirect/gateway), show a safe, actionable message
+      const contentType = (serverHeaders && serverHeaders['content-type']) || (serverHeaders && serverHeaders['Content-Type']) || '';
+      if (typeof serverData === 'string' && /<\s*!doctype|<html|<title/i.test(serverData)) {
+        setError('Server returned an unexpected HTML response (possible redirect). Check API base URL and backend health.');
+      } else if (contentType.includes('text/html')) {
+        setError('Server returned an HTML response. Check API base URL and backend configuration.');
+      } else {
+        // Use existing parseErrorForUser to produce a friendly message
+        setError(parseErrorForUser(err));
+      }
     } finally {
       setLoading(false);
     }
