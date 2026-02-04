@@ -6,7 +6,7 @@ import { Navigate } from 'react-router-dom';
 // In dev we prefer a relative baseURL so Vite's dev proxy (if enabled) forwards `/api` requests
 // to the backend and avoids CORS. In production, prefer an explicit `VITE_API_URL` or the
 // hard-coded production backend.
-const baseURL = import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? '' : 'https://unda-youth-network-backend.onrender.com');
+const baseURL = import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? '' : 'https://api.undayouth.org');
 
 const api = axios.create({
   // Use the resolved baseURL
