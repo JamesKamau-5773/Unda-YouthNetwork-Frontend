@@ -155,6 +155,7 @@ const PortalLogin = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    console.debug('Login: handleLogin started', { identifier: formData.identifier });
 
     try {
       // 1. Attempt Login - accept either username or email in a single identifier field
@@ -229,6 +230,7 @@ const PortalLogin = () => {
         setError(parseErrorForUser(err));
       }
     } finally {
+      console.debug('Login: finally - clearing loading');
       setLoading(false);
     }
   };
@@ -244,6 +246,7 @@ const PortalLogin = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    console.debug('Signup: handleSignup started', { fullName: signupData.fullName });
     try {
       if (!signupData.fullName || !signupData.password) {
         setError('Please complete all required fields.');
@@ -298,6 +301,7 @@ const PortalLogin = () => {
       console.error('Signup failed', { err, serverData });
       setError(parseErrorForUser(err));
     } finally {
+      console.debug('Signup: finally - clearing loading');
       setLoading(false);
     }
   };

@@ -84,6 +84,7 @@ export default function WeeklyCheckInForm() {
     setLoading(true);
     setError('');
     setShowRedFlagAlert(false);
+    console.debug('CheckIn: handleSubmit started', { form });
     // Basic client-side validation
     if (!form.championId || form.championId.trim().length < 1) {
       setError('Please provide a Champion ID.');
@@ -112,7 +113,9 @@ export default function WeeklyCheckInForm() {
     }
     
     try {
+      console.debug('CheckIn: calling checkInService.submitCheckIn');
       await checkInService.submitCheckIn({ ...form, isRedFlag });
+      console.debug('CheckIn: submitCheckIn resolved');
       // clear saved draft on success
       try { localStorage.removeItem('checkin_draft'); } catch (err) { console.debug('Failed to remove checkin draft', err); }
       setSuccess(true);
@@ -120,6 +123,7 @@ export default function WeeklyCheckInForm() {
       console.error('Check-in submit error:', err?.response?.data || err);
       setError(parseErrorForUser(err));
     } finally {
+      console.debug('CheckIn: finally - clearing loading');
       setLoading(false);
     }
   };
