@@ -3,6 +3,12 @@
 export function parseErrorForUser(err) {
   if (!err) return 'Something went wrong. Please try again.';
 
+  // Axios timeout or network error detection
+  // Axios sets `code === 'ECONNABORTED'` for timeouts and message may contain 'timeout'
+  if (err.code === 'ECONNABORTED' || (err.message && /timeout|network error/i.test(err.message))) {
+    return 'Server not responding. Please check your connection and try again.';
+  }
+
   const status = err?.response?.status;
   const data = err?.response?.data;
 

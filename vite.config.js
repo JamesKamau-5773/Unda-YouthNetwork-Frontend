@@ -16,7 +16,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: process.env.VITE_API_URL || 'https://unda-youth-network-backend.onrender.com',
+        target: process.env.VITE_API_URL || 'https://api.undayouth.org',
         changeOrigin: true,
         secure: false,
         // keep path as-is (frontend calls /api/... and proxy forwards to target/api/...)

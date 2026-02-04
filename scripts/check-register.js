@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /* global process */
 // Quick check script: attempts /api/auth/register then falls back to /auth/register
-// Usage: BASE=https://unda-youth-network-backend.onrender.com node scripts/check-register.js
+// Usage: BASE=https://api.undayouth.org node scripts/check-register.js
 
 (async function () {
-  const base = process.env.BASE || 'https://unda-youth-network-backend.onrender.com';
+  const base = process.env.BASE || 'https://api.undayouth.org';
   const payload = {
     full_name: 'Test User',
     email: 'test+debug@example.com',
