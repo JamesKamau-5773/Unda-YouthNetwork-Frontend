@@ -13,6 +13,8 @@ const api = axios.create({
   baseURL,
   // Send cookies for session-based auth
   withCredentials: true,
+  // Avoid requests hanging indefinitely if backend doesn't respond
+  timeout: 15000, // 15 seconds
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
