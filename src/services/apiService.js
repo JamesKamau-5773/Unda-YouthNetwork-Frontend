@@ -69,7 +69,7 @@ api.interceptors.response.use(
       try {
         // Attempt to refresh token. Backend should set refresh token in HttpOnly cookie and
         // return a new access token in the JSON response: { access_token: '...' }
-        const resp = await api.post('/api/auth/refresh');
+        const resp = await api.post('/api/auth/refresh', null, { withCredentials: true });
         const newToken = resp?.data?.access_token || null;
         if (newToken) {
           auth.setAccessToken(newToken);
@@ -141,7 +141,7 @@ export const memberService = {
         };
 
         // POST to the public member registration endpoint as JSON
-        const result = await api.post('/api/auth/register', payload);
+        const result = await api.post('/api/auth/register', payload, { withCredentials: true });
         // If registration succeeds and backend returns registration id, persist it locally
         try {
           const regId = result?.data?.registration_id || result?.data?.id || null;
@@ -217,7 +217,7 @@ export const championService = {
       recruitment_source: data.recruitmentSource || undefined
     };
 
-    return await api.post('/api/champions/register', payload);
+    return await api.post('/api/champions/register', payload, { withCredentials: true });
   },
 
   // Backwards-compatible apply method (keeps previous behaviour if used elsewhere)
@@ -237,7 +237,7 @@ export const championService = {
       recruitment_source: data.recruitmentSource
     };
 
-    return await api.post('/api/champion/apply', payload);
+    return await api.post('/api/champion/apply', payload, { withCredentials: true });
   }
 };
 
@@ -269,7 +269,7 @@ export const checkInService = {
       // ignore logging errors
     }
 
-    return await api.post('/api/checkin', payload);
+    return await api.post('/api/checkin', payload, { withCredentials: true });
   }
 };
 
