@@ -23,7 +23,7 @@ const PortalLogin = () => {
     identifier: '', // email or username
     password: ''
   });
-  const [signupData, setSignupData] = useState({ fullName: '', email: '', username: '', phone: '', password: '', confirmPassword: '' });
+  const [signupData, setSignupData] = useState({ fullName: '', email: '', username: '', phone: '', password: '', confirmPassword: '', dob: '', gender: '', county: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loginPwdFocused, setLoginPwdFocused] = useState(false);
   const [signupPwdFocused, setSignupPwdFocused] = useState(false);
@@ -31,6 +31,8 @@ const PortalLogin = () => {
   const [regStatus, setRegStatus] = useState(null);
   const [regMessage, setRegMessage] = useState(null);
   const [checkingReg, setCheckingReg] = useState(false);
+
+  const today = new Date().toISOString().split('T')[0];
 
   // Password evaluation helper
   const evaluatePassword = (pwd) => {
@@ -539,6 +541,28 @@ const PortalLogin = () => {
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Phone Number</label>
                   <Input type="tel" name="phone" value={signupData.phone} onChange={handleSignupChange} required placeholder="e.g. +254712345678" className="h-12 rounded-xl bg-slate-50 border border-slate-200" />
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Gender</label>
+                    <select name="gender" value={signupData.gender} onChange={handleSignupChange} className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#00C2CB]/20 focus:border-[#00C2CB]">
+                      <option value="">Select Gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                      <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Date of Birth</label>
+                    <Input type="date" name="dob" value={signupData.dob} onChange={handleSignupChange} max={today} className="h-12 rounded-xl bg-slate-50 border border-slate-200" />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">County / Location</label>
+                  <Input type="text" name="county" value={signupData.county} onChange={handleSignupChange} placeholder="e.g. Nairobi / Westlands" className="h-12 rounded-xl bg-slate-50 border border-slate-200" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Choose Password</label>
