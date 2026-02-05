@@ -230,7 +230,7 @@ const Navbar = () => {
                 </Link>
                 <div className={`w-px h-4 mx-1 transition-opacity ${isPortal ? 'bg-white/30' : 'bg-slate-300 group-hover:opacity-50'}`} />
                 <a
-                  href="https://api.undayouth.org/admin/login"
+                  href="https://api.undayouth.org/auth/login"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest ${isPortal ? 'text-white/90 hover:text-white' : 'text-slate-400 hover:text-[#00C2CB] hover:bg-white'} transition-all duration-300`}
@@ -306,7 +306,7 @@ const Navbar = () => {
               </Button>
 
               <Button asChild className="w-full bg-white text-[#0B1E3B] border border-slate-200 h-12 rounded-xl">
-                <a href="https://api.undayouth.org/admin/login" target="_blank" rel="noopener noreferrer">
+                <a href="https://api.undayouth.org/auth/login" target="_blank" rel="noopener noreferrer">
                   Staff Login <ExternalLink size={14} className="ml-2" />
                 </a>
               </Button>
