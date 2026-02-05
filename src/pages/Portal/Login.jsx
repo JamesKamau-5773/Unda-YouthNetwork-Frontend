@@ -172,16 +172,20 @@ const PortalLogin = () => {
       // Log full response for troubleshooting token persistence
       console.debug('Login response data:', response?.data);
 
-      // 2. Extract Token & User
-      const { access_token, user } = response.data;
+      // 2. Extract Token & User (handle multiple possible backend shapes)
+      const data = response?.data || {};
+      const token = data.access_token || data.token || (data.data && (data.data.access_token || data.data.token)) || null;
+      const user = data.user || (data.data && data.data.user) || data.profile || data.member || null;
 
       // 3. Save to Storage / in-memory handlers
-      if (access_token) {
+      if (token) {
         // use auth helper so token is available in-memory and persisted
         const authModule = await import('@/lib/auth');
-        authModule.setAccessToken(access_token);
+        authModule.setAccessToken(token);
       } else {
-        console.warn('Login did not return access_token — token will not be persisted.');
+        // Backend may be setting an HttpOnly cookie (refresh token) without returning an access token.
+        // In that case the refresh/refresh-token flow will rely on the cookie; warn but continue.
+        console.warn('Login response did not contain a client-visible access token. If your backend sets an HttpOnly cookie this is expected.');
       }
       if (user) {
         localStorage.setItem('unda_user', JSON.stringify(user));

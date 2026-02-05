@@ -33,6 +33,29 @@ const Profile = () => {
 
   // Fetch real profile on mount
   useEffect(() => {
+    // First, seed UI from any cached user saved at login so fields aren't empty
+    try {
+      const cached = typeof window !== 'undefined' ? localStorage.getItem('unda_user') : null;
+      if (cached) {
+        const user = JSON.parse(cached);
+        if (user) {
+          if (user.avatar_url || user.avatarUrl || user.profile_photo) {
+            setAvatarPreview(user.avatar_url || user.avatarUrl || user.profile_photo);
+          }
+          setFormData(f => ({
+            fullName: user.full_name || user.fullName || user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim(),
+            email: user.email || user.email_address || user.email_address || '',
+            phone: user.phone_number || user.phone || user.contact || '',
+            location: user.location || user.county_sub_county || user.county || '',
+          }));
+        }
+      }
+    } catch (err) {
+      // ignore parse errors
+      console.debug('Profile: no cached user or failed to parse', err);
+    }
+
+    // Then fetch authoritative profile from backend and overwrite fields when available
     const fetchProfile = async () => {
       try {
         setLoading(true);
@@ -42,18 +65,19 @@ const Profile = () => {
         if (data.avatar_url || data.avatarUrl || data.profile_photo) {
           setAvatarPreview(data.avatar_url || data.avatarUrl || data.profile_photo);
         }
-        setFormData({
-          fullName: data.full_name || data.fullName || data.name || '',
-          email: data.email || data.email_address || '',
-          phone: data.phone_number || data.phone || '',
-          location: data.location || data.county_sub_county || '',
-        });
+        setFormData(f => ({
+          fullName: data.full_name || data.fullName || data.name || f.fullName || '',
+          email: data.email || data.email_address || f.email || '',
+          phone: data.phone_number || data.phone || f.phone || '',
+          location: data.location || data.county_sub_county || data.county || f.location || '',
+        }));
       } catch (error) {
         console.error('Failed to load profile', error);
       } finally {
         setLoading(false);
       }
     };
+
     fetchProfile();
   }, []);
 
