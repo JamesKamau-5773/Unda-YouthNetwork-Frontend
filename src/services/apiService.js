@@ -278,10 +278,27 @@ export const checkInService = {
 // 7. Member Profile Service (Protected)
 export const profileService = {
   getProfile: async () => {
-    return await api.get('/api/members/me');
+    // New backend provides a consolidated auth/me endpoint that returns camelCase user and champion data
+    return await api.get('/api/auth/me');
   },
   updateProfile: async (data) => {
-    return await api.put('/api/members/me', data);
+    return await api.put('/api/auth/me', data);
+  },
+  // Upload avatar/profile photo: attempt dedicated avatar endpoint, fallback to multipart PUT
+  uploadAvatar: async (file) => {
+    const form = new FormData();
+    form.append('avatar', file);
+    // Try dedicated endpoint first
+    try {
+      return await api.post('/api/auth/me/avatar', form, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+    } catch (err) {
+      // Fallback: some backends accept multipart PUT to the auth/me endpoint
+      return await api.put('/api/auth/me', form, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+    }
   }
   ,
   // Upload avatar/profile photo: attempt dedicated avatar endpoint, fallback to multipart PUT
