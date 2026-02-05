@@ -28,6 +28,7 @@ const Profile = () => {
   const [success, setSuccess] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [hasChampionProfile, setHasChampionProfile] = useState(true); // Track if champion profile exists
   const fileInputRef = React.useRef(null);
   const navigate = useNavigate();
 
@@ -60,16 +61,32 @@ const Profile = () => {
       try {
         setLoading(true);
         const res = await profileService.getProfile();
-        const data = res?.data || {};
+        const rawData = res?.data || {};
+        
+        // Backend returns { user: {...}, champion: {...} } or just user data
+        // Champion profile has the full details; user has basic account info
+        const champion = rawData.champion || null;
+        const user = rawData.user || rawData;
+        
+        // If no champion profile exists, show prompt to complete profile
+        if (!champion || !champion.championId) {
+          setHasChampionProfile(false);
+        } else {
+          setHasChampionProfile(true);
+        }
+        
+        // Merge data: prefer champion fields, fallback to user fields
+        const data = { ...user, ...champion };
+        
         // If backend provides avatar URL, use it
-        if (data.avatar_url || data.avatarUrl || data.profile_photo) {
-          setAvatarPreview(data.avatar_url || data.avatarUrl || data.profile_photo);
+        if (data.avatar_url || data.avatarUrl || data.profilePhoto || data.profile_photo) {
+          setAvatarPreview(data.avatar_url || data.avatarUrl || data.profilePhoto || data.profile_photo);
         }
         setFormData(f => ({
-          fullName: data.full_name || data.fullName || data.name || f.fullName || '',
-          email: data.email || data.email_address || f.email || '',
-          phone: data.phone_number || data.phone || f.phone || '',
-          location: data.location || data.county_sub_county || data.county || f.location || '',
+          fullName: data.fullName || data.full_name || data.name || f.fullName || '',
+          email: data.email || data.emailAddress || data.email_address || f.email || '',
+          phone: data.phoneNumber || data.phone_number || data.phone || f.phone || '',
+          location: data.countySubCounty || data.county_sub_county || data.location || data.county || f.location || '',
         }));
       } catch (error) {
         console.error('Failed to load profile', error);
@@ -144,6 +161,23 @@ const Profile = () => {
 
   return (
     <DashboardLayout>
+      {/* --- INCOMPLETE PROFILE BANNER --- */}
+      {!hasChampionProfile && !loading && (
+        <div className="rounded-[2rem] bg-amber-50 border border-amber-200 p-6 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div className="flex items-start gap-3">
+            <div className="p-2 bg-amber-100 rounded-xl">
+              <User size={20} className="text-amber-600" />
+            </div>
+            <div>
+              <h3 className="font-bold text-amber-800">Complete Your Profile</h3>
+              <p className="text-sm text-amber-700 mt-1">
+                Your champion profile is incomplete. Please fill in the details below to unlock all features.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* --- HEADER --- */}
       <div className="rounded-[2rem] bg-white p-8 mb-8 shadow-sm border border-[#E0F7FA] flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
