@@ -168,7 +168,7 @@ const DebatersCircle = () => {
     const fetchDebates = async () => {
       setLoading(true);
       try {
-        const response = await api.get('/api/events/?category=debate');
+        const response = await api.get('/api/workstreams/events?program=debate');
         console.log('Debates API Response:', response.data);
         
         if (response.data?.events && Array.isArray(response.data.events)) {
@@ -212,7 +212,7 @@ const DebatersCircle = () => {
   const fetchDebateEvents = async () => {
     setLoading(true);
     try {
-      const response = await api.get('/api/events?category=debate');
+      const response = await api.get('/api/workstreams/events?program=debate&status=Upcoming');
       if (response.data?.events?.length > 0) {
         setEvents(response.data.events);
       } else {

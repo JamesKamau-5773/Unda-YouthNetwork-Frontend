@@ -168,8 +168,18 @@ export const eventService = {
   },
 
   // Get upcoming events
-  getUpcoming: async () => {
-    const response = await api.get('/api/workstreams/events?status=upcoming');
+  getUpcoming: async (program = null) => {
+    const params = new URLSearchParams({ status: 'Upcoming' });
+    if (program) params.append('program', program);
+    const response = await api.get(`/api/workstreams/events?${params.toString()}`);
+    return response.data;
+  },
+
+  // Get events by program type
+  getByProgram: async (program, status = null) => {
+    const params = new URLSearchParams({ program });
+    if (status) params.append('status', status);
+    const response = await api.get(`/api/workstreams/events?${params.toString()}`);
     return response.data;
   },
 

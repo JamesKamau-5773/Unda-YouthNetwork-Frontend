@@ -119,7 +119,7 @@ const UMVMtaani = () => {
   const fetchUpcomingBarazas = async () => {
     setLoading(true);
     try {
-      const response = await api.get('/api/events?category=mtaani');
+      const response = await api.get('/api/workstreams/events?program=baraza&status=Upcoming');
       if (response.data?.events?.length > 0) {
         setUpcomingEvents(response.data.events);
         
@@ -144,7 +144,7 @@ const UMVMtaani = () => {
   const fetchMtaaniEvents = async () => {
     setLoading(true);
     try {
-      const response = await api.get('/api/events?category=mtaani');
+      const response = await api.get('/api/workstreams/events?program=baraza');
       if (response.data?.events?.length > 0) {
         setEvents(response.data.events);
       } else {
