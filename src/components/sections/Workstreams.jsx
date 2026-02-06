@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Mic,
@@ -7,13 +7,22 @@ import {
   MapPin,
   BookOpen,
   ArrowRight,
+  Loader2,
 } from "lucide-react";
+import { programService } from "@/services/workstreamService";
+
+// Icon map for dynamic icon resolution from backend
+const iconMap = { Mic, Users, GraduationCap, MapPin, BookOpen };
 
 const Workstreams = () => {
-  const streams = [
+  const [loading, setLoading] = useState(true);
+  const [streams, setStreams] = useState([]);
+
+  // Fallback static data
+  const defaultStreams = [
     {
       title: "UMV Podcast",
-      icon: <Mic />,
+      icon: "Mic",
       desc: "Our social driver — youth-led storytelling and expert conversations.",
       color: "border-[#00C2CB]",
       iconColor: '#00C2CB',
@@ -21,7 +30,7 @@ const Workstreams = () => {
     },
     {
       title: "UMV Debaters",
-      icon: <Users />,
+      icon: "Users",
       desc: "Age-appropriate mental health debates and conversations for 13–17 in school and community settings.",
       color: "border-[#00C2CB]",
       iconColor: '#00C2CB',
@@ -29,7 +38,7 @@ const Workstreams = () => {
     },
     {
       title: "UMV Campus",
-      icon: <GraduationCap />,
+      icon: "GraduationCap",
       desc: "Campus cohorts, events, and embedded research driving prevention innovation.",
       color: "border-[#0090C0]",
       iconColor: '#0090C0',
@@ -37,14 +46,42 @@ const Workstreams = () => {
     },
     {
       title: "UMV Mtaani",
-      icon: <MapPin />,
+      icon: "MapPin",
       desc: "Community outreaches, local prevention cohorts, and pillar events.",
       color: "border-[#0B1E3B]",
       iconColor: '#0B1E3B',
       link: "/mtaani"
     },
-    // Keep placeholder removed — primary UMV products now displayed
   ];
+
+  useEffect(() => {
+    const fetchStreams = async () => {
+      setLoading(true);
+      try {
+        const data = await programService.getFeatured();
+        setStreams(data?.length ? data : defaultStreams);
+      } catch (err) {
+        console.error('Failed to fetch workstreams:', err);
+        setStreams(defaultStreams);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStreams();
+  }, []);
+
+  // Resolve icon from string name
+  const resolveIcon = (iconName) => iconMap[iconName] || Mic;
+
+  if (loading) {
+    return (
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 flex items-center justify-center">
+          <Loader2 className="animate-spin h-10 w-10 text-[#00C2CB]" />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-24 bg-white">
@@ -53,8 +90,9 @@ const Workstreams = () => {
           Our Workstreams
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {streams.map((stream, idx) => (
-            stream.link ? (
+          {streams.map((stream, idx) => {
+            const IconComponent = resolveIcon(stream.icon);
+            return stream.link ? (
               <Link
                 key={idx}
                 to={stream.link}
@@ -63,7 +101,7 @@ const Workstreams = () => {
                 className={`p-8 border-t-4 ${stream.color} bg-[#F9FAFB]/30 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group cursor-pointer block flex flex-col h-full justify-between focus:outline-none focus-visible:ring-2`}
               >
                 <div className="mb-6 group-hover:scale-110 transition-transform">
-                  {React.cloneElement(stream.icon, { size: 36, style: { color: stream.iconColor } })}
+                  <IconComponent size={36} style={{ color: stream.iconColor }} />
                 </div>
 
                 <div>
@@ -83,7 +121,7 @@ const Workstreams = () => {
                 className={`p-8 border-t-4 ${stream.color} bg-[#F9FAFB]/30 rounded-2xl opacity-60 cursor-not-allowed flex flex-col h-full justify-between`}
               >
                 <div className="mb-6">
-                  {React.cloneElement(stream.icon, { size: 36, style: { color: stream.iconColor } })}
+                  <IconComponent size={36} style={{ color: stream.iconColor }} />
                 </div>
 
                 <div>
@@ -95,8 +133,8 @@ const Workstreams = () => {
 
                 <p className="text-xs text-slate-400 italic font-bold">Coming soon</p>
               </div>
-            )
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
