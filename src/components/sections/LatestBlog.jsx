@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Newspaper, ArrowRight } from 'lucide-react';
+import { Newspaper, ArrowRight, Loader2 } from 'lucide-react';
+import { storyService } from '@/services/workstreamService';
 
 const LatestBlog = () => {
-  const articles = [
+  const [loading, setLoading] = useState(true);
+  const [articles, setArticles] = useState([]);
+
+  // Fallback static data
+  const defaultArticles = [
     {
       title: "Unda Youth Network Unda Mind Vibes (UMV) Program Featured on EpicPulse Magazine",
       excerpt: "A preview of how our prevention-first model is shaping conversations ahead of our official rollout in January.",
@@ -21,8 +26,7 @@ const LatestBlog = () => {
       excerpt: "Early stories from schools, campuses and communities preparing to participate in Unda Mind Vibes (UMV) Debaters, Unda Mind Vibes (UMV) Campus and Unda Mind Vibes (UMV) Mtaani.",
       link: "/blog",
       color: "border-[#0090C0]"
-    }
-    ,
+    },
     {
       title: "MindRoots Parent Circle",
       excerpt: "Prevention support and family psychoeducation to enhance parent-youth conversation and proactive action.",
@@ -30,6 +34,32 @@ const LatestBlog = () => {
       color: "border-[#00C2CB]"
     }
   ];
+
+  useEffect(() => {
+    const fetchLatest = async () => {
+      setLoading(true);
+      try {
+        const data = await storyService.getLatest(4);
+        setArticles(data?.length ? data : defaultArticles);
+      } catch (err) {
+        console.error('Failed to fetch latest stories:', err);
+        setArticles(defaultArticles);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLatest();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-24 bg-[#F9FAFB]/50">
+        <div className="container mx-auto px-6 flex items-center justify-center">
+          <Loader2 className="animate-spin h-10 w-10 text-[#00C2CB]" />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-24 bg-[#F9FAFB]/50">

@@ -1,10 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
-import { ArrowLeft, BookOpen, FileText, Heart, Download, ArrowRight } from 'lucide-react';
+import { ArrowLeft, BookOpen, FileText, Heart, Download, ArrowRight, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { resourceService } from '@/services/workstreamService';
 
 const Resources = () => {
+  const [loading, setLoading] = useState(true);
+  const [publications, setPublications] = useState([]);
+  const [toolkits, setToolkits] = useState([]);
+
+  // Fallback static toolkits
+  const defaultToolkits = [
+    "Resilience Building for Youth",
+    "Stress Management Toolkit",
+    "Peer Support Guidelines",
+    "Digital Wellbeing Resources"
+  ];
+
+  useEffect(() => {
+    const fetchResources = async () => {
+      setLoading(true);
+      try {
+        const [pubsRes, toolkitsRes] = await Promise.all([
+          resourceService.getPublications().catch(() => null),
+          resourceService.getToolkits().catch(() => null)
+        ]);
+        setPublications(pubsRes?.length ? pubsRes : []);
+        setToolkits(toolkitsRes?.length ? toolkitsRes : defaultToolkits.map((t, i) => ({ id: i, title: t, status: 'coming_soon' })));
+      } catch (err) {
+        console.error('Failed to fetch resources:', err);
+        setPublications([]);
+        setToolkits(defaultToolkits.map((t, i) => ({ id: i, title: t, status: 'coming_soon' })));
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchResources();
+  }, []);
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="animate-spin h-12 w-12 text-[#00C2CB]" />
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div className="min-h-screen bg-transparent">
@@ -42,10 +86,24 @@ const Resources = () => {
               </div>
 
               <div className="space-y-6">
-                <div className="bg-white rounded-2xl p-12 border border-slate-100 shadow-sm text-center">
-                  <h3 className="text-3xl font-black text-[#0B1E3B] mb-3">Coming soon</h3>
-                  <p className="text-slate-500">Publications and downloadable reports will appear here once they're published.</p>
-                </div>
+                {publications.length === 0 ? (
+                  <div className="bg-white rounded-2xl p-12 border border-slate-100 shadow-sm text-center">
+                    <h3 className="text-3xl font-black text-[#0B1E3B] mb-3">Coming soon</h3>
+                    <p className="text-slate-500">Publications and downloadable reports will appear here once they're published.</p>
+                  </div>
+                ) : (
+                  publications.map((pub) => (
+                    <div key={pub.id} className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300">
+                      <h3 className="text-2xl font-black text-[#0B1E3B] mb-3">{pub.title}</h3>
+                      {pub.description && <p className="text-slate-600 mb-4">{pub.description}</p>}
+                      {pub.download_url && (
+                        <a href={pub.download_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-[#00C2CB] font-bold hover:underline">
+                          <Download size={16} className="mr-2" /> Download
+                        </a>
+                      )}
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>
@@ -68,15 +126,16 @@ const Resources = () => {
                   Practical, user-friendly resources for young people, schools, and communities on resilience, stress management, peer support, and digital wellbeing.
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
-                  {[
-                    "Resilience Building for Youth",
-                    "Stress Management Toolkit",
-                    "Peer Support Guidelines",
-                    "Digital Wellbeing Resources"
-                  ].map((toolkit, idx) => (
-                    <div key={idx} className="p-4 bg-white rounded-xl border border-slate-100">
-                      <p className="font-bold text-[#0B1E3B]">{toolkit}</p>
-                      <p className="text-xs text-slate-400 italic mt-2">Coming soon</p>
+                  {toolkits.map((toolkit) => (
+                    <div key={toolkit.id || toolkit} className="p-4 bg-white rounded-xl border border-slate-100">
+                      <p className="font-bold text-[#0B1E3B]">{toolkit.title || toolkit}</p>
+                      {(toolkit.status === 'coming_soon' || !toolkit.download_url) ? (
+                        <p className="text-xs text-slate-400 italic mt-2">Coming soon</p>
+                      ) : (
+                        <a href={toolkit.download_url} target="_blank" rel="noopener noreferrer" className="text-xs text-[#00C2CB] font-bold mt-2 inline-flex items-center hover:underline">
+                          <Download size={12} className="mr-1" /> Download
+                        </a>
+                      )}
                     </div>
                   ))}
                 </div>

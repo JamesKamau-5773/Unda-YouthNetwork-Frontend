@@ -1,9 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
-import { ArrowLeft, Image, Video, Camera, Play } from 'lucide-react';
+import { ArrowLeft, Image, Video, Camera, Play, Loader2 } from 'lucide-react';
+import { galleryService } from '@/services/workstreamService';
 
 const Gallery = () => {
+  const [loading, setLoading] = useState(true);
+  const [photos, setPhotos] = useState([]);
+  const [videos, setVideos] = useState([]);
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      setLoading(true);
+      try {
+        const [photosRes, videosRes] = await Promise.all([
+          galleryService.getPhotos().catch(() => null),
+          galleryService.getVideos().catch(() => null)
+        ]);
+        setPhotos(photosRes?.length ? photosRes : []);
+        setVideos(videosRes?.length ? videosRes : []);
+      } catch (err) {
+        console.error('Failed to fetch gallery:', err);
+        setPhotos([]);
+        setVideos([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchGallery();
+  }, []);
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="animate-spin h-12 w-12 text-[#00C2CB]" />
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div className="min-h-screen bg-transparent">
@@ -41,15 +77,30 @@ const Gallery = () => {
               </div>
               
               <div className="grid md:grid-cols-3 gap-6">
-                {[1, 2, 3, 4, 5, 6].map((item) => (
-                  <div key={item} className="aspect-square rounded-2xl bg-[#F9FAFB]/30 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group">
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="text-center">
-                        <Image size={48} className="text-slate-300 mx-auto mb-3" />
+                {photos.length === 0 ? (
+                  // Placeholder grid when no photos from API
+                  [1, 2, 3, 4, 5, 6].map((item) => (
+                    <div key={item} className="aspect-square rounded-2xl bg-[#F9FAFB]/30 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group">
+                      <div className="w-full h-full flex items-center justify-center">
+                        <div className="text-center">
+                          <Image size={48} className="text-slate-300 mx-auto mb-3" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  photos.map((photo) => (
+                    <div key={photo.id} className="aspect-square rounded-2xl bg-[#F9FAFB]/30 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group">
+                      {photo.url ? (
+                        <img src={photo.url} alt={photo.title || 'Gallery photo'} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Image size={48} className="text-slate-300 mx-auto" />
+                        </div>
+                      )}
+                    </div>
+                  ))
+                )}
               </div>
 
               <div className="mt-12 text-center">
@@ -73,17 +124,47 @@ const Gallery = () => {
               </div>
               
               <div className="grid md:grid-cols-2 gap-6">
-                {[1, 2, 3, 4].map((item) => (
-                  <div key={item} className="aspect-video rounded-2xl bg-[#F9FAFB]/30 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer">
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="h-16 w-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                          <Play size={32} className="text-white ml-1" />
+                {videos.length === 0 ? (
+                  // Placeholder grid when no videos from API
+                  [1, 2, 3, 4].map((item) => (
+                    <div key={item} className="aspect-video rounded-2xl bg-[#F9FAFB]/30 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer">
+                      <div className="w-full h-full flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="h-16 w-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                            <Play size={32} className="text-white ml-1" />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  videos.map((video) => (
+                    <a
+                      key={video.id}
+                      href={video.url || '#'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="aspect-video rounded-2xl bg-[#F9FAFB]/30 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer block"
+                    >
+                      {video.thumbnail_url ? (
+                        <div className="relative w-full h-full">
+                          <img src={video.thumbnail_url} alt={video.title || 'Video'} className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors">
+                            <div className="h-16 w-16 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+                              <Play size={32} className="text-white ml-1" />
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <div className="h-16 w-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <Play size={32} className="text-white ml-1" />
+                          </div>
+                        </div>
+                      )}
+                    </a>
+                  ))
+                )}
               </div>
 
               <div className="mt-12 text-center">

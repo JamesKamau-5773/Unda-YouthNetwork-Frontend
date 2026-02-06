@@ -1,12 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
-import { ArrowLeft, Newspaper, TrendingUp, FileText, Award, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Newspaper, TrendingUp, FileText, Award, ArrowRight, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { storyService } from '@/services/workstreamService';
 
 const Blog = () => {
-  // Articles will come from the backend later. Show placeholder until available.
-  const articles = [];
+  const [loading, setLoading] = useState(true);
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      setLoading(true);
+      try {
+        const data = await storyService.getAll();
+        setArticles(data?.length ? data : []);
+      } catch (err) {
+        console.error('Failed to fetch stories:', err);
+        setArticles([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, []);
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="animate-spin h-12 w-12 text-[#00C2CB]" />
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>

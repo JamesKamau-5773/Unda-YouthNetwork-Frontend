@@ -271,7 +271,11 @@ export const checkInService = {
       // ignore logging errors
     }
 
-    return await api.post('/api/checkin', payload, { withCredentials: true });
+    const token = auth.getAccessToken();
+    return await api.post('/api/checkin', payload, {
+      withCredentials: true,
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined
+    });
   }
 };
 

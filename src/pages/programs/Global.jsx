@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '@/components/shared/Layout';
-import { ArrowLeft, Globe } from 'lucide-react';
+import { ArrowLeft, Globe, Calendar, MapPin, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import api from '@/services/apiService';
 
 const Global = () => {
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchGlobalEvents = async () => {
+      setLoading(true);
+      try {
+        const response = await api.get('/api/workstreams/events?program=international&status=Upcoming');
+        if (response.data?.events?.length > 0) {
+          setEvents(response.data.events);
+        } else {
+          setEvents([]);
+        }
+      } catch (err) {
+        console.error('Failed to fetch global events:', err);
+        setEvents([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchGlobalEvents();
+  }, []);
+
   return (
     <Layout>
       <div className="min-h-screen bg-transparent pb-24">
@@ -34,6 +58,39 @@ const Global = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-black text-[#0B1E3B] mb-6">International Partnerships</h2>
             <p className="text-slate-600 mb-8">We adapt content and delivery for new cultural contexts while preserving youth-led principles and prevention science.</p>
+          </div>
+
+          {/* Upcoming Global Events */}
+          <div className="max-w-4xl mx-auto mt-12">
+            <h3 className="text-2xl font-black text-[#0B1E3B] mb-6 text-center">Upcoming Events</h3>
+            {loading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="animate-spin text-[#00C2CB]" size={32} />
+              </div>
+            ) : events.length > 0 ? (
+              <div className="grid gap-6">
+                {events.map((event) => (
+                  <div key={event.id} className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100">
+                    <h4 className="font-black text-[#0B1E3B] text-lg mb-2">{event.title}</h4>
+                    {event.description && <p className="text-slate-600 mb-4">{event.description}</p>}
+                    <div className="flex flex-wrap gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1">
+                        <Calendar size={14} />
+                        {new Date(event.event_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                      </span>
+                      {event.location && (
+                        <span className="flex items-center gap-1">
+                          <MapPin size={14} />
+                          {event.location}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-slate-500">No upcoming international events. Check back soon!</p>
+            )}
           </div>
         </section>
       </div>

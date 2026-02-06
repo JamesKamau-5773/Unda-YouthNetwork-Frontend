@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
-import { ArrowLeft, Target, Users, Heart, Lightbulb, ArrowRight, Mic2, MessageSquare, GraduationCap, MapPin, Calendar, Globe } from 'lucide-react';
+import { ArrowLeft, Target, Users, Heart, Lightbulb, ArrowRight, Mic2, MessageSquare, GraduationCap, MapPin, Calendar, Globe, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { programService } from '@/services/workstreamService';
+
+// Icon map for dynamic icon resolution from backend
+const iconMap = {
+  Users, Heart, Lightbulb, MessageSquare, GraduationCap, MapPin, Mic2, Calendar, Globe
+};
 
 const Programs = () => {
-  const pillars = [
+  const [loading, setLoading] = useState(true);
+  const [pillars, setPillars] = useState([]);
+  const [programs, setPrograms] = useState([]);
+
+  // Fallback static data
+  const defaultPillars = [
     {
       icon: Users,
       title: "Awareness",
@@ -26,7 +37,7 @@ const Programs = () => {
     }
   ];
 
-  const programs = [
+  const defaultPrograms = [
     {
       icon: MessageSquare,
       title: "UMV Debaters",
@@ -121,6 +132,45 @@ const Programs = () => {
     }
   ];
 
+  // Fetch pillars and programs from backend on mount
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const [pillarsRes, programsRes] = await Promise.all([
+          programService.getPillars().catch(() => null),
+          programService.getAll().catch(() => null)
+        ]);
+        // Use API data if available, otherwise fallback to defaults
+        setPillars(pillarsRes?.length ? pillarsRes : defaultPillars);
+        setPrograms(programsRes?.length ? programsRes : defaultPrograms);
+      } catch (err) {
+        console.error('Failed to fetch programs:', err);
+        setPillars(defaultPillars);
+        setPrograms(defaultPrograms);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Resolve icon from string name or use component directly
+  const resolveIcon = (icon) => {
+    if (typeof icon === 'string') return iconMap[icon] || Users;
+    return icon || Users;
+  };
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="animate-spin h-12 w-12 text-[#00C2CB]" />
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div className="min-h-screen bg-transparent">
@@ -163,7 +213,7 @@ const Programs = () => {
 
             <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {pillars.map((pillar, idx) => {
-                const Icon = pillar.icon;
+                const Icon = resolveIcon(pillar.icon);
                 const colorMap = {
                   teal: 'border-[#00C2CB]',
                   orange: 'border-[#00C2CB]',
@@ -202,7 +252,7 @@ const Programs = () => {
 
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {programs.map((program, idx) => {
-                const Icon = program.icon;
+                const Icon = resolveIcon(program.icon);
                 const colorMap = {
                   teal: 'border-[#00C2CB]',
                   orange: 'border-[#00C2CB]',
