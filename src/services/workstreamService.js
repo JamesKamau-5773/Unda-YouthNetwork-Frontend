@@ -13,6 +13,25 @@
 import api from './apiService';
 
 // ============================================================================
+// HELPER: Extract array data from API responses
+// Backend returns { success: true, count: N, <entity>: [...] } or just arrays
+// ============================================================================
+
+const extractArray = (data, ...keys) => {
+  if (!data) return [];
+  if (Array.isArray(data)) return data;
+  // Try each possible key in order
+  for (const key of keys) {
+    if (Array.isArray(data[key])) return data[key];
+  }
+  // Fallback: look for any array property
+  for (const value of Object.values(data)) {
+    if (Array.isArray(value)) return value;
+  }
+  return [];
+};
+
+// ============================================================================
 // PROGRAMS / WORKSTREAMS
 // ============================================================================
 
@@ -20,25 +39,25 @@ export const programService = {
   // Get all programs/workstreams
   getAll: async () => {
     const response = await api.get('/api/workstreams/programs');
-    return response.data;
+    return extractArray(response.data, 'programs', 'items', 'data');
   },
 
   // Get a single program by ID or slug
   getOne: async (idOrSlug) => {
     const response = await api.get(`/api/workstreams/programs/${idOrSlug}`);
-    return response.data;
+    return response.data?.program || response.data;
   },
 
   // Get program pillars (Awareness, Access, Advocacy)
   getPillars: async () => {
     const response = await api.get('/api/workstreams/pillars');
-    return response.data;
+    return extractArray(response.data, 'pillars', 'items', 'data');
   },
 
   // Get featured/highlighted programs for homepage
   getFeatured: async () => {
     const response = await api.get('/api/workstreams/programs/featured');
-    return response.data;
+    return extractArray(response.data, 'programs', 'items', 'data');
   }
 };
 
@@ -50,31 +69,31 @@ export const resourceService = {
   // Get all resources
   getAll: async () => {
     const response = await api.get('/api/workstreams/resources');
-    return response.data;
+    return extractArray(response.data, 'resources', 'items', 'data');
   },
 
   // Get resources by category (publications, toolkits, guides)
   getByCategory: async (category) => {
     const response = await api.get(`/api/workstreams/resources?category=${category}`);
-    return response.data;
+    return extractArray(response.data, 'resources', 'items', 'data');
   },
 
   // Get a single resource by ID
   getOne: async (id) => {
     const response = await api.get(`/api/workstreams/resources/${id}`);
-    return response.data;
+    return response.data?.resource || response.data;
   },
 
   // Get publications
   getPublications: async () => {
     const response = await api.get('/api/workstreams/resources?category=publication');
-    return response.data;
+    return extractArray(response.data, 'resources', 'items', 'data');
   },
 
   // Get toolkits
   getToolkits: async () => {
     const response = await api.get('/api/workstreams/resources?category=toolkit');
-    return response.data;
+    return extractArray(response.data, 'resources', 'items', 'data');
   }
 };
 
@@ -86,31 +105,31 @@ export const storyService = {
   // Get all stories/articles
   getAll: async () => {
     const response = await api.get('/api/workstreams/stories');
-    return response.data;
+    return extractArray(response.data, 'stories', 'items', 'data');
   },
 
   // Get stories by category
   getByCategory: async (category) => {
     const response = await api.get(`/api/workstreams/stories?category=${category}`);
-    return response.data;
+    return extractArray(response.data, 'stories', 'items', 'data');
   },
 
   // Get a single story by ID or slug
   getOne: async (idOrSlug) => {
     const response = await api.get(`/api/workstreams/stories/${idOrSlug}`);
-    return response.data;
+    return response.data?.story || response.data;
   },
 
   // Get latest stories (for homepage)
   getLatest: async (limit = 4) => {
     const response = await api.get(`/api/workstreams/stories?limit=${limit}&sort=latest`);
-    return response.data;
+    return extractArray(response.data, 'stories', 'items', 'data');
   },
 
   // Get featured stories
   getFeatured: async () => {
     const response = await api.get('/api/workstreams/stories?featured=true');
-    return response.data;
+    return extractArray(response.data, 'stories', 'items', 'data');
   }
 };
 
@@ -118,29 +137,89 @@ export const storyService = {
 // GALLERY (Photos, Videos)
 // ============================================================================
 
+/**
+ * Helper to extract gallery items from API response.
+ * Backend returns { items: [], count: N, success: true } or { galleries: [] }
+ * We also fetch from /api/media-galleries as fallback since admin uploads there.
+ */
+const extractGalleryItems = (data) => {
+  if (!data) return [];
+  // Handle array response directly
+  if (Array.isArray(data)) return data;
+  // Handle { items: [...] } structure
+  if (Array.isArray(data.items)) return data.items;
+  // Handle { galleries: [...] } structure from media-galleries endpoint
+  if (Array.isArray(data.galleries)) {
+    // Flatten all items from all galleries
+    return data.galleries.flatMap(gallery => 
+      (gallery.items || []).map(item => ({
+        ...item,
+        gallery_name: gallery.name,
+        gallery_id: gallery.id
+      }))
+    );
+  }
+  return [];
+};
+
+/**
+ * Fetch gallery items, trying workstreams endpoint first, then media-galleries
+ */
+const fetchGalleryWithFallback = async (type = null) => {
+  let items = [];
+  
+  // Try primary workstreams/gallery endpoint
+  try {
+    const params = type ? `?type=${type}` : '';
+    const response = await api.get(`/api/workstreams/gallery${params}`);
+    items = extractGalleryItems(response.data);
+  } catch (err) {
+    console.warn('Workstreams gallery endpoint failed:', err.message);
+  }
+  
+  // If no items, try media-galleries endpoint (where admin uploads go)
+  if (items.length === 0) {
+    try {
+      const response = await api.get('/api/media-galleries');
+      const allItems = extractGalleryItems(response.data);
+      // Filter by type if specified
+      if (type && allItems.length > 0) {
+        items = allItems.filter(item => 
+          item.type === type || 
+          item.media_type === type ||
+          (type === 'photo' && (item.type === 'image' || item.media_type === 'image')) ||
+          (type === 'video' && (item.type === 'video' || item.media_type === 'video'))
+        );
+      } else {
+        items = allItems;
+      }
+    } catch (err) {
+      console.warn('Media galleries endpoint failed:', err.message);
+    }
+  }
+  
+  return items;
+};
+
 export const galleryService = {
   // Get all gallery items
   getAll: async () => {
-    const response = await api.get('/api/workstreams/gallery');
-    return response.data;
+    return await fetchGalleryWithFallback();
   },
 
   // Get gallery items by type (photo, video)
   getByType: async (type) => {
-    const response = await api.get(`/api/workstreams/gallery?type=${type}`);
-    return response.data;
+    return await fetchGalleryWithFallback(type);
   },
 
   // Get photos
   getPhotos: async () => {
-    const response = await api.get('/api/workstreams/gallery?type=photo');
-    return response.data;
+    return await fetchGalleryWithFallback('photo');
   },
 
   // Get videos
   getVideos: async () => {
-    const response = await api.get('/api/workstreams/gallery?type=video');
-    return response.data;
+    return await fetchGalleryWithFallback('video');
   },
 
   // Get a single gallery item by ID
@@ -151,8 +230,8 @@ export const galleryService = {
 
   // Get featured gallery items (for homepage highlights)
   getFeatured: async () => {
-    const response = await api.get('/api/workstreams/gallery?featured=true');
-    return response.data;
+    const items = await fetchGalleryWithFallback();
+    return items.filter(item => item.featured);
   }
 };
 
@@ -164,7 +243,7 @@ export const eventService = {
   // Get all events
   getAll: async () => {
     const response = await api.get('/api/workstreams/events');
-    return response.data;
+    return extractArray(response.data, 'events', 'items', 'data');
   },
 
   // Get upcoming events
@@ -172,7 +251,7 @@ export const eventService = {
     const params = new URLSearchParams({ status: 'Upcoming' });
     if (program) params.append('program', program);
     const response = await api.get(`/api/workstreams/events?${params.toString()}`);
-    return response.data;
+    return extractArray(response.data, 'events', 'items', 'data');
   },
 
   // Get events by program type
@@ -180,13 +259,13 @@ export const eventService = {
     const params = new URLSearchParams({ program });
     if (status) params.append('status', status);
     const response = await api.get(`/api/workstreams/events?${params.toString()}`);
-    return response.data;
+    return extractArray(response.data, 'events', 'items', 'data');
   },
 
   // Get a single event by ID or slug
   getOne: async (idOrSlug) => {
     const response = await api.get(`/api/workstreams/events/${idOrSlug}`);
-    return response.data;
+    return response.data?.event || response.data;
   }
 };
 
