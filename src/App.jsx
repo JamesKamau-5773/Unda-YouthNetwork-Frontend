@@ -26,6 +26,7 @@ import Programs from './pages/Programs';
 import Membership from './pages/Membership';
 import Resources from './pages/Resources';
 import Blog from './pages/Blog';
+import StoryDetail from './pages/StoryDetail';
 import Gallery from './pages/Gallery';
 import MindRootsParentCircle from './pages/MindRootsParentCircle';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -39,6 +40,7 @@ import WeeklyCheckInForm from './features/checkin/WeeklyCheckInForm';
 import Partner from './pages/Partner';
 import Support from './pages/Support';
 import CampusEdition from './pages/workstreams/CampusEdition';
+import CampusInitiative from './pages/workstreams/CampusInitiative';
 import DebatersCircle from './pages/workstreams/DebatersCircle'; 
 import UMVMtaani from './pages/workstreams/UMVMtaani';
 import SeedFundingApplication from './pages/Programs/SeedFundingApplication';
@@ -107,6 +109,7 @@ function App() {
                     <Route path="/membership" element={<Membership />} />
                     <Route path="/resources" element={<Resources />} />
                     <Route path="/blog" element={<Blog />} />
+                    <Route path="/blog/:slug" element={<StoryDetail />} />
                     <Route path="/gallery" element={<Gallery />} />
                     <Route path="/contribute" element={<Support />} />
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -123,6 +126,7 @@ function App() {
                     <Route path="/podcast" element={<PodcastPage />} />
                     <Route path="/mindroots-parent-circle" element={<MindRootsParentCircle />} />
                     <Route path="/campus" element={<CampusEdition />} />
+                    <Route path="/campus/initiative/:id" element={<CampusInitiative />} />
                     <Route path="/debaters-circle" element={<DebatersCircle />} />
                     <Route path="/mtaani" element={<UMVMtaani />} />
                     <Route path="/programs/annual-conference" element={<AnnualConference />} />

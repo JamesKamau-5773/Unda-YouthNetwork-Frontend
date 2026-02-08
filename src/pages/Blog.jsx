@@ -9,6 +9,11 @@ const Blog = () => {
   const [loading, setLoading] = useState(true);
   const [articles, setArticles] = useState([]);
 
+  const getStoryPath = (article) => {
+    const slugOrId = article?.slug || article?.id || article?._id;
+    return slugOrId ? `/blog/${slugOrId}` : '/blog';
+  };
+
   useEffect(() => {
     const fetchArticles = async () => {
       setLoading(true);
@@ -78,7 +83,11 @@ const Blog = () => {
                   </div>
                 ) : (
                   articles.map((article, idx) => (
-                    <div key={idx} className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:border-unda-teal/30 transition-all duration-300 group">
+                    <Link
+                      key={idx}
+                      to={getStoryPath(article)}
+                      className="block bg-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:border-unda-teal/30 transition-all duration-300 group"
+                    >
                       <div className="flex items-center gap-3 mb-4">
                         <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-unda-bg text-unda-navy">
                           {article.category}
@@ -91,10 +100,10 @@ const Blog = () => {
                       <p className="text-slate-600 leading-relaxed mb-4">
                         {article.excerpt}
                       </p>
-                      <Button variant="ghost" className="text-unda-teal font-bold p-0 h-auto hover:bg-transparent group-hover:translate-x-1 transition-transform">
+                      <div className="text-unda-teal font-bold p-0 h-auto hover:bg-transparent group-hover:translate-x-1 transition-transform inline-flex items-center">
                         Read More <ArrowRight size={16} className="ml-2" />
-                      </Button>
-                    </div>
+                      </div>
+                    </Link>
                   ))
                 )}
               </div>

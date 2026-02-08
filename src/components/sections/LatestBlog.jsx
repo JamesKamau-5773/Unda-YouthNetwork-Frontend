@@ -7,6 +7,12 @@ const LatestBlog = () => {
   const [loading, setLoading] = useState(true);
   const [articles, setArticles] = useState([]);
 
+  const getStoryPath = (article) => {
+    if (article?.link) return article.link;
+    const slugOrId = article?.slug || article?.id || article?._id;
+    return slugOrId ? `/blog/${slugOrId}` : '/blog';
+  };
+
   // Fallback static data
   const defaultArticles = [
     {
@@ -71,7 +77,7 @@ const LatestBlog = () => {
           {articles.map((article, idx) => (
             <Link
               key={idx}
-              to={article.link}
+              to={getStoryPath(article)}
               className={`p-8 border-t-4 ${article.color} bg-white rounded-2xl hover:shadow-xl transition-all duration-300 group cursor-pointer`}
             >
               <div className="text-[#00C2CB] mb-4 group-hover:scale-110 transition-transform">
