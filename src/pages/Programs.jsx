@@ -15,6 +15,19 @@ const Programs = () => {
   const [pillars, setPillars] = useState([]);
   const [programs, setPrograms] = useState([]);
 
+  const resolveProgramLink = (program) => {
+    if (program?.link) return program.link;
+    const raw = program?.slug || program?.title || program?.name || '';
+    const normalized = raw.toString().toLowerCase();
+    if (normalized.includes('podcast')) return '/podcast';
+    if (normalized.includes('debaters')) return '/debaters-circle';
+    if (normalized.includes('campus')) return '/campus';
+    if (normalized.includes('mtaani')) return '/mtaani';
+    if (normalized.includes('annual') && normalized.includes('conference')) return '/programs/annual-conference';
+    if (normalized.includes('global')) return '/programs/global';
+    return null;
+  };
+
   // Fallback static data
   const defaultPillars = [
     {
@@ -274,12 +287,13 @@ const Programs = () => {
 
                 // availability: if `available` is explicitly false the program is not yet live
                 const isAvailable = program.available !== false;
-                const linkValid = isAvailable && program.link && program.link !== '/';
+                const resolvedLink = resolveProgramLink(program);
+                const linkValid = isAvailable && resolvedLink && resolvedLink !== '/';
 
                 return linkValid ? (
                   <Link
                     key={idx}
-                    to={program.link}
+                    to={resolvedLink}
                     role="button"
                     aria-label={`Open ${program.title}`}
                     className={`bg-[#F9FAFB]/30 rounded-2xl p-8 lg:p-12 border-l-4 ${colorMap[program.color]} hover:bg-white hover:shadow-xl transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 group block`}

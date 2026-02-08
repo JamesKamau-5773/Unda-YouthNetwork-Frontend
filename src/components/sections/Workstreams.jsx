@@ -18,6 +18,19 @@ const Workstreams = () => {
   const [loading, setLoading] = useState(true);
   const [streams, setStreams] = useState([]);
 
+  const resolveWorkstreamLink = (stream) => {
+    if (stream?.link) return stream.link;
+    const raw = stream?.slug || stream?.title || stream?.name || '';
+    const normalized = raw.toString().toLowerCase();
+    if (normalized.includes('podcast')) return '/podcast';
+    if (normalized.includes('debaters')) return '/debaters-circle';
+    if (normalized.includes('campus')) return '/campus';
+    if (normalized.includes('mtaani')) return '/mtaani';
+    if (normalized.includes('annual') && normalized.includes('conference')) return '/programs/annual-conference';
+    if (normalized.includes('global')) return '/programs/global';
+    return null;
+  };
+
   // Fallback static data
   const defaultStreams = [
     {
@@ -92,10 +105,11 @@ const Workstreams = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {streams.map((stream, idx) => {
             const IconComponent = resolveIcon(stream.icon);
-            return stream.link ? (
+            const resolvedLink = resolveWorkstreamLink(stream);
+            return resolvedLink ? (
               <Link
                 key={idx}
-                to={stream.link}
+                to={resolvedLink}
                 role="button"
                 aria-label={`Open ${stream.title}`}
                 className={`p-8 border-t-4 ${stream.color} bg-[#F9FAFB]/30 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group cursor-pointer block flex flex-col h-full justify-between focus:outline-none focus-visible:ring-2`}
