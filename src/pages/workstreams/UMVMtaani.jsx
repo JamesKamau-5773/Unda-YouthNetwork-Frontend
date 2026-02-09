@@ -119,13 +119,19 @@ const UMVMtaani = () => {
   const fetchUpcomingBarazas = async () => {
     setLoading(true);
     try {
-      const response = await api.get('/api/workstreams/events?program=baraza&status=Upcoming');
-      if (response.data?.events?.length > 0) {
-        setUpcomingEvents(response.data.events);
-        
-        // Extract unique regions from events
+      const primary = await api.get('/api/workstreams/events?program=mtaani&status=Upcoming');
+      let eventsList = primary.data?.events || [];
+
+      if (!eventsList.length) {
+        const fallback = await api.get('/api/workstreams/events?program=baraza&status=Upcoming');
+        eventsList = fallback.data?.events || [];
+      }
+
+      if (eventsList.length > 0) {
+        setUpcomingEvents(eventsList);
+
         const uniqueRegions = ['All', ...new Set(
-          response.data.events
+          eventsList
             .map(event => event.region || event.location?.split(',')[0]?.trim())
             .filter(Boolean)
         )];
@@ -144,12 +150,15 @@ const UMVMtaani = () => {
   const fetchMtaaniEvents = async () => {
     setLoading(true);
     try {
-      const response = await api.get('/api/workstreams/events?program=baraza');
-      if (response.data?.events?.length > 0) {
-        setEvents(response.data.events);
-      } else {
-        setEvents([]);
+      const primary = await api.get('/api/workstreams/events?program=mtaani');
+      let eventsList = primary.data?.events || [];
+
+      if (!eventsList.length) {
+        const fallback = await api.get('/api/workstreams/events?program=baraza');
+        eventsList = fallback.data?.events || [];
       }
+
+      setEvents(eventsList);
     } catch {
       setEvents([]);
     } finally {

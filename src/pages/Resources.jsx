@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
-import { ArrowLeft, BookOpen, FileText, Heart, Download, ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowLeft, BookOpen, FileText, Heart, Download, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { resourceService } from '@/services/workstreamService';
 
@@ -9,14 +9,7 @@ const Resources = () => {
   const [loading, setLoading] = useState(true);
   const [publications, setPublications] = useState([]);
   const [toolkits, setToolkits] = useState([]);
-
-  // Fallback static toolkits
-  const defaultToolkits = [
-    "Resilience Building for Youth",
-    "Stress Management Toolkit",
-    "Peer Support Guidelines",
-    "Digital Wellbeing Resources"
-  ];
+  const [openingToolkitId, setOpeningToolkitId] = useState(null);
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -27,11 +20,11 @@ const Resources = () => {
           resourceService.getToolkits().catch(() => null)
         ]);
         setPublications(pubsRes?.length ? pubsRes : []);
-        setToolkits(toolkitsRes?.length ? toolkitsRes : defaultToolkits.map((t, i) => ({ id: i, title: t, status: 'coming_soon' })));
+        setToolkits(toolkitsRes?.length ? toolkitsRes : []);
       } catch (err) {
         console.error('Failed to fetch resources:', err);
         setPublications([]);
-        setToolkits(defaultToolkits.map((t, i) => ({ id: i, title: t, status: 'coming_soon' })));
+        setToolkits([]);
       } finally {
         setLoading(false);
       }
@@ -39,11 +32,65 @@ const Resources = () => {
     fetchResources();
   }, []);
 
+  const resolveToolkitUrl = (toolkit) => (
+    toolkit?.download_url ||
+    toolkit?.file_url ||
+    toolkit?.fileUrl ||
+    toolkit?.document_url ||
+    toolkit?.documentUrl ||
+    toolkit?.pdf_url ||
+    toolkit?.pdfUrl ||
+    toolkit?.url ||
+    toolkit?.link
+  );
+
+  const handleToolkitClick = async (toolkit) => {
+    const directUrl = resolveToolkitUrl(toolkit);
+    if (directUrl) {
+      window.open(directUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    const toolkitId = toolkit?.id || toolkit?._id;
+    if (!toolkitId) return;
+
+    setOpeningToolkitId(toolkitId);
+    try {
+      const full = await resourceService.getOne(toolkitId);
+      const resolved = resolveToolkitUrl(full || {});
+      if (resolved) {
+        window.open(resolved, '_blank', 'noopener,noreferrer');
+      }
+    } finally {
+      setOpeningToolkitId(null);
+    }
+  };
+
   if (loading) {
     return (
       <Layout>
-        <div className="min-h-screen flex items-center justify-center">
-          <Loader2 className="animate-spin h-12 w-12 text-[#00C2CB]" />
+        <div className="min-h-screen bg-transparent">
+          <section className="pt-40 pb-20 bg-gradient-to-br from-[#00C2CB] to-[#0B1E3B] relative overflow-hidden">
+            <div className="container mx-auto px-6">
+              <div className="max-w-4xl">
+                <div className="h-10 w-2/3 bg-white/30 rounded mb-4 animate-pulse" />
+                <div className="h-5 w-full bg-white/20 rounded animate-pulse" />
+              </div>
+            </div>
+          </section>
+          <section className="py-24 bg-white">
+            <div className="container mx-auto px-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                {[...Array(2)].map((_, idx) => (
+                  <div key={idx} className="p-8 border border-slate-100 rounded-2xl animate-pulse">
+                    <div className="h-5 w-1/2 bg-slate-200 rounded mb-3" />
+                    <div className="h-3 w-full bg-slate-200 rounded mb-2" />
+                    <div className="h-3 w-5/6 bg-slate-200 rounded" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
         </div>
       </Layout>
     );
@@ -88,8 +135,11 @@ const Resources = () => {
               <div className="space-y-6">
                 {publications.length === 0 ? (
                   <div className="bg-white rounded-2xl p-12 border border-slate-100 shadow-sm text-center">
-                    <h3 className="text-3xl font-black text-[#0B1E3B] mb-3">Coming soon</h3>
-                    <p className="text-slate-500">Publications and downloadable reports will appear here once they're published.</p>
+                    <h3 className="text-3xl font-black text-[#0B1E3B] mb-3">Check back soon</h3>
+                    <p className="text-slate-500 mb-6">Publications and downloadable reports will appear here once they're published.</p>
+                    <Button asChild className="bg-[#00C2CB] text-white hover:bg-[#0B1E3B]">
+                      <Link to="/contribute">Be the first to contribute</Link>
+                    </Button>
                   </div>
                 ) : (
                   publications.map((pub) => (
@@ -125,20 +175,34 @@ const Resources = () => {
                 <p className="text-slate-600 leading-relaxed mb-6">
                   Practical, user-friendly resources for young people, schools, and communities on resilience, stress management, peer support, and digital wellbeing.
                 </p>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {toolkits.map((toolkit) => (
-                    <div key={toolkit.id || toolkit} className="p-4 bg-white rounded-xl border border-slate-100">
-                      <p className="font-bold text-[#0B1E3B]">{toolkit.title || toolkit}</p>
-                      {(toolkit.status === 'coming_soon' || !toolkit.download_url) ? (
-                        <p className="text-xs text-slate-400 italic mt-2">Coming soon</p>
-                      ) : (
-                        <a href={toolkit.download_url} target="_blank" rel="noopener noreferrer" className="text-xs text-[#00C2CB] font-bold mt-2 inline-flex items-center hover:underline">
-                          <Download size={12} className="mr-1" /> Download
-                        </a>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                {toolkits.length === 0 ? (
+                  <div className="bg-white rounded-2xl p-10 border border-slate-100 text-center">
+                    <p className="text-slate-500 font-bold mb-4">No toolkits published yet.</p>
+                    <Button asChild className="bg-[#00C2CB] text-white hover:bg-[#0B1E3B]">
+                      <Link to="/contribute">Be the first to contribute</Link>
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {toolkits.map((toolkit) => {
+                      const key = toolkit.id || toolkit._id || toolkit;
+                      const isOpening = openingToolkitId && (openingToolkitId === toolkit.id || openingToolkitId === toolkit._id);
+                      return (
+                        <button
+                          key={key}
+                          type="button"
+                          onClick={() => handleToolkitClick(toolkit)}
+                          className="p-4 bg-white rounded-xl border border-slate-100 hover:border-[#00C2CB] hover:shadow-md transition-all duration-200 block text-left w-full"
+                        >
+                          <p className="font-bold text-[#0B1E3B]">{toolkit.title || toolkit}</p>
+                          <div className="text-xs text-[#00C2CB] font-bold mt-2 inline-flex items-center">
+                            <Download size={12} className="mr-1" /> {isOpening ? 'Opening…' : 'View Toolkit'}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
           </div>

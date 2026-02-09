@@ -92,8 +92,26 @@ export const resourceService = {
 
   // Get toolkits
   getToolkits: async () => {
-    const response = await api.get('/api/workstreams/resources?category=toolkit');
-    return extractArray(response.data, 'resources', 'items', 'data');
+    const attempts = [
+      () => api.get('/api/workstreams/resources?category=toolkit'),
+      () => api.get('/api/workstreams/resources?category=toolkits'),
+      () => api.get('/api/workstreams/resources?category=institutional_toolkit'),
+      () => api.get('/api/workstreams/toolkits'),
+      () => api.get('/api/toolkit'),
+      () => api.get('/api/toolkits')
+    ];
+
+    for (const attempt of attempts) {
+      try {
+        const response = await attempt();
+        const items = extractArray(response.data, 'resources', 'items', 'data', 'toolkits', 'toolkit');
+        if (items.length) return items;
+      } catch (err) {
+        // Continue to next attempt
+      }
+    }
+
+    return [];
   }
 };
 
