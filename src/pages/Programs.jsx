@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
-import { ArrowLeft, Target, Users, Heart, Lightbulb, ArrowRight, Mic2, MessageSquare, GraduationCap, MapPin, Calendar, Globe, Loader2 } from 'lucide-react';
+import { ArrowLeft, Target, Users, Heart, Lightbulb, ArrowRight, Mic2, MessageSquare, GraduationCap, MapPin, Calendar, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { programService } from '@/services/workstreamService';
 
@@ -28,123 +28,6 @@ const Programs = () => {
     return null;
   };
 
-  // Fallback static data
-  const defaultPillars = [
-    {
-      icon: Users,
-      title: "Awareness",
-      color: "teal",
-      description: "Large-scale youth campaigns, storytelling, digital content, debates and podcast conversations that increase mental-health literacy and reduce stigma."
-    },
-    {
-      icon: Heart,
-      title: "Access",
-      color: "orange",
-      description: "Peer-led prevention services, community-based engagement, school and campus outreach, and digital platforms that bring preventive support closer to young people."
-    },
-    {
-      icon: Lightbulb,
-      title: "Advocacy",
-      color: "yellow",
-      description: "Network-building, intersectoral partnerships, school–community collaborations, and youth representation in policy spaces to strengthen prevention systems nationally."
-    }
-  ];
-
-  const defaultPrograms = [
-    {
-      icon: MessageSquare,
-      title: "UMV Debaters",
-      tagline: "Critical Thinking Through Structured Debates",
-      description: "A dynamic platform where high school students explore mental-health prevention topics through structured debates.",
-      highlights: [
-        "Intra-school and inter-school debate levels",
-        "Age-appropriate debate topics aligned with real youth risks",
-        "Training for debate clubs on mental-health literacy",
-        "Incentivized competitions at zonal, county and national levels"
-      ],
-      cta: "Learn More",
-      link: "/debaters-circle",
-      color: "teal"
-    },
-    {
-      icon: GraduationCap,
-      title: "UMV Campus",
-      tagline: "Research-Driven Innovation for Tertiary Students",
-      description: "A research-centered competition for university and college students passionate about preventive mental health.",
-      highlights: [
-        "Draft research proposal competitions",
-        "Funding or cash incentives for top proposals",
-        "Mentorship from mental-health experts and researchers",
-        "Building youth leadership in evidence generation"
-      ],
-      cta: "Explore Campus",
-      link: "/campus",
-      color: "yellow"
-    },
-    {
-      icon: MapPin,
-      title: "UMV Mtaani",
-      tagline: "Community Engagement Beyond the Classroom",
-      description: "A vibrant community engagement model reaching young people outside formal schooling.",
-      highlights: [
-        "Sports activities like soccer tournaments",
-        "Art festivals & creative showcases",
-        "Community galas and open-air dialogues",
-        "Mobile outreach and peer support booths"
-      ],
-      cta: "Join Mtaani",
-      link: "/mtaani",
-      color: "orange"
-    },
-    {
-      icon: Mic2,
-      title: "UMV Podcast",
-      tagline: "Conversations That Prevent",
-      description: "A bi-monthly podcast where young people, creatives and mental-health voices unpack real issues affecting daily life.",
-      highlights: [
-        "Honest conversations on resilience, stress, identity, relationships",
-        "Preventive insights from psychologists and youth leaders",
-        "Youth stories, creative perspectives and practical tools",
-        "Available on all major streaming platforms"
-      ],
-      cta: "Listen Now",
-      link: "/podcast",
-      color: "teal"
-    },
-    {
-      icon: Calendar,
-      title: "UMV Annual Conference",
-      tagline: "A Flagship Youth Mental Health Convening",
-      description: "A flagship youth convening that brings together networks, schools, universities, researchers and community partners.",
-      highlights: [
-        "Expert-led prevention sessions",
-        "Debate showcases and live competitions",
-        "Youth research presentations",
-        "Creative performances and thematic panels"
-      ],
-      cta: "Register",
-      link: "/programs/annual-conference",
-      available: true,
-      color: "navy"
-    },
-    {
-      icon: Globe,
-      title: "UMV Global",
-      tagline: "Expanding Prevention to the United States",
-      description: "The international expansion of the UMV Prevention Program, bringing our youth-centered mental-health initiatives to the United States.",
-      highlights: [
-        "Adapted programs for new cultural contexts",
-        "Accessibility and relevance for adolescents and youth",
-                "Building on the success of UMV in Kenya",
-        "Creating global impact through local action"
-      ],
-      cta: "Learn More",
-      link: "/programs/global",
-      available: true,
-      color: "teal"
-    }
-  ];
-
   // Fetch pillars and programs from backend on mount
   useEffect(() => {
     const fetchData = async () => {
@@ -154,13 +37,12 @@ const Programs = () => {
           programService.getPillars().catch(() => null),
           programService.getAll().catch(() => null)
         ]);
-        // Use API data if available, otherwise fallback to defaults
-        setPillars(pillarsRes?.length ? pillarsRes : defaultPillars);
-        setPrograms(programsRes?.length ? programsRes : defaultPrograms);
+        setPillars(pillarsRes?.length ? pillarsRes : []);
+        setPrograms(programsRes?.length ? programsRes : []);
       } catch (err) {
         console.error('Failed to fetch programs:', err);
-        setPillars(defaultPillars);
-        setPrograms(defaultPrograms);
+        setPillars([]);
+        setPrograms([]);
       } finally {
         setLoading(false);
       }
@@ -177,8 +59,45 @@ const Programs = () => {
   if (loading) {
     return (
       <Layout>
-        <div className="min-h-screen flex items-center justify-center">
-          <Loader2 className="animate-spin h-12 w-12 text-[#00C2CB]" />
+        <div className="min-h-screen bg-transparent">
+          <section className="pt-40 pb-20 bg-gradient-to-br from-[#0B1E3B] via-[#00C2CB] to-[#0B1E3B] relative overflow-hidden hero-overlay">
+            <div className="container mx-auto px-6">
+              <div className="max-w-4xl">
+                <div className="h-12 w-2/3 bg-white/30 rounded mb-4 animate-pulse" />
+                <div className="h-5 w-full bg-white/20 rounded animate-pulse" />
+              </div>
+            </div>
+          </section>
+
+          <section className="py-24 bg-white">
+            <div className="container mx-auto px-6">
+              <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                {[...Array(3)].map((_, idx) => (
+                  <div key={idx} className="p-8 border-t-4 border-slate-200 bg-[#F9FAFB]/30 rounded-2xl animate-pulse">
+                    <div className="h-16 w-16 bg-slate-200 rounded-2xl mb-6" />
+                    <div className="h-4 w-1/2 bg-slate-200 rounded mb-3" />
+                    <div className="h-3 w-full bg-slate-200 rounded mb-2" />
+                    <div className="h-3 w-5/6 bg-slate-200 rounded" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="py-24 bg-white">
+            <div className="container mx-auto px-6">
+              <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                {[...Array(2)].map((_, idx) => (
+                  <div key={idx} className="p-8 lg:p-12 border-l-4 border-slate-200 bg-[#F9FAFB]/30 rounded-2xl animate-pulse">
+                    <div className="h-6 w-1/3 bg-slate-200 rounded mb-4" />
+                    <div className="h-5 w-2/3 bg-slate-200 rounded mb-4" />
+                    <div className="h-3 w-full bg-slate-200 rounded mb-2" />
+                    <div className="h-3 w-5/6 bg-slate-200 rounded" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
         </div>
       </Layout>
     );
@@ -224,30 +143,37 @@ const Programs = () => {
               </p>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {pillars.map((pillar, idx) => {
-                const Icon = resolveIcon(pillar.icon);
-                const colorMap = {
-                  teal: 'border-[#00C2CB]',
-                  orange: 'border-[#00C2CB]',
-                  yellow: 'border-[#0090C0]'
-                };
-                const iconBgMap = {
-                  teal: 'bg-[#00C2CB]/10 text-[#00C2CB]',
-                  orange: 'bg-[#00C2CB]/10 text-[#00C2CB]',
-                  yellow: 'bg-[#0090C0]/10 text-[#0090C0]'
-                };
-                return (
-                  <div key={idx} className={`bg-[#F9FAFB]/30 rounded-2xl p-8 border-t-4 ${colorMap[pillar.color]} hover:bg-white hover:shadow-xl transition-all duration-300 group`}>
-                    <div className={`h-16 w-16 rounded-2xl ${iconBgMap[pillar.color]} flex items-center justify-center mb-6`}>
-                      <Icon size={32} />
+            {pillars.length === 0 ? (
+              <div className="bg-[#F9FAFB]/30 rounded-2xl p-10 border border-slate-100 text-center">
+                <p className="text-slate-500 font-bold">No pillars published yet.</p>
+              </div>
+            ) : (
+              <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                {pillars.map((pillar, idx) => {
+                  const Icon = resolveIcon(pillar.icon);
+                  const colorMap = {
+                    teal: 'border-[#00C2CB]',
+                    orange: 'border-[#00C2CB]',
+                    yellow: 'border-[#0090C0]'
+                  };
+                  const iconBgMap = {
+                    teal: 'bg-[#00C2CB]/10 text-[#00C2CB]',
+                    orange: 'bg-[#00C2CB]/10 text-[#00C2CB]',
+                    yellow: 'bg-[#0090C0]/10 text-[#0090C0]'
+                  };
+                  const resolvedColor = pillar.color || 'teal';
+                  return (
+                    <div key={pillar.id || idx} className={`bg-[#F9FAFB]/30 rounded-2xl p-8 border-t-4 ${colorMap[resolvedColor]} hover:bg-white hover:shadow-xl transition-all duration-300 group`}>
+                      <div className={`h-16 w-16 rounded-2xl ${iconBgMap[resolvedColor]} flex items-center justify-center mb-6`}>
+                        <Icon size={32} />
+                      </div>
+                        <h3 className="text-2xl font-black text-[#0B1E3B] mb-4">{pillar.title}</h3>
+                      <p className="text-slate-600 leading-relaxed">{pillar.description}</p>
                     </div>
-                      <h3 className="text-2xl font-black text-[#0B1E3B] mb-4">{pillar.title}</h3>
-                    <p className="text-slate-600 leading-relaxed">{pillar.description}</p>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </section>
 
@@ -263,6 +189,11 @@ const Programs = () => {
               </p>
             </div>
 
+            {programs.length === 0 ? (
+              <div className="bg-[#F9FAFB]/30 rounded-2xl p-10 border border-slate-100 text-center">
+                <p className="text-slate-500 font-bold">No programs published yet.</p>
+              </div>
+            ) : (
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {programs.map((program, idx) => {
                 const Icon = resolveIcon(program.icon);
@@ -284,6 +215,7 @@ const Programs = () => {
                   yellow: 'bg-[#0090C0] text-[#0B1E3B] hover:bg-[#00C2CB] hover:text-white',
                   navy: 'bg-[#0B1E3B] text-white hover:bg-[#00C2CB]'
                 };
+                const resolvedColor = program.color || 'teal';
 
                 // availability: if `available` is explicitly false the program is not yet live
                 const isAvailable = program.available !== false;
@@ -296,11 +228,11 @@ const Programs = () => {
                     to={resolvedLink}
                     role="button"
                     aria-label={`Open ${program.title}`}
-                    className={`bg-[#F9FAFB]/30 rounded-2xl p-8 lg:p-12 border-l-4 ${colorMap[program.color]} hover:bg-white hover:shadow-xl transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 group block`}
+                    className={`bg-[#F9FAFB]/30 rounded-2xl p-8 lg:p-12 border-l-4 ${colorMap[resolvedColor]} hover:bg-white hover:shadow-xl transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 group block`}
                   >
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                       <div>
-                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl ${iconBgMap[program.color]} mb-6 transform transition-transform group-hover:scale-105`}>
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl ${iconBgMap[resolvedColor]} mb-6 transform transition-transform group-hover:scale-105`}>
                           <Icon size={20} />
                           <span className="text-xs font-black uppercase tracking-widest">{program.title}</span>
                         </div>
@@ -309,7 +241,7 @@ const Programs = () => {
                         <p className="text-slate-600 leading-relaxed mb-6">{program.description}</p>
 
                         <ul className="space-y-2 mb-6">
-                          {program.highlights.map((highlight, hIdx) => (
+                          {(Array.isArray(program.highlights) ? program.highlights : []).map((highlight, hIdx) => (
                             <li key={hIdx} className="flex items-start gap-2 text-sm text-slate-600">
                                 <div className="h-1.5 w-1.5 rounded-full bg-[#00C2CB] mt-2 flex-shrink-0" />
                               <span>{highlight}</span>
@@ -317,19 +249,19 @@ const Programs = () => {
                           ))}
                         </ul>
 
-                        <div className={`w-full ${buttonMap[program.color]} font-bold py-4 rounded-xl text-center`}>{program.cta && program.cta.trim() !== '' ? program.cta : 'Learn More'} <ArrowRight size={16} className="ml-2 inline-block" /></div>
+                        <div className={`w-full ${buttonMap[resolvedColor]} font-bold py-4 rounded-xl text-center`}>{program.cta && program.cta.trim() !== '' ? program.cta : 'Learn More'} <ArrowRight size={16} className="ml-2 inline-block" /></div>
                       </div>
 
-                      <div className={`aspect-video rounded-2xl ${iconBgMap[program.color]} flex items-center justify-center opacity-50 transform transition-all group-hover:opacity-80 group-hover:scale-105`}>
+                      <div className={`aspect-video rounded-2xl ${iconBgMap[resolvedColor]} flex items-center justify-center opacity-50 transform transition-all group-hover:opacity-80 group-hover:scale-105`}>
                         <Icon size={64} className="opacity-20" />
                       </div>
                     </div>
                   </Link>
                 ) : (
-                  <div key={idx} className={`bg-[#F9FAFB]/30 rounded-2xl p-8 lg:p-12 border-l-4 ${colorMap[program.color]} opacity-50 cursor-not-allowed pointer-events-none transition-all duration-300`}>
+                  <div key={idx} className={`bg-[#F9FAFB]/30 rounded-2xl p-8 lg:p-12 border-l-4 ${colorMap[resolvedColor]} opacity-50 cursor-not-allowed pointer-events-none transition-all duration-300`}>
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                       <div>
-                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl ${iconBgMap[program.color]} mb-6`}>
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl ${iconBgMap[resolvedColor]} mb-6`}>
                           <Icon size={20} />
                           <span className="text-xs font-black uppercase tracking-widest">{program.title}</span>
                         </div>
@@ -338,7 +270,7 @@ const Programs = () => {
                         <p className="text-slate-600 leading-relaxed mb-6">{program.description}</p>
 
                         <ul className="space-y-2 mb-6">
-                          {program.highlights.map((highlight, hIdx) => (
+                          {(Array.isArray(program.highlights) ? program.highlights : []).map((highlight, hIdx) => (
                             <li key={hIdx} className="flex items-start gap-2 text-sm text-slate-600">
                                 <div className="h-1.5 w-1.5 rounded-full bg-[#00C2CB] mt-2 flex-shrink-0" />
                               <span>{highlight}</span>
@@ -349,13 +281,13 @@ const Programs = () => {
                         { !isAvailable ? (
                           <div className="inline-flex items-center px-4 py-2 rounded-full bg-[#F1F5F9] text-[#0B1E3B] font-bold">Coming Soon</div>
                         ) : (
-                          <div className={`w-full ${buttonMap[program.color]} font-bold py-4 rounded-xl text-center`}>
+                          <div className={`w-full ${buttonMap[resolvedColor]} font-bold py-4 rounded-xl text-center`}>
                             {program.cta && program.cta.trim() !== '' ? program.cta : 'Learn More'} <ArrowRight size={16} className="ml-2 inline-block" />
                           </div>
                         )}
                       </div>
 
-                      <div className={`aspect-video rounded-2xl ${iconBgMap[program.color]} flex items-center justify-center opacity-30`}>
+                      <div className={`aspect-video rounded-2xl ${iconBgMap[resolvedColor]} flex items-center justify-center opacity-30`}>
                         <Icon size={64} className="opacity-10" />
                       </div>
                     </div>
@@ -363,6 +295,7 @@ const Programs = () => {
                 );
               })}
             </div>
+            )}
           </div>
         </section>
 
