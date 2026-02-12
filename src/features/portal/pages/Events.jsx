@@ -91,14 +91,6 @@ const Events = () => {
   };
 
   const handleLogActivity = async () => {
-    const token = localStorage.getItem('unda_token');
-    // If not logged in, redirect to portal and preserve next
-    if (!token) {
-      const next = encodeURIComponent(window.location.pathname + window.location.search);
-      window.location.href = `/portal?next=${next}`;
-      return;
-    }
-
     const event = events[selectedIndex];
     if (!event) {
       console.error('Log activity failed: no event selected');
