@@ -21,6 +21,71 @@ const api = axios.create({
   },
 });
 
+const toIntegerId = (value) => {
+  const num = Number(value);
+  return Number.isFinite(num) && !Number.isNaN(num) ? num : null;
+};
+
+const getCachedUser = () => {
+  try {
+    const userStr = typeof window !== 'undefined' ? localStorage.getItem('unda_user') : null;
+    return userStr ? JSON.parse(userStr) : null;
+  } catch {
+    return null;
+  }
+};
+
+const extractChampionId = (data) => {
+  if (!data || typeof data !== 'object') return null;
+  const candidates = [
+    data.champion_id,
+    data.championId,
+    data.championID,
+    data.id,
+    data.user_id,
+    data.member_id
+  ];
+  for (const candidate of candidates) {
+    const numeric = toIntegerId(candidate);
+    if (numeric !== null) return numeric;
+  }
+  return null;
+};
+
+export const resolveChampionId = async (candidate) => {
+  const direct = toIntegerId(candidate);
+  if (direct !== null) return direct;
+
+  const cachedUser = getCachedUser();
+  const cachedNumeric = extractChampionId(cachedUser);
+  if (cachedNumeric !== null) return cachedNumeric;
+
+  try {
+    const res = await api.get('/api/auth/me');
+    const data = res?.data || {};
+    const champion = data?.champion || null;
+    const user = data?.user || data;
+    const resolved = extractChampionId(champion) ?? extractChampionId(user);
+    if (resolved !== null) {
+      try {
+        if (cachedUser && !cachedUser.champion_id) {
+          localStorage.setItem('unda_user', JSON.stringify({
+            ...cachedUser,
+            champion_id: resolved
+          }));
+        }
+      } catch {
+        // ignore cache update errors
+      }
+      return resolved;
+    }
+  } catch {
+    // ignore and fall through to error
+  }
+
+  throw new Error('Unable to resolve champion id to an integer.');
+};
+
 // 2. Request Interceptor: Attaches the Token to every request automatically
 api.interceptors.request.use(
   (config) => {
@@ -247,9 +312,7 @@ export const championService = {
 export const checkInService = {
   submitCheckIn: async (data) => {
     // Validate or transform data if needed
-    // If championId can be coerced to a number, send it as a numeric id; otherwise send as-is
-    const maybeNumericId = Number(data.championId);
-    const championIdValue = Number.isFinite(maybeNumericId) && !Number.isNaN(maybeNumericId) ? maybeNumericId : data.championId;
+    const championIdValue = await resolveChampionId(data.championId);
 
     const payload = {
       champion_id: championIdValue,
