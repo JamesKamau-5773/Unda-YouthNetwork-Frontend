@@ -9,7 +9,7 @@ const DevPortal = () => {
   const enableDevAccess = () => {
     // Lightweight dev-only convenience: set a fake token and user then navigate
     localStorage.setItem('unda_token', 'dev-access-token');
-    localStorage.setItem('unda_user', JSON.stringify({ id: 'dev', email: 'dev@local', full_name: 'Developer (dev)' }));
+    localStorage.setItem('unda_user', JSON.stringify({ id: 'dev', champion_id: 1, email: 'dev@local', full_name: 'Developer (dev)' }));
     navigate('/member/dashboard');
   };
 

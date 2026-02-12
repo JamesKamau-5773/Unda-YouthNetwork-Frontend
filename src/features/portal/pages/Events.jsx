@@ -24,16 +24,32 @@ const Events = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const logClientTelemetry = async (payload) => {
+    const url = import.meta.env.VITE_CLIENT_LOG_URL;
+    if (!url) return;
+    try {
+      if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
+        const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+        navigator.sendBeacon(url, blob);
+        return;
+      }
+      await api.post(url, payload, { headers: { 'Content-Type': 'application/json' } });
+    } catch {
+      // ignore telemetry errors
+    }
+  };
+
   useEffect(() => {
     try {
       const userStr = localStorage.getItem('unda_user');
       if (userStr) {
         const user = JSON.parse(userStr);
+        const candidateId = user?.champion_id ?? user?.championId ?? user?.id;
         // Only use numeric ID for champion_id
-        if (user && user.id && typeof user.id === 'number') {
-          setChampionId(user.id);
-        } else if (user && user.id && !isNaN(Number(user.id))) {
-          setChampionId(Number(user.id));
+        if (candidateId && typeof candidateId === 'number') {
+          setChampionId(candidateId);
+        } else if (candidateId && !isNaN(Number(candidateId))) {
+          setChampionId(Number(candidateId));
         }
       }
     } catch (err) {
@@ -119,8 +135,20 @@ const Events = () => {
         notes: notes.trim()
       };
 
-      if (championId) {
+      try {
         payload.champion_id = await resolveChampionId(championId);
+      } catch (idErr) {
+        console.error('Failed to resolve champion id for event participation', idErr);
+        logClientTelemetry({
+          type: 'event-participation-missing-champion-id',
+          event_id: eventId,
+          has_cached_champion_id: !!championId,
+          path: typeof window !== 'undefined' ? window.location.pathname : null,
+          timestamp: new Date().toISOString()
+        });
+        setErrorMessage('We could not find your Champion ID. Please sign out and back in, then try again.');
+        setSubmitting(false);
+        return;
       }
 
       await api.post('/api/event-participation/', payload);
@@ -152,6 +180,7 @@ const Events = () => {
             <div className="mb-4">
               <p className="text-sm text-slate-600">{events[selectedIndex].event_date || events[selectedIndex].date || 'Date TBA'} • {getEventTime(events[selectedIndex])}</p>
               {events[selectedIndex].location && <p className="text-sm text-slate-600">Location: {events[selectedIndex].location}</p>}
+              <p className="text-xs text-slate-400 mt-2">Champion ID is pulled from your account automatically. If this fails, sign out and back in.</p>
             </div>
 
             {successMessage && (

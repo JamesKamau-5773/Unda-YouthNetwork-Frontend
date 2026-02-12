@@ -49,6 +49,11 @@ const PortalLogin = () => {
     return { lengthOk, upperOk, lowerOk, numberOk, specialOk, score, label };
   };
 
+  const toIntegerId = (value) => {
+    const num = Number(value);
+    return Number.isFinite(num) && !Number.isNaN(num) ? num : null;
+  };
+
   const PasswordIndicator = ({ password, focused }) => {
     if (!password) return null;
     const p = evaluatePassword(password);
@@ -176,6 +181,7 @@ const PortalLogin = () => {
       const data = response?.data || {};
       const token = data.access_token || data.token || (data.data && (data.data.access_token || data.data.token)) || null;
       const user = data.user || (data.data && data.data.user) || data.profile || data.member || null;
+      const champion = data.champion || (data.data && data.data.champion) || null;
 
       // 3. Save to Storage / in-memory handlers
       if (token) {
@@ -188,7 +194,32 @@ const PortalLogin = () => {
         console.warn('Login response did not contain a client-visible access token. If your backend sets an HttpOnly cookie this is expected.');
       }
       if (user) {
-        localStorage.setItem('unda_user', JSON.stringify(user));
+        let cachedUser = user;
+        const championIdFromResponse = toIntegerId(champion?.champion_id ?? champion?.championId ?? champion?.id);
+        if (championIdFromResponse !== null && !cachedUser?.champion_id) {
+          cachedUser = { ...cachedUser, champion_id: championIdFromResponse };
+        }
+        localStorage.setItem('unda_user', JSON.stringify(cachedUser));
+
+        if (!cachedUser?.champion_id) {
+          try {
+            const me = await api.get('/api/auth/me');
+            const meData = me?.data || {};
+            const meChampion = meData.champion || null;
+            const meUser = meData.user || meData;
+            const resolvedChampionId =
+              toIntegerId(meChampion?.champion_id ?? meChampion?.championId ?? meChampion?.id) ??
+              toIntegerId(meUser?.champion_id ?? meUser?.championId ?? meUser?.id);
+            if (resolvedChampionId !== null) {
+              localStorage.setItem('unda_user', JSON.stringify({
+                ...cachedUser,
+                champion_id: resolvedChampionId
+              }));
+            }
+          } catch (meErr) {
+            console.debug('Login: unable to enrich champion id from /api/auth/me', meErr);
+          }
+        }
       }
 
       // Clear any saved registration flags — user is now authenticated/approved
