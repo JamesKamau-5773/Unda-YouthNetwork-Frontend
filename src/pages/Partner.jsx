@@ -4,6 +4,7 @@ import Layout from '@/components/shared/Layout';
 import { ArrowLeft, Handshake, Building2, Globe, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import api from '@/services/apiService';
 
 const Partner = () => {
   const [formData, setFormData] = useState({
@@ -15,12 +16,22 @@ const Partner = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // In a real app, this would send data to a backend
-    console.log('Partnership Inquiry:', formData);
-    setSubmitted(true);
+    setSubmitting(true);
+    setErrorMessage('');
+
+    try {
+      await api.post('/api/support-review/partnership', formData);
+      setSubmitted(true);
+    } catch (err) {
+      setErrorMessage(err.response?.data?.message || 'Failed to submit inquiry. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -93,6 +104,12 @@ const Partner = () => {
                 {!submitted ? (
                   <form onSubmit={handleSubmit} className="relative z-10 space-y-6">
                       <h3 className="text-2xl font-black text-[#0B1E3B] mb-6">Partnership Inquiry</h3>
+
+                    {errorMessage && (
+                      <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        {errorMessage}
+                      </div>
+                    )}
                     
                     <div className="space-y-2">
                       <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Organization Name</label>
@@ -162,8 +179,12 @@ const Partner = () => {
                        />
                     </div>
 
-                    <Button type="submit" className="w-full h-14 bg-[#0B1E3B] hover:bg-[#00C2CB] text-white font-bold text-lg rounded-xl shadow-lg transition-all">
-                      Submit Inquiry
+                    <Button
+                      type="submit"
+                      disabled={submitting}
+                      className="w-full h-14 bg-[#0B1E3B] hover:bg-[#00C2CB] text-white font-bold text-lg rounded-xl shadow-lg transition-all disabled:opacity-70"
+                    >
+                      {submitting ? 'Submitting...' : 'Submit Inquiry'}
                     </Button>
                   </form>
                 ) : (
@@ -175,7 +196,20 @@ const Partner = () => {
                     <p className="text-slate-600 mb-8">
                       We've received your partnership inquiry. Our team will review your details and get back to you shortly at <span className="font-bold">{formData.email}</span>.
                     </p>
-                    <Button onClick={() => setSubmitted(false)} variant="outline" className="border-[#00C2CB] text-[#00C2CB] hover:bg-[#00C2CB]/5">
+                    <Button
+                      onClick={() => {
+                        setSubmitted(false);
+                        setFormData({
+                          organizationName: '',
+                          contactPerson: '',
+                          email: '',
+                          partnershipType: '',
+                          message: ''
+                        });
+                      }}
+                      variant="outline"
+                      className="border-[#00C2CB] text-[#00C2CB] hover:bg-[#00C2CB]/5"
+                    >
                       Send Another Inquiry
                     </Button>
                   </div>

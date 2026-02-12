@@ -4,6 +4,7 @@ import Layout from '@/components/shared/Layout';
 import { ArrowLeft, HeartHandshake, Users, Calendar, CheckCircle, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import api from '@/services/apiService';
 
 const Volunteer = () => {
   const [formType, setFormType] = useState(null); // 'volunteer' or 'host-event' or null
@@ -16,12 +17,22 @@ const Volunteer = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // In a real app, this would send data to a backend
-    console.log('Volunteer/Event Submission:', { type: formType, ...formData });
-    setSubmitted(true);
+    setSubmitting(true);
+    setErrorMessage('');
+
+    try {
+      await api.post('/api/support-review/support', { type: formType, ...formData });
+      setSubmitted(true);
+    } catch (err) {
+      setErrorMessage(err.response?.data?.message || 'Failed to submit request. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -190,6 +201,12 @@ const Volunteer = () => {
                     <p className="text-sm text-slate-500 mb-6">
                       Fill in your details and we'll get back to you within 48 hours.
                     </p>
+
+                    {errorMessage && (
+                      <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        {errorMessage}
+                      </div>
+                    )}
                     
                     <div className="space-y-2">
                       <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider">Full Name *</label>
@@ -262,10 +279,13 @@ const Volunteer = () => {
                     </div>
 
                     <Button 
-                      type="submit" 
-                      className={`w-full h-14 ${formType === 'volunteer' ? 'bg-[#00C2CB] hover:bg-[#00C2CB]/90' : 'bg-[#0090C0] hover:bg-[#0090C0]/90'} text-white font-bold text-lg rounded-xl shadow-lg transition-all`}
+                      type="submit"
+                      disabled={submitting}
+                      className={`w-full h-14 ${formType === 'volunteer' ? 'bg-[#00C2CB] hover:bg-[#00C2CB]/90' : 'bg-[#0090C0] hover:bg-[#0090C0]/90'} text-white font-bold text-lg rounded-xl shadow-lg transition-all disabled:opacity-70`}
                     >
-                      {formType === 'volunteer' ? 'Submit Support Application' : 'Submit Event Request'}
+                      {submitting
+                        ? 'Submitting...'
+                        : (formType === 'volunteer' ? 'Submit Support Application' : 'Submit Event Request')}
                     </Button>
                   </form>
                 ) : (

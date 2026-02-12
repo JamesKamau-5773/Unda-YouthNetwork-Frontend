@@ -14,6 +14,7 @@ import ScrollToTop from './components/shared/ScrollToTop';
 import MemberDashboard from './features/portal/pages/MemberDashboard';
 import WellnessCheckInPortal from './features/portal/pages/WellnessCheckIn';
 import Events from './features/portal/pages/Events';
+import EventSubmission from './features/portal/pages/EventSubmission';
 import Certificate from './features/portal/pages/Certificate';
 import Profile from './features/portal/pages/Profile';
 import ProfileTwoFactor from './features/portal/pages/ProfileTwoFactor';
@@ -91,6 +92,7 @@ function App() {
             <Route path="/member/check-in" element={<ProtectedRoute><WellnessCheckInPortal /></ProtectedRoute>} />
             <Route path="/member/check-in/start" element={<ProtectedRoute><WeeklyCheckInForm /></ProtectedRoute>} />
             <Route path="/member/events" element={<ProtectedRoute><Events /></ProtectedRoute>} />
+            <Route path="/member/events/new" element={<ProtectedRoute><EventSubmission /></ProtectedRoute>} />
             <Route path="/member/certificate" element={<ProtectedRoute><Certificate /></ProtectedRoute>} />
             <Route path="/member/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/member/profile/2fa" element={<ProtectedRoute><ProfileTwoFactor /></ProtectedRoute>} />

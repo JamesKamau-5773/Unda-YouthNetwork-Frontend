@@ -10,6 +10,67 @@ const iconMap = {
   Users, Heart, Lightbulb, MessageSquare, GraduationCap, MapPin, Mic2, Calendar, Globe
 };
 
+const fallbackPillars = [
+  {
+    id: 1,
+    title: 'Awareness',
+    description: 'Building knowledge and understanding of adolescent mental health, prevention strategies, and resources across youth communities.',
+    icon: 'Lightbulb',
+    color: 'teal'
+  },
+  {
+    id: 2,
+    title: 'Access',
+    description: 'Ensuring equitable access to prevention resources, support services, and safe spaces for youth mental health and resilience.',
+    icon: 'Users',
+    color: 'orange'
+  },
+  {
+    id: 3,
+    title: 'Advocacy',
+    description: 'Empowering youth voices to advocate for mental health policies, support systems, and community-led prevention initiatives.',
+    icon: 'Heart',
+    color: 'yellow'
+  }
+];
+
+const fallbackPrograms = [
+  {
+    id: 1,
+    title: 'Annual Conference',
+    tagline: 'Youth mental health leaders convening for learning, networking, and action',
+    description: 'Join 150+ youth-led delegates, educators, and partners for a two-day conference on prevention, innovation, and youth empowerment.',
+    icon: 'Calendar',
+    color: 'teal',
+    highlights: [
+      'Keynote speakers on adolescent mental health',
+      'Interactive workshops on resilience building',
+      'Networking with prevention champions',
+      'Capacity-building on advocacy'
+    ],
+    cta: 'Register Now',
+    available: true,
+    link: '/programs/annual-conference'
+  },
+  {
+    id: 2,
+    title: 'Global Initiative',
+    tagline: 'International collaboration on youth mental health prevention',
+    description: 'A global partnership to strengthen youth-led prevention efforts across continents, sharing knowledge and building solidarity.',
+    icon: 'Globe',
+    color: 'yellow',
+    highlights: [
+      'Cross-cultural peer learning',
+      'Joint prevention research initiatives',
+      'International advocacy campaigns',
+      'Youth ambassador network'
+    ],
+    cta: 'Learn More',
+    available: true,
+    link: '/programs/global'
+  }
+];
+
 const Programs = () => {
   const [loading, setLoading] = useState(true);
   const [pillars, setPillars] = useState([]);
@@ -37,12 +98,12 @@ const Programs = () => {
           programService.getPillars().catch(() => null),
           programService.getAll().catch(() => null)
         ]);
-        setPillars(pillarsRes?.length ? pillarsRes : []);
-        setPrograms(programsRes?.length ? programsRes : []);
+        setPillars(pillarsRes?.length ? pillarsRes : fallbackPillars);
+        setPrograms(programsRes?.length ? programsRes : fallbackPrograms);
       } catch (err) {
         console.error('Failed to fetch programs:', err);
-        setPillars([]);
-        setPrograms([]);
+        setPillars(fallbackPillars);
+        setPrograms(fallbackPrograms);
       } finally {
         setLoading(false);
       }
@@ -143,13 +204,13 @@ const Programs = () => {
               </p>
             </div>
 
-            {pillars.length === 0 ? (
+            {((pillars.length ? pillars : fallbackPillars)).length === 0 ? (
               <div className="bg-[#F9FAFB]/30 rounded-2xl p-10 border border-slate-100 text-center">
                 <p className="text-slate-500 font-bold">No pillars published yet.</p>
               </div>
             ) : (
               <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                {pillars.map((pillar, idx) => {
+                {(pillars.length ? pillars : fallbackPillars).map((pillar, idx) => {
                   const Icon = resolveIcon(pillar.icon);
                   const colorMap = {
                     teal: 'border-[#00C2CB]',
@@ -189,13 +250,13 @@ const Programs = () => {
               </p>
             </div>
 
-            {programs.length === 0 ? (
+            {((programs.length ? programs : fallbackPrograms)).length === 0 ? (
               <div className="bg-[#F9FAFB]/30 rounded-2xl p-10 border border-slate-100 text-center">
                 <p className="text-slate-500 font-bold">No programs published yet.</p>
               </div>
             ) : (
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              {programs.map((program, idx) => {
+              {(programs.length ? programs : fallbackPrograms).map((program, idx) => {
                 const Icon = resolveIcon(program.icon);
                 const colorMap = {
                   teal: 'border-[#00C2CB]',

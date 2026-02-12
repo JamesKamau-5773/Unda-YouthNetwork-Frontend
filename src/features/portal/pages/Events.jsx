@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import DashboardLayout from "../layout/DashboardLayout";
 import {
   Video,
@@ -6,30 +7,34 @@ import {
   Clock,
   MapPin,
   Calendar,
-  ArrowUpRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { eventService } from "@/services/workstreamService";
+import api from "@/services/apiService";
 
 const Events = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [logModalOpen, setLogModalOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [registering, setRegistering] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [notes, setNotes] = useState('');
+  const [championId, setChampionId] = useState('');
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     try {
-      const params = new URLSearchParams(window.location.search);
-      const auto = params.get('autoRegister');
-      const idx = parseInt(params.get('index') || '0', 10);
-      if (auto === '1') {
-        setSelectedIndex(Number.isNaN(idx) ? 0 : idx);
-        setModalOpen(true);
+      const userStr = localStorage.getItem('unda_user');
+      if (userStr) {
+        const user = JSON.parse(userStr);
+        if (user && (user.id || user.username || user.full_name)) {
+          setChampionId(user.id || user.username || user.full_name);
+        }
       }
-    } catch (e) {
-      // ignore
+    } catch (err) {
+      console.error('Failed to read champion id from cache', err);
     }
   }, []);
 
@@ -66,7 +71,6 @@ const Events = () => {
     return { day, month };
   };
 
-  const getEventStatus = (event) => event?.status || 'Upcoming';
   const getEventType = (event) => event?.event_type || event?.type || (event?.location ? 'Physical' : 'Virtual');
   const getEventCategory = (event) => event?.event_type || event?.category || 'Event';
   const getEventTime = (event) => {
@@ -78,14 +82,16 @@ const Events = () => {
   };
   const getEventHost = (event) => event?.organizer || event?.host || event?.team || 'Unda Youth Network';
 
-  const openRegisterFor = (i) => {
+  const openLogFor = (i) => {
     setSelectedIndex(i);
-    setModalOpen(true);
+    setLogModalOpen(true);
+    setSuccessMessage('');
+    setErrorMessage('');
+    setNotes('');
   };
 
-  const handleRegister = async () => {
+  const handleLogActivity = async () => {
     const token = localStorage.getItem('unda_token');
-    const params = new URLSearchParams(window.location.search);
     // If not logged in, redirect to portal and preserve next
     if (!token) {
       const next = encodeURIComponent(window.location.pathname + window.location.search);
@@ -93,37 +99,60 @@ const Events = () => {
       return;
     }
 
-    setRegistering(true);
-    // Simulate registration API call; replace with real API when available
+    const event = events[selectedIndex];
+    if (!event) {
+      console.error('Log activity failed: no event selected');
+      setErrorMessage('Please select an event to log.');
+      return;
+    }
+
+    setSubmitting(true);
+    setSuccessMessage('');
+    setErrorMessage('');
     try {
-      await new Promise((res) => setTimeout(res, 900));
-      setSuccessMessage('Reservation confirmed — check your email for details.');
-      // Optionally remove autoRegister from URL
-      const url = new URL(window.location.href);
-      url.searchParams.delete('autoRegister');
-      url.searchParams.delete('index');
-      window.history.replaceState({}, '', url.toString());
+      const eventId = event.id || event.event_id;
+      if (!eventId) {
+        console.error('Log activity failed: missing event id', event);
+        setErrorMessage('Unable to log this event. Please try another event.');
+        setSubmitting(false);
+        return;
+      }
+
+      const payload = {
+        event_id: eventId,
+        registration_status: 'attended',
+        notes: notes.trim()
+      };
+
+      if (championId) {
+        const maybeNumericId = Number(championId);
+        payload.champion_id = Number.isFinite(maybeNumericId) && !Number.isNaN(maybeNumericId) ? maybeNumericId : championId;
+      }
+
+      await api.post('/api/event-participation/', payload);
+      setSuccessMessage('Attendance logged. Thank you for the update.');
       setTimeout(() => {
-        setModalOpen(false);
+        setLogModalOpen(false);
       }, 1200);
     } catch (err) {
-      setSuccessMessage('Failed to confirm reservation. Please try again.');
+      console.error('Failed to log activity', err?.response?.data || err);
+      setErrorMessage(err?.response?.data?.message || 'Failed to log activity. Please try again.');
     } finally {
-      setRegistering(false);
+      setSubmitting(false);
     }
   };
 
   return (
     <DashboardLayout>
-      {modalOpen && events[selectedIndex] && (
+      {logModalOpen && events[selectedIndex] && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
             <div className="flex justify-between items-start mb-4">
               <div>
-                <h3 className="text-lg font-black text-[#0B1E3B]">Register for event</h3>
+                <h3 className="text-lg font-black text-[#0B1E3B]">Log activity</h3>
                 <p className="text-sm text-slate-500">{events[selectedIndex].title}</p>
               </div>
-              <button onClick={() => setModalOpen(false)} className="text-slate-400">✕</button>
+              <button onClick={() => setLogModalOpen(false)} className="text-slate-400">✕</button>
             </div>
 
             <div className="mb-4">
@@ -131,14 +160,34 @@ const Events = () => {
               {events[selectedIndex].location && <p className="text-sm text-slate-600">Location: {events[selectedIndex].location}</p>}
             </div>
 
-            {successMessage ? (
-              <div className="p-4 rounded-lg bg-green-50 text-green-700">{successMessage}</div>
-            ) : (
-              <div className="flex gap-2">
-                <button onClick={handleRegister} disabled={registering} className="flex-1 bg-[#00ACC1] text-white py-3 rounded-xl font-bold">{registering ? 'Confirming...' : 'Confirm Reservation'}</button>
-                <button onClick={() => setModalOpen(false)} className="flex-1 bg-white border border-slate-200 py-3 rounded-xl">Cancel</button>
-              </div>
+            {successMessage && (
+              <div className="p-4 rounded-lg bg-green-50 text-green-700 mb-4">{successMessage}</div>
             )}
+
+            {errorMessage && (
+              <div className="p-4 rounded-lg bg-red-50 text-red-700 mb-4">{errorMessage}</div>
+            )}
+
+            <div className="mb-4">
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Notes (Optional)</label>
+              <textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Community impact, youth reached, key discussions..."
+                className="mt-2 w-full min-h-[110px] rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm focus:border-[#00ACC1] focus:outline-none resize-none"
+              />
+            </div>
+
+            <div className="flex gap-2">
+              <button
+                onClick={handleLogActivity}
+                disabled={submitting}
+                className="flex-1 bg-[#00ACC1] text-white py-3 rounded-xl font-bold"
+              >
+                {submitting ? 'Submitting...' : 'Log Attendance'}
+              </button>
+              <button onClick={() => setLogModalOpen(false)} className="flex-1 bg-white border border-slate-200 py-3 rounded-xl">Cancel</button>
+            </div>
           </div>
         </div>
       )}
@@ -158,11 +207,19 @@ const Events = () => {
           </p>
         </div>
 
-        <div className="relative z-10 px-4 py-2 rounded-full bg-[#E0F7FA] border border-[#00ACC1]/30 text-[#006064] flex items-center gap-2">
-          <Calendar size={16} className="text-[#00ACC1]" />
-          <span className="text-xs font-bold uppercase tracking-wider">
-            Upcoming
-          </span>
+        <div className="relative z-10 flex flex-wrap items-center gap-3">
+          <button
+            onClick={() => navigate('/member/events/new')}
+            className="px-4 py-2 rounded-full bg-[#0B1E3B] text-white text-xs font-bold uppercase tracking-wider"
+          >
+            Start a Mtaani Hub
+          </button>
+          <div className="px-4 py-2 rounded-full bg-[#E0F7FA] border border-[#00ACC1]/30 text-[#006064] flex items-center gap-2">
+            <Calendar size={16} className="text-[#00ACC1]" />
+            <span className="text-xs font-bold uppercase tracking-wider">
+              Upcoming
+            </span>
+          </div>
         </div>
       </div>
 
@@ -192,7 +249,6 @@ const Events = () => {
         <div className="grid gap-4">
           {events.map((evt, idx) => {
             const { day, month } = getEventDateParts(evt);
-            const status = getEventStatus(evt);
             const type = getEventType(evt);
             const category = getEventCategory(evt);
             return (
@@ -239,18 +295,10 @@ const Events = () => {
 
                 <div className="w-full md:w-auto relative z-10">
                   <Button
-                    onClick={() => openRegisterFor(idx)}
-                    className={`w-full md:w-auto rounded-xl font-bold text-xs h-12 px-8 shadow-lg transition-transform hover:-translate-y-0.5 ${
-                      status === 'Waitlist'
-                        ? 'bg-white text-[#00838F] border border-[#E0F7FA] hover:bg-[#F2F9FA]'
-                        : 'bg-[#00ACC1] hover:bg-[#0097A7] text-white shadow-[#00ACC1]/20'
-                    }`}
-                    disabled={status === 'Waitlist'}
+                    onClick={() => openLogFor(idx)}
+                    className="w-full md:w-auto rounded-xl font-bold text-xs h-12 px-8 shadow-lg transition-transform hover:-translate-y-0.5 bg-[#00ACC1] hover:bg-[#0097A7] text-white shadow-[#00ACC1]/20"
                   >
-                    {status === 'Waitlist' ? 'Join Waitlist' : 'Register Now'}
-                    {status !== 'Waitlist' && (
-                      <ArrowUpRight size={14} className="ml-1" />
-                    )}
+                    Log Activity
                   </Button>
                 </div>
               </div>
