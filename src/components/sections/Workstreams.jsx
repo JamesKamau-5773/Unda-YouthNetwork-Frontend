@@ -15,16 +15,24 @@ const iconMap = { Mic, Users, GraduationCap, MapPin, BookOpen };
 
 const fallbackStreams = [
   {
-    title: 'Campus Edition',
-    desc: 'Campus-based mental health activation with peer-led sessions and resilience programs.',
+    title: 'UMV Podcast',
+    desc: 'Social driver & audio content',
+    link: '/podcast',
+    icon: 'Mic',
+    iconColor: '#008ba3',
+    color: 'border-[#008ba3]'
+  },
+  {
+    title: 'UMV Campus',
+    desc: 'Campus cohorts, events & research',
     link: '/campus',
     icon: 'GraduationCap',
     iconColor: '#00C2CB',
     color: 'border-[#00C2CB]'
   },
   {
-    title: 'Debaters Circle',
-    desc: 'Debate-driven prevention program building confidence, empathy, and critical thinking.',
+    title: 'UMV Debaters',
+    desc: 'Age-appropriate mental health debates and conversations for 13–17 in school and community settings',
     link: '/debaters-circle',
     icon: 'Users',
     iconColor: '#0090C0',
@@ -32,19 +40,27 @@ const fallbackStreams = [
   },
   {
     title: 'UMV Mtaani',
-    desc: 'Neighborhood prevention through community barazas and outreach activities.',
+    desc: 'Community outreaches & pillar events',
     link: '/mtaani',
     icon: 'MapPin',
     iconColor: '#0B1E3B',
     color: 'border-[#0B1E3B]'
   },
   {
-    title: 'Unda Podcast',
-    desc: 'Youth voices and expert insights on mental health, wellbeing, and prevention.',
-    link: '/podcast',
-    icon: 'Mic',
-    iconColor: '#FFC83D',
-    color: 'border-[#FFC83D]'
+    title: 'UMV Annual Conference',
+    desc: 'Flagship youth convening',
+    link: '/programs/annual-conference',
+    icon: 'BookOpen',
+    iconColor: '#008ba3',
+    color: 'border-[#008ba3]'
+  },
+  {
+    title: 'UMV Global',
+    desc: 'International expansion',
+    link: '/programs/global',
+    icon: 'MapPin',
+    iconColor: '#00C2CB',
+    color: 'border-[#00C2CB]'
   }
 ];
 
