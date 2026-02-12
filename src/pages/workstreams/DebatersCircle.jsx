@@ -455,6 +455,9 @@ const DebatersCircle = () => {
                 )}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
     </div>
   );
