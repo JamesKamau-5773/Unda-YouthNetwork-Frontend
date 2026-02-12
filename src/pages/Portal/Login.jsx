@@ -51,7 +51,7 @@ const PortalLogin = () => {
 
   const toIntegerId = (value) => {
     const num = Number(value);
-    return Number.isFinite(num) && !Number.isNaN(num) ? num : null;
+    return Number.isFinite(num) && !Number.isNaN(num) && num > 0 ? num : null;
   };
 
   const PasswordIndicator = ({ password, focused }) => {
