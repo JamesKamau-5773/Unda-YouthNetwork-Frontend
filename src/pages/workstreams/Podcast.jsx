@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Play, Mic2, Calendar, Share2, X, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import api from "@/services/apiService";
@@ -9,6 +9,7 @@ const Podcast = () => {
   const [_error, setError] = useState(null);
   const [showPlayerModal, setShowPlayerModal] = useState(false);
   const [playingEpisode, setPlayingEpisode] = useState(null);
+  const episodeListRef = useRef(null);
 
   useEffect(() => {
     const fetchPodcasts = async () => {
@@ -292,11 +293,22 @@ const Podcast = () => {
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">
-                <Button className="h-16 px-8 rounded-2xl bg-gradient-to-r from-[#0B1E3B] to-[#00C2CB] text-white text-lg font-bold shadow-2xl transform transition hover:scale-[1.02]">
+                <Button
+                  onClick={() => {
+                    if (episodes.length > 0) {
+                      handlePlayEpisode(episodes[0]);
+                    }
+                  }}
+                  disabled={episodes.length === 0}
+                  className="h-16 px-8 rounded-2xl bg-gradient-to-r from-[#0B1E3B] to-[#00C2CB] text-white text-lg font-bold shadow-2xl transform transition hover:scale-[1.02] disabled:opacity-50"
+                >
                   <Play className="mr-3" size={20} />
                   Listen Now
                 </Button>
                 <Button
+                  onClick={() => {
+                    episodeListRef.current?.scrollIntoView({ behavior: 'smooth' });
+                  }}
                   variant="outline"
                   className="h-16 px-8 rounded-2xl border-slate-200 text-[#0B1E3B] font-bold hover:bg-slate-50"
                 >
@@ -335,7 +347,7 @@ const Podcast = () => {
       </section>
 
       {/* 2. EPISODE LIST: Professional & High-Contrast */}
-      <section className="py-24 container mx-auto px-6">
+      <section ref={episodeListRef} className="py-24 container mx-auto px-6">
         <div className="flex justify-between items-end mb-16 border-b border-slate-100 pb-8">
           <div>
               <h2 className="text-3xl font-black text-[#0B1E3B] tracking-tight">

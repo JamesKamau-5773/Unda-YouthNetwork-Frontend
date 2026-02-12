@@ -17,6 +17,10 @@ const About = () => {
     {
       title: "Peer-Led Access & Support",
       description: "Our peer-driven models provide person-centered support close to communities, expand access to early preventive interventions, and strengthen referral pathways, consistent with WHO recommendations for integrated, youth-centered mental health strategies."
+    },
+    {
+      title: "Global Youth Mental Health Priorities",
+      description: "UMV supports the recent WHO/UN joint call for sustained investment in child and youth mental health as a global policy priority. Our approach, combining youth participation, digital innovation, and whole-of-society collaboration, reflects global guidance for rights-based, community-led, cross-sectoral strategies."
     }
   ];
 
@@ -124,11 +128,6 @@ const About = () => {
                 ))}
               </div>
 
-              <div className="mt-12 p-8 bg-unda-navy/5 rounded-2xl border border-unda-navy/10">
-                <p className="text-sm text-[#0B1E3B] leading-relaxed">
-                  <strong className="text-unda-navy">Global Youth Mental Health Priorities:</strong> UMV supports the recent WHO/UN joint call for sustained investment in child and youth mental health as a global policy priority. Our approach, combining youth participation, digital innovation, and whole-of-society collaboration, reflects global guidance for rights-based, community-led, cross-sectoral strategies.
-                </p>
-              </div>
             </div>
           </div>
         </section>

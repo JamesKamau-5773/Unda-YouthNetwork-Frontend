@@ -4,146 +4,138 @@ import {
   ArrowLeft,
   MessageSquare,
   BookOpen,
-  GraduationCap,
-  Download,
-  CheckSquare,
-  X,
-  Loader2,
   Calendar,
   MapPin,
-  Users,
+  Download,
+  X,
+  Loader2,
   CheckCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import api from "@/services/apiService";
 
-// Participation Modal Component - moved outside to prevent re-creation on each render
-const ParticipationModal = ({ 
-  showLogModal, 
-  setShowLogModal, 
-  message, 
-  loading, 
-  events, 
-  formData, 
-  setFormData, 
-  handleLogParticipation, 
-  submitting 
+// Registration Modal Component
+const RegistrationModal = ({ 
+  showModal, 
+  setShowModal, 
+  selectedEvent, 
+  registrationData, 
+  setRegistrationData, 
+  handleRegistrationSubmit, 
+  registering,
+  registrationSubmitted,
+  registrationError
 }) => {
-  if (!showLogModal) return null;
-  
-  return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-        {/* Modal Header */}
-        <div className="p-6 border-b border-slate-100 flex justify-between items-center">
-          <div>
-            <h2 className="text-xl font-black text-[#0B1E3B]">Log Debate Participation</h2>
-            <p className="text-sm text-slate-500 mt-1">Record your attendance for Documentation Quality Score</p>
-          </div>
-          <button 
-            onClick={() => setShowLogModal(false)}
-            className="p-2 hover:bg-slate-100 rounded-xl transition-colors"
-          >
-            <X size={20} className="text-slate-400" />
-          </button>
-        </div>
+  if (!showModal) return null;
 
-        {/* Modal Body */}
-        <form onSubmit={handleLogParticipation} className="p-6 space-y-6">
-          {/* Message Display */}
-          {message.text && (
-            <div className={`p-4 rounded-xl flex items-center gap-3 ${
-              message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
-            }`}>
-              {message.type === 'success' ? <CheckCircle size={20} /> : <X size={20} />}
-              <span className="text-sm font-medium">{message.text}</span>
+  return (
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl max-h-[90vh] overflow-y-auto relative">
+        <button
+          onClick={() => setShowModal(false)}
+          className="absolute top-4 right-4 bg-white/90 p-2 rounded-full shadow-md hover:bg-white z-10"
+        >
+          <X size={20} className="text-slate-600" />
+        </button>
+
+        <div className="p-8">
+          {!registrationSubmitted ? (
+            <>
+              <h2 className="text-3xl font-black text-[#0B1E3B] mb-2">Register Interest</h2>
+              <p className="text-slate-600 mb-6">
+                For: <span className="font-bold text-[#0B1E3B]">{selectedEvent?.motion || selectedEvent?.title}</span>
+              </p>
+
+              {registrationError && (
+                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 mb-6">
+                  {registrationError}
+                </div>
+              )}
+
+              <form onSubmit={handleRegistrationSubmit} className="space-y-6">
+                <div>
+                  <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider block mb-2">
+                    Full Name *
+                  </label>
+                  <Input
+                    name="fullName"
+                    value={registrationData.fullName}
+                    onChange={(e) => setRegistrationData({ ...registrationData, fullName: e.target.value })}
+                    required
+                    placeholder="Your name"
+                    className="bg-white border-slate-200 h-12 rounded-xl"
+                  />
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider block mb-2">
+                      Email *
+                    </label>
+                    <Input
+                      name="email"
+                      type="email"
+                      value={registrationData.email}
+                      onChange={(e) => setRegistrationData({ ...registrationData, email: e.target.value })}
+                      required
+                      placeholder="your@email.com"
+                      className="bg-white border-slate-200 h-12 rounded-xl"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-bold text-[#0B1E3B] uppercase tracking-wider block mb-2">
+                      Phone
+                    </label>
+                    <Input
+                      name="phone"
+                      type="tel"
+                      value={registrationData.phone}
+                      onChange={(e) => setRegistrationData({ ...registrationData, phone: e.target.value })}
+                      placeholder="07XXXXXXXX"
+                      className="bg-white border-slate-200 h-12 rounded-xl"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex gap-4 pt-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setShowModal(false)}
+                    className="flex-1 h-12 border-slate-200 text-[#0B1E3B] font-bold rounded-xl"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={registering}
+                    className="flex-1 h-12 bg-[#00C2CB] hover:bg-[#0090C0] text-white font-bold rounded-xl disabled:opacity-70"
+                  >
+                    {registering ? 'Submitting...' : 'Register Interest'}
+                  </Button>
+                </div>
+              </form>
+            </>
+          ) : (
+            <div className="text-center py-12">
+              <div className="mx-auto w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
+                <CheckCircle size={40} />
+              </div>
+              <h3 className="text-2xl font-black text-[#0B1E3B] mb-4">Thank You!</h3>
+              <p className="text-slate-600 mb-8">
+                We've received your interest registration for <span className="font-bold">{selectedEvent?.motion || selectedEvent?.title}</span>.
+                We'll contact you at <span className="font-bold">{registrationData.email}</span>.
+              </p>
+              <Button
+                onClick={() => setShowModal(false)}
+                className="bg-[#00C2CB] hover:bg-[#0090C0] text-white font-bold rounded-xl"
+              >
+                Close
+              </Button>
             </div>
           )}
-
-          {/* Event Selection */}
-          <div className="space-y-3">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">
-              Select Debate Event
-            </label>
-            {loading ? (
-                <div className="flex items-center justify-center py-8">
-                <Loader2 className="animate-spin text-[#00C2CB]" size={32} />
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {events.map((event) => (
-                  <label
-                    key={event.id}
-                    className={`block p-4 rounded-2xl border-2 cursor-pointer transition-all ${
-                      formData.event_id === String(event.id)
-                        ? 'border-[#00C2CB] bg-[#00C2CB]/5'
-                        : 'border-slate-100 hover:border-slate-200'
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="event_id"
-                      value={event.id}
-                      checked={formData.event_id === String(event.id)}
-                      onChange={(e) => setFormData({ ...formData, event_id: e.target.value })}
-                      className="sr-only"
-                    />
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        {event.motion && (
-                          <div className="mb-2">
-                            <span className="text-[9px] font-black text-[#00C2CB] uppercase tracking-widest">Motion</span>
-                            <p className="font-black text-[#0B1E3B] text-sm mt-0.5">{event.motion}</p>
-                          </div>
-                        )}
-                        <h4 className="font-bold text-[#0B1E3B]">{event.title}</h4>
-                        <div className="flex items-center gap-4 mt-2 text-xs text-slate-500">
-                          <span className="flex items-center gap-1">
-                            <Calendar size={12} /> {event.event_date}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <MapPin size={12} /> {event.location}
-                          </span>
-                        </div>
-                      </div>
-                      {formData.event_id === String(event.id) && (
-                        <CheckCircle className="text-[#00C2CB]" size={20} />
-                      )}
-                    </div>
-                  </label>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Notes (Optional) */}
-          <div className="space-y-3">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">
-              Notes (Optional)
-            </label>
-            <textarea
-              value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              placeholder="Any observations or key takeaways from the session..."
-              className="w-full p-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-[#00C2CB] focus:outline-none transition-colors min-h-[100px] resize-none"
-            />
-          </div>
-
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            disabled={submitting || !formData.event_id}
-            className="w-full h-14 rounded-2xl bg-[#00C2CB] text-white hover:bg-[#0B1E3B] font-bold text-sm uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {submitting ? (
-              <span className="flex items-center gap-2">
-                <Loader2 className="animate-spin" size={18} /> Logging...
-              </span>
-            ) : (
-              'Log My Participation'
-            )}
-          </Button>
-        </form>
+        </div>
       </div>
     </div>
   );
@@ -151,17 +143,22 @@ const ParticipationModal = ({
 
 const DebatersCircle = () => {
   const navigate = useNavigate();
-  const [showLogModal, setShowLogModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [events, setEvents] = useState([]);
-  const [message, setMessage] = useState({ type: '', text: '' });
-  const [formData, setFormData] = useState({
-    event_id: '',
-    notes: '',
-  });
-
+  
   const [motions, setMotions] = useState([]);
+  const [toolkitResources, setToolkitResources] = useState([]);
+  const [toolkitLoading, setToolkitLoading] = useState(true);
+  
+  const [showModal, setShowModal] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [registrationSubmitted, setRegistrationSubmitted] = useState(false);
+  const [registrationError, setRegistrationError] = useState('');
+  const [registrationData, setRegistrationData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+  });
 
   // Fetch debates on component mount
   useEffect(() => {
@@ -199,73 +196,46 @@ const DebatersCircle = () => {
       }
     };
 
+    // Fetch toolkit resources
+    const fetchToolkitResources = async () => {
+      setToolkitLoading(true);
+      try {
+        const response = await api.get('/api/workstreams/debate/resources');
+        if (response.data?.resources && Array.isArray(response.data.resources)) {
+          setToolkitResources(response.data.resources);
+        } else {
+          setToolkitResources([]);
+        }
+      } catch (err) {
+        console.error('Failed to fetch toolkit resources:', err);
+        setToolkitResources([]);
+      } finally {
+        setToolkitLoading(false);
+      }
+    };
+
     fetchDebates();
+    fetchToolkitResources();
   }, []);
 
-  // Fetch debate events when modal opens
-  useEffect(() => {
-    if (showLogModal) {
-      fetchDebateEvents();
-    }
-  }, [showLogModal]);
-
-  const fetchDebateEvents = async () => {
-    setLoading(true);
-    try {
-      const response = await api.get('/api/workstreams/events?program=debate&status=Upcoming');
-      if (response.data?.events?.length > 0) {
-        setEvents(response.data.events);
-      } else {
-        setEvents([]);
-      }
-    } catch (err) {
-      console.error('Events API error:', err.message);
-      setEvents([]);
-    } finally {
-      setLoading(false);
-    }
+  const handleRegisterClick = (event) => {
+    setSelectedEvent(event);
+    setShowModal(true);
+    setRegistrationSubmitted(false);
+    setRegistrationError('');
+    setRegistrationData({ fullName: '', email: '', phone: '' });
   };
 
-  const handleLogParticipation = async (e) => {
+  const handleRegistrationSubmit = async (e) => {
     e.preventDefault();
-
-    // Check for authentication first
-    const token = localStorage.getItem('unda_token');
-    if (!token) {
-      setMessage({ type: 'error', text: 'You must be logged in to log participation. Please log in via the Portal.' });
-      return;
-    }
-
-    if (!formData.event_id) {
-      setMessage({ type: 'error', text: 'Please select an event' });
-      return;
-    }
-
     setSubmitting(true);
-    setMessage({ type: '', text: '' });
+    setRegistrationError('');
 
     try {
-      // Get champion_id from localStorage or current user context
-      // const token = localStorage.getItem('unda_token'); // Already checked above
-      
-      const response = await api.post('/api/event-participation/', {
-        event_id: parseInt(formData.event_id),
-        champion_id: 1, // This should come from the logged-in user's champion profile
-        registration_status: 'attended',
-        notes: formData.notes,
-      });
-
-      if (response.data?.success) {
-        setMessage({ type: 'success', text: 'Participation logged successfully! Your Documentation Quality Score has been updated.' });
-        setFormData({ event_id: '', notes: '' });
-        setTimeout(() => {
-          setShowLogModal(false);
-          setMessage({ type: '', text: '' });
-        }, 2000);
-      }
+      await api.post(`/api/events/${selectedEvent.id}/register-interest`, registrationData);
+      setRegistrationSubmitted(true);
     } catch (err) {
-      const errorMsg = err.response?.data?.message || 'Failed to log participation. Please try again.';
-      setMessage({ type: 'error', text: errorMsg });
+      setRegistrationError(err.response?.data?.message || 'Failed to register interest. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -273,17 +243,17 @@ const DebatersCircle = () => {
 
   return (
     <div className="min-h-screen bg-transparent pb-32">
-      {/* Participation Modal */}
-      <ParticipationModal 
-        showLogModal={showLogModal}
-        setShowLogModal={setShowLogModal}
-        message={message}
-        loading={loading}
-        events={events}
-        formData={formData}
-        setFormData={setFormData}
-        handleLogParticipation={handleLogParticipation}
-        submitting={submitting}
+      {/* Registration Modal */}
+      <RegistrationModal 
+        showModal={showModal}
+        setShowModal={setShowModal}
+        selectedEvent={selectedEvent}
+        registrationData={registrationData}
+        setRegistrationData={setRegistrationData}
+        handleRegistrationSubmit={handleRegistrationSubmit}
+        registering={submitting}
+        registrationSubmitted={registrationSubmitted}
+        registrationError={registrationError}
       />
 
       {/* 1. HERO: Editorial Alignment */}
@@ -325,8 +295,8 @@ const DebatersCircle = () => {
       {/* 2. ASYMMETRICAL GRID: Resources & Motions */}
       <section className="py-24 container mx-auto px-6">
         <div className="grid lg:grid-cols-12 gap-20">
-          {/* LEFT: Active Motions  */}
-          <div className="lg:col-span-7">
+          {/* Active Motions  */}
+          <div className="lg:col-span-12">
             <h2 className="text-2xl font-black text-[#0B1E3B] mb-10 tracking-tight uppercase tracking-[0.1em]">
               Current Motions
             </h2>
@@ -422,11 +392,17 @@ const DebatersCircle = () => {
                         </h4>
                       )}
                       
-                      <p className="text-slate-600 text-sm mb-4 line-clamp-3">{motion.description}</p>
-                      <div className="flex items-center gap-6 text-slate-600 font-semibold text-xs">
-                        <span className="flex items-center gap-2">
+                      <p className="text-slate-600 text-sm mb-6 line-clamp-3">{motion.description}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="flex items-center gap-2 text-slate-600 font-semibold text-xs">
                           <MapPin size={14} /> {motion.location}
                         </span>
+                        <Button
+                          onClick={() => handleRegisterClick(motion)}
+                          className="h-10 px-4 bg-[#00C2CB] hover:bg-[#0090C0] text-white font-bold text-xs rounded-xl"
+                        >
+                          Register Interest
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -435,9 +411,9 @@ const DebatersCircle = () => {
             </div>
           </div>
 
-          {/* RIGHT: Compliance & Toolkits  */}
-            <div className="lg:col-span-5 space-y-12">
-            <div className="p-10 rounded-[3rem] bg-slate-50 border border-slate-100 shadow-sm">
+          {/* Institutional Toolkit  */}
+            <div className="lg:col-span-12">
+            <div className="p-10 rounded-[3rem] bg-slate-50 border border-slate-100 shadow-sm max-w-2xl">
               <h3 className="text-xl font-black text-[#0B1E3B] mb-6">
                 Institutional Toolkit
               </h3>
@@ -447,57 +423,39 @@ const DebatersCircle = () => {
               </p>
 
               <div className="space-y-4">
-                {[
-                  { name: "School Consent Policy", type: "PDF " },
-                  { name: "Legal Aspect Summary", type: "PDF" },
-                  { name: "Safe Environment Protocol", type: "PDF" },
-                ].map((doc, idx) => (
-                  <button
-                    key={idx}
-                    className="w-full flex items-center justify-between p-4 rounded-2xl bg-white border border-slate-200 hover:border-[#00C2CB] transition-all group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-xl bg-slate-50 text-slate-400 group-hover:text-[#00C2CB]">
-                        <Download size={16} />
+                {toolkitLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="animate-spin text-[#00C2CB]" size={24} />
+                  </div>
+                ) : toolkitResources.length === 0 ? (
+                  <p className="text-sm text-slate-500 text-center py-8">No toolkit resources available yet.</p>
+                ) : (
+                  toolkitResources.map((resource) => (
+                    <a
+                      key={resource.id}
+                      href={resource.file_url || resource.fileUrl}
+                      download
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex items-center justify-between p-4 rounded-2xl bg-white border border-slate-200 hover:border-[#00C2CB] transition-all group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-xl bg-slate-50 text-slate-400 group-hover:text-[#00C2CB]">
+                          <Download size={16} />
+                        </div>
+                        <span className="text-sm font-bold text-[#0B1E3B]">
+                          {resource.name || resource.title}
+                        </span>
                       </div>
-                      <span className="text-sm font-bold text-[#0B1E3B]">
-                        {doc.name}
+                      <span className="text-[10px] font-black text-slate-400 uppercase">
+                        {resource.file_type || 'PDF'}
                       </span>
-                    </div>
-                    <span className="text-[10px] font-black text-slate-400 uppercase">
-                      {doc.type}
-                    </span>
-                  </button>
-                ))}
+                    </a>
+                  ))
+                )}
               </div>
             </div>
 
-            {/* QUICK LINK: Operational Data Log  */}
-            <div className="p-10 rounded-[3rem] bg-gradient-to-r from-[#00C2CB] to-[#0090C0] text-white shadow-2xl shadow-[#00C2CB]/20">
-              <GraduationCap size={40} className="mb-6 opacity-30" />
-              <h3 className="text-xl font-black mb-4">Log Circle Activity</h3>
-              <p className="text-white/90 text-sm font-medium mb-8">
-                Champions must log debate participation to maintain high
-                Documentation Quality Scores.
-              </p>
-              <Button 
-                onClick={() => {
-                  const token = localStorage.getItem('unda_token');
-                  const target = encodeURIComponent('/member/events');
-                  if (!token) {
-                    navigate(`/portal?next=${target}`);
-                  } else {
-                    setShowLogModal(true);
-                  }
-                }}
-                className="w-full h-14 rounded-2xl bg-white text-[#00C2CB] hover:bg-[#0B1E3B] hover:text-white font-black uppercase tracking-widest transition-all shadow-md"
-              >
-                Open Operational Log
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };

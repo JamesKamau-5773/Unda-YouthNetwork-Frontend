@@ -9,7 +9,7 @@ const Resources = () => {
   const [loading, setLoading] = useState(true);
   const [publications, setPublications] = useState([]);
   const [toolkits, setToolkits] = useState([]);
-  const [openingToolkitId, setOpeningToolkitId] = useState(null);
+  const [toolkitNotice, setToolkitNotice] = useState('');
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -48,22 +48,11 @@ const Resources = () => {
     const directUrl = resolveToolkitUrl(toolkit);
     if (directUrl) {
       window.open(directUrl, '_blank', 'noopener,noreferrer');
+      setToolkitNotice('');
       return;
     }
-
-    const toolkitId = toolkit?.id || toolkit?._id;
-    if (!toolkitId) return;
-
-    setOpeningToolkitId(toolkitId);
-    try {
-      const full = await resourceService.getOne(toolkitId);
-      const resolved = resolveToolkitUrl(full || {});
-      if (resolved) {
-        window.open(resolved, '_blank', 'noopener,noreferrer');
-      }
-    } finally {
-      setOpeningToolkitId(null);
-    }
+    console.error('Toolkit missing download URL; unable to open resource.', toolkit);
+    setToolkitNotice('This resource is not ready for download yet. Please check back soon or contact us if you need access.');
   };
 
   if (loading) {
@@ -137,9 +126,6 @@ const Resources = () => {
                   <div className="bg-white rounded-2xl p-12 border border-slate-100 shadow-sm text-center">
                     <h3 className="text-3xl font-black text-[#0B1E3B] mb-3">Check back soon</h3>
                     <p className="text-slate-500 mb-6">Publications and downloadable reports will appear here once they're published.</p>
-                    <Button asChild className="bg-[#00C2CB] text-white hover:bg-[#0B1E3B]">
-                      <Link to="/contribute">Be the first to contribute</Link>
-                    </Button>
                   </div>
                 ) : (
                   publications.map((pub) => (
@@ -178,15 +164,17 @@ const Resources = () => {
                 {toolkits.length === 0 ? (
                   <div className="bg-white rounded-2xl p-10 border border-slate-100 text-center">
                     <p className="text-slate-500 font-bold mb-4">No toolkits published yet.</p>
-                    <Button asChild className="bg-[#00C2CB] text-white hover:bg-[#0B1E3B]">
-                      <Link to="/contribute">Be the first to contribute</Link>
-                    </Button>
                   </div>
                 ) : (
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    {toolkitNotice && (
+                      <div className="mb-4 rounded-xl border border-[#00C2CB]/20 bg-[#E0F7FA] px-4 py-3 text-sm text-[#006064]">
+                        {toolkitNotice}
+                      </div>
+                    )}
+                    <div className="grid md:grid-cols-2 gap-4">
                     {toolkits.map((toolkit) => {
                       const key = toolkit.id || toolkit._id || toolkit;
-                      const isOpening = openingToolkitId && (openingToolkitId === toolkit.id || openingToolkitId === toolkit._id);
                       return (
                         <button
                           key={key}
@@ -196,11 +184,12 @@ const Resources = () => {
                         >
                           <p className="font-bold text-[#0B1E3B]">{toolkit.title || toolkit}</p>
                           <div className="text-xs text-[#00C2CB] font-bold mt-2 inline-flex items-center">
-                            <Download size={12} className="mr-1" /> {isOpening ? 'Opening…' : 'View Toolkit'}
+                            <Download size={12} className="mr-1" /> View Toolkit
                           </div>
                         </button>
                       );
                     })}
+                    </div>
                   </div>
                 )}
               </div>
@@ -271,9 +260,6 @@ const Resources = () => {
             <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-12">
               New resources are added regularly. Join the network to stay updated on the latest tools, guides, and research.
             </p>
-            <Button className="h-14 px-8 rounded-2xl bg-[#0090C0] text-[#0B1E3B] hover:bg-[#00C2CB] hover:text-white text-lg font-bold">
-             Join the Network
-            </Button>
           </div>
         </section>
       </div>

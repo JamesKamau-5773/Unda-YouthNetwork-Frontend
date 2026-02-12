@@ -13,6 +13,41 @@ import { programService } from "@/services/workstreamService";
 // Icon map for dynamic icon resolution from backend
 const iconMap = { Mic, Users, GraduationCap, MapPin, BookOpen };
 
+const fallbackStreams = [
+  {
+    title: 'Campus Edition',
+    desc: 'Campus-based mental health activation with peer-led sessions and resilience programs.',
+    link: '/campus',
+    icon: 'GraduationCap',
+    iconColor: '#00C2CB',
+    color: 'border-[#00C2CB]'
+  },
+  {
+    title: 'Debaters Circle',
+    desc: 'Debate-driven prevention program building confidence, empathy, and critical thinking.',
+    link: '/debaters-circle',
+    icon: 'Users',
+    iconColor: '#0090C0',
+    color: 'border-[#0090C0]'
+  },
+  {
+    title: 'UMV Mtaani',
+    desc: 'Neighborhood prevention through community barazas and outreach activities.',
+    link: '/mtaani',
+    icon: 'MapPin',
+    iconColor: '#0B1E3B',
+    color: 'border-[#0B1E3B]'
+  },
+  {
+    title: 'Unda Podcast',
+    desc: 'Youth voices and expert insights on mental health, wellbeing, and prevention.',
+    link: '/podcast',
+    icon: 'Mic',
+    iconColor: '#FFC83D',
+    color: 'border-[#FFC83D]'
+  }
+];
+
 const Workstreams = () => {
   const [loading, setLoading] = useState(true);
   const [streams, setStreams] = useState([]);
@@ -74,13 +109,13 @@ const Workstreams = () => {
         <h2 className="text-4xl font-black text-[#0B1E3B] text-center mb-16">
           Our Workstreams
         </h2>
-        {streams.length === 0 ? (
+        {((streams.length ? streams : fallbackStreams)).length === 0 ? (
           <div className="bg-[#F9FAFB]/30 rounded-2xl p-10 border border-slate-100 text-center">
             <p className="text-slate-500 font-bold">No workstreams published yet.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {streams.map((stream, idx) => {
+            {(streams.length ? streams : fallbackStreams).map((stream, idx) => {
               const IconComponent = resolveIcon(stream.icon);
               const resolvedLink = resolveWorkstreamLink(stream);
               return resolvedLink ? (
