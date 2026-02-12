@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { eventService } from "@/services/workstreamService";
-import api from "@/services/apiService";
+import api, { resolveChampionId } from "@/services/apiService";
 
 const Events = () => {
   const [logModalOpen, setLogModalOpen] = useState(false);
@@ -29,8 +29,11 @@ const Events = () => {
       const userStr = localStorage.getItem('unda_user');
       if (userStr) {
         const user = JSON.parse(userStr);
-        if (user && (user.id || user.username || user.full_name)) {
-          setChampionId(user.id || user.username || user.full_name);
+        // Only use numeric ID for champion_id
+        if (user && user.id && typeof user.id === 'number') {
+          setChampionId(user.id);
+        } else if (user && user.id && !isNaN(Number(user.id))) {
+          setChampionId(Number(user.id));
         }
       }
     } catch (err) {
@@ -117,8 +120,7 @@ const Events = () => {
       };
 
       if (championId) {
-        const maybeNumericId = Number(championId);
-        payload.champion_id = Number.isFinite(maybeNumericId) && !Number.isNaN(maybeNumericId) ? maybeNumericId : championId;
+        payload.champion_id = await resolveChampionId(championId);
       }
 
       await api.post('/api/event-participation/', payload);
