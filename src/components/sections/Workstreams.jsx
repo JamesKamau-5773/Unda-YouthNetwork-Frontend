@@ -43,8 +43,8 @@ const fallbackStreams = [
     desc: 'Youth voices and expert insights on mental health, wellbeing, and prevention.',
     link: '/podcast',
     icon: 'Mic',
-    iconColor: '#FFC83D',
-    color: 'border-[#FFC83D]'
+    iconColor: '#008ba3',
+    color: 'border-[#008ba3]'
   }
 ];
 

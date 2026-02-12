@@ -235,7 +235,7 @@ const Resources = () => {
               </div>
 
               <div className="bg-[#F9FAFB]/30 rounded-2xl p-8 hover:bg-white hover:shadow-xl transition-all duration-300 relative">
-                <div className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl" style={{ background: 'linear-gradient(90deg, #00C2CB 0%, #FFDFA8 50%, #FFC83D 100%)' }} />
+                <div className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl" style={{ background: 'linear-gradient(90deg, #00C2CB 0%, #0090C0 50%, #008ba3 100%)' }} />
                 <div className="pt-3">
                 <h3 className="text-2xl font-black text-[#0B1E3B] mb-3">MindRoots Parent Circle</h3>
                 <p className="text-slate-600 leading-relaxed mb-4">Prevention support and family psychoeducation to enhance parent-youth conversation and proactive action.</p>

@@ -186,9 +186,9 @@ const Certificate = () => {
                             
                             {/* Gold Seal */}
                             <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
-                                <div className="h-24 w-24 rounded-full border-4 border-[#F59E0B]/20 bg-white shadow-md flex items-center justify-center relative">
-                                    <div className="absolute inset-1 border border-[#F59E0B]/30 rounded-full" />
-                                    <Award size={36} className="text-[#F59E0B]" />
+                                <div className="h-24 w-24 rounded-full border-4 border-[#00C2CB]/20 bg-white shadow-md flex items-center justify-center relative">
+                                    <div className="absolute inset-1 border border-[#00C2CB]/30 rounded-full" />
+                                    <Award size={36} className="text-[#00C2CB]" />
                                 </div>
                             </div>
 
