@@ -115,25 +115,23 @@ const Podcast = () => {
     const mediaType = getMediaType(mediaUrl);
 
     return (
-      <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-3xl max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto relative">
-          {/* Floating close control for extra discoverability */}
+      <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 pt-28">
+        <div className="bg-white rounded-3xl max-w-4xl w-full shadow-2xl max-h-[80vh] overflow-y-auto relative">
+          {/* Large prominent close button */}
           <button
             onClick={() => { setShowPlayerModal(false); setPlayingEpisode(null); }}
             aria-label="Close player"
-            className="absolute top-4 right-4 bg-white/90 p-2 rounded-full shadow-md hover:bg-white z-30"
+            className="absolute top-6 right-6 bg-slate-100 hover:bg-slate-200 p-3 rounded-full shadow-lg z-[60] transition-all duration-200"
+            title="Close (Esc)"
           >
-            <X size={18} className="text-slate-600" />
+            <X size={24} className="text-slate-700" />
           </button>
 
-          <div className="p-6 border-b border-slate-100 flex justify-between items-center sticky top-0 bg-white z-10 rounded-t-3xl">
+          <div className="p-6 border-b border-slate-100 sticky top-0 bg-white z-10 rounded-t-3xl">
             <div>
               <h2 className="text-xl font-black text-[#0B1E3B]">{playingEpisode?.title}</h2>
               <p className="text-sm text-slate-500 mt-1">Guest: {playingEpisode?.guest || 'N/A'}</p>
             </div>
-            <button onClick={() => setShowPlayerModal(false)} className="p-2 hover:bg-slate-100 rounded-xl">
-              <X size={20} className="text-slate-400" />
-            </button>
           </div>
           <div className="p-6">
             {!mediaUrl ? (
