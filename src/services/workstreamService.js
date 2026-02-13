@@ -86,8 +86,28 @@ export const resourceService = {
 
   // Get publications
   getPublications: async () => {
-    const response = await api.get('/api/workstreams/resources?category=publication');
-    return extractArray(response.data, 'resources', 'items', 'data');
+    const normalize = (value) => (value || '').toString().trim().toLowerCase();
+    try {
+      const response = await api.get('/api/workstreams/resources?category=publication');
+      const items = extractArray(response.data, 'resources', 'items', 'data');
+      const publishedItems = items.filter((item) => item?.published === true);
+      if (publishedItems.length) return publishedItems;
+    } catch {
+      // fall through to broader fetch
+    }
+
+    const fallback = await api.get('/api/workstreams/resources');
+    const allItems = extractArray(fallback.data, 'resources', 'items', 'data');
+    const filtered = allItems.filter((item) => {
+      if (item?.published !== true) return false;
+      const category = normalize(item.category || item.type || item.resource_type);
+      if (category === 'publication' || category === 'publications') return true;
+      if (!category) {
+        return !!(item.published && Array.isArray(item.attachments) && item.attachments.length > 0);
+      }
+      return false;
+    });
+    return filtered;
   },
 
   // Get toolkits

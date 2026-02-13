@@ -44,6 +44,19 @@ const Resources = () => {
     toolkit?.link
   );
 
+  const resolvePublicationUrl = (publication) => (
+    publication?.download_url ||
+    publication?.file_url ||
+    publication?.fileUrl ||
+    publication?.document_url ||
+    publication?.documentUrl ||
+    publication?.pdf_url ||
+    publication?.pdfUrl ||
+    publication?.url ||
+    publication?.link ||
+    (Array.isArray(publication?.attachments) ? publication.attachments[0]?.url : null)
+  );
+
   const handleToolkitClick = async (toolkit) => {
     const directUrl = resolveToolkitUrl(toolkit);
     if (directUrl) {
@@ -128,17 +141,21 @@ const Resources = () => {
                     <p className="text-slate-500 mb-6">Publications and downloadable reports will appear here once they're published.</p>
                   </div>
                 ) : (
-                  publications.map((pub) => (
-                    <div key={pub.id} className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300">
-                      <h3 className="text-2xl font-black text-[#0B1E3B] mb-3">{pub.title}</h3>
-                      {pub.description && <p className="text-slate-600 mb-4">{pub.description}</p>}
-                      {pub.download_url && (
-                        <a href={pub.download_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-[#00C2CB] font-bold hover:underline">
-                          <Download size={16} className="mr-2" /> Download
-                        </a>
-                      )}
-                    </div>
-                  ))
+                  publications.map((pub) => {
+                    const downloadUrl = resolvePublicationUrl(pub);
+                    const summary = pub.summary || pub.description || pub.content;
+                    return (
+                      <div key={pub.id} className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300">
+                        <h3 className="text-2xl font-black text-[#0B1E3B] mb-3">{pub.title}</h3>
+                        {summary && <p className="text-slate-600 mb-4">{summary}</p>}
+                        {downloadUrl && (
+                          <a href={downloadUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-[#00C2CB] font-bold hover:underline">
+                            <Download size={16} className="mr-2" /> Download
+                          </a>
+                        )}
+                      </div>
+                    );
+                  })
                 )}
               </div>
             </div>
