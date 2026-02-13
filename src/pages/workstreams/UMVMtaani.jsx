@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
 import { MapPin, ArrowLeft } from 'lucide-react';
-import api from '@/services/apiService';
+import { eventService } from '@/services/workstreamService';
 
 const UMVMtaani = () => {
   const [loading, setLoading] = useState(true);
@@ -18,12 +18,19 @@ const UMVMtaani = () => {
   const fetchUpcomingBarazas = async () => {
     setLoading(true);
     try {
-      const primary = await api.get('/api/workstreams/events?program=mtaani&status=Upcoming');
-      let eventsList = primary.data?.events || [];
+      const normalize = (value) => (value || '').toString().trim().toLowerCase();
+      const allowedTypes = new Set(['mtaani', 'baraza']);
+      const allowedStatuses = new Set(['upcoming', 'active', 'published']);
 
-      if (!eventsList.length) {
-        const fallback = await api.get('/api/workstreams/events?program=baraza&status=Upcoming');
-        eventsList = fallback.data?.events || [];
+      let eventsList = await eventService.getUpcoming();
+      if (eventsList.length) {
+        eventsList = eventsList.filter((event) => {
+          const status = normalize(event.status || event.event_status || event.submission_status);
+          const type = normalize(event.event_type || event.eventType || event.program || event.category || event.type);
+          const statusOk = !status || allowedStatuses.has(status);
+          const typeOk = !type || allowedTypes.has(type);
+          return statusOk && typeOk;
+        });
       }
 
       if (eventsList.length > 0) {

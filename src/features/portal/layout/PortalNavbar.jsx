@@ -11,11 +11,13 @@ const PortalNavbar = () => {
   const location = useLocation();
 
   // Determine where the "Back to site" button should go:
-  // - If on the portal home/dashboard, send user to the portal login (`/portal`).
-  // - Otherwise (other member pages), send user back to the portal home/dashboard.
-  const backLinkTarget = (location.pathname === '/member/dashboard' || location.pathname === '/portal' || location.pathname === '/member')
-    ? '/portal'
-    : '/member/dashboard';
+  // - If on member dashboard, send user to main landing page (`/`).
+  // - If on other member pages, send user back to the member dashboard.
+  // - If on portal pages, send user back to the portal login.
+  const isDashboard = location.pathname === '/member/dashboard';
+  const backLinkTarget = isDashboard
+    ? '/'
+    : (location.pathname.startsWith('/member') ? '/member/dashboard' : '/portal');
 
   // Close dropdown when clicking outside
   useEffect(() => {

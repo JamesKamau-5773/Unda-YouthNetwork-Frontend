@@ -315,9 +315,7 @@ const DebatersCircle = () => {
                     key={motion.id || idx}
                     role="button"
                     tabIndex={0}
-                    onClick={() => motion.id && navigate(`/events/${motion.id}`)}
-                    onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && motion.id) { e.preventDefault(); navigate(`/events/${motion.id}`); } }}
-                    className="rounded-[2.5rem] border border-slate-100 bg-white hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 group overflow-hidden cursor-pointer"
+                    className="rounded-[2.5rem] border border-slate-100 bg-white hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 group overflow-hidden"
                   >
                     {/* Cover Image Section */}
                       {motion.imageUrl ? (
@@ -398,7 +396,7 @@ const DebatersCircle = () => {
                           <MapPin size={14} /> {motion.location}
                         </span>
                         <Button
-                          onClick={() => handleRegisterClick(motion)}
+                          onClick={(e) => { e.stopPropagation(); handleRegisterClick(motion); }}
                           className="h-10 px-4 bg-[#00C2CB] hover:bg-[#0090C0] text-white font-bold text-xs rounded-xl"
                         >
                           Register Interest

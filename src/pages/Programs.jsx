@@ -37,35 +37,97 @@ const fallbackPillars = [
 const fallbackPrograms = [
   {
     id: 1,
-    title: 'Annual Conference',
-    tagline: 'Youth mental health leaders convening for learning, networking, and action',
-    description: 'Join 150+ youth-led delegates, educators, and partners for a two-day conference on prevention, innovation, and youth empowerment.',
+    title: 'UMV Podcast',
+    tagline: 'Social driver & audio content',
+    description: 'Story-led conversations that normalize mental health and share prevention insights from youth voices and experts.',
+    icon: 'Mic2',
+    color: 'teal',
+    highlights: [
+      'Youth-led mental health storytelling',
+      'Community conversations and interviews',
+      'Prevention tools in audio format'
+    ],
+    cta: 'Listen Now',
+    available: true,
+    link: '/podcast'
+  },
+  {
+    id: 2,
+    title: 'UMV Debaters',
+    tagline: 'Age-appropriate mental health debates and conversations for 13–17 in school and community settings',
+    description: 'Debate circles that build confidence, critical thinking, and prevention literacy among adolescents.',
+    icon: 'Users',
+    color: 'yellow',
+    highlights: [
+      'School and community debate forums',
+      'Peer-led prevention discussions',
+      'Safe space for youth expression'
+    ],
+    cta: 'Explore Debaters',
+    available: true,
+    link: '/debaters-circle'
+  },
+  {
+    id: 3,
+    title: 'UMV Campus',
+    tagline: 'Campus cohorts, events & research',
+    description: 'University-based cohorts that lead campus activation, research, and mental health prevention initiatives.',
+    icon: 'GraduationCap',
+    color: 'teal',
+    highlights: [
+      'Campus-based cohorts',
+      'Research and innovation projects',
+      'Student-led prevention events'
+    ],
+    cta: 'See Campus',
+    available: true,
+    link: '/campus'
+  },
+  {
+    id: 4,
+    title: 'UMV Mtaani',
+    tagline: 'Community outreaches & pillar events',
+    description: 'Neighborhood activations that translate prevention into action through safe, community-led gatherings.',
+    icon: 'MapPin',
+    color: 'navy',
+    highlights: [
+      'Community barazas and pop-ups',
+      'Local prevention education',
+      'Youth-led outreach teams'
+    ],
+    cta: 'Visit Mtaani',
+    available: true,
+    link: '/mtaani'
+  },
+  {
+    id: 5,
+    title: 'UMV Annual Conference',
+    tagline: 'Flagship youth convening',
+    description: 'A flagship gathering for prevention champions, partners, and youth leaders to connect and co-create.',
     icon: 'Calendar',
     color: 'teal',
     highlights: [
-      'Keynote speakers on adolescent mental health',
-      'Interactive workshops on resilience building',
-      'Networking with prevention champions',
-      'Capacity-building on advocacy'
+      'Keynotes and learning tracks',
+      'Youth leadership showcases',
+      'Network building and collaboration'
     ],
     cta: 'Register Now',
     available: true,
     link: '/programs/annual-conference'
   },
   {
-    id: 2,
-    title: 'Global Initiative',
-    tagline: 'International collaboration on youth mental health prevention',
-    description: 'A global partnership to strengthen youth-led prevention efforts across continents, sharing knowledge and building solidarity.',
+    id: 6,
+    title: 'UMV Global',
+    tagline: 'International expansion',
+    description: 'Cross-border collaboration that scales youth-led prevention through partnerships and shared learning.',
     icon: 'Globe',
     color: 'yellow',
     highlights: [
-      'Cross-cultural peer learning',
-      'Joint prevention research initiatives',
-      'International advocacy campaigns',
-      'Youth ambassador network'
+      'Regional partnerships',
+      'Global youth exchange',
+      'Shared prevention resources'
     ],
-    cta: 'Learn More',
+    cta: 'Explore Global',
     available: true,
     link: '/programs/global'
   }
@@ -94,12 +156,12 @@ const Programs = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const [pillarsRes, programsRes] = await Promise.all([
+        const [pillarsRes] = await Promise.all([
           programService.getPillars().catch(() => null),
           programService.getAll().catch(() => null)
         ]);
         setPillars(pillarsRes?.length ? pillarsRes : fallbackPillars);
-        setPrograms(programsRes?.length ? programsRes : fallbackPrograms);
+        setPrograms(fallbackPrograms);
       } catch (err) {
         console.error('Failed to fetch programs:', err);
         setPillars(fallbackPillars);
