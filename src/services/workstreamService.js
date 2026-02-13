@@ -280,23 +280,29 @@ export const galleryService = {
 export const eventService = {
   // Get all events
   getAll: async () => {
-    const response = await api.get('/api/workstreams/events');
+    const response = await api.get('/api/workstreams/events?_t=' + Date.now(), {
+      headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+    });
     return extractArray(response.data, 'events', 'items', 'data');
   },
 
   // Get upcoming events
   getUpcoming: async (program = null) => {
-    const params = new URLSearchParams({ status: 'Upcoming' });
+    const params = new URLSearchParams({ status: 'Upcoming', _t: Date.now() });
     if (program) params.append('program', program);
-    const response = await api.get(`/api/workstreams/events?${params.toString()}`);
+    const response = await api.get(`/api/workstreams/events?${params.toString()}`, {
+      headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+    });
     return extractArray(response.data, 'events', 'items', 'data');
   },
 
   // Get events by program type
   getByProgram: async (program, status = null) => {
-    const params = new URLSearchParams({ program });
+    const params = new URLSearchParams({ program, _t: Date.now() });
     if (status) params.append('status', status);
-    const response = await api.get(`/api/workstreams/events?${params.toString()}`);
+    const response = await api.get(`/api/workstreams/events?${params.toString()}`, {
+      headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+    });
     return extractArray(response.data, 'events', 'items', 'data');
   },
 

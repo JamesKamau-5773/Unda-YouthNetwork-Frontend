@@ -7,6 +7,7 @@ import {
   Clock,
   MapPin,
   Calendar,
+  RefreshCw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { eventService } from "@/services/workstreamService";
@@ -22,7 +23,42 @@ const Events = () => {
   const [championId, setChampionId] = useState('');
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const navigate = useNavigate();
+
+  const fetchEvents = async () => {
+    const setLoadingFunc = setLoading;
+    setLoadingFunc(true);
+    try {
+      const data = await eventService.getUpcoming();
+      const nextEvents = data?.length ? data : [];
+      setEvents(nextEvents);
+      if (nextEvents.length === 0 || selectedIndex >= nextEvents.length) {
+        setSelectedIndex(0);
+      }
+    } catch (err) {
+      console.error('Failed to fetch events:', err);
+      setEvents([]);
+    } finally {
+      setLoadingFunc(false);
+    }
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      const data = await eventService.getUpcoming();
+      const nextEvents = data?.length ? data : [];
+      setEvents(nextEvents);
+      if (nextEvents.length === 0 || selectedIndex >= nextEvents.length) {
+        setSelectedIndex(0);
+      }
+    } catch (err) {
+      console.error('Failed to refresh events:', err);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   const logClientTelemetry = async (payload) => {
     const url = import.meta.env.VITE_CLIENT_LOG_URL;
@@ -236,6 +272,15 @@ const Events = () => {
             className="px-4 py-2 rounded-full bg-[#0B1E3B] text-white text-xs font-bold uppercase tracking-wider"
           >
             Start a Mtaani Hub
+          </button>
+          <button
+            onClick={handleRefresh}
+            disabled={refreshing}
+            className="px-4 py-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-colors disabled:opacity-50"
+            title="Refresh events to see latest updates"
+          >
+            <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} />
+            {refreshing ? 'Refreshing...' : 'Refresh'}
           </button>
           <div className="px-4 py-2 rounded-full bg-[#E0F7FA] border border-[#00ACC1]/30 text-[#006064] flex items-center gap-2">
             <Calendar size={16} className="text-[#00ACC1]" />
