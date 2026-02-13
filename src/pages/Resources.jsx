@@ -315,9 +315,9 @@ const Resources = () => {
               </div>
             )}
 
-            {/* Download button if URL is available */}
-            {resolvePublicationUrl(selectedPublication) && (
-              <div className="pt-4 border-t border-slate-200">
+            {/* Download button */}
+            <div className="pt-4 border-t border-slate-200">
+              {resolvePublicationUrl(selectedPublication) ? (
                 <a
                   href={resolvePublicationUrl(selectedPublication)}
                   target="_blank"
@@ -328,8 +328,17 @@ const Resources = () => {
                   Download Full Document
                   <ExternalLink size={16} />
                 </a>
-              </div>
-            )}
+              ) : (
+                <button
+                  disabled
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-slate-300 text-slate-500 font-bold rounded-lg cursor-not-allowed opacity-60"
+                  title="Download not available yet"
+                >
+                  <Download size={18} />
+                  Download Not Available
+                </button>
+              )}
+            </div>
 
             {/* Metadata if available */}
             {(selectedPublication?.author || selectedPublication?.published_date || selectedPublication?.date) && (
