@@ -232,7 +232,12 @@ const DebatersCircle = () => {
     setRegistrationError('');
 
     try {
-      await api.post(`/api/events/${selectedEvent.id}/register-interest`, registrationData);
+      const payload = {
+        full_name: registrationData.fullName,
+        email: registrationData.email,
+        phone_number: registrationData.phone
+      };
+      await api.post(`/api/events/${selectedEvent.id}/register-interest`, payload);
       setRegistrationSubmitted(true);
     } catch (err) {
       setRegistrationError(err.response?.data?.message || 'Failed to register interest. Please try again.');
