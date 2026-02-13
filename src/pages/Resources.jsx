@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
-import { ArrowLeft, BookOpen, FileText, Heart, Download, ArrowRight } from 'lucide-react';
+import { ArrowLeft, BookOpen, FileText, Heart, Download, ArrowRight, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { resourceService } from '@/services/workstreamService';
 
 const Resources = () => {
@@ -10,6 +17,8 @@ const Resources = () => {
   const [publications, setPublications] = useState([]);
   const [toolkits, setToolkits] = useState([]);
   const [toolkitNotice, setToolkitNotice] = useState('');
+  const [selectedPublication, setSelectedPublication] = useState(null);
+  const [isPublicationDialogOpen, setIsPublicationDialogOpen] = useState(false);
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -66,6 +75,11 @@ const Resources = () => {
     }
     console.error('Toolkit missing download URL; unable to open resource.', toolkit);
     setToolkitNotice('This resource is not ready for download yet. Please check back soon or contact us if you need access.');
+  };
+
+  const handlePublicationClick = (publication) => {
+    setSelectedPublication(publication);
+    setIsPublicationDialogOpen(true);
   };
 
   if (loading) {
@@ -145,14 +159,16 @@ const Resources = () => {
                     const downloadUrl = resolvePublicationUrl(pub);
                     const summary = pub.summary || pub.description || pub.content;
                     return (
-                      <div key={pub.id} className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300">
-                        <h3 className="text-2xl font-black text-[#0B1E3B] mb-3">{pub.title}</h3>
-                        {summary && <p className="text-slate-600 mb-4">{summary}</p>}
-                        {downloadUrl && (
-                          <a href={downloadUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-[#00C2CB] font-bold hover:underline">
-                            <Download size={16} className="mr-2" /> Download
-                          </a>
-                        )}
+                      <div 
+                        key={pub.id} 
+                        onClick={() => handlePublicationClick(pub)}
+                        className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:border-[#00C2CB] transition-all duration-300 cursor-pointer group"
+                      >
+                        <h3 className="text-2xl font-black text-[#0B1E3B] mb-3 group-hover:text-[#00C2CB] transition-colors">{pub.title}</h3>
+                        {summary && <p className="text-slate-600 mb-4 line-clamp-3">{summary}</p>}
+                        <div className="inline-flex items-center text-[#00C2CB] font-bold">
+                          <ArrowRight size={16} className="mr-2" /> Read More
+                        </div>
                       </div>
                     );
                   })
@@ -280,6 +296,53 @@ const Resources = () => {
           </div>
         </section>
       </div>
+
+      {/* Publication Detail Dialog */}
+      <Dialog open={isPublicationDialogOpen} onOpenChange={setIsPublicationDialogOpen}>
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-3xl font-black text-[#0B1E3B] pr-8">
+              {selectedPublication?.title}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="mt-4 space-y-4">
+            {/* Full content */}
+            {(selectedPublication?.content || selectedPublication?.description || selectedPublication?.summary) && (
+              <div className="prose prose-slate max-w-none">
+                <p className="text-slate-700 leading-relaxed whitespace-pre-wrap">
+                  {selectedPublication?.content || selectedPublication?.description || selectedPublication?.summary}
+                </p>
+              </div>
+            )}
+
+            {/* Download button if URL is available */}
+            {resolvePublicationUrl(selectedPublication) && (
+              <div className="pt-4 border-t border-slate-200">
+                <a
+                  href={resolvePublicationUrl(selectedPublication)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#00C2CB] text-white font-bold rounded-lg hover:bg-[#0B1E3B] transition-colors"
+                >
+                  <Download size={18} />
+                  Download Full Document
+                  <ExternalLink size={16} />
+                </a>
+              </div>
+            )}
+
+            {/* Metadata if available */}
+            {(selectedPublication?.author || selectedPublication?.published_date || selectedPublication?.date) && (
+              <div className="pt-4 border-t border-slate-200 text-sm text-slate-500 space-y-1">
+                {selectedPublication?.author && <p>Author: {selectedPublication.author}</p>}
+                {(selectedPublication?.published_date || selectedPublication?.date) && (
+                  <p>Published: {new Date(selectedPublication.published_date || selectedPublication.date).toLocaleDateString()}</p>
+                )}
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 };
