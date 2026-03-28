@@ -9,6 +9,7 @@ const Podcast = () => {
   const [_error, setError] = useState(null);
   const [showPlayerModal, setShowPlayerModal] = useState(false);
   const [playingEpisode, setPlayingEpisode] = useState(null);
+  const [selectedModule, setSelectedModule] = useState('all');
   const episodeListRef = useRef(null);
 
   useEffect(() => {
@@ -110,6 +111,46 @@ const Podcast = () => {
     return url;
   };
 
+  const formatDuration = (value) => {
+    if (value === null || value === undefined || value === '') return 'N/A';
+
+    if (typeof value === 'string') {
+      const trimmed = value.trim();
+      if (!trimmed) return 'N/A';
+      const numeric = Number(trimmed);
+      if (!Number.isNaN(numeric)) {
+        return formatDuration(numeric);
+      }
+      return trimmed;
+    }
+
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric) || numeric <= 0) return 'N/A';
+
+    const totalSeconds = numeric >= 10000 ? Math.round(numeric / 1000) : Math.round(numeric);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    if (hours > 0) {
+      return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+    return `${minutes}:${String(seconds).padStart(2, '0')}`;
+  };
+
+  const formatDateOnly = (value) => {
+    if (!value) return 'Date TBA';
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) {
+      return value.toString().split('T')[0] || 'Date TBA';
+    }
+    return parsed.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
   const PlayerModal = () => {
     const mediaUrl = playingEpisode?.audioUrl || playingEpisode?.audio_url;
     const mediaType = getMediaType(mediaUrl);
@@ -186,7 +227,7 @@ const Podcast = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-black text-[#0B1E3B]">{playingEpisode?.title}</h3>
-                    <p className="text-sm text-slate-500">{playingEpisode?.duration || 'Audio Podcast'}</p>
+                    <p className="text-sm text-slate-500">{formatDuration(playingEpisode?.duration) || 'Audio Podcast'}</p>
                   </div>
                 </div>
                 <audio
@@ -237,13 +278,13 @@ const Podcast = () => {
                   {playingEpisode.duration && (
                     <div>
                       <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Duration</p>
-                      <p className="text-sm font-bold text-[#0B1E3B]">{playingEpisode.duration}</p>
+                      <p className="text-sm font-bold text-[#0B1E3B]">{formatDuration(playingEpisode.duration)}</p>
                     </div>
                   )}
                   {playingEpisode.date && (
                     <div>
                       <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Date</p>
-                      <p className="text-sm font-bold text-[#0B1E3B]">{playingEpisode.date}</p>
+                      <p className="text-sm font-bold text-[#0B1E3B]">{formatDateOnly(playingEpisode.date)}</p>
                     </div>
                   )}
                       {playingEpisode.episode && (
@@ -355,10 +396,27 @@ const Podcast = () => {
               Prevention Literacy Track
             </p>
           </div>
-          <div className="flex gap-4">
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-              Filter By Module
-            </span>
+          <div className="flex gap-2 flex-wrap">
+            {(() => {
+              const uniqueModules = ['all', ...new Set(
+                episodes
+                  .map(ep => ep.module || 'General')
+                  .filter(Boolean)
+              )];
+              return uniqueModules.map(module => (
+                <button
+                  key={module}
+                  onClick={() => setSelectedModule(module)}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-200 ${
+                    selectedModule === module
+                      ? 'bg-[#00C2CB] text-white shadow-md'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  {module === 'all' ? 'All Modules' : module}
+                </button>
+              ));
+            })()}
           </div>
         </div>
 
@@ -367,12 +425,17 @@ const Podcast = () => {
               <div className="flex items-center justify-center py-16">
               <Loader2 className="animate-spin text-[#00C2CB]" size={48} />
             </div>
-          ) : episodes.length === 0 ? (
-            <div className="text-center py-16 text-slate-500">
-              <p className="text-lg font-medium">No episodes available yet.</p>
-            </div>
-          ) : (
-            episodes.map((ep, idx) => (
+          ) : (() => {
+            const filtered = selectedModule === 'all'
+              ? episodes
+              : episodes.filter(ep => (ep.module || 'General') === selectedModule);
+            
+            return filtered.length === 0 ? (
+              <div className="text-center py-16 text-slate-500">
+                <p className="text-lg font-medium">No episodes found for {selectedModule === 'all' ? '' : `the ${selectedModule} module`}.</p>
+              </div>
+            ) : (
+              filtered.map((ep, idx) => (
               <div
                 key={ep.id || idx}
                 role="button"
@@ -394,7 +457,7 @@ const Podcast = () => {
                         {ep.module}
                       </span>
                       <span className="text-[11px] text-slate-400 font-bold flex items-center gap-1">
-                        <Calendar size={12} /> {ep.date}
+                        <Calendar size={12} /> {formatDateOnly(ep.date)}
                       </span>
                     </div>
                     <h3 className="text-2xl font-black text-[#0B1E3B] group-hover:text-[#00C2CB] transition-colors">
@@ -408,7 +471,7 @@ const Podcast = () => {
 
                 <div className="flex items-center gap-4">
                   <span className="text-slate-400 text-xs font-bold uppercase tracking-widest mr-4">
-                    {ep.duration}
+                    {formatDuration(ep.duration)}
                   </span>
                   <Button
                     variant="ghost"
@@ -418,8 +481,9 @@ const Podcast = () => {
                   </Button>
                 </div>
               </div>
-            ))
-          )}
+              ))
+            );
+          })()}
         </div>
       </section>
     </div>

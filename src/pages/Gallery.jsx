@@ -9,6 +9,12 @@ const Gallery = () => {
   const [photos, setPhotos] = useState([]);
   const [videos, setVideos] = useState([]);
 
+  const isImageThumbnail = (url) => {
+    if (!url) return false;
+    const cleanUrl = url.split('?')[0].toLowerCase();
+    return /\.(jpg|jpeg|png|gif|webp|avif|svg)$/.test(cleanUrl);
+  };
+
   useEffect(() => {
     const fetchGallery = async () => {
       setLoading(true);
@@ -138,32 +144,35 @@ const Gallery = () => {
                     </div>
                   ))
                 ) : (
-                  videos.map((video) => (
-                    <a
-                      key={video.id}
-                      href={video.url || '#'}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="aspect-video rounded-2xl bg-[#F9FAFB]/30 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer block"
-                    >
-                      {video.thumbnail_url ? (
-                        <div className="relative w-full h-full">
-                          <img src={video.thumbnail_url} alt={video.title || 'Video'} className="w-full h-full object-cover" />
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors">
-                            <div className="h-16 w-16 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+                  videos.map((video) => {
+                    const hasImageThumbnail = isImageThumbnail(video.thumbnail_url);
+                    return (
+                      <a
+                        key={video.id}
+                        href={video.url || '#'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="aspect-video rounded-2xl bg-[#F9FAFB]/30 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer block"
+                      >
+                        {hasImageThumbnail ? (
+                          <div className="relative w-full h-full">
+                            <img src={video.thumbnail_url} alt={video.title || 'Video'} className="w-full h-full object-cover" />
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors">
+                              <div className="h-16 w-16 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <Play size={32} className="text-white ml-1" />
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <div className="h-16 w-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
                               <Play size={32} className="text-white ml-1" />
                             </div>
                           </div>
-                        </div>
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <div className="h-16 w-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <Play size={32} className="text-white ml-1" />
-                          </div>
-                        </div>
-                      )}
-                    </a>
-                  ))
+                        )}
+                      </a>
+                    );
+                  })
                 )}
               </div>
 

@@ -200,11 +200,69 @@ const extractGalleryItems = (data) => {
   return [];
 };
 
+const normalizeGalleryType = (value) => {
+  const normalized = (value || '').toString().trim().toLowerCase();
+  if (normalized === 'image') return 'photo';
+  if (normalized === 'photos') return 'photo';
+  if (normalized === 'videos') return 'video';
+  return normalized;
+};
+
+const resolveApiOrigin = () => {
+  const explicit = (import.meta.env.VITE_API_URL || '').toString().trim();
+  if (explicit) return explicit.replace(/\/+$/, '');
+  return 'https://api.undayouth.org';
+};
+
+const toAbsoluteAssetUrl = (value) => {
+  if (!value) return null;
+  const raw = value.toString().trim();
+  if (!raw) return null;
+  if (/^https?:\/\//i.test(raw)) return raw;
+  if (raw.startsWith('//')) return `https:${raw}`;
+  if (raw.startsWith('/')) return `${resolveApiOrigin()}${raw}`;
+  return raw;
+};
+
+const normalizeGalleryItem = (item = {}) => {
+  const type = normalizeGalleryType(item.type || item.media_type || item.mediaType);
+  const url = toAbsoluteAssetUrl(
+    item.url ||
+    item.src ||
+    item.file_url ||
+    item.fileUrl ||
+    item.media_url ||
+    item.mediaUrl ||
+    item.videoUrl ||
+    item.video_url
+  );
+
+  const thumbnailUrl = toAbsoluteAssetUrl(
+    item.thumbnail_url ||
+    item.thumbnail ||
+    item.preview_image ||
+    item.previewImage ||
+    item.poster ||
+    item.src
+  );
+
+  return {
+    ...item,
+    type,
+    media_type: type || item.media_type,
+    url,
+    src: toAbsoluteAssetUrl(item.src) || url,
+    videoUrl: toAbsoluteAssetUrl(item.videoUrl || item.video_url) || url,
+    thumbnail_url: thumbnailUrl,
+  };
+};
+
 /**
  * Fetch gallery items, trying workstreams endpoint first, then media-galleries
  */
 const fetchGalleryWithFallback = async (type = null) => {
   let items = [];
+  const normalizedRequestedType = normalizeGalleryType(type);
   
   // Try primary workstreams/gallery endpoint
   try {
@@ -223,10 +281,7 @@ const fetchGalleryWithFallback = async (type = null) => {
       // Filter by type if specified
       if (type && allItems.length > 0) {
         items = allItems.filter(item => 
-          item.type === type || 
-          item.media_type === type ||
-          (type === 'photo' && (item.type === 'image' || item.media_type === 'image')) ||
-          (type === 'video' && (item.type === 'video' || item.media_type === 'video'))
+          normalizeGalleryType(item.type || item.media_type || item.mediaType) === normalizedRequestedType
         );
       } else {
         items = allItems;
@@ -235,8 +290,13 @@ const fetchGalleryWithFallback = async (type = null) => {
       console.warn('Media galleries endpoint failed:', err.message);
     }
   }
-  
-  return items;
+
+  const normalizedItems = items
+    .map(normalizeGalleryItem)
+    .filter((item) => item?.published !== false);
+
+  if (!normalizedRequestedType) return normalizedItems;
+  return normalizedItems.filter((item) => normalizeGalleryType(item.type || item.media_type) === normalizedRequestedType);
 };
 
 export const galleryService = {
