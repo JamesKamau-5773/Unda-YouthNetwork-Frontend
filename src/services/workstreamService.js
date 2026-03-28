@@ -373,11 +373,58 @@ export const eventService = {
   }
 };
 
+// ============================================================================
+// PODCASTS
+// ============================================================================
+
+const normalizePodcastEpisode = (episode = {}) => {
+  const thumbnailUrl = toAbsoluteAssetUrl(
+    episode.thumbnailUrl ||
+    episode.thumbnail_url ||
+    episode.thumbnail ||
+    episode.poster
+  );
+
+  return {
+    ...episode,
+    id: episode.id || episode.podcast_id,
+    title: episode.title || episode.name || 'Untitled Episode',
+    guest: episode.guest || episode.host || 'TBA',
+    duration: episode.duration || episode.length || 'N/A',
+    module: episode.module || episode.category || episode.episode || 'General',
+    date: episode.date || episode.published_date || episode.publishedAt || episode.published_at || episode.created_at || 'Recent',
+    thumbnailUrl,
+    thumbnail_url: thumbnailUrl
+  };
+};
+
+export const podcastService = {
+  // Get all podcasts
+  getAll: async () => {
+    try {
+      const response = await api.get('/api/podcasts');
+      const items = extractArray(response.data, 'podcasts', 'items', 'data');
+      return items.map(normalizePodcastEpisode);
+    } catch (err) {
+      console.error('Podcasts API error:', err.message);
+      return [];
+    }
+  },
+
+  // Get a single podcast by ID
+  getOne: async (id) => {
+    const response = await api.get(`/api/podcasts/${id}`);
+    const episode = response.data?.podcast || response.data;
+    return normalizePodcastEpisode(episode);
+  }
+};
+
 // Default export for convenience
 export default {
   programs: programService,
   resources: resourceService,
   stories: storyService,
   gallery: galleryService,
-  events: eventService
+  events: eventService,
+  podcasts: podcastService
 };

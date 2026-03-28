@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Play, Mic2, Calendar, Share2, X, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import api from "@/services/apiService";
+import workstreamService from "@/services/workstreamService";
 
 const Podcast = () => {
   const [episodes, setEpisodes] = useState([]);
@@ -15,41 +15,13 @@ const Podcast = () => {
   useEffect(() => {
     const fetchPodcasts = async () => {
       try {
-        const response = await api.get('/api/podcasts');
-        console.log('Podcasts API Response:', response.data);
-        console.log('Total podcasts from backend:', response.data?.total || 0);
-        
-        if (response.data?.podcasts && Array.isArray(response.data.podcasts)) {
-          if (response.data.podcasts.length > 0) {
-            console.log('Using real podcasts from backend:', response.data.podcasts);
-            console.log('First podcast structure:', response.data.podcasts[0]);
-            
-            // Map backend fields to frontend expected fields
-            const mappedEpisodes = response.data.podcasts.map(podcast => ({
-              id: podcast.id,
-              title: podcast.title || podcast.name || 'Untitled Episode',
-              guest: podcast.guest || podcast.host || 'TBA',
-              duration: podcast.duration || podcast.length || 'N/A',
-              module: podcast.module || podcast.category || podcast.episode || 'General',
-              date: podcast.date || podcast.published_date || podcast.created_at || 'Recent',
-              // Keep original data for debugging
-              ...podcast
-            }));
-            
-            console.log('Mapped episodes:', mappedEpisodes);
-            setEpisodes(mappedEpisodes);
-          } else {
-            console.warn('Backend returned empty podcasts array');
-            setEpisodes([]);
-          }
-        } else {
-          console.error('Unexpected API response structure:', response.data);
-          setEpisodes([]);
-        }
+        const episodes = await workstreamService.podcasts.getAll();
+        console.log('Podcasts from service:', episodes);
+        setEpisodes(episodes);
       } catch (err) {
-        console.error('Podcasts API error:', err.message);
+        console.error('Podcasts service error:', err.message);
         setEpisodes([]);
-        setError('Failed to load podcasts from backend.');
+        setError('Failed to load podcasts.');
       } finally {
         setLoading(false);
       }
@@ -445,9 +417,22 @@ const Podcast = () => {
                 className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 hover:border-[#00C2CB] hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-8 cursor-pointer"
               >
                 <div className="flex items-center gap-6">
+                  {ep.thumbnailUrl && (
+                    <div className="h-16 w-16 rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0 shadow-md">
+                      <img 
+                        src={ep.thumbnailUrl} 
+                        alt={ep.title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  )}
                   <button 
                     onClick={() => handlePlayEpisode(ep)}
-                    className="h-16 w-16 rounded-2xl bg-gradient-to-br from-[#00C2CB] to-[#0090C0] text-white flex items-center justify-center shadow-lg transform transition-all hover:scale-110"
+                    className="h-16 w-16 rounded-2xl bg-gradient-to-br from-[#00C2CB] to-[#0090C0] text-white flex items-center justify-center shadow-lg transform transition-all hover:scale-110 flex-shrink-0"
                   >
                     <Play size={24} />
                   </button>
