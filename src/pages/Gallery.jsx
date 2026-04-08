@@ -81,12 +81,13 @@ const Gallery = () => {
         {/* Lightbox Modal */}
         {lightboxOpen && photos.length > 0 && (
           <div 
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-4"
             onClick={closeLightbox}
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition z-10"
+              className="absolute top-20 right-4 md:top-6 md:right-6 p-4 md:p-3 bg-white/10 hover:bg-white/20 rounded-full transition z-[210]"
+              aria-label="Close gallery lightbox"
             >
               <X size={24} className="text-white" />
             </button>
@@ -117,13 +118,15 @@ const Gallery = () => {
                 <>
                   <button
                     onClick={prevPhoto}
-                    className="absolute left-4 p-3 bg-white/10 hover:bg-white/20 rounded-full transition"
+                    className="absolute left-4 p-4 md:p-3 bg-white/10 hover:bg-white/20 rounded-full transition"
+                    aria-label="Previous photo"
                   >
                     <ChevronLeft size={28} className="text-white" />
                   </button>
                   <button
                     onClick={nextPhoto}
-                    className="absolute right-4 p-3 bg-white/10 hover:bg-white/20 rounded-full transition"
+                    className="absolute right-4 p-4 md:p-3 bg-white/10 hover:bg-white/20 rounded-full transition"
+                    aria-label="Next photo"
                   >
                     <ChevronRight size={28} className="text-white" />
                   </button>
