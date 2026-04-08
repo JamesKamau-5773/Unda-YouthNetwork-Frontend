@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
-import { ArrowLeft, Image, Video, Camera, Play, Loader2 } from 'lucide-react';
+import { ArrowLeft, Image, Video, Camera, Play, Loader2, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { galleryService } from '@/services/workstreamService';
 
 const Gallery = () => {
@@ -9,6 +9,9 @@ const Gallery = () => {
   const [photos, setPhotos] = useState([]);
   const [videos, setVideos] = useState([]);
   const [failedImages, setFailedImages] = useState(new Set());
+  const [failedVideoThumbnails, setFailedVideoThumbnails] = useState(new Set());
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
 
   const isImageThumbnail = (url) => {
     if (!url) return false;
@@ -18,6 +21,27 @@ const Gallery = () => {
 
   const handleImageError = (photoId) => {
     setFailedImages(prev => new Set([...prev, photoId]));
+  };
+
+  const handleVideoThumbnailError = (videoId) => {
+    setFailedVideoThumbnails(prev => new Set([...prev, videoId]));
+  };
+
+  const openLightbox = (index) => {
+    setSelectedPhotoIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+  };
+
+  const nextPhoto = () => {
+    setSelectedPhotoIndex((prev) => (prev + 1) % photos.length);
+  };
+
+  const prevPhoto = () => {
+    setSelectedPhotoIndex((prev) => (prev - 1 + photos.length) % photos.length);
   };
 
   useEffect(() => {
@@ -54,6 +78,72 @@ const Gallery = () => {
   return (
     <Layout>
       <div className="min-h-screen bg-transparent">
+        {/* Lightbox Modal */}
+        {lightboxOpen && photos.length > 0 && (
+          <div 
+            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+            onClick={closeLightbox}
+          >
+            <button
+              onClick={closeLightbox}
+              className="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition z-10"
+            >
+              <X size={24} className="text-white" />
+            </button>
+
+            <div 
+              className="relative w-full h-full max-w-5xl max-h-[90vh] flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Main Image */}
+              <div className="flex items-center justify-center w-full h-full">
+                {photos[selectedPhotoIndex]?.url && !failedImages.has(photos[selectedPhotoIndex]?.id) ? (
+                  <img
+                    src={photos[selectedPhotoIndex].url}
+                    alt={photos[selectedPhotoIndex].title}
+                    className="max-w-full max-h-full object-contain rounded-lg"
+                    onError={() => handleImageError(photos[selectedPhotoIndex].id)}
+                  />
+                ) : (
+                  <div className="text-center text-white">
+                    <Image size={64} className="mx-auto mb-4 text-slate-400" />
+                    <p>{photos[selectedPhotoIndex]?.title || 'Photo'}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Navigation Buttons */}
+              {photos.length > 1 && (
+                <>
+                  <button
+                    onClick={prevPhoto}
+                    className="absolute left-4 p-3 bg-white/10 hover:bg-white/20 rounded-full transition"
+                  >
+                    <ChevronLeft size={28} className="text-white" />
+                  </button>
+                  <button
+                    onClick={nextPhoto}
+                    className="absolute right-4 p-3 bg-white/10 hover:bg-white/20 rounded-full transition"
+                  >
+                    <ChevronRight size={28} className="text-white" />
+                  </button>
+                </>
+              )}
+
+              {/* Photo Counter */}
+              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-black/60 px-4 py-2 rounded-full text-white text-sm font-medium">
+                {selectedPhotoIndex + 1} / {photos.length}
+              </div>
+
+              {/* Photo Title */}
+              {photos[selectedPhotoIndex]?.title && (
+                <div className="absolute top-6 left-6 bg-black/60 px-4 py-2 rounded-lg text-white max-w-md">
+                  <p className="font-medium truncate">{photos[selectedPhotoIndex].title}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
         {/* Hero Section */}
         <section className="pt-40 pb-20 bg-gradient-to-br from-[#0090C0] via-[#00C2CB] to-[#0B1E3B] relative overflow-hidden">
           <div className="absolute inset-0 opacity-6 z-0" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
@@ -100,13 +190,20 @@ const Gallery = () => {
                     </div>
                   ))
                 ) : (
-                  photos.map((photo) => (
-                    <div key={photo.id} className="aspect-square rounded-2xl bg-[#F9FAFB]/30 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group">
+                  photos.map((photo, index) => (
+                    <div 
+                      key={photo.id} 
+                      onClick={() => openLightbox(index)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openLightbox(index); }}
+                      className="aspect-square rounded-2xl bg-[#F9FAFB]/30 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer"
+                    >
                       {photo.url && !failedImages.has(photo.id) ? (
                         <img 
                           src={photo.url} 
                           alt={photo.title || 'Gallery photo'} 
-                          className="w-full h-full object-cover" 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                           onError={() => handleImageError(photo.id)}
                           loading="lazy"
                         />
@@ -160,17 +257,25 @@ const Gallery = () => {
                 ) : (
                   videos.map((video) => {
                     const hasImageThumbnail = isImageThumbnail(video.thumbnail_url);
+                    const thumbnailFailed = failedVideoThumbnails.has(video.id);
+                    
                     return (
                       <a
                         key={video.id}
                         href={video.url || '#'}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="aspect-video rounded-2xl bg-[#F9FAFB]/30 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer block"
+                        className="aspect-video rounded-2xl bg-gradient-to-br from-[#0B1E3B] to-[#003f47] border-t-4 border-[#00C2CB] hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer block"
                       >
-                        {hasImageThumbnail ? (
+                        {hasImageThumbnail && !thumbnailFailed ? (
                           <div className="relative w-full h-full">
-                            <img src={video.thumbnail_url} alt={video.title || 'Video'} className="w-full h-full object-cover" />
+                            <img 
+                              src={video.thumbnail_url} 
+                              alt={video.title || 'Video'} 
+                              className="w-full h-full object-cover" 
+                              onError={() => handleVideoThumbnailError(video.id)}
+                              loading="lazy"
+                            />
                             <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors">
                               <div className="h-16 w-16 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
                                 <Play size={32} className="text-white ml-1" />
@@ -178,10 +283,11 @@ const Gallery = () => {
                             </div>
                           </div>
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <div className="h-16 w-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
-                              <Play size={32} className="text-white ml-1" />
+                          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#0B1E3B]/5 to-[#00C2CB]/5">
+                            <div className="h-16 w-16 rounded-full bg-[#00C2CB]/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform mb-3">
+                              <Play size={32} className="text-[#00C2CB] ml-1" />
                             </div>
+                            <p className="text-sm text-slate-500 font-medium text-center px-4">{video.title || 'Video'}</p>
                           </div>
                         )}
                       </a>
