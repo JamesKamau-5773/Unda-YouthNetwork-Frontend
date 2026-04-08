@@ -214,6 +214,28 @@ const resolveApiOrigin = () => {
   return 'https://api.undayouth.org';
 };
 
+/**
+ * NOTE: Gallery media URLs from API are currently protected behind auth.
+ * Backend serves /static/uploads/ paths which require login.
+ * 
+ * BACKEND TODO: Configure nginx/server to serve media gallery files publicly:
+ * - Add location rule: /static/uploads/media_galleries/* -> public access
+ * - Or create /api/public/media endpoint that serves files without auth
+ * 
+ * TEMPORARY: Images will only work for authenticated users.
+ * Public visitors will see alt text/placeholders until backend is updated.
+ */
+const createPublicMediaUrl = (relativePath) => {
+  if (!relativePath) return null;
+  
+  // Already absolute
+  if (/^https?:\/\//i.test(relativePath)) return relativePath;
+  
+  // Relative path — prepend API origin
+  const baseUrl = resolveApiOrigin().replace(/\/+$/, '');
+  return baseUrl + (relativePath.startsWith('/') ? relativePath : '/' + relativePath);
+};
+
 const toAbsoluteAssetUrl = (value) => {
   if (!value) return null;
   const raw = value.toString().trim();
@@ -226,7 +248,7 @@ const toAbsoluteAssetUrl = (value) => {
 
 const normalizeGalleryItem = (item = {}) => {
   const type = normalizeGalleryType(item.type || item.media_type || item.mediaType);
-  const url = toAbsoluteAssetUrl(
+  const url = createPublicMediaUrl(
     item.url ||
     item.src ||
     item.file_url ||
@@ -237,7 +259,7 @@ const normalizeGalleryItem = (item = {}) => {
     item.video_url
   );
 
-  const thumbnailUrl = toAbsoluteAssetUrl(
+  const thumbnailUrl = createPublicMediaUrl(
     item.thumbnail_url ||
     item.thumbnail ||
     item.preview_image ||
@@ -251,8 +273,8 @@ const normalizeGalleryItem = (item = {}) => {
     type,
     media_type: type || item.media_type,
     url,
-    src: toAbsoluteAssetUrl(item.src) || url,
-    videoUrl: toAbsoluteAssetUrl(item.videoUrl || item.video_url) || url,
+    src: createPublicMediaUrl(item.src) || url,
+    videoUrl: createPublicMediaUrl(item.videoUrl || item.video_url) || url,
     thumbnail_url: thumbnailUrl,
   };
 };
@@ -378,7 +400,7 @@ export const eventService = {
 // ============================================================================
 
 const normalizePodcastEpisode = (episode = {}) => {
-  const thumbnailUrl = toAbsoluteAssetUrl(
+  const thumbnailUrl = createPublicMediaUrl(
     episode.thumbnailUrl ||
     episode.thumbnail_url ||
     episode.thumbnail ||
