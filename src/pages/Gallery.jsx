@@ -8,11 +8,16 @@ const Gallery = () => {
   const [loading, setLoading] = useState(true);
   const [photos, setPhotos] = useState([]);
   const [videos, setVideos] = useState([]);
+  const [failedImages, setFailedImages] = useState(new Set());
 
   const isImageThumbnail = (url) => {
     if (!url) return false;
     const cleanUrl = url.split('?')[0].toLowerCase();
     return /\.(jpg|jpeg|png|gif|webp|avif|svg)$/.test(cleanUrl);
+  };
+
+  const handleImageError = (photoId) => {
+    setFailedImages(prev => new Set([...prev, photoId]));
   };
 
   useEffect(() => {
@@ -97,11 +102,20 @@ const Gallery = () => {
                 ) : (
                   photos.map((photo) => (
                     <div key={photo.id} className="aspect-square rounded-2xl bg-[#F9FAFB]/30 border-t-4 border-[#00C2CB] hover:bg-white hover:shadow-xl transition-all duration-300 overflow-hidden group">
-                      {photo.url ? (
-                        <img src={photo.url} alt={photo.title || 'Gallery photo'} className="w-full h-full object-cover" />
+                      {photo.url && !failedImages.has(photo.id) ? (
+                        <img 
+                          src={photo.url} 
+                          alt={photo.title || 'Gallery photo'} 
+                          className="w-full h-full object-cover" 
+                          onError={() => handleImageError(photo.id)}
+                          loading="lazy"
+                        />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Image size={48} className="text-slate-300 mx-auto" />
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-50">
+                          <div className="text-center px-4">
+                            <Image size={40} className="text-slate-300 mx-auto mb-2" />
+                            <p className="text-xs text-slate-500 font-medium">{photo.title || 'Photo'}</p>
+                          </div>
                         </div>
                       )}
                     </div>

@@ -215,15 +215,9 @@ const resolveApiOrigin = () => {
 };
 
 /**
- * NOTE: Gallery media URLs from API are currently protected behind auth.
- * Backend serves /static/uploads/ paths which require login.
- * 
- * BACKEND TODO: Configure nginx/server to serve media gallery files publicly:
- * - Add location rule: /static/uploads/media_galleries/* -> public access
- * - Or create /api/public/media endpoint that serves files without auth
- * 
- * TEMPORARY: Images will only work for authenticated users.
- * Public visitors will see alt text/placeholders until backend is updated.
+ * NOTE: Gallery media URLs from API now use /api/media/uploads/ format.
+ * Backend normalized the paths correctly.
+ * Endpoint is being verified for public accessibility.
  */
 const createPublicMediaUrl = (relativePath) => {
   if (!relativePath) return null;

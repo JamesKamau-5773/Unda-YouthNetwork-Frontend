@@ -10,7 +10,12 @@ const Podcast = () => {
   const [showPlayerModal, setShowPlayerModal] = useState(false);
   const [playingEpisode, setPlayingEpisode] = useState(null);
   const [selectedModule, setSelectedModule] = useState('all');
+  const [failedThumbnails, setFailedThumbnails] = useState(new Set());
   const episodeListRef = useRef(null);
+
+  const handleThumbnailError = (episodeId) => {
+    setFailedThumbnails(prev => new Set([...prev, episodeId]));
+  };
 
   useEffect(() => {
     const fetchPodcasts = async () => {
@@ -417,16 +422,14 @@ const Podcast = () => {
                 className="group p-8 rounded-[2.5rem] bg-white border border-slate-100 hover:border-[#00C2CB] hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-8 cursor-pointer"
               >
                 <div className="flex items-center gap-6">
-                  {ep.thumbnailUrl && (
-                    <div className="h-16 w-16 rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0 shadow-md">
+                  {ep.thumbnailUrl && !failedThumbnails.has(ep.id) && (
+                    <div className="h-16 w-16 rounded-2xl overflow-hidden bg-gradient-to-br from-[#00C2CB]/20 to-[#0090C0]/20 flex-shrink-0 shadow-md flex items-center justify-center">
                       <img 
                         src={ep.thumbnailUrl} 
                         alt={ep.title}
                         className="w-full h-full object-cover"
                         loading="lazy"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                        }}
+                        onError={() => handleThumbnailError(ep.id)}
                       />
                     </div>
                   )}
