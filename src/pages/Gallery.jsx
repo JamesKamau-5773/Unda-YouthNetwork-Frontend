@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/shared/Layout';
 import { ArrowLeft, Image, Video, Camera, Play, Loader2, X, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -12,6 +12,8 @@ const Gallery = () => {
   const [failedVideoThumbnails, setFailedVideoThumbnails] = useState(new Set());
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
+  const touchStartXRef = useRef(0);
+  const touchEndXRef = useRef(0);
 
   const isImageThumbnail = (url) => {
     if (!url) return false;
@@ -42,6 +44,30 @@ const Gallery = () => {
 
   const prevPhoto = () => {
     setSelectedPhotoIndex((prev) => (prev - 1 + photos.length) % photos.length);
+  };
+
+  const handleTouchStart = (event) => {
+    touchStartXRef.current = event.changedTouches[0].clientX;
+    touchEndXRef.current = event.changedTouches[0].clientX;
+  };
+
+  const handleTouchMove = (event) => {
+    touchEndXRef.current = event.changedTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const swipeDistance = touchStartXRef.current - touchEndXRef.current;
+    const minimumSwipeDistance = 50;
+
+    if (Math.abs(swipeDistance) < minimumSwipeDistance || photos.length < 2) {
+      return;
+    }
+
+    if (swipeDistance > 0) {
+      nextPhoto();
+    } else {
+      prevPhoto();
+    }
   };
 
   useEffect(() => {
@@ -95,6 +121,9 @@ const Gallery = () => {
             <div 
               className="relative w-full h-full max-w-5xl max-h-[90vh] flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
               {/* Main Image */}
               <div className="flex items-center justify-center w-full h-full">

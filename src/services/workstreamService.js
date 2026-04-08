@@ -354,6 +354,22 @@ export const galleryService = {
 // ============================================================================
 
 export const eventService = {
+  isUpcomingEvent: (event = {}) => {
+    const status = (event?.status || event?.event_status || '').toString().toLowerCase();
+    if (status.includes('upcoming')) return true;
+
+    const dateValue = event?.event_date || event?.date || event?.start_date || event?.startDate;
+    if (!dateValue) return false;
+
+    const parsed = new Date(dateValue);
+    if (Number.isNaN(parsed.getTime())) return false;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    parsed.setHours(0, 0, 0, 0);
+    return parsed >= today;
+  },
+
   // Get all events
   getAll: async () => {
     const response = await api.get('/api/workstreams/events?_t=' + Date.now(), {
@@ -364,12 +380,34 @@ export const eventService = {
 
   // Get upcoming events
   getUpcoming: async (program = null) => {
-    const params = new URLSearchParams({ status: 'Upcoming', _t: Date.now() });
-    if (program) params.append('program', program);
-    const response = await api.get(`/api/workstreams/events?${params.toString()}`, {
-      headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
-    });
-    return extractArray(response.data, 'events', 'items', 'data');
+    const headers = { 'Cache-Control': 'no-cache, no-store, must-revalidate' };
+    const baseParams = new URLSearchParams({ _t: Date.now() });
+    if (program) baseParams.append('program', program);
+
+    const attemptFilteredFetch = async (statusValue) => {
+      const params = new URLSearchParams(baseParams);
+      params.append('status', statusValue);
+      const response = await api.get(`/api/workstreams/events?${params.toString()}`, { headers });
+      return extractArray(response.data, 'events', 'items', 'data');
+    };
+
+    try {
+      const primary = await attemptFilteredFetch('Upcoming');
+      if (primary.length) return primary;
+
+      const secondary = await attemptFilteredFetch('upcoming');
+      if (secondary.length) return secondary;
+    } catch {
+      // Fall through to broad fetch below
+    }
+
+    try {
+      const response = await api.get(`/api/workstreams/events?${baseParams.toString()}`, { headers });
+      const items = extractArray(response.data, 'events', 'items', 'data');
+      return items.filter(eventService.isUpcomingEvent);
+    } catch {
+      return [];
+    }
   },
 
   // Get events by program type
